@@ -1,6 +1,6 @@
-# Zenseless
+[![Build status](https://ci.appveyor.com/api/projects/status/6yeqn2p92vd8rddx?svg=true)](https://ci.appveyor.com/project/danielscherzer/zenseless)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/qyi1li184k33ycqe?svg=true)](https://ci.appveyor.com/project/danielscherzer/framework)
+# Zenseless
 A Framework for real-time computer graphics using OpenGL. This framework is created for a university course in computer graphics. Documentation inside the package is incomplete! See the [change log](CHANGELOG.md) for changes, features and road map.
 
 ### Setup of an empty stand-alone project
@@ -16,10 +16,10 @@ A Framework for real-time computer graphics using OpenGL. This framework is crea
 	1. change into empty dir
 	+ repository clone [TortoiseGit](https://tortoisegit.org/)
 		1. right click `git clone...`
-		1. URL: https://github.com/danielscherzer/Framework
+		1. URL: https://github.com/danielscherzer/Zenseless
 	+ repository clone (shell)
 		1. open `git cmd` or `git bash`
-		1. `git clone https://github.com/danielscherzer/Framework`
+		1. `git clone https://github.com/danielscherzer/Zenseless`
 1. compile and run
 	1. open solution file (`all.sln`)
 	1. build solution
