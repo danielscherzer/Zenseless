@@ -15,8 +15,8 @@ build:
   verbosity: minimal              # MSBuild verbosity level
 
 after_test:
-- nuget pack _Common\Zenseless.nuspec -symbols -IncludeReferencedProjects -Properties version=%APPVEYOR_BUILD_VERSION%
-- nuget pack _Common\Zenseless.Sources.nuspec -IncludeReferencedProjects -Properties version=%APPVEYOR_BUILD_VERSION%
+- nuget pack src\Zenseless.nuspec -symbols -IncludeReferencedProjects -Properties version=%APPVEYOR_BUILD_VERSION%
+- nuget pack src\Zenseless.Sources.nuspec -IncludeReferencedProjects -Properties version=%APPVEYOR_BUILD_VERSION%
 
 artifacts:
 - path: '*.nupkg'
