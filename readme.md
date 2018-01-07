@@ -5,7 +5,7 @@ A Framework for real-time computer graphics using OpenGL. This framework is crea
 
 ### Setup of an empty stand-alone project
 1. Create a Console App (.Net Framework) in Visual Studio
-1. Install the Nuget package [OpenTK](hhttps://www.nuget.org/packages/OpenTK/3.0.0-pre). An [OpenTK Manual](https://github.com/mono/opentk/blob/master/Documentation/Manual.pdf).
+1. Install the Nuget package [OpenTK](hhttps://www.nuget.org/packages/OpenTK/3.0.0-pre) in its newest pre-release version. An [OpenTK Manual](https://github.com/mono/opentk/blob/master/Documentation/Manual.pdf).
 1. Install either Nuget package [Zenseless](https://www.nuget.org/packages/Zenseless/) or [Zenseless.sources](https://www.nuget.org/packages/Zenseless.sources/)
 	+ [Zenseless](https://www.nuget.org/packages/Zenseless/) is a .Net Framework 4.6 assembly package.
 	+ [Zenseless.sources](https://www.nuget.org/packages/Zenseless.sources/) is a source package. The sources of Zenseless will be compiled along-side your project.
