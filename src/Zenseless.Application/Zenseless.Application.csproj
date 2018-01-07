@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{911C6DFF-BE3E-4EA5-ADF2-A363DF797F23}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Zenseless.Application</RootNamespace>
+    <AssemblyName>Zenseless.Application</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Zenseless.Application.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Zenseless.Application.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandGL.cs" />
+    <Compile Include="DoubleBufferedFBO.cs" />
+    <Compile Include="DrawConfiguration.cs" />
+    <Compile Include="ExampleWindow.cs" />
+    <Compile Include="ICommand.cs" />
+    <Compile Include="ICreator.cs" />
+    <Compile Include="IShaderProvider.cs" />
+    <Compile Include="Reference.cs" />
+    <Compile Include="ResourceManager.cs" />
+    <Compile Include="ShaderCreatorGL.cs" />
+    <Compile Include="ShaderManagerGL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zenseless.Base\Zenseless.Base.csproj">
+      <Project>{e5ff60a4-46fb-42d2-9430-bc523315c2e0}</Project>
+      <Name>Zenseless.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zenseless.Geometry\Zenseless.Geometry.csproj">
+      <Project>{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}</Project>
+      <Name>Zenseless.Geometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zenseless.HLGL\Zenseless.HLGL.csproj">
+      <Project>{227d6be1-ba08-4030-a755-07288540931f}</Project>
+      <Name>Zenseless.HLGL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zenseless.OpenGL\Zenseless.OpenGL.csproj">
+      <Project>{C660F6AF-C100-4169-A9FB-61E1EBE87F34}</Project>
+      <Name>Zenseless.OpenGL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zenseless.ShaderDebugging\Zenseless.ShaderDebugging.csproj">
+      <Project>{3C8BCF2C-1019-4A8D-B986-AFD6BB80E917}</Project>
+      <Name>Zenseless.ShaderDebugging</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="OpenTK">
+      <Version>3.0.0-pre</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

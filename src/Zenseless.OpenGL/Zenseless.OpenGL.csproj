@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C660F6AF-C100-4169-A9FB-61E1EBE87F34}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Zenseless.OpenGL</RootNamespace>
+    <AssemblyName>Zenseless.OpenGL</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Zenseless.OpenGL.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Zenseless.OpenGL.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimationTextures.cs" />
+    <Compile Include="ColorSystems.cs" />
+    <Compile Include="BufferObject.cs" />
+    <Compile Include="INativeWindowExtensions.cs" />
+    <Compile Include="RenderContextGL.cs" />
+    <Compile Include="FBOwithDepth.cs" />
+    <Compile Include="DrawTools.cs" />
+    <Compile Include="RenderSurfaceGL.cs" />
+    <Compile Include="QueryObject.cs" />
+    <Compile Include="FrameBuffer.cs" />
+    <Compile Include="RenderBuffer.cs" />
+    <Compile Include="ResourceTextureBitmap.cs" />
+    <Compile Include="ResourceTextureFile.cs" />
+    <Compile Include="ResourceVertFragShaderFile.cs" />
+    <Compile Include="ResourceVertFragShaderString.cs" />
+    <Compile Include="SpriteSheetAnimation.cs" />
+    <Compile Include="FBO.cs" />
+    <Compile Include="Shader.cs" />
+    <Compile Include="ShaderLoader.cs" />
+    <Compile Include="SpriteSheetRenderer.cs" />
+    <Compile Include="StateActiveFboGL.cs" />
+    <Compile Include="StateActiveShaderGL.cs" />
+    <Compile Include="StateBoolGL.cs" />
+    <Compile Include="Texture2dGL.cs" />
+    <Compile Include="TextureArrayGL.cs" />
+    <Compile Include="TextureFont.cs" />
+    <Compile Include="Texture.cs" />
+    <Compile Include="TextureLoader.cs" />
+    <Compile Include="TextureToFrameBuffer.cs" />
+    <Compile Include="VAO.cs" />
+    <Compile Include="VAOLoader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zenseless.Geometry\Zenseless.Geometry.csproj">
+      <Project>{b37b7dde-435b-4f27-9a9b-9b6df8744ebe}</Project>
+      <Name>Zenseless.Geometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zenseless.Base\Zenseless.Base.csproj">
+      <Project>{e5ff60a4-46fb-42d2-9430-bc523315c2e0}</Project>
+      <Name>Zenseless.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zenseless.HLGL\Zenseless.HLGL.csproj">
+      <Project>{227d6be1-ba08-4030-a755-07288540931f}</Project>
+      <Name>Zenseless.HLGL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="OpenTK">
+      <Version>3.0.0-pre</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
