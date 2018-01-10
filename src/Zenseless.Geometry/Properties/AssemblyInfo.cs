@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Zenseless.Geometry")]
 [assembly: AssemblyDescription("Geometry amnd mathematical classes for computer graphics")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Zenseless")]
+[assembly: AssemblyCompany("Daniel Scherzer")]
 [assembly: AssemblyProduct("Zenseless.Geometry")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright © 2015 Daniel Scherzer")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.2.0.*")]
-[assembly: AssemblyFileVersion("0.2.0.0")]
+[assembly: AssemblyVersion("0.1.*")]
+[assembly: AssemblyFileVersion("0.1")]
 [assembly: NeutralResourcesLanguage("en")]
 
