@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6DE0AA68-F375-4C8C-B207-141BF71DF96F}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{353CE3AB-3D8
 		src\Zenseless.Sources.nuspec = src\Zenseless.Sources.nuspec
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Base", "src\Zenseless.Base\Zenseless.Base.csproj", "{E5FF60A4-46FB-42D2-9430-BC523315C2E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Base", "src\Zenseless.Base\Zenseless.Base.csproj", "{4DE8BCD3-83DF-48DD-B962-518C06D3491A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Geometry", "src\Zenseless.Geometry\Zenseless.Geometry.csproj", "{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}"
 EndProject
@@ -46,10 +46,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E5FF60A4-46FB-42D2-9430-BC523315C2E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5FF60A4-46FB-42D2-9430-BC523315C2E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5FF60A4-46FB-42D2-9430-BC523315C2E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5FF60A4-46FB-42D2-9430-BC523315C2E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DE8BCD3-83DF-48DD-B962-518C06D3491A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DE8BCD3-83DF-48DD-B962-518C06D3491A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DE8BCD3-83DF-48DD-B962-518C06D3491A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DE8BCD3-83DF-48DD-B962-518C06D3491A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,7 +91,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E5FF60A4-46FB-42D2-9430-BC523315C2E0} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
+		{4DE8BCD3-83DF-48DD-B962-518C06D3491A} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
 		{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
 		{C660F6AF-C100-4169-A9FB-61E1EBE87F34} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
 		{78A88806-AD96-4821-B9AD-8FC060F6FEB6} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}

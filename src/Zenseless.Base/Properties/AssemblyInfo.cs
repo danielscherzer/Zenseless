@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Zenseless.Geometry")]
-[assembly: AssemblyDescription("Geometry and mathematical classes for computer graphics")]
+[assembly: AssemblyTitle("Zenseless.Base")]
+[assembly: AssemblyDescription("PathTools FileWatcher Disposable Serialization TimeTools")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Daniel Scherzer")]
-[assembly: AssemblyProduct("Zenseless.Geometry")]
+[assembly: AssemblyProduct("Zenseless.Base")]
 [assembly: AssemblyCopyright("Copyright © 2015 Daniel Scherzer")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4de8bcd3-83df-48dd-b962-518c06d3491a")]
+[assembly: Guid("b8dda0c6-86fc-46ef-a8ca-fedb19594fcf")]
 
 // Version information for an assembly consists of the following four values:
 //

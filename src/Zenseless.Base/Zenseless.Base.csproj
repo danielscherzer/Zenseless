@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E5FF60A4-46FB-42D2-9430-BC523315C2E0}</ProjectGuid>
+    <ProjectGuid>{4de8bcd3-83df-48dd-b962-518c06d3491a}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Zenseless.Base</RootNamespace>
@@ -37,9 +37,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Disposable.cs" />
     <Compile Include="FileWatcher.cs" />
@@ -49,8 +47,12 @@
     <Compile Include="ITimedUpdate.cs" />
     <Compile Include="PathTools.cs" />
     <Compile Include="PeriodicUpdate.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization.cs" />
     <Compile Include="Converter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Zenseless.Base.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
