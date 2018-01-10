@@ -35,9 +35,7 @@
   <ItemGroup>
     <Reference Include="System.Numerics" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Zenseless.Base\Zenseless.Base.csproj">
       <Project>{e5ff60a4-46fb-42d2-9430-bc523315c2e0}</Project>
@@ -59,6 +57,7 @@
     <Compile Include="IStateManager.cs" />
     <Compile Include="ITexture.cs" />
     <Compile Include="ITexture2D.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShaderException.cs" />
     <Compile Include="ShaderLog.cs" />
     <Compile Include="SpriteSheet.cs" />
@@ -71,6 +70,9 @@
     <Compile Include="IStateTyped.cs" />
     <Compile Include="StateManager.cs" />
     <Compile Include="States.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Zenseless.HLGL.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

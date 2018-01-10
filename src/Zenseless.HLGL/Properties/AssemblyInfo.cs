@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Zenseless.Base")]
-[assembly: AssemblyDescription("PathTools FileWatcher Disposable Serialization TimeTools")]
+[assembly: AssemblyTitle("Zenseless.HLGL")]
+[assembly: AssemblyDescription("Contains interfaces and classes for real-time computer graphics and games.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Daniel Scherzer")]
-[assembly: AssemblyProduct("Zenseless.Base")]
+[assembly: AssemblyProduct("Zenseless.HLGL")]
 [assembly: AssemblyCopyright("Copyright © 2015 Daniel Scherzer")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4DE8BCD3-83DF-48DD-B962-518C06D3491A")]
+[assembly: Guid("227D6BE1-BA08-4030-A755-07288540931F")]
 
 // Version information for an assembly consists of the following four values:
 //
