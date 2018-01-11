@@ -13,10 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}"
-	ProjectSection(SolutionItems) = preProject
-		src\Zenseless.nuspec = src\Zenseless.nuspec
-		src\Zenseless.Sources.nuspec = src\Zenseless.Sources.nuspec
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Base", "src\Zenseless.Base\Zenseless.Base.csproj", "{4DE8BCD3-83DF-48DD-B962-518C06D3491A}"
 EndProject
@@ -25,10 +21,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.OpenGL", "src\Zenseless.OpenGL\Zenseless.OpenGL.csproj", "{C660F6AF-C100-4169-A9FB-61E1EBE87F34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Sound", "src\Zenseless.Sound\Zenseless.Sound.csproj", "{78A88806-AD96-4821-B9AD-8FC060F6FEB6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.ShaderDebugging", "src\Zenseless.ShaderDebugging\Zenseless.ShaderDebugging.csproj", "{3C8BCF2C-1019-4A8D-B986-AFD6BB80E917}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Application", "src\Zenseless.Application\Zenseless.Application.csproj", "{911C6DFF-BE3E-4EA5-ADF2-A363DF797F23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.HLGL", "src\Zenseless.HLGL\Zenseless.HLGL.csproj", "{227D6BE1-BA08-4030-A755-07288540931F}"
 EndProject
@@ -39,6 +31,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.OpenGL.Tests", "Test\Zenseless.OpenGL.Tests\Zenseless.OpenGL.Tests.csproj", "{87F3A725-6AF4-41F7-AA58-CACD9E23D6D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.HLGL.Tests", "Test\Zenseless.HLGL.Tests\Zenseless.HLGL.Tests.csproj", "{2F1AE477-5B19-4E8D-A70E-B1B74F57560C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.ContentPipeline", "src\Zenseless.ContentPipeline\Zenseless.ContentPipeline.csproj", "{6810DE78-7764-4C8C-ADA7-E7D31AE6C259}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,14 +56,6 @@ Global
 		{78A88806-AD96-4821-B9AD-8FC060F6FEB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78A88806-AD96-4821-B9AD-8FC060F6FEB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78A88806-AD96-4821-B9AD-8FC060F6FEB6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C8BCF2C-1019-4A8D-B986-AFD6BB80E917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C8BCF2C-1019-4A8D-B986-AFD6BB80E917}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C8BCF2C-1019-4A8D-B986-AFD6BB80E917}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C8BCF2C-1019-4A8D-B986-AFD6BB80E917}.Release|Any CPU.Build.0 = Release|Any CPU
-		{911C6DFF-BE3E-4EA5-ADF2-A363DF797F23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{911C6DFF-BE3E-4EA5-ADF2-A363DF797F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{911C6DFF-BE3E-4EA5-ADF2-A363DF797F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{911C6DFF-BE3E-4EA5-ADF2-A363DF797F23}.Release|Any CPU.Build.0 = Release|Any CPU
 		{227D6BE1-BA08-4030-A755-07288540931F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{227D6BE1-BA08-4030-A755-07288540931F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{227D6BE1-BA08-4030-A755-07288540931F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -86,6 +72,10 @@ Global
 		{2F1AE477-5B19-4E8D-A70E-B1B74F57560C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F1AE477-5B19-4E8D-A70E-B1B74F57560C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F1AE477-5B19-4E8D-A70E-B1B74F57560C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6810DE78-7764-4C8C-ADA7-E7D31AE6C259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6810DE78-7764-4C8C-ADA7-E7D31AE6C259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6810DE78-7764-4C8C-ADA7-E7D31AE6C259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6810DE78-7764-4C8C-ADA7-E7D31AE6C259}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,12 +85,11 @@ Global
 		{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
 		{C660F6AF-C100-4169-A9FB-61E1EBE87F34} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
 		{78A88806-AD96-4821-B9AD-8FC060F6FEB6} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
-		{3C8BCF2C-1019-4A8D-B986-AFD6BB80E917} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
-		{911C6DFF-BE3E-4EA5-ADF2-A363DF797F23} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
 		{227D6BE1-BA08-4030-A755-07288540931F} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
 		{DF096E15-AA81-4FFD-B360-2B12E812BF26} = {BEE08292-7C95-44EC-B228-44ED81C09610}
 		{87F3A725-6AF4-41F7-AA58-CACD9E23D6D9} = {BEE08292-7C95-44EC-B228-44ED81C09610}
 		{2F1AE477-5B19-4E8D-A70E-B1B74F57560C} = {BEE08292-7C95-44EC-B228-44ED81C09610}
+		{6810DE78-7764-4C8C-ADA7-E7D31AE6C259} = {353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CA293D8-FC78-4BF1-BA73-543451A6B7AB}
