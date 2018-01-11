@@ -34,6 +34,9 @@
     <DocumentationFile>..\..\bin\Release\Zenseless.OpenGL.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OpenTK.3.0.0-pre\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -89,11 +92,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="OpenTK">
-      <Version>3.0.0-pre</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
     <None Include="Zenseless.OpenGL.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
