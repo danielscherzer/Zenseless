@@ -33,11 +33,10 @@
     <DocumentationFile>..\..\bin\Release\Zenseless.Sound.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="AudioPlaybackEngine.cs" />
     <Compile Include="AutoDisposeSampleProvider.cs" />
     <Compile Include="ITimedMedia.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SoundTimeSource.cs" />
     <Compile Include="SoundLoopStream.cs" />
   </ItemGroup>
@@ -48,9 +47,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NAudio">
-      <Version>1.8.3</Version>
-    </PackageReference>
+    <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Zenseless.Sound.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

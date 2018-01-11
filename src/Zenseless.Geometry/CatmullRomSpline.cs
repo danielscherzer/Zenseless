@@ -97,32 +97,35 @@ namespace Zenseless.Geometry
 		/// <param name="t">The t.</param>
 		/// <param name="pointCount">The point count.</param>
 		/// <returns></returns>
-		public static Tuple<int, int> FindSegment(float t, int pointCount)
+		public static Tuple<int, int> FindSegmentLoop(float t, int pointCount)
 		{
 			var id = (int)Math.Floor(t);
 			return new Tuple<int, int>(id % pointCount, (id + 1) % pointCount);
 		}
 
 		/// <summary>
-		/// Finites the difference.
+		/// Calculate the finite difference for each point.
 		/// </summary>
-		/// <param name="pointL">The point l.</param>
-		/// <param name="pointR">The point r.</param>
+		/// <param name="points">The input points</param>
 		/// <returns></returns>
-		public static Vector2 FiniteDifference(Vector2 pointL, Vector2 pointR)
+		public static List<Vector2> FiniteDifference(IList<Vector2> points)
 		{
-			return 0.5f * (pointR - pointL);
-		}
-
-		/// <summary>
-		/// Finites the difference.
-		/// </summary>
-		/// <param name="pointL">The point l.</param>
-		/// <param name="pointR">The point r.</param>
-		/// <returns></returns>
-		public static Vector3 FiniteDifference(Vector3 pointL, Vector3 pointR)
-		{
-			return 0.5f * (pointR - pointL);
+			var output = new List<Vector2>();
+			if (points.Count < 2)
+			{
+				if (points.Count == 1) output.Add(points[0]);
+				return output;
+			}
+			//first tangent
+			output.Add(FiniteDifference(points[0], points[1]));
+			//the rest except last
+			for (int i = 0; i < points.Count - 2; ++i)
+			{
+				output.Add(FiniteDifference(points[i], points[i + 2]));
+			}
+			//add last
+			output.Add(FiniteDifference(points[points.Count - 2], points[points.Count - 1]));
+			return output;
 		}
 
 		/// <summary>
@@ -133,7 +136,7 @@ namespace Zenseless.Geometry
 		public static List<Vector2> FiniteDifferenceLoop(IList<Vector2> points)
 		{
 			var output = new List<Vector2>();
-			if (points.Count < 3) return output;
+			if (points.Count < 2) return output;
 			//first tangent
 			output.Add(FiniteDifference(points[points.Count - 1], points[1]));
 			//the rest except last
@@ -166,5 +169,8 @@ namespace Zenseless.Geometry
 			output.Add(FiniteDifference(points[points.Count - 2], points[0]));
 			return output;
 		}
+
+		private static Vector2 FiniteDifference(Vector2 pointLeft, Vector2 pointRight) => 0.5f * (pointRight - pointLeft);
+		private static Vector3 FiniteDifference(Vector3 pointLeft, Vector3 pointRight) => 0.5f * (pointRight - pointLeft);
 	}
 }

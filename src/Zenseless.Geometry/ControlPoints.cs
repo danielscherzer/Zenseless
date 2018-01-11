@@ -61,10 +61,10 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Finds the infimum.
+		/// Returns the infimum.
 		/// </summary>
-		/// <param name="t">The t.</param>
-		/// <returns></returns>
+		/// <param name="t">The time for which to find the infimum.</param>
+		/// <returns>the <code>KeyValuePair</code></returns>
 		public KeyValuePair<float, T> FindInfimum(float t)
 		{
 			var firstItem = this.First();
@@ -98,10 +98,10 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Finds the supremum.
+		/// Returns the supremum.
 		/// </summary>
-		/// <param name="t">The t.</param>
-		/// <returns></returns>
+		/// <param name="t">The time for which to find the supremum.</param>
+		/// <returns>the <code>KeyValuePair</code></returns>
 		public KeyValuePair<float, T> FindSupremum(float t)
 		{
 			var lastItem = this.Last();

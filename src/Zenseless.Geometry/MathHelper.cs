@@ -108,6 +108,16 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
+		/// Converts radians to degrees
+		/// </summary>
+		/// <param name="angle">input angle in radians</param>
+		/// <returns>input angle converted to degrees</returns>
+		public static float RadiansToDegrees(float angle)
+		{
+			return (angle * 360.0f) / TWO_PI;
+		}
+
+		/// <summary>
 		/// Linear interpolation of two known values a and b according to weight
 		/// </summary>
 		/// <param name="a">First value</param>
