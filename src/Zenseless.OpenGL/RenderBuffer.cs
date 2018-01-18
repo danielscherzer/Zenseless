@@ -1,5 +1,4 @@
-﻿using System;
-using Zenseless.Base;
+﻿using Zenseless.Base;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Zenseless.OpenGL

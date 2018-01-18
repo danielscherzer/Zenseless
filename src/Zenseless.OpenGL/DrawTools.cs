@@ -2,6 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
+using System;
 
 namespace Zenseless.OpenGL
 {
@@ -26,7 +27,7 @@ namespace Zenseless.OpenGL
 		}
 
 		/// <summary>
-		/// Writes OpenGL errors to the debug output.
+		/// Writes OpenGL errors to the console.
 		/// </summary>
 		public static void WriteErrors()
 		{
@@ -34,7 +35,7 @@ namespace Zenseless.OpenGL
 			ErrorCode error;
 			while (ErrorCode.NoError != (error = GL.GetError()))
 			{
-				Debug.WriteLine(error);
+				Console.WriteLine(error);
 			}
 		}
 

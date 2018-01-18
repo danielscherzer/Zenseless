@@ -34,8 +34,8 @@ namespace Zenseless.OpenGL
 		/// <summary>
 		/// Creates the specified width.
 		/// </summary>
-		/// <param name="width">The width.</param>
-		/// <param name="height">The height.</param>
+		/// <param name="width">The texture width in pixel.</param>
+		/// <param name="height">The texture height in pixel.</param>
 		/// <param name="components">The components.</param>
 		/// <param name="floatingPoint">if set to <c>true</c> [floating point].</param>
 		/// <returns></returns>

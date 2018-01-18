@@ -23,7 +23,7 @@ namespace Zenseless.OpenGL
 		/// <param name="floatingPoint">if set to <c>true</c> [floating point].</param>
 		public RenderSurfaceGL(int width, int height, bool hasDepthBuffer = false, byte components = 4, bool floatingPoint = false): this(hasDepthBuffer)
 		{
-			var tex = OpenGL.Texture2dGL.Create(width, height, components, floatingPoint);
+			var tex = Texture2dGL.Create(width, height, components, floatingPoint);
 			if (hasDepthBuffer)
 			{
 				fbo = new FBOwithDepth(tex);
