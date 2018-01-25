@@ -25,7 +25,7 @@ namespace Zenseless.OpenGL
 			StateManager.Register<IStateBool, States.IBackfaceCulling>(new StateBoolGL(EnableCap.CullFace));
 			StateManager.Register<IStateBool, States.IShaderPointSize>(new StateBoolGL(EnableCap.ProgramPointSize));
 			StateManager.Register<IStateBool, States.IPointSprite>(new StateBoolGL(EnableCap.PointSprite));
-			StateManager.Register<IStateBool, States.IBlending>(new StateBoolGL(EnableCap.Blend));
+			StateManager.Register<IStateBool, States.IBlending>(new StateBoolGL(EnableCap.Blend)); //TODO: use blend state
 			StateManager.Register<IStateTyped<float>, States.ILineWidth>(new StateCommandGL<float>(GL.LineWidth, 1f));
 			StateManager.Register<IStateTyped<Vector4>, States.IClearColor>(new StateCommandGL<Vector4>(ClearColor, Vector4.Zero));
 			//stateManager.Register<ICommand, IClearColor>(new CommandGL());

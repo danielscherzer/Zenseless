@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationTextures.cs" />
+    <Compile Include="BlendStateGL.cs" />
     <Compile Include="ColorSystems.cs" />
     <Compile Include="BufferObject.cs" />
     <Compile Include="INativeWindowExtensions.cs" />

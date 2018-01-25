@@ -35,18 +35,11 @@
   <ItemGroup>
     <Reference Include="System.Numerics" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Zenseless.Base\Zenseless.Base.csproj">
-      <Project>{e5ff60a4-46fb-42d2-9430-bc523315c2e0}</Project>
-      <Name>Zenseless.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Zenseless.Geometry\Zenseless.Geometry.csproj">
-      <Project>{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}</Project>
-      <Name>Zenseless.Geometry</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="BlendOperator.cs" />
+    <Compile Include="BlendParameter.cs" />
+    <Compile Include="BlendState.cs" />
+    <Compile Include="BlendStates.cs" />
     <Compile Include="DefaultShader.cs" />
     <Compile Include="IAnimation.cs" />
     <Compile Include="IRenderContext.cs" />
@@ -73,6 +66,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Zenseless.HLGL.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zenseless.Base\Zenseless.Base.csproj">
+      <Project>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</Project>
+      <Name>Zenseless.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zenseless.Geometry\Zenseless.Geometry.csproj">
+      <Project>{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}</Project>
+      <Name>Zenseless.Geometry</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
