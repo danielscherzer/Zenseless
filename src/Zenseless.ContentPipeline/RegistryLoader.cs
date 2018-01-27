@@ -2,7 +2,7 @@
 using OpenTK;
 using System;
 
-namespace Zenseless.ShaderDebugging
+namespace Zenseless.ContentPipeline
 {
 	/// <summary>
 	/// 

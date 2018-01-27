@@ -5,7 +5,7 @@ using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Collections.Generic;
 
-namespace Zenseless.Application
+namespace Zenseless.ContentPipeline
 {
 	//todo: make this into a node with typed inputs and outputs
 	/// <summary>
@@ -64,21 +64,21 @@ namespace Zenseless.Application
 		public void Draw(IRenderContext context)
 		{
 			var stateManager = context.StateManager;
-			stateManager.Get<IStateBool, States.IBlending>().Enabled = BackfaceCulling;
-			stateManager.Get<IStateBool, States.IBackfaceCulling>().Enabled = BackfaceCulling;
-			stateManager.Get<IStateBool, States.IShaderPointSize>().Enabled = ShaderPointSize;
-			stateManager.Get<IStateBool, States.IZBufferTest>().Enabled = ZBufferTest;
+			context.RenderState.Set(new BoolState<IShaderPointSizeState>(ShaderPointSize));
+			context.RenderState.Set(new BoolState<IDepthState>(ZBufferTest));
+			context.RenderState.Set(new BoolState<IBackfaceCullingState>(BackfaceCulling));
+
 			stateManager.Get<StateActiveShaderGL, StateActiveShaderGL>().Shader = Shader;
 
 			BindTextures();
 			ActivateBuffers();
 
 			var vao = Vao;
-			if (ReferenceEquals(null, vao))
+			if (vao is null)
 			{
 				if (1 == InstanceCount)
 				{
-					GL.DrawArrays(PrimitiveType.Quads, 0, 4); //todo: make this general -> mesh with only vertex count? particle system, sprites
+					GL.DrawArrays(PrimitiveType.Quads, 0, 4); //TODO: make this general -> mesh with only vertex count? particle system, sprites
 				}
 				else
 				{
@@ -182,10 +182,10 @@ namespace Zenseless.Application
 		{
 			if (string.IsNullOrWhiteSpace(shaderName)) throw new ArgumentException("A shaderName is required");
 			var resShader = ResourceManager.Instance.Get<IShader>(shaderName);
-			if (ReferenceEquals(null, resShader)) throw new ArgumentException("Shader '" + shaderName + "' does not exist");
+			if (resShader is null) throw new ArgumentException("Shader '" + shaderName + "' does not exist");
 			Shader = resShader.Value;
 			//if (ReferenceEquals(null, mesh)) throw new ArgumentException("A mesh is required");
-			Vao = ReferenceEquals(null, mesh) ? null : VAOLoader.FromMesh(mesh, Shader);
+			Vao = mesh is null ? null : VAOLoader.FromMesh(mesh, Shader);
 		}
 
 		/// <summary>
@@ -196,8 +196,7 @@ namespace Zenseless.Application
 		/// <param name="uniforms">The uniforms.</param>
 		public void UpdateUniforms<DATA>(string name, DATA uniforms) where DATA : struct
 		{
-			BufferObject buffer;
-			if (!buffers.TryGetValue(name, out buffer))
+			if (!buffers.TryGetValue(name, out BufferObject buffer))
 			{
 				buffer = new BufferObject(BufferTarget.UniformBuffer);
 				buffers.Add(name, buffer);
@@ -213,8 +212,7 @@ namespace Zenseless.Application
 		/// <param name="uniformArray">The uniform array.</param>
 		public void UpdateShaderBuffer<DATA_ELEMENT_TYPE>(string name, DATA_ELEMENT_TYPE[] uniformArray) where DATA_ELEMENT_TYPE : struct
 		{
-			BufferObject buffer;
-			if (!buffers.TryGetValue(name, out buffer))
+			if (!buffers.TryGetValue(name, out BufferObject buffer))
 			{
 				buffer = new BufferObject(BufferTarget.ShaderStorageBuffer);
 				buffers.Add(name, buffer);
@@ -262,7 +260,7 @@ namespace Zenseless.Application
 		private void BindTextures()
 		{
 			int id = 0;
-			if (ReferenceEquals(null, Shader))
+			if (Shader is null)
 			{
 				foreach (var namedTex in textures)
 				{
@@ -306,7 +304,7 @@ namespace Zenseless.Application
 		/// <exception cref="InvalidOperationException">Specify mesh before setting instance attributes</exception>
 		private int GetAttributeShaderLocationAndCheckVao(string name)
 		{
-			if (ReferenceEquals(null, Vao)) throw new InvalidOperationException("Specify mesh before setting instance attributes");
+			if (Vao is null) throw new InvalidOperationException("Specify mesh before setting instance attributes");
 			return Shader.GetResourceLocation(ShaderResourceType.Attribute, name);
 		}
 	}

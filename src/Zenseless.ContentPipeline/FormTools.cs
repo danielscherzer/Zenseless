@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Zenseless.ShaderDebugging
+namespace Zenseless.ContentPipeline
 {
 	/// <summary>
 	/// 

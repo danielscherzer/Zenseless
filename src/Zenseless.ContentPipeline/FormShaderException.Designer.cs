@@ -1,4 +1,4 @@
-﻿namespace Zenseless.ShaderDebugging
+﻿namespace Zenseless.ContentPipeline
 {
 	partial class FormShaderException
 	{

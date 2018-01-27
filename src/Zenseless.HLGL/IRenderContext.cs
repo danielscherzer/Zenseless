@@ -12,6 +12,14 @@
 		/// The state manager.
 		/// </value>
 		IStateManager StateManager { get; }
+
+		/// <summary>
+		/// Gets the state of the render.
+		/// </summary>
+		/// <value>
+		/// The state of the render.
+		/// </value>
+		IRenderState RenderState { get; }
 		/// <summary>
 		/// Creates the draw configuration.
 		/// </summary>

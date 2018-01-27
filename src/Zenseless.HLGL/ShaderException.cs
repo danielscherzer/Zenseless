@@ -30,7 +30,7 @@ namespace Zenseless.HLGL
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.HLGL.ShaderException" />
+	/// <seealso cref="ShaderException" />
 	public class ShaderCompileException : ShaderException
 	{
 		/// <summary>

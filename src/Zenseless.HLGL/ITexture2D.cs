@@ -5,7 +5,7 @@ namespace Zenseless.HLGL
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.HLGL.ITexture" />
+	/// <seealso cref="ITexture" />
 	public interface ITexture2D : ITexture
 	{
 		/// <summary>

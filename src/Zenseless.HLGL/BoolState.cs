@@ -3,57 +3,37 @@
 	using System;
 
 	/// <summary>
-	/// Encapsulates the blend state inside an immutable structure
+	/// Encapsulates a boolean state inside an immutable structure
 	/// </summary>
-	public struct BlendState : IEquatable<BlendState>
+	public struct BoolState<NAME> : IEquatable<BoolState<NAME>>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="BlendState"/> structure.
+		/// The enabled
 		/// </summary>
-		/// <param name="blendOperator">The blend function operator.</param>
-		/// <param name="blendParameterSource">The source blend parameter.</param>
-		/// <param name="blendParameterDestination">The destination blend parameter.</param>
-		public BlendState(BlendOperator blendOperator, BlendParameter blendParameterSource, BlendParameter blendParameterDestination)
+		public static BoolState<NAME> Enabled = new BoolState<NAME>(true);
+		/// <summary>
+		/// The disabled
+		/// </summary>
+		public static BoolState<NAME> Disabled = new BoolState<NAME>(false);
+
+		private readonly bool isEnabled;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BoolState{NAME}"/> struct.
+		/// </summary>
+		/// <param name="isEnabled">if set to <c>true</c> [is enabled].</param>
+		public BoolState(bool isEnabled)
 		{
-			this.blendOperator = blendOperator;
-			this.blendParameterSource = blendParameterSource;
-			this.blendParameterDestination = blendParameterDestination;
+			this.isEnabled = isEnabled;
 		}
 
 		/// <summary>
-		/// Gets the blend function operator.
+		/// Gets a value indicating whether this instance is enabled.
 		/// </summary>
 		/// <value>
-		/// The blend function operator.
+		///   <c>true</c> if this instance is enabled; otherwise, <c>false</c>.
 		/// </value>
-		public BlendOperator BlendOperator { get => blendOperator; }
-		/// <summary>
-		/// Gets the blend parameter source.
-		/// </summary>
-		/// <value>
-		/// The blend parameter source.
-		/// </value>
-		public BlendParameter BlendParameterSource { get => blendParameterSource; }
-		/// <summary>
-		/// Gets the blend parameter destination.
-		/// </summary>
-		/// <value>
-		/// The blend parameter destination.
-		/// </value>
-		public BlendParameter BlendParameterDestination { get => blendParameterDestination; }
-
-		/// <summary>
-		/// The blend operator
-		/// </summary>
-		private readonly BlendOperator blendOperator;
-		/// <summary>
-		/// The blend parameter source
-		/// </summary>
-		private readonly BlendParameter blendParameterSource;
-		/// <summary>
-		/// The blend parameter destination
-		/// </summary>
-		private readonly BlendParameter blendParameterDestination;
+		public bool IsEnabled => isEnabled;
 
 		/// <summary>
 		/// Implements the operator ==.
@@ -63,7 +43,7 @@
 		/// <returns>
 		/// The result of the operator.
 		/// </returns>
-		public static bool operator==(BlendState a, BlendState b)
+		public static bool operator ==(BoolState<NAME> a, BoolState<NAME> b)
 		{
 			return a.Equals(b);
 		}
@@ -76,7 +56,7 @@
 		/// <returns>
 		/// The result of the operator.
 		/// </returns>
-		public static bool operator !=(BlendState a, BlendState b)
+		public static bool operator !=(BoolState<NAME> a, BoolState<NAME> b)
 		{
 			return !(a == b);
 		}
@@ -88,7 +68,7 @@
 		/// <returns>
 		///   <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.
 		/// </returns>
-		public bool Equals(BlendState other)
+		public bool Equals(BoolState<NAME> other)
 		{
 			//check for value type equality (memory compare)
 			return base.Equals(other);
@@ -115,7 +95,8 @@
 		/// </returns>
 		public override int GetHashCode()
 		{
-			return (int)BlendOperator ^ (int)BlendParameterSource ^ (int)BlendParameterDestination;
+			return IsEnabled.GetHashCode();
 		}
 	}
 }
+

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using Zenseless.Base;
 using System.Runtime.InteropServices;
 
-namespace Zenseless.Application
+namespace Zenseless.ContentPipeline
 {
 	/// <summary>
 	/// Intended for use for small example programs in the <see cref="Zenseless"/> framework

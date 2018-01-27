@@ -1,7 +1,7 @@
 ﻿using Zenseless.HLGL;
 using Zenseless.OpenGL;
 
-namespace Zenseless.Application
+namespace Zenseless.ContentPipeline
 {
 	/// <summary>
 	/// 

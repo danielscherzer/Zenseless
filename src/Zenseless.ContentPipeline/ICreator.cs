@@ -4,7 +4,7 @@
 	/// 
 	/// </summary>
 	/// <typeparam name="TYPE">The type of the ype.</typeparam>
-	/// <seealso cref="Zenseless.HLGL.IState" />
+	/// <seealso cref="IState" />
 	public interface ICreator<TYPE> : IState
 	{
 		/// <summary>

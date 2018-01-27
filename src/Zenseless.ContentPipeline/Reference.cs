@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zenseless.Application
+namespace Zenseless.ContentPipeline
 {
 	/// <summary>
 	/// 

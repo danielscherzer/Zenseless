@@ -3,7 +3,7 @@
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.HLGL.IState" />
+	/// <seealso cref="IState" />
 	public interface ICommand : IState
 	{
 		/// <summary>

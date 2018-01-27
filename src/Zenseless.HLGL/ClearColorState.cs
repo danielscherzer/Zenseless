@@ -1,59 +1,72 @@
-﻿namespace Zenseless.HLGL
-{
-	using System;
+﻿using System;
 
+namespace Zenseless.HLGL
+{
 	/// <summary>
-	/// Encapsulates the blend state inside an immutable structure
+	/// 
 	/// </summary>
-	public struct BlendState : IEquatable<BlendState>
+	public struct ClearColorState : IEquatable<ClearColorState>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="BlendState"/> structure.
+		/// The red
 		/// </summary>
-		/// <param name="blendOperator">The blend function operator.</param>
-		/// <param name="blendParameterSource">The source blend parameter.</param>
-		/// <param name="blendParameterDestination">The destination blend parameter.</param>
-		public BlendState(BlendOperator blendOperator, BlendParameter blendParameterSource, BlendParameter blendParameterDestination)
+		private readonly float red;
+		/// <summary>
+		/// The green
+		/// </summary>
+		private readonly float green;
+		/// <summary>
+		/// The blue
+		/// </summary>
+		private readonly float blue;
+		/// <summary>
+		/// The alpha
+		/// </summary>
+		private readonly float alpha;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ClearColorState"/> struct.
+		/// </summary>
+		/// <param name="red">The red.</param>
+		/// <param name="green">The green.</param>
+		/// <param name="blue">The blue.</param>
+		/// <param name="alpha">The alpha.</param>
+		public ClearColorState(float red, float green, float blue, float alpha)
 		{
-			this.blendOperator = blendOperator;
-			this.blendParameterSource = blendParameterSource;
-			this.blendParameterDestination = blendParameterDestination;
+			this.red = red;
+			this.green = green;
+			this.blue = blue;
+			this.alpha = alpha;
 		}
 
 		/// <summary>
-		/// Gets the blend function operator.
+		/// Gets the red.
 		/// </summary>
 		/// <value>
-		/// The blend function operator.
+		/// The red.
 		/// </value>
-		public BlendOperator BlendOperator { get => blendOperator; }
+		public float Red { get => red; }
 		/// <summary>
-		/// Gets the blend parameter source.
+		/// Gets the green.
 		/// </summary>
 		/// <value>
-		/// The blend parameter source.
+		/// The green.
 		/// </value>
-		public BlendParameter BlendParameterSource { get => blendParameterSource; }
+		public float Green { get => green; }
 		/// <summary>
-		/// Gets the blend parameter destination.
+		/// Gets the blue.
 		/// </summary>
 		/// <value>
-		/// The blend parameter destination.
+		/// The blue.
 		/// </value>
-		public BlendParameter BlendParameterDestination { get => blendParameterDestination; }
-
+		public float Blue { get => blue; }
 		/// <summary>
-		/// The blend operator
+		/// Gets the alpha.
 		/// </summary>
-		private readonly BlendOperator blendOperator;
-		/// <summary>
-		/// The blend parameter source
-		/// </summary>
-		private readonly BlendParameter blendParameterSource;
-		/// <summary>
-		/// The blend parameter destination
-		/// </summary>
-		private readonly BlendParameter blendParameterDestination;
+		/// <value>
+		/// The alpha.
+		/// </value>
+		public float Alpha { get => alpha; }
 
 		/// <summary>
 		/// Implements the operator ==.
@@ -63,7 +76,7 @@
 		/// <returns>
 		/// The result of the operator.
 		/// </returns>
-		public static bool operator==(BlendState a, BlendState b)
+		public static bool operator==(ClearColorState a, ClearColorState b)
 		{
 			return a.Equals(b);
 		}
@@ -76,7 +89,7 @@
 		/// <returns>
 		/// The result of the operator.
 		/// </returns>
-		public static bool operator !=(BlendState a, BlendState b)
+		public static bool operator !=(ClearColorState a, ClearColorState b)
 		{
 			return !(a == b);
 		}
@@ -88,7 +101,7 @@
 		/// <returns>
 		///   <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.
 		/// </returns>
-		public bool Equals(BlendState other)
+		public bool Equals(ClearColorState other)
 		{
 			//check for value type equality (memory compare)
 			return base.Equals(other);
@@ -115,7 +128,12 @@
 		/// </returns>
 		public override int GetHashCode()
 		{
-			return (int)BlendOperator ^ (int)BlendParameterSource ^ (int)BlendParameterDestination;
+			var hashCode = 214250488;
+			hashCode = hashCode * -1521134295 + red.GetHashCode();
+			hashCode = hashCode * -1521134295 + green.GetHashCode();
+			hashCode = hashCode * -1521134295 + blue.GetHashCode();
+			hashCode = hashCode * -1521134295 + alpha.GetHashCode();
+			return hashCode;
 		}
 	}
 }

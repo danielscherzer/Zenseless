@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Zenseless.HLGL;
 
-namespace Zenseless.ShaderDebugging
+namespace Zenseless.ContentPipeline
 {
 	/// <summary>
 	/// 

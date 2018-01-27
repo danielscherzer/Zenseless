@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Zenseless.Base;
 
-namespace Zenseless.ShaderDebugging
+namespace Zenseless.ContentPipeline
 {
 	/// <summary>
 	/// 

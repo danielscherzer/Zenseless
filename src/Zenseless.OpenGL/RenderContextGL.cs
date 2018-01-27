@@ -1,16 +1,13 @@
 ﻿using Zenseless.HLGL;
 using OpenTK.Graphics.OpenGL4;
-using System.Numerics;
 using System;
 
 namespace Zenseless.OpenGL
 {
-	//public interface IClearColor : ICommand { };
-
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.HLGL.IRenderContext" />
+	/// <seealso cref="IRenderContext" />
 	public class RenderContextGL : IRenderContext
 	{
 		/// <summary>
@@ -18,18 +15,12 @@ namespace Zenseless.OpenGL
 		/// </summary>
 		public RenderContextGL()
 		{
+			RenderState = RenderStateGL.Create();
+
 			StateManager = new StateManager();
 			StateManager.Register<StateActiveFboGL, StateActiveFboGL>(new StateActiveFboGL());
 			StateManager.Register<StateActiveShaderGL, StateActiveShaderGL>(new StateActiveShaderGL());
-			StateManager.Register<IStateBool, States.IZBufferTest>(new StateBoolGL(EnableCap.DepthTest));
-			StateManager.Register<IStateBool, States.IBackfaceCulling>(new StateBoolGL(EnableCap.CullFace));
-			StateManager.Register<IStateBool, States.IShaderPointSize>(new StateBoolGL(EnableCap.ProgramPointSize));
-			StateManager.Register<IStateBool, States.IPointSprite>(new StateBoolGL(EnableCap.PointSprite));
-			StateManager.Register<IStateBool, States.IBlending>(new StateBoolGL(EnableCap.Blend)); //TODO: use blend state
 			StateManager.Register<IStateTyped<float>, States.ILineWidth>(new StateCommandGL<float>(GL.LineWidth, 1f));
-			StateManager.Register<IStateTyped<Vector4>, States.IClearColor>(new StateCommandGL<Vector4>(ClearColor, Vector4.Zero));
-			//stateManager.Register<ICommand, IClearColor>(new CommandGL());
-			//StateManager.Register<ICreator<IShader>, IShader>(new ShaderCreatorGL());
 		}
 
 		/// <summary>
@@ -41,10 +32,12 @@ namespace Zenseless.OpenGL
 		public IStateManager StateManager { get; private set; }
 
 		/// <summary>
-		/// Clears the color.
+		/// Gets the state of the render.
 		/// </summary>
-		/// <param name="c">The c.</param>
-		private void ClearColor(Vector4 c) => GL.ClearColor(c.X, c.Y, c.Z, c.W);
+		/// <value>
+		/// The state of the render.
+		/// </value>
+		public IRenderState RenderState { get; private set; }
 
 		/// <summary>
 		/// Draws the points.

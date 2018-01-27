@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationTextures.cs" />
-    <Compile Include="BlendStateGL.cs" />
     <Compile Include="ColorSystems.cs" />
     <Compile Include="BufferObject.cs" />
     <Compile Include="INativeWindowExtensions.cs" />
@@ -53,6 +52,7 @@
     <Compile Include="RenderContextGL.cs" />
     <Compile Include="FBOwithDepth.cs" />
     <Compile Include="DrawTools.cs" />
+    <Compile Include="RenderStateGL.cs" />
     <Compile Include="RenderSurfaceGL.cs" />
     <Compile Include="QueryObject.cs" />
     <Compile Include="FrameBuffer.cs" />
@@ -68,7 +68,6 @@
     <Compile Include="SpriteSheetRenderer.cs" />
     <Compile Include="StateActiveFboGL.cs" />
     <Compile Include="StateActiveShaderGL.cs" />
-    <Compile Include="StateBoolGL.cs" />
     <Compile Include="Texture2dGL.cs" />
     <Compile Include="TextureArrayGL.cs" />
     <Compile Include="TextureFont.cs" />

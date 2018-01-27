@@ -6,7 +6,6 @@ namespace Zenseless.HLGL
 	/// 
 	/// </summary>
 	/// <typeparam name="TYPE">The type of the ype.</typeparam>
-	/// <seealso cref="Zenseless.HLGL.IStateTyped{TYPE}" />
 	public class StateCommandGL<TYPE> : IStateTyped<TYPE> where TYPE : IEquatable<TYPE>
 	{
 		/// <summary>
@@ -17,7 +16,7 @@ namespace Zenseless.HLGL
 		/// <exception cref="ArgumentNullException"></exception>
 		public StateCommandGL(Action<TYPE> glCommand, TYPE defaultValue)
 		{
-			if (ReferenceEquals(null, glCommand)) throw new ArgumentNullException();
+			if (glCommand is null) throw new ArgumentNullException();
 			this.glCommand = glCommand;
 			value = defaultValue;
 			UpdateGL();

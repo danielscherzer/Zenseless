@@ -8,8 +8,8 @@
 		/// <summary>
 		/// Gets this instance.
 		/// </summary>
-		/// <typeparam name="INTERFACE">The type of the nterface.</typeparam>
-		/// <typeparam name="KEYTYPE">The type of the eytype.</typeparam>
+		/// <typeparam name="INTERFACE">The type of the interface.</typeparam>
+		/// <typeparam name="KEYTYPE">The type of the keytype.</typeparam>
 		/// <returns></returns>
 		INTERFACE Get<INTERFACE, KEYTYPE>()
 			where INTERFACE : class, IState

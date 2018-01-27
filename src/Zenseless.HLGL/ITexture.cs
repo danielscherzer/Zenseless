@@ -8,15 +8,15 @@ namespace Zenseless.HLGL
 	public enum TextureFilterMode
 	{
 		/// <summary>
-		/// The nearest
+		/// Nearest neighbor filter mode (box filtering)
 		/// </summary>
 		Nearest,
 		/// <summary>
-		/// The linear
+		/// Linear filter mode (tent filtering)
 		/// </summary>
 		Linear,
 		/// <summary>
-		/// The mipmap
+		/// Mipmap filter mode
 		/// </summary>
 		Mipmap
 	};

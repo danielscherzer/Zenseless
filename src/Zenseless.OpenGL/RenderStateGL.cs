@@ -1,53 +1,52 @@
-﻿using System;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
+using System;
 using Zenseless.HLGL;
 
 namespace Zenseless.OpenGL
 {
 	/// <summary>
-	/// Implements blending for OpenGL
+	/// 
 	/// </summary>
-	public class BlendStateGL
+	public static class RenderStateGL
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="BlendStateGL"/> class.
+		/// Creates this instance.
 		/// </summary>
-		public BlendStateGL(): this(BlendStates.Opaque)
+		/// <returns></returns>
+		public static RenderState Create()
 		{
+			var renderState = new RenderState();
+			renderState.Register(Update, BlendStates.Opaque);
+			renderState.Register((c) => GL.ClearColor(c.Red, c.Green, c.Blue, c.Alpha), new ClearColorState(0f, 0f, 0f, 1f));
+			renderState.Register((s) => Update(s.IsEnabled, EnableCap.DepthTest), new BoolState<IDepthState>(false));
+			renderState.Register((s) => Update(s.IsEnabled, EnableCap.CullFace), new BoolState<IBackfaceCullingState>(false));
+			renderState.Register((s) => Update(s.IsEnabled, EnableCap.ProgramPointSize), new BoolState<IShaderPointSizeState>(false));
+			renderState.Register((s) => Update(s.IsEnabled, EnableCap.PointSprite), new BoolState<IPointSpriteState>(false));
+			renderState.Register((s) => Update(s.IsEnabled, EnableCap.LineSmooth), new BoolState<ILineSmoothState>(false));
+			return renderState;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BlendStateGL"/> class.
-		/// </summary>
-		/// <param name="blendState">State of the blend.</param>
-		public BlendStateGL(BlendState blendState)
+		private static void Update(bool enabled, EnableCap cap)
 		{
-			this.blendState = blendState;
-			Update();
-		}
-
-		/// <summary>
-		/// Gets or sets the current blend state.
-		/// </summary>
-		/// <value>
-		/// The current blend state.
-		/// </value>
-		public BlendState BlendState
-		{
-			get => blendState;
-			set
+			if (enabled)
 			{
-				if (value == blendState) return;
-				blendState = value;
-				Update();
+				GL.Enable(cap);
+			}
+			else
+			{
+				GL.Disable(cap);
 			}
 		}
 
-		private BlendState blendState;
-
-		private void SetOperator(BlendOperator blendOperator)
+		private static void Update(BlendState blendState)
 		{
-			switch(blendOperator)
+			SetOperator(blendState.BlendOperator);
+			SetFunction(blendState.BlendParameterSource, blendState.BlendParameterDestination);
+		}
+
+		private static void SetOperator(BlendOperator blendOperator)
+		{
+			switch (blendOperator)
 			{
 				case BlendOperator.None: GL.Disable(EnableCap.Blend); return;
 				case BlendOperator.Add: GL.BlendEquation(BlendEquationMode.FuncAdd); break;
@@ -60,9 +59,9 @@ namespace Zenseless.OpenGL
 			GL.Enable(EnableCap.Blend);
 		}
 
-		private BlendingFactorSrc ConvertSource(BlendParameter param)
+		private static BlendingFactorSrc ConvertSource(BlendParameter param)
 		{
-			switch(param)
+			switch (param)
 			{
 				case BlendParameter.DestinationAlpha: return BlendingFactorSrc.DstAlpha;
 				case BlendParameter.DestinationColor: return BlendingFactorSrc.DstColor;
@@ -79,7 +78,7 @@ namespace Zenseless.OpenGL
 			}
 		}
 
-		private BlendingFactorDest ConvertDestination(BlendParameter param)
+		private static BlendingFactorDest ConvertDestination(BlendParameter param)
 		{
 			switch (param)
 			{
@@ -98,17 +97,11 @@ namespace Zenseless.OpenGL
 			}
 		}
 
-		private void SetFunction(BlendParameter source, BlendParameter destination)
+		private static void SetFunction(BlendParameter source, BlendParameter destination)
 		{
 			var parameterSource = ConvertSource(source);
 			var parameterDestination = ConvertDestination(destination);
 			GL.BlendFunc(parameterSource, parameterDestination);
-		}
-
-		private void Update()
-		{
-			SetOperator(blendState.BlendOperator);
-			SetFunction(blendState.BlendParameterSource, blendState.BlendParameterDestination);
 		}
 	}
 }

@@ -3,7 +3,7 @@ using Zenseless.OpenGL;
 using System;
 using System.Drawing;
 
-namespace Zenseless.Application
+namespace Zenseless.ContentPipeline
 {
 	/// <summary>
 	/// 

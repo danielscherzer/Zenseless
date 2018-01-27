@@ -1,15 +1,15 @@
 ﻿using System;
-using Zenseless.ShaderDebugging;
+using Zenseless.ContentPipeline;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Zenseless.HLGL;
 
-namespace Zenseless.Application
+namespace Zenseless.ContentPipeline
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.Application.IShaderProvider" />
+	/// <seealso cref="Zenseless.ContentPipeline.IShaderProvider" />
 	/// <seealso cref="Zenseless.HLGL.IResourceProvider" />
 	[Export(typeof(IResourceProvider))]
 	[PartCreationPolicy(CreationPolicy.Shared)]
