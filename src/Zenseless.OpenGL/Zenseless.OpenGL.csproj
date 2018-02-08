@@ -78,13 +78,13 @@
     <Compile Include="VAOLoader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Zenseless.Base\Zenseless.Base.csproj">
+      <Project>{4de8bcd3-83df-48dd-b962-518c06d3491a}</Project>
+      <Name>Zenseless.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Zenseless.Geometry\Zenseless.Geometry.csproj">
       <Project>{b37b7dde-435b-4f27-9a9b-9b6df8744ebe}</Project>
       <Name>Zenseless.Geometry</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Zenseless.Base\Zenseless.Base.csproj">
-      <Project>{e5ff60a4-46fb-42d2-9430-bc523315c2e0}</Project>
-      <Name>Zenseless.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zenseless.HLGL\Zenseless.HLGL.csproj">
       <Project>{227d6be1-ba08-4030-a755-07288540931f}</Project>
