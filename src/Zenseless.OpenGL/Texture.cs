@@ -179,6 +179,7 @@ namespace Zenseless.OpenGL
 					break;
 			}
 			Activate();
+			if(1 == mipmap) GL.GenerateMipmap((GenerateMipmapTarget)Target);
 			GL.TexParameter(Target, TextureParameterName.TextureMagFilter, magFilter);
 			GL.TexParameter(Target, TextureParameterName.TextureMinFilter, minFilter);
 			GL.TexParameter(Target, TextureParameterName.GenerateMipmap, mipmap);

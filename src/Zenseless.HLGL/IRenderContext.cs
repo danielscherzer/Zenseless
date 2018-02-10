@@ -39,7 +39,7 @@
 		/// Creates the shader.
 		/// </summary>
 		/// <returns></returns>
-		IShader CreateShader();
+		IShaderProgram CreateShader();
 		/// <summary>
 		/// Draws the points.
 		/// </summary>

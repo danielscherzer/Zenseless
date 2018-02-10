@@ -33,6 +33,7 @@
     <DocumentationFile>..\..\bin\Release\Zenseless.HLGL.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
@@ -41,18 +42,21 @@
     <Compile Include="BlendState.cs" />
     <Compile Include="BlendStates.cs" />
     <Compile Include="ClearColorState.cs" />
+    <Compile Include="ContentManager.cs" />
     <Compile Include="DefaultShader.cs" />
     <Compile Include="BoolState.cs" />
     <Compile Include="IAnimation.cs" />
+    <Compile Include="IContentManager.cs" />
     <Compile Include="IRenderContext.cs" />
     <Compile Include="IDrawConfiguration.cs" />
     <Compile Include="IRenderState.cs" />
     <Compile Include="IRenderSurface.cs" />
-    <Compile Include="IShader.cs" />
     <Compile Include="IShaderProgram.cs" />
     <Compile Include="IStateManager.cs" />
     <Compile Include="ITexture.cs" />
     <Compile Include="ITexture2D.cs" />
+    <Compile Include="ITexture2dArray.cs" />
+    <Compile Include="NamedResourceStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderState.cs" />
     <Compile Include="ShaderException.cs" />

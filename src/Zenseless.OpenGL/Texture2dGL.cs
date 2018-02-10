@@ -1,14 +1,14 @@
-﻿using Zenseless.HLGL;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 using System;
+using Zenseless.HLGL;
 
 namespace Zenseless.OpenGL
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.OpenGL.Texture" />
-	/// <seealso cref="Zenseless.HLGL.ITexture2D" />
+	/// <seealso cref="Texture" />
+	/// <seealso cref="ITexture2D" />
 	public class Texture2dGL : Texture, ITexture2D
 	{
 		/// <summary>
@@ -79,9 +79,13 @@ namespace Zenseless.OpenGL
 		public void LoadPixels(IntPtr pixels, int width, int height, PixelInternalFormat internalFormat, PixelFormat inputPixelFormat, PixelType type)
 		{
 			Activate();
+			//if(width != Width ||height != Height)
+			//GL.TexStorage2D((TextureTarget2d)Target, 1, (SizedInternalFormat)internalFormat, width, height); //immutable texture storage need to set mipmap levels
+			Width = width;
+			Height = height;
+			//if (IntPtr.Zero != pixels) GL.TexSubImage2D(Target, 0, 0, 0, width, height, inputPixelFormat, type, pixels);
 			GL.TexImage2D(Target, 0, internalFormat, width, height, 0, inputPixelFormat, type, pixels);
-			this.Width = width;
-			this.Height = height;
+
 			Deactivate();
 		}
 
@@ -98,11 +102,7 @@ namespace Zenseless.OpenGL
 			var internalFormat = Convert(components, floatingPoint);
 			var inputPixelFormat = Convert(components);
 			var type = floatingPoint ? PixelType.UnsignedByte : PixelType.Float;
-			Activate();
-			GL.TexImage2D(Target, 0, internalFormat, width, height, 0, inputPixelFormat, type, pixels);
-			this.Width = width;
-			this.Height = height;
-			Deactivate();
+			LoadPixels(pixels, width, height, internalFormat, inputPixelFormat, type);
 		}
 	}
 }

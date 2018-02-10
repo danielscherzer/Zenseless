@@ -83,5 +83,43 @@
 				bool black = 1.0 > mod(uv10.x + uv10.y, 2.0f);
 				color = black ? vec4(0, 0, 0, 1) : vec4(1, 1, 0, 1);
 			}";
+
+		/// <summary>
+		/// A vertex shader that uses fixed function gl_ModelViewProjectionMatrix and per vertex color and a 2d texture for rendering
+		/// </summary>
+		public const string VertexShaderColorTexture = @"
+			#version 130
+			uniform mat4 gl_ModelViewProjectionMatrix;
+			in vec4 gl_Vertex;
+			out vec4 color;
+			out vec2 texCoord0;
+			void main() {
+				color = gl_Color;
+				texCoord0 = gl_MultiTexCoord0.xy;
+				gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+			}";
+
+		/// <summary>
+		/// A fragment shader that uses a color and a 2d texture for rendering
+		/// </summary>
+		public const string FragmentShaderColorTexture = @"
+			#version 430 core
+			uniform sampler2D image;
+			in vec4 color;
+			in vec2 texCoord0; 
+			void main() {
+				gl_FragColor = color * texture(image, texCoord0);
+			}";
+
+		/// <summary>
+		/// A fragment shader that uses a 2d texture for rendering
+		/// </summary>
+		public const string FragmentShaderTexture = @"
+			#version 430 core
+			uniform sampler2D image;
+			in vec2 texCoord0; 
+			void main() {
+				gl_FragColor = texture(image, texCoord0);
+			}";
 	}
 }

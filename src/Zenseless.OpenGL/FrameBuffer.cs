@@ -34,7 +34,7 @@ namespace Zenseless.OpenGL
 			var format = System.Drawing.Imaging.PixelFormat.Format24bppRgb;
 			var bmp = new Bitmap(width, height);
 			BitmapData data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, format);
-			GL.ReadPixels(x, y, width, height, TextureLoader.SelectPixelFormat(format), PixelType.UnsignedByte, data.Scan0);
+			GL.ReadPixels(x, y, width, height, TextureLoaderDrawing.SelectPixelFormat(format), PixelType.UnsignedByte, data.Scan0);
 			bmp.UnlockBits(data);
 			if(rotateFlip) bmp.RotateFlip();
 			return bmp;

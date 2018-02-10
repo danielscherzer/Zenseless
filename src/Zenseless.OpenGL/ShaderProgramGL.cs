@@ -1,21 +1,21 @@
-﻿using System;
-using OpenTK.Graphics.OpenGL4;
-using Zenseless.Base;
+﻿using OpenTK.Graphics.OpenGL4;
+using System;
 using System.Collections.Generic;
+using Zenseless.Base;
 using Zenseless.HLGL;
 
 namespace Zenseless.OpenGL
 {
-	using TKShaderType = OpenTK.Graphics.OpenGL4.ShaderType;
 	using ShaderType = HLGL.ShaderType;
+	using TKShaderType = OpenTK.Graphics.OpenGL4.ShaderType;
 
 	/// <summary>
-	/// Shader class
+	/// OpenGL shader program class
 	/// </summary>
 	/// <seealso cref="Zenseless.Base.Disposable" />
-	/// <seealso cref="Zenseless.HLGL.IShader" />
-	/// todo: rename to ShaderProgram and create Shader classes to compile individual (fragment, vertex, ...) shaders
-	public class Shader : Disposable, IShader
+	/// <seealso cref="Zenseless.HLGL.IShaderProgram" />
+	/// TODO: create Shader classes to compile individual (fragment, vertex, ...) shaders
+	public class ShaderProgramGL : Disposable, IShaderProgram
 	{
 		/// <summary>
 		/// Gets a value indicating whether this instance is linked.
@@ -42,9 +42,9 @@ namespace Zenseless.OpenGL
 		public int ProgramID { get; private set; } = 0;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Shader" /> class.
+		/// Initializes a new instance of the <see cref="ShaderProgramGL" /> class.
 		/// </summary>
-		public Shader()
+		public ShaderProgramGL()
 		{
 			ProgramID = GL.CreateProgram();
 		}

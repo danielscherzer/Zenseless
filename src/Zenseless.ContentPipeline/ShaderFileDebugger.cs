@@ -35,7 +35,7 @@ namespace Zenseless.ContentPipeline
 			{
 				var sVertex = vertexShader is null ? string.Empty : Encoding.UTF8.GetString(vertexShader);
 				var sFragment = fragmentShader is null ? string.Empty : Encoding.UTF8.GetString(fragmentShader);
-				shader = ShaderLoader.FromStrings(sVertex, sFragment);
+				shaderProgram = ShaderLoader.FromStrings(sVertex, sFragment);
 				//ShaderLoaded?.Invoke(); //is null because we are in the constructor
 			}
 		}
@@ -52,7 +52,7 @@ namespace Zenseless.ContentPipeline
 			if (!shaderWatcherVertex.Dirty && !shaderWatcherFragment.Dirty) return false;
 			try
 			{
-				shader = ShaderLoader.FromFiles(shaderWatcherVertex.FullPath, shaderWatcherFragment.FullPath);
+				shaderProgram = ShaderLoader.FromFiles(shaderWatcherVertex.FullPath, shaderWatcherFragment.FullPath);
 				shaderWatcherVertex.Dirty = false;
 				shaderWatcherFragment.Dirty = false;
 				//ShaderLoaded?.Invoke();
@@ -85,12 +85,12 @@ namespace Zenseless.ContentPipeline
 		/// <value>
 		/// The shader.
 		/// </value>
-		public IShader Shader { get { return shader; } }
+		public IShaderProgram ShaderProgram { get { return shaderProgram; } }
 
 		/// <summary>
 		/// The shader
 		/// </summary>
-		private IShader shader;
+		private IShaderProgram shaderProgram;
 		/// <summary>
 		/// The shader watcher vertex
 		/// </summary>

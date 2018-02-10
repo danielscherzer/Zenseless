@@ -23,9 +23,9 @@ namespace Zenseless.OpenGL
 		/// <returns>
 		/// a new instance
 		/// </returns>
-		public static Shader FromStrings(string sVertexShd_, string sFragmentShd_)
+		public static ShaderProgramGL FromStrings(string sVertexShd_, string sFragmentShd_)
 		{
-			Shader shd = new Shader();
+			ShaderProgramGL shd = new ShaderProgramGL();
 			try
 			{
 				shd.FromStrings(sVertexShd_, sFragmentShd_);
@@ -41,16 +41,16 @@ namespace Zenseless.OpenGL
 		/// <summary>
 		/// Compiles and links vertex and fragment shaders from strings.
 		/// </summary>
-		/// <param name="shader">The empty shader to which the two shader sources are linked to.</param>
+		/// <param name="shaderProgram">The empty shader to which the two shader sources are linked to.</param>
 		/// <param name="sVertexShd_">The vertex shader source code string.</param>
 		/// <param name="sFragmentShd_">The fragment shader source code string.</param>
 		/// <returns>The shader log, Empty if no errors.</returns>
-		public static string FromStrings(this IShader shader, string sVertexShd_, string sFragmentShd_)
+		public static string FromStrings(this IShaderProgram shaderProgram, string sVertexShd_, string sFragmentShd_)
 		{
-			shader.Compile(sVertexShd_, ShaderType.VertexShader);
-			shader.Compile(sFragmentShd_, ShaderType.FragmentShader);
-			shader.Link();
-			return shader.LastLog;
+			shaderProgram.Compile(sVertexShd_, ShaderType.VertexShader);
+			shaderProgram.Compile(sFragmentShd_, ShaderType.FragmentShader);
+			shaderProgram.Link();
+			return shaderProgram.LastLog;
 		}
 
 		/// <summary>
@@ -62,7 +62,7 @@ namespace Zenseless.OpenGL
 		/// a new instance
 		/// </returns>
 		/// <exception cref="ArgumentOutOfRangeException">FromFiles called with unexpected shader type</exception>
-		public static Shader FromFiles(string sVertexShdFile_, string sFragmentShdFile_)
+		public static ShaderProgramGL FromFiles(string sVertexShdFile_, string sFragmentShdFile_)
 		{
 			string sVertexShd = ShaderStringFromFileWithIncludes(sVertexShdFile_, false);
 			string sFragmentShd = ShaderStringFromFileWithIncludes(sFragmentShdFile_, false);
@@ -135,7 +135,7 @@ namespace Zenseless.OpenGL
 					string sIncludeShd = File.ReadAllText(sIncludePath); // read include as string
 					if (testCompileInclude)
 					{
-						using (var shader = new Shader())
+						using (var shader = new ShaderProgramGL())
 						{
 							try
 							{

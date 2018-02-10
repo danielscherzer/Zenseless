@@ -8,7 +8,7 @@ namespace Zenseless.ContentPipeline
 	/// 
 	/// </summary>
 	/// <seealso cref="IResource{IShader}" />
-	public class ResourceVertFragShaderString : IResource<IShader>
+	public class ResourceVertFragShaderString : IResource<IShaderProgram>
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ResourceVertFragShaderString"/> class.
@@ -17,7 +17,7 @@ namespace Zenseless.ContentPipeline
 		/// <param name="sFragment">The s fragment.</param>
 		public ResourceVertFragShaderString(string sVertex, string sFragment)
 		{
-			shader = ShaderLoader.FromStrings(sVertex, sFragment);
+			shaderProgram = ShaderLoader.FromStrings(sVertex, sFragment);
 		}
 
 		/// <summary>
@@ -34,16 +34,16 @@ namespace Zenseless.ContentPipeline
 		/// <value>
 		/// The value.
 		/// </value>
-		public IShader Value { get { return shader; } }
+		public IShaderProgram Value { get { return shaderProgram; } }
 
 		/// <summary>
 		/// Occurs when [change].
 		/// </summary>
-		public event EventHandler<IShader> Change { add { } remove { } }
+		public event EventHandler<IShaderProgram> Change { add { } remove { } }
 
 		/// <summary>
 		/// The shader
 		/// </summary>
-		private IShader shader;
+		private IShaderProgram shaderProgram;
 	}
 }

@@ -8,17 +8,17 @@ namespace Zenseless.OpenGL
 	/// 
 	/// </summary>
 	/// <seealso cref="ICreator{IShader}" />
-	public class ShaderCreatorGL : ICreator<IShader>
+	public class ShaderCreatorGL : ICreator<IShaderProgram>
 	{
 		/// <summary>
 		/// Creates this instance.
 		/// </summary>
 		/// <returns></returns>
-		public TypedHandle<IShader> Create()
+		public TypedHandle<IShaderProgram> Create()
 		{
-			var shader = new Shader();
+			var shader = new ShaderProgramGL();
 			shaders.Add(shader.ProgramID, shader);
-			return new TypedHandle<IShader>(shader.ProgramID);
+			return new TypedHandle<IShaderProgram>(shader.ProgramID);
 		}
 
 		/// <summary>
@@ -27,11 +27,11 @@ namespace Zenseless.OpenGL
 		/// <param name="handle">The handle.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException">Invalid Handle id given</exception>
-		public IShader Get(TypedHandle<IShader> handle)
+		public IShaderProgram Get(TypedHandle<IShaderProgram> handle)
 		{
-			if(shaders.TryGetValue(handle.ID, out IShader shader))
+			if(shaders.TryGetValue(handle.ID, out IShaderProgram shaderProgram))
 			{
-				return shader;
+				return shaderProgram;
 			}
 			throw new ArgumentException("Invalid Handle id given");
 		}
@@ -39,6 +39,6 @@ namespace Zenseless.OpenGL
 		/// <summary>
 		/// The shaders
 		/// </summary>
-		private Dictionary<int, IShader> shaders = new Dictionary<int, IShader>();
+		private Dictionary<int, IShaderProgram> shaders = new Dictionary<int, IShaderProgram>();
 	}
 }

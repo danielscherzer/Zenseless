@@ -14,21 +14,21 @@ namespace Zenseless.OpenGL
 		/// <value>
 		/// The shader.
 		/// </value>
-		public IShader Shader
+		public IShaderProgram ShaderProgram
 		{
-			get => shader;
+			get => shaderProgram;
 			set
 			{
-				if (ReferenceEquals(shader, value)) return;
-				shader?.Deactivate();
-				shader = value;
-				shader?.Activate();
+				if (ReferenceEquals(shaderProgram, value)) return;
+				shaderProgram?.Deactivate();
+				shaderProgram = value;
+				shaderProgram?.Activate();
 			}
 		}
 
 		/// <summary>
 		/// The shader
 		/// </summary>
-		private IShader shader = null;
+		private IShaderProgram shaderProgram = null;
 	}
 }

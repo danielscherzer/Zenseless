@@ -16,7 +16,7 @@ namespace Zenseless.ContentPipeline
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <returns></returns>
-		IShader GetShader(string name);
+		IShaderProgram GetShaderProgram(string name);
 		//Texture GetTexture(string name);
 	}
 }

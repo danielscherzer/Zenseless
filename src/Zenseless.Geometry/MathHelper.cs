@@ -74,6 +74,18 @@ namespace Zenseless.Geometry
 			return new Vector4(Clamp(v.X, min, max), Clamp(v.Y, min, max), Clamp(v.Z, min, max), Clamp(v.W, min, max));
 		}
 
+
+		/// <summary>
+		/// Returns the number of mipmap levels required for mipmapped filtering of an image.
+		/// </summary>
+		/// <param name="width">The image width in pixels.</param>
+		/// <param name="height">The image height in pixels.</param>
+		/// <returns>Number of mipmap levels</returns>
+		public static int MipMapLevels(int width, int height)
+		{
+			return (int)Math.Log(Math.Max(width, height), 2.0) + 1;
+		}
+
 		/// <summary>
 		/// Convert input uint from range [0,255] into float in range [0,1]
 		/// </summary>

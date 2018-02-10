@@ -85,9 +85,9 @@ namespace Zenseless.OpenGL
 		/// Creates the shader.
 		/// </summary>
 		/// <returns></returns>
-		public IShader CreateShader()
+		public IShaderProgram CreateShader()
 		{
-			return new Shader();
+			return new ShaderProgramGL();
 		}
 	}
 }

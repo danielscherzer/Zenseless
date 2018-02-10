@@ -17,7 +17,7 @@ namespace Zenseless.ContentPipeline
 		/// <param name="bitmap">The bitmap.</param>
 		public ResourceTextureBitmap(Bitmap bitmap)
 		{
-			texture = TextureLoader.FromBitmap(bitmap);
+			texture = TextureLoaderDrawing.FromBitmap(bitmap);
 		}
 
 		/// <summary>

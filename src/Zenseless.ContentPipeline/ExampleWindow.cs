@@ -11,6 +11,8 @@ using System.Drawing;
 using System.Collections.Generic;
 using Zenseless.Base;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Zenseless.ContentPipeline
 {
@@ -72,6 +74,13 @@ namespace Zenseless.ContentPipeline
 		/// The resource manager.
 		/// </value>
 		public ResourceManager ResourceManager { get; private set; }
+		/// <summary>
+		/// Gets the content manager.
+		/// </summary>
+		/// <value>
+		/// The content manager.
+		/// </value>
+		public IContentManager ContentManager { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ExampleWindow"/> class.
@@ -102,6 +111,8 @@ namespace Zenseless.ContentPipeline
 			//register callback for keyboard
 			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
 			ResourceManager = resourceProvider as ResourceManager;
+
+			ContentManager = ContentManagerGL.Create(Assembly.GetEntryAssembly());
 		}
 
 		/// <summary>

@@ -1,11 +1,20 @@
-﻿namespace Zenseless.HLGL
+﻿using System;
+
+namespace Zenseless.HLGL
 {
 	/// <summary>
 	/// 
 	/// </summary>
 	/// <seealso cref="ITexture" />
-	public interface ITexture2D : ITexture
+	public interface ITexture2dArray : ITexture
 	{
+		/// <summary>
+		/// Gets the elements.
+		/// </summary>
+		/// <value>
+		/// The elements.
+		/// </value>
+		int Elements { get; }
 		/// <summary>
 		/// Gets the height.
 		/// </summary>
@@ -20,7 +29,5 @@
 		/// The width.
 		/// </value>
 		int Width { get; }
-
-		//void LoadPixels(IntPtr pixels, int width, int height, byte components = 4, bool floatingPoint = false);
 	}
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Zenseless.ContentPipeline;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Zenseless.HLGL;
@@ -27,8 +26,8 @@ namespace Zenseless.ContentPipeline
 		/// 
 		/// </summary>
 		/// <param name="name">The name.</param>
-		/// <param name="shader">The shader.</param>
-		public delegate void ShaderChangedHandler(string name, IShader shader);
+		/// <param name="shaderProgram">The shader.</param>
+		public delegate void ShaderChangedHandler(string name, IShaderProgram shaderProgram);
 		/// <summary>
 		/// Occurs when [shader changed].
 		/// </summary>
@@ -58,7 +57,7 @@ namespace Zenseless.ContentPipeline
 			{
 				if(item.Value.CheckForShaderChange())
 				{
-					ShaderChanged?.Invoke(item.Key, item.Value.Shader);
+					ShaderChanged?.Invoke(item.Key, item.Value.ShaderProgram);
 				}
 			}
 		}
@@ -68,11 +67,11 @@ namespace Zenseless.ContentPipeline
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <returns></returns>
-		public IShader GetShader(string name)
+		public IShaderProgram GetShaderProgram(string name)
 		{
 			if (shaderWatcher.TryGetValue(name, out ShaderFileDebugger shaderFD))
 			{
-				return shaderFD.Shader;
+				return shaderFD.ShaderProgram;
 			}
 			return null;
 		}

@@ -14,7 +14,7 @@ namespace Zenseless.OpenGL
 		/// 
 		/// </summary>
 		/// <param name="currentShader">The current shader.</param>
-		public delegate void SetUniforms(IShader currentShader);
+		public delegate void SetUniforms(IShaderProgram currentShader);
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TextureToFrameBuffer"/> class.
@@ -23,7 +23,7 @@ namespace Zenseless.OpenGL
 		/// <param name="vertexShader">The vertex shader.</param>
 		public TextureToFrameBuffer(string fragmentShader = DefaultShader.FragmentShaderCopy, string vertexShader = DefaultShader.VertexShaderScreenQuad)
 		{
-			shader = ShaderLoader.FromStrings(vertexShader, fragmentShader);
+			shaderProgram = ShaderLoader.FromStrings(vertexShader, fragmentShader);
 		}
 
 		/// <summary>
@@ -33,25 +33,25 @@ namespace Zenseless.OpenGL
 		/// <param name="setUniformsHandler">The set uniforms handler.</param>
 		public void Draw(ITexture texture, SetUniforms setUniformsHandler = null)
 		{
-			shader.Activate();
+			shaderProgram.Activate();
 			texture.Activate();
-			setUniformsHandler?.Invoke(shader);
+			setUniformsHandler?.Invoke(shaderProgram);
 			GL.DrawArrays(PrimitiveType.Quads, 0, 4);
 			texture.Deactivate();
-			shader.Deactivate();
+			shaderProgram.Deactivate();
 		}
 
 		/// <summary>
 		/// The shader
 		/// </summary>
-		private IShader shader;
+		private IShaderProgram shaderProgram;
 
 		/// <summary>
 		/// Will be called from the default Dispose method.
 		/// </summary>
 		protected override void DisposeResources()
 		{
-			shader.Dispose();
+			shaderProgram.Dispose();
 		}
 	}
 }

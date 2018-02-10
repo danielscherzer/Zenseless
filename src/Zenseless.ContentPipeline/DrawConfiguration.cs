@@ -41,7 +41,7 @@ namespace Zenseless.ContentPipeline
 		/// <value>
 		/// The shader.
 		/// </value>
-		public IShader Shader { get; private set; }
+		public IShaderProgram ShaderProgram { get; private set; }
 		/// <summary>
 		/// Gets the vao.
 		/// </summary>
@@ -68,7 +68,7 @@ namespace Zenseless.ContentPipeline
 			context.RenderState.Set(new BoolState<IDepthState>(ZBufferTest));
 			context.RenderState.Set(new BoolState<IBackfaceCullingState>(BackfaceCulling));
 
-			stateManager.Get<StateActiveShaderGL, StateActiveShaderGL>().Shader = Shader;
+			stateManager.Get<StateActiveShaderGL, StateActiveShaderGL>().ShaderProgram = ShaderProgram;
 
 			BindTextures();
 			ActivateBuffers();
@@ -181,11 +181,11 @@ namespace Zenseless.ContentPipeline
 		public void UpdateMeshShader(DefaultMesh mesh, string shaderName)
 		{
 			if (string.IsNullOrWhiteSpace(shaderName)) throw new ArgumentException("A shaderName is required");
-			var resShader = ResourceManager.Instance.Get<IShader>(shaderName);
+			var resShader = ResourceManager.Instance.Get<IShaderProgram>(shaderName);
 			if (resShader is null) throw new ArgumentException("Shader '" + shaderName + "' does not exist");
-			Shader = resShader.Value;
+			ShaderProgram = resShader.Value;
 			//if (ReferenceEquals(null, mesh)) throw new ArgumentException("A mesh is required");
-			Vao = mesh is null ? null : VAOLoader.FromMesh(mesh, Shader);
+			Vao = mesh is null ? null : VAOLoader.FromMesh(mesh, ShaderProgram);
 		}
 
 		/// <summary>
@@ -237,7 +237,7 @@ namespace Zenseless.ContentPipeline
 		{
 			foreach (var uBuffer in buffers)
 			{
-				var bindingIndex = Shader.GetResourceLocation(uBuffer.Value.Type, uBuffer.Key);
+				var bindingIndex = ShaderProgram.GetResourceLocation(uBuffer.Value.Type, uBuffer.Key);
 				if (-1 == bindingIndex) throw new ArgumentException("Could not find shader parameters '" + uBuffer.Key + "'");
 				uBuffer.Value.ActivateBind(bindingIndex);
 			}
@@ -260,7 +260,7 @@ namespace Zenseless.ContentPipeline
 		private void BindTextures()
 		{
 			int id = 0;
-			if (Shader is null)
+			if (ShaderProgram is null)
 			{
 				foreach (var namedTex in textures)
 				{
@@ -275,7 +275,7 @@ namespace Zenseless.ContentPipeline
 				{
 					GL.ActiveTexture(TextureUnit.Texture0 + id);
 					namedTex.Value.Activate();
-					GL.Uniform1(Shader.GetResourceLocation(ShaderResourceType.Uniform, namedTex.Key), id);
+					GL.Uniform1(ShaderProgram.GetResourceLocation(ShaderResourceType.Uniform, namedTex.Key), id);
 					++id;
 				}
 			}
@@ -305,7 +305,7 @@ namespace Zenseless.ContentPipeline
 		private int GetAttributeShaderLocationAndCheckVao(string name)
 		{
 			if (Vao is null) throw new InvalidOperationException("Specify mesh before setting instance attributes");
-			return Shader.GetResourceLocation(ShaderResourceType.Attribute, name);
+			return ShaderProgram.GetResourceLocation(ShaderResourceType.Attribute, name);
 		}
 	}
 }
