@@ -74,7 +74,7 @@
     <Compile Include="TextureLoader.cs" />
     <Compile Include="TextureLoaderDrawing.cs" />
     <Compile Include="TextureLoaderImaging.cs" />
-    <Compile Include="TextureToFrameBuffer.cs" />
+    <Compile Include="PostProcessing.cs" />
     <Compile Include="VAO.cs" />
     <Compile Include="VAOLoader.cs" />
   </ItemGroup>

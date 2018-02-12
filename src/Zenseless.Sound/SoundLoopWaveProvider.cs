@@ -5,17 +5,17 @@ namespace Zenseless.Sound
 	/// <summary>
 	/// A wave stream that is looped when played back (can be turned off)
 	/// </summary>
-	/// <seealso cref="NAudio.Wave.WaveStream" />
-	class SoundLoopStream : WaveStream
+	/// <seealso cref="IWaveProvider" />
+	class SoundLoopWaveProvider : IWaveProvider
 	{
 		WaveStream sourceStream;
 
 		/// <summary>
-		/// Creates a new Loop stream
+		/// Creates a an adapter around an input WaveStream that enables looping
 		/// </summary>
 		/// <param name="sourceStream">The stream to read from. Note: the Read method of this stream should return 0 when it reaches the end
 		/// or else we will not loop to the start again.</param>
-		public SoundLoopStream(WaveStream sourceStream)
+		public SoundLoopWaveProvider(WaveStream sourceStream)
 		{
 			this.sourceStream = sourceStream;
 			this.EnableLooping = true;
@@ -29,26 +29,9 @@ namespace Zenseless.Sound
 		/// <summary>
 		/// Return source stream's wave format
 		/// </summary>
-		public override WaveFormat WaveFormat
+		public WaveFormat WaveFormat
 		{
 			get { return sourceStream.WaveFormat; }
-		}
-
-		/// <summary>
-		/// LoopStream simply returns
-		/// </summary>
-		public override long Length
-		{
-			get { return sourceStream.Length; }
-		}
-
-		/// <summary>
-		/// LoopStream simply passes on positioning to source stream
-		/// </summary>
-		public override long Position
-		{
-			get { return sourceStream.Position; }
-			set { sourceStream.Position = value; }
 		}
 
 		/// <summary>
@@ -60,7 +43,7 @@ namespace Zenseless.Sound
 		/// <returns>
 		/// The total number of bytes read into the buffer. This can be less than the number of bytes requested if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.
 		/// </returns>
-		public override int Read(byte[] buffer, int offset, int count)
+		public int Read(byte[] buffer, int offset, int count)
 		{
 			int totalBytesRead = 0;
 

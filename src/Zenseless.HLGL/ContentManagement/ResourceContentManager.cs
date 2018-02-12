@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Zenseless.HLGL
 {
 	/// <summary>
-	/// Implementation of a content manager
+	/// Implementation of a content manager for embedded resources
 	/// </summary>
 	/// <seealso cref="IContentManager" />
 	public class ContentManager : IContentManager
 	{
 		private readonly IEnumerable<string> resourceNames;
 		private readonly Assembly resourceAssembly;
-		private Dictionary<string, Func<NamedResourceStream, object>> converters = new Dictionary<string, Func<NamedResourceStream, object>>();
 		private Dictionary<Type, Func<IEnumerable<NamedResourceStream>, object>> typeConverters = new Dictionary<Type, Func<IEnumerable<NamedResourceStream>, object>>();
-
-		//public IEnumerable<string> ResourceNames => resourceNames;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ContentManager"/> class.
@@ -29,27 +27,32 @@ namespace Zenseless.HLGL
 			this.resourceAssembly = resourceAssembly;
 			resourceNames = resourceAssembly.GetManifestResourceNames();
 
-			string TextConverter(NamedResourceStream res)
+			string StringConverter(IEnumerable<NamedResourceStream> resources)
 			{
-				using (var reader = new StreamReader(res.Stream, true))
+				var sb = new StringBuilder();
+				foreach (var res in resources)
 				{
-					return reader.ReadToEnd();
+					using (var reader = new StreamReader(res.Stream, true))
+					{
+						sb.Append(reader.ReadToEnd());
+					}
 				}
+				return sb.ToString();
 			}
-			RegisterConverter(".txt", TextConverter);
-		}
+			RegisterConverter(StringConverter);
 
-		/// <summary>
-		/// Registers a resource converter. Responsible for converting one type of resource into an object instance
-		/// </summary>
-		/// <typeparam name="TYPE">The type of the instance that will be created by the converter.</typeparam>
-		/// <param name="nameExtension">The resource name extension this converter is responsible for.</param>
-		/// <param name="converter">The converter function.</param>
-		/// <exception cref="ArgumentException"></exception>
-		public void RegisterConverter<TYPE>(string nameExtension, Func<NamedResourceStream, TYPE> converter) where TYPE : class
-		{
-			if(converter is null) throw new ArgumentException($"The converter must not be null.");
-			converters.Add(nameExtension, converter);
+			byte[] BufferConverter(IEnumerable<NamedResourceStream> resources)
+			{
+				foreach (var res in resources)
+				{
+					using (BinaryReader br = new BinaryReader(res.Stream))
+					{
+						return br.ReadBytes((int)res.Stream.Length);
+					}
+				}
+				throw new ArgumentException("No elements");
+			}
+			RegisterConverter(BufferConverter);
 		}
 
 		/// <summary>
@@ -76,19 +79,23 @@ namespace Zenseless.HLGL
 		/// </exception>
 		public TYPE Load<TYPE>(string name) where TYPE : class
 		{
-			var fullName = GetFullName(name);
-			if (fullName is null) throw new ArgumentException($"The embedded resource '{name}' was not found.");
-			using (var stream = resourceAssembly.GetManifestResourceStream(fullName))
+			var names = new List<string>();
+			if (ContainsWildCard(name))
 			{
-				var extension = Path.GetExtension(fullName).ToLowerInvariant();
-				if (converters.TryGetValue(extension, out var converter))
+				var regex = WildCardToRegular(name);
+				foreach (var res in resourceNames)
 				{
-					var output = converter.Invoke(new NamedResourceStream(fullName, stream)) as TYPE;
-					if (output is null) throw new ArgumentException($"Converter for resource type '{extension}' does not convert to '{typeof(TYPE).FullName}'.");
-					return output;
+					if(Regex.IsMatch(res, regex))
+					{
+						names.Add(res);
+					}
 				}
-				throw new ArgumentException($"No converter for resource type '{extension}' was found.");
 			}
+			else
+			{
+				names.Add(name);
+			}
+			return Load<TYPE>(names);
 		}
 
 		/// <summary>
@@ -113,24 +120,17 @@ namespace Zenseless.HLGL
 			var type = typeof(TYPE);
 			if (typeConverters.TryGetValue(type, out var converter))
 			{
-				return converter.Invoke(resources) as TYPE;
+				var result = converter.Invoke(resources) as TYPE;
+				foreach (var res in resources) res.Stream.Dispose();
+				return result;
 			}
 			throw new ArgumentException($"No converter for type '{type.FullName}' was found.");
 		}
 
-		private string GetFullName(string name)
-		{
-			return resourceNames.FirstOrDefault((resName) => resName.ToLowerInvariant().Contains(name.ToLowerInvariant()));
-		}
+		private string GetFullName(string name) => resourceNames.FirstOrDefault((resName) => resName.ToLowerInvariant().Contains(name.ToLowerInvariant()));
 
-		private bool ContainsWildCard(string name)
-		{
-			return name.Contains("*");
-		}
+		private bool ContainsWildCard(string name) => name.Contains("*");
 
-		private static string WildCardToRegular(string value)
-		{
-			return "^" + Regex.Escape(value).Replace("\\*", ".*") + "$";
-		}
+		private static string WildCardToRegular(string value) => Regex.Escape(value).Replace("\\*", ".*");
 	}
 }

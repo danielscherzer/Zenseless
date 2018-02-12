@@ -7,8 +7,8 @@ namespace Zenseless.OpenGL
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.Base.Disposable" />
-	public class TextureToFrameBuffer : Disposable
+	/// <seealso cref="Disposable" />
+	public class PostProcessing : Disposable
 	{
 		/// <summary>
 		/// 
@@ -17,11 +17,11 @@ namespace Zenseless.OpenGL
 		public delegate void SetUniforms(IShaderProgram currentShader);
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TextureToFrameBuffer"/> class.
+		/// Initializes a new instance of the <see cref="PostProcessing"/> class.
 		/// </summary>
 		/// <param name="fragmentShader">The fragment shader.</param>
 		/// <param name="vertexShader">The vertex shader.</param>
-		public TextureToFrameBuffer(string fragmentShader = DefaultShader.FragmentShaderCopy, string vertexShader = DefaultShader.VertexShaderScreenQuad)
+		public PostProcessing(string fragmentShader = DefaultShader.FragmentShaderCopy, string vertexShader = DefaultShader.VertexShaderScreenQuad)
 		{
 			shaderProgram = ShaderLoader.FromStrings(vertexShader, fragmentShader);
 		}

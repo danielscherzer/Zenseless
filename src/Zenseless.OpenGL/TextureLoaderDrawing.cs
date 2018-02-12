@@ -17,7 +17,7 @@
 		/// </summary>
 		/// <param name="bitmap">The bitmap.</param>
 		/// <returns></returns>
-		public static ITexture FromBitmap(Bitmap bitmap)
+		public static ITexture2D FromBitmap(Bitmap bitmap)
 		{
 			var texture = new Texture2dGL
 			{
@@ -43,7 +43,7 @@
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="FileLoadException"></exception>
-		public static ITexture FromFile(string fileName)
+		public static ITexture2D FromFile(string fileName)
 		{
 			if (String.IsNullOrEmpty(fileName))
 			{

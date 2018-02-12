@@ -25,7 +25,7 @@ namespace Zenseless.Sound
 		{
 			waveOutDevice = new WaveOut();
 			audioFileReader = new AudioFileReader(fileName);
-			loopingWaveStream = new SoundLoopStream(audioFileReader)
+			loopingWaveStream = new SoundLoopWaveProvider(audioFileReader)
 			{
 				EnableLooping = false
 			};
@@ -93,7 +93,7 @@ namespace Zenseless.Sound
 
 		private IWavePlayer waveOutDevice;
 		private AudioFileReader audioFileReader;
-		private SoundLoopStream loopingWaveStream;
+		private SoundLoopWaveProvider loopingWaveStream;
 
 		private bool playing = false;
 		private float length = 10.0f;

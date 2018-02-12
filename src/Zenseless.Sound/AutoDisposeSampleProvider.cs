@@ -18,8 +18,7 @@ namespace Zenseless.Sound
 
 		public int Read(float[] buffer, int offset, int count)
 		{
-			if (isDisposed)
-				return 0;
+			if (isDisposed) return 0;
 			int read = sampleProvider.Read(buffer, offset, count);
 			if (read == 0)
 			{

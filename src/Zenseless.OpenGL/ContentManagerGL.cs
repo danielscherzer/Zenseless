@@ -25,9 +25,7 @@ namespace Zenseless.OpenGL
 		{
 			var mgr = new ContentManager(resourceAssembly);
 
-			mgr.RegisterConverter(".png", BitmapConverter);
-			mgr.RegisterConverter(".jpg", BitmapConverter);
-			mgr.RegisterConverter(".glsl", PixelShaderConverter);
+			mgr.RegisterConverter(BitmapConverter);
 			mgr.RegisterConverter(TextureArrayConverter);
 			mgr.RegisterConverter(ShaderProgramConverter);
 			return mgr;
@@ -58,12 +56,17 @@ namespace Zenseless.OpenGL
 			{ ".vert" , HLGL.ShaderType.VertexShader },
 		};
 
-		private static ITexture BitmapConverter(NamedResourceStream res)
+		private static ITexture2D BitmapConverter(IEnumerable<NamedResourceStream> resources)
 		{
-			using (var bitmap = new Bitmap(res.Stream))
+			foreach (var res in resources)
 			{
-				return TextureLoaderDrawing.FromBitmap(bitmap);
+				using (var bitmap = new Bitmap(res.Stream))
+				{
+					return TextureLoaderDrawing.FromBitmap(bitmap);
+				}
+				//TODO: load mipmap levels
 			}
+			return null;
 		}
 
 		private static IShaderProgram PixelShaderConverter(NamedResourceStream res)
@@ -78,7 +81,8 @@ namespace Zenseless.OpenGL
 		private static IShaderProgram ShaderProgramConverter(IEnumerable<NamedResourceStream> resources)
 		{
 			var count = resources.Count();
-			if (2 > count) return null;
+			if (0 == count) return null;
+			if (1 == count) return PixelShaderConverter(resources.First());
 			ShaderProgramGL shaderProgram = new ShaderProgramGL();
 			try
 			{

@@ -31,16 +31,16 @@ namespace Zenseless.Sound
 		}
 
 		/// <summary>
-		/// Plays sound from a given file (can be compressed, like with mp3)
+		/// Plays sound from a given file
 		/// </summary>
-		/// <param name="fileName">input sound file name</param>
+		/// <param name="fileName">input sound file name (can be a compressed format, like mp3)</param>
 		/// <param name="looped">should playback be looped forever</param>
 		public void PlaySound(string fileName, bool looped = false)
 		{
 			var input = new AudioFileReader(fileName);
 			if (looped)
 			{
-				var reader = new SoundLoopStream(input);
+				var reader = new SoundLoopWaveProvider(input);
 				var sampleChannel = new SampleChannel(reader, false);
 				AddMixerInput(sampleChannel);
 			}
@@ -59,10 +59,10 @@ namespace Zenseless.Sound
 		public void PlaySound(Stream stream, bool looped = false)
 		{
 			WaveStream reader = FindCorrectWaveStream(stream);
+			if (reader is null) return;
 			if (looped)
 			{
-				reader = new SoundLoopStream(reader);
-				var sampleChannel = new SampleChannel(reader, false);
+				var sampleChannel = new SampleChannel(new SoundLoopWaveProvider(reader), false);
 				AddMixerInput(sampleChannel);
 			}
 			else

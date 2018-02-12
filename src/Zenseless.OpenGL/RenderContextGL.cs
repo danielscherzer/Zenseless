@@ -20,7 +20,7 @@ namespace Zenseless.OpenGL
 			StateManager = new StateManager();
 			StateManager.Register<StateActiveFboGL, StateActiveFboGL>(new StateActiveFboGL());
 			StateManager.Register<StateActiveShaderGL, StateActiveShaderGL>(new StateActiveShaderGL());
-			StateManager.Register<IStateTyped<float>, States.ILineWidth>(new StateCommandGL<float>(GL.LineWidth, 1f));
+			StateManager.Register<IStateTyped<float>, States.ILineWidth>(new StateCommand<float>(GL.LineWidth, 1f));
 		}
 
 		/// <summary>
