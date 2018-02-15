@@ -69,29 +69,29 @@ namespace Zenseless.Base
 		}
 
 		/// <summary>
-		/// Returns the relative path. if no relative path is valid, the absolut path is returned.
+		/// Returns the relative path. If no relative path is valid, the absolute path is returned.
 		/// </summary>
-		/// <param name="fromPath">the path the result should be relative to</param>
-		/// <param name="toPath">the path to be converted into relative form</param>
+		/// <param name="referencePath">the path the result should be relative to</param>
+		/// <param name="inputPath">the path to be converted into relative form</param>
 		/// <returns></returns>
-		public static string GetRelativePath(string fromPath, string toPath)
+		public static string GetRelativePath(string referencePath, string inputPath)
 		{
-			if (string.IsNullOrEmpty(fromPath) || string.IsNullOrEmpty(toPath)) return toPath;
+			if (string.IsNullOrEmpty(referencePath) || string.IsNullOrEmpty(inputPath)) return inputPath;
 			try
 			{
-				int fromAttr = GetPathAttribute(fromPath);
-				int toAttr = GetPathAttribute(toPath);
+				int fromAttr = GetPathAttribute(referencePath);
+				int toAttr = GetPathAttribute(inputPath);
 
-				StringBuilder path = new StringBuilder(5260); // MAX_PATH could be enough
-				if (0 == SafeNativeMethods.PathRelativePathTo(path, fromPath, fromAttr, toPath, toAttr))
+				StringBuilder path = new StringBuilder(256);
+				if (0 == SafeNativeMethods.PathRelativePathTo(path, referencePath, fromAttr, inputPath, toAttr))
 				{
-					return toPath;
+					return inputPath;
 				}
 				return path.ToString();
 			}
 			catch
 			{
-				return toPath;
+				return inputPath;
 			}
 		}
 

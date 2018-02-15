@@ -23,11 +23,12 @@ namespace Zenseless.OpenGL
 		/// <returns>A content manager instance</returns>
 		public static IContentManager Create(Assembly resourceAssembly)
 		{
-			var mgr = new ContentManager(resourceAssembly);
-
-			mgr.RegisterConverter(BitmapConverter);
-			mgr.RegisterConverter(TextureArrayConverter);
-			mgr.RegisterConverter(ShaderProgramConverter);
+			var mgr = new CachedContentManagerDecorator(new ResourceContentManager(resourceAssembly));
+			mgr.RegisterImporter(ContentImporters.String);
+			mgr.RegisterImporter(ContentImporters.ByteBuffer);
+			mgr.RegisterImporter(BitmapConverter);
+			mgr.RegisterImporter(TextureArrayConverter);
+			mgr.RegisterImporter(ShaderProgramConverter);
 			return mgr;
 		}
 
@@ -56,7 +57,7 @@ namespace Zenseless.OpenGL
 			{ ".vert" , HLGL.ShaderType.VertexShader },
 		};
 
-		private static ITexture2D BitmapConverter(IEnumerable<NamedResourceStream> resources)
+		private static ITexture2D BitmapConverter(IEnumerable<NamedStream> resources)
 		{
 			foreach (var res in resources)
 			{
@@ -69,7 +70,7 @@ namespace Zenseless.OpenGL
 			return null;
 		}
 
-		private static IShaderProgram PixelShaderConverter(NamedResourceStream res)
+		private static IShaderProgram PixelShaderConverter(NamedStream res)
 		{
 			using (var reader = new StreamReader(res.Stream, true))
 			{
@@ -78,7 +79,7 @@ namespace Zenseless.OpenGL
 			}
 		}
 
-		private static IShaderProgram ShaderProgramConverter(IEnumerable<NamedResourceStream> resources)
+		private static IShaderProgram ShaderProgramConverter(IEnumerable<NamedStream> resources)
 		{
 			var count = resources.Count();
 			if (0 == count) return null;
@@ -109,7 +110,7 @@ namespace Zenseless.OpenGL
 			}
 		}
 
-		private static ITexture2dArray TextureArrayConverter(IEnumerable<NamedResourceStream> resources)
+		private static ITexture2dArray TextureArrayConverter(IEnumerable<NamedStream> resources)
 		{
 			var count = resources.Count();
 			if (2 > count) return null;

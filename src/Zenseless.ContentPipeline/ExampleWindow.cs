@@ -74,13 +74,14 @@ namespace Zenseless.ContentPipeline
 		/// The resource manager.
 		/// </value>
 		public ResourceManager ResourceManager { get; private set; }
+
 		/// <summary>
 		/// Gets the content manager.
 		/// </summary>
 		/// <value>
 		/// The content manager.
 		/// </value>
-		public IContentManager ContentManager { get; }
+		public IContentLoader ContentLoader => contentManager;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ExampleWindow"/> class.
@@ -112,7 +113,18 @@ namespace Zenseless.ContentPipeline
 			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
 			ResourceManager = resourceProvider as ResourceManager;
 
-			ContentManager = ContentManagerGL.Create(Assembly.GetEntryAssembly());
+			contentManager = ContentManagerGL.Create(Assembly.GetEntryAssembly());
+		}
+
+		/// <summary>
+		/// Sets the content search directory. 
+		/// This is needed if you want to do automatic runtime content reloading if the content source file changes. 
+		/// This feature is disabled otherwise. The execution time of this command is dependent on how many files are found inside the given directory.
+		/// </summary>
+		/// <param name="contentSearchDirectory">The content search directory. Content is found in this directory or subdirectories</param>
+		public void SetContentSearchDirectory(string contentSearchDirectory)
+		{
+			contentManager.ResolveContentFiles(contentSearchDirectory);
 		}
 
 		/// <summary>
@@ -135,6 +147,7 @@ namespace Zenseless.ContentPipeline
 			screenShots?.SaveToDefaultDir();
 		}
 
+		private readonly IContentManager contentManager;
 		private CompositionContainer _container;
 		private GameWindow gameWindow;
 		[Import] private IResourceProvider resourceProvider = null;

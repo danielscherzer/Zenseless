@@ -37,6 +37,10 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentManagement\CachedContentManagerDecorator.cs" />
+    <Compile Include="ContentManagement\ContentImporters.cs" />
+    <Compile Include="ContentManagement\ContentLoaderExtensions.cs" />
+    <Compile Include="ContentManagement\IContentLoader.cs" />
     <Compile Include="StateManagement\BlendOperator.cs" />
     <Compile Include="StateManagement\BlendParameter.cs" />
     <Compile Include="StateManagement\BlendState.cs" />
@@ -56,7 +60,7 @@
     <Compile Include="ITexture.cs" />
     <Compile Include="ITexture2D.cs" />
     <Compile Include="ITexture2dArray.cs" />
-    <Compile Include="ContentManagement\NamedResourceStream.cs" />
+    <Compile Include="ContentManagement\NamedStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateManagement\RenderState.cs" />
     <Compile Include="ShaderException.cs" />

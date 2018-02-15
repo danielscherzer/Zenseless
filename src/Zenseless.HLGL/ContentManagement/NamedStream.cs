@@ -5,7 +5,7 @@ namespace Zenseless.HLGL
 	/// <summary>
 	/// 
 	/// </summary>
-	public struct NamedResourceStream
+	public struct NamedStream
 	{
 		/// <summary>
 		/// The name
@@ -17,11 +17,11 @@ namespace Zenseless.HLGL
 		public readonly Stream Stream;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="NamedResourceStream"/> struct.
+		/// Initializes a new instance of the <see cref="NamedStream"/> struct.
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="stream">The stream.</param>
-		public NamedResourceStream(string name, Stream stream)
+		public NamedStream(string name, Stream stream)
 		{
 			Name = name;
 			Stream = stream;
