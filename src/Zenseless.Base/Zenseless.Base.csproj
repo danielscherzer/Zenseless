@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4de8bcd3-83df-48dd-b962-518c06d3491a}</ProjectGuid>
+    <ProjectGuid>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Zenseless.Base</RootNamespace>
@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="DebugTools.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="FileWatcher.cs" />
     <Compile Include="GameTime.cs" />

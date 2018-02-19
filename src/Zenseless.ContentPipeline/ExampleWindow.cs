@@ -1,18 +1,16 @@
-﻿using Zenseless.HLGL;
-using Zenseless.OpenGL;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Platform;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Linq;
 using System.Drawing;
-using System.Collections.Generic;
-using Zenseless.Base;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
+using Zenseless.Base;
+using Zenseless.HLGL;
+using Zenseless.OpenGL;
 
 namespace Zenseless.ContentPipeline
 {
@@ -124,7 +122,7 @@ namespace Zenseless.ContentPipeline
 		/// <param name="contentSearchDirectory">The content search directory. Content is found in this directory or subdirectories</param>
 		public void SetContentSearchDirectory(string contentSearchDirectory)
 		{
-			contentManager.ResolveContentFiles(contentSearchDirectory);
+			contentManager.SetContentSearchDirectory(contentSearchDirectory);
 		}
 
 		/// <summary>
@@ -147,7 +145,7 @@ namespace Zenseless.ContentPipeline
 			screenShots?.SaveToDefaultDir();
 		}
 
-		private readonly IContentManager contentManager;
+		private readonly FileContentManager contentManager;
 		private CompositionContainer _container;
 		private GameWindow gameWindow;
 		[Import] private IResourceProvider resourceProvider = null;
@@ -170,6 +168,7 @@ namespace Zenseless.ContentPipeline
 
 		private void GameWindowRender()
 		{
+			contentManager.CheckForResourceChange();
 			ResourceManager?.CheckForShaderChange();
 			//render
 			Render?.Invoke();

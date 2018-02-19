@@ -18,11 +18,6 @@
 		/// <returns></returns>
 		public static ITexture FromStream(Stream stream)
 		{
-			var texture = new Texture2dGL
-			{
-				Filter = TextureFilterMode.Mipmap
-			};
-			texture.Activate();
 			var source = new SysMedia.Imaging.BitmapImage();
 			source.BeginInit();
 			source.StreamSource = stream;
@@ -32,9 +27,10 @@
 			writable.Lock();
 			var internalFormat = SelectInternalPixelFormat(source.Format);
 			var inputPixelFormat = SelectPixelFormat(source.Format);
+			var texture = new Texture2dGL();
 			texture.LoadPixels(writable.BackBuffer, source.PixelWidth, source.PixelHeight, internalFormat, inputPixelFormat, PixelType.UnsignedByte);
 			writable.Unlock();
-			texture.Deactivate();
+			texture.Filter = TextureFilterMode.Mipmap;
 			return texture;
 		}
 

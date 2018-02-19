@@ -9,17 +9,35 @@ namespace Zenseless.HLGL
 	/// </summary>
 	public class CachedContentManagerDecorator : IContentManager
 	{
-		private readonly IContentManager contentManager;
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CachedContentManagerDecorator"/> class.
 		/// </summary>
 		/// <param name="contentManager">The content manager.</param>
 		public CachedContentManagerDecorator(IContentManager contentManager)
 		{
-			if (contentManager is null) throw new ArgumentException($"Parameter '{nameof(contentManager)}' must not be null");
-			this.contentManager = contentManager;
+			ContentManager = contentManager ?? throw new ArgumentNullException(nameof(contentManager));
 		}
+
+		/// <summary>
+		/// Gets the decorated content manager.
+		/// </summary>
+		/// <value>
+		/// The content manager.
+		/// </value>
+		public IContentManager ContentManager { get; private set; }
+
+		/// <summary>
+		/// Occurs after a new cache entry was created.
+		/// </summary>
+		public event EventHandler<NewCacheEntryEventArgs> NewCacheEntry;
+
+		/// <summary>
+		/// Gets the underlying <seealso cref="INamedStreamLoader" /> loader instance.
+		/// </summary>
+		/// <value>
+		/// The <seealso cref="INamedStreamLoader" /> loader instance.
+		/// </value>
+		public INamedStreamLoader Loader => ContentManager.Loader;
 
 		/// <summary>
 		/// Enumerates all content resource names.
@@ -27,7 +45,23 @@ namespace Zenseless.HLGL
 		/// <value>
 		/// All content resource names.
 		/// </value>
-		public IEnumerable<string> Names => contentManager.Names;
+		public IEnumerable<string> Names => ContentManager.Names;
+
+		/// <summary>
+		/// Disposes all loaded content instances.
+		/// </summary>
+		public void DisposeInstances()
+		{
+			foreach(var instance in instanceCache.Values)
+			{
+				var disposable = instance as IDisposable;
+				if(!(disposable is null))
+				{
+					disposable.Dispose();
+				}
+				instanceCache.Clear();
+			}
+		}
 
 		/// <summary>
 		/// Creates an instance of a given type from the resources with the specified names.
@@ -46,8 +80,10 @@ namespace Zenseless.HLGL
 				if(typedInstance is null) throw new ArgumentException($"Wrong type '{typeof(TYPE).FullName}' for instance of type '{instance.GetType().FullName}'.");
 				return typedInstance;
 			}
-			var result = contentManager.Load<TYPE>(names);
+			var fullNames = Names.GetFullNames(names);
+			var result = ContentManager.Load<TYPE>(fullNames);
 			instanceCache[name] = result;
+			NewCacheEntry?.Invoke(this, new NewCacheEntryEventArgs(result, name, fullNames));
 			return result;
 		}
 
@@ -58,7 +94,7 @@ namespace Zenseless.HLGL
 		/// <param name="importer">The importer instance.</param>
 		public void RegisterImporter<TYPE>(Func<IEnumerable<NamedStream>, TYPE> importer) where TYPE : class
 		{
-			contentManager.RegisterImporter(importer);
+			ContentManager.RegisterImporter(importer);
 		}
 
 		private Dictionary<string, object> instanceCache = new Dictionary<string, object>();

@@ -12,14 +12,14 @@ namespace Zenseless.HLGL
 		/// </summary>
 		public readonly string Name;
 		/// <summary>
-		/// The stream
+		/// The stream. Do not dispose the stream this will be handled by the content manager/loader
 		/// </summary>
 		public readonly Stream Stream;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="NamedStream"/> struct.
+		/// Initializes a new instance of the <see cref="NamedStream"/> structure.
 		/// </summary>
-		/// <param name="name">The name.</param>
+		/// <param name="name">The name of the stream.</param>
 		/// <param name="stream">The stream.</param>
 		public NamedStream(string name, Stream stream)
 		{

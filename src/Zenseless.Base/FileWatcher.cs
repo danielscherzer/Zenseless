@@ -4,9 +4,9 @@ using System.IO;
 namespace Zenseless.Base
 {
 	/// <summary>
-	/// 
+	/// Watches the file system for changes to a given file
 	/// </summary>
-	public class FileWatcher
+	public class FileWatcher : Disposable
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FileWatcher"/> class.
@@ -27,7 +27,7 @@ namespace Zenseless.Base
                 SynchronizingObject = syncObject
             };
             watcher.Changed += FileNotification;
-			//visual studio does not change a file, but saves a copy and later deletes the original and renames
+			//visual studio does not change a file, but saves a copy and later deletes the original and renames so we watch these too
 			watcher.Created += FileNotification;
 			watcher.Renamed += FileNotification;
 			watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size | NotifyFilters.CreationTime | NotifyFilters.FileName;
@@ -35,20 +35,9 @@ namespace Zenseless.Base
 		}
 
 		/// <summary>
-		/// Occurs when [changed].
+		/// Occurs when the file has changed on disc.
 		/// </summary>
 		public event FileSystemEventHandler Changed;
-
-		/// <summary>
-		/// Files the notification.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="FileSystemEventArgs"/> instance containing the event data.</param>
-		private void FileNotification(object sender, FileSystemEventArgs e)
-		{
-			Dirty = true;
-			Changed?.Invoke(sender, e);
-		}
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="FileWatcher"/> is dirty.
@@ -57,17 +46,30 @@ namespace Zenseless.Base
 		///   <c>true</c> if dirty; otherwise, <c>false</c>.
 		/// </value>
 		public bool Dirty { get; set; }
+
 		/// <summary>
-		/// Gets the full path.
+		/// Gets the full path of the file.
 		/// </summary>
 		/// <value>
 		/// The full path.
 		/// </value>
 		public string FullPath { get; private set; }
 
-		/// <summary>
-		/// The watcher
-		/// </summary>
 		private FileSystemWatcher watcher;
+
+		private void FileNotification(object sender, FileSystemEventArgs e)
+		{
+			Dirty = true;
+			Changed?.Invoke(sender, e);
+		}
+
+		/// <summary>
+		/// Will be called from the default Dispose method.
+		/// Implementers should dispose all their resources her.
+		/// </summary>
+		protected override void DisposeResources()
+		{
+			watcher.Dispose();
+		}
 	}
 }

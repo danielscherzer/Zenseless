@@ -19,10 +19,18 @@
 		/// <returns></returns>
 		public static ITexture2D FromBitmap(Bitmap bitmap)
 		{
-			var texture = new Texture2dGL
-			{
-				Filter = TextureFilterMode.Mipmap
-			};
+			var texture = new Texture2dGL();
+			texture.FromBitmap(bitmap);
+			return texture;
+		}
+
+		/// <summary>
+		/// Loads texture date from a bitmap into a Texture2dGL instance.
+		/// </summary>
+		/// <param name="texture">The texture instance.</param>
+		/// <param name="bitmap">The bitmap.</param>
+		public static void FromBitmap(this Texture2dGL texture, Bitmap bitmap)
+		{
 			//TODO: 16bit channels
 			using (Bitmap bmp = new Bitmap(bitmap))
 			{
@@ -33,7 +41,7 @@
 				texture.LoadPixels(bmpData.Scan0, bmpData.Width, bmpData.Height, internalFormat, inputPixelFormat, PixelType.UnsignedByte);
 				bmp.UnlockBits(bmpData);
 			}
-			return texture;
+			texture.Filter = TextureFilterMode.Mipmap;
 		}
 
 		/// <summary>

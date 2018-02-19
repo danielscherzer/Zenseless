@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
 
 namespace Zenseless.Geometry
 {
@@ -33,22 +32,22 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether [contains] [the specified name].
+		/// Determines whether the mesh contains the attribute with the specified name.
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <returns>
-		///   <c>true</c> if [contains] [the specified name]; otherwise, <c>false</c>.
+		///   <c>true</c> if the mesh contains the attribute with the specified name; otherwise, <c>false</c>.
 		/// </returns>
 		public bool Contains(string name) => attributes.ContainsKey(name);
 
 		/// <summary>
-		/// Gets the specified name.
+		/// Gets the attribute with the specified name.
 		/// </summary>
-		/// <typeparam name="ELEMENT_TYPE">The type of the lement type.</typeparam>
+		/// <typeparam name="ELEMENT_TYPE">The type of the element.</typeparam>
 		/// <param name="name">The name.</param>
 		/// <returns></returns>
 		/// <exception cref="InvalidCastException"></exception>
-		/// <exception cref="KeyNotFoundException"></exception>
+		/// <exception cref="ArgumentException"></exception>
 		public List<ELEMENT_TYPE> Get<ELEMENT_TYPE>(string name)
 		{
 			if (attributes.TryGetValue(name, out object data))
@@ -60,12 +59,9 @@ namespace Zenseless.Geometry
 				}
 				return typedData;
 			}
-			throw new KeyNotFoundException($"No attribute with name '{name}' stored.");
+			throw new ArgumentException($"No attribute with name '{name}' stored.");
 		}
 
-		/// <summary>
-		/// The attributes
-		/// </summary>
 		private Dictionary<string, object> attributes = new Dictionary<string, object>();
 	}
 }

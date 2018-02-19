@@ -1,8 +1,9 @@
 ﻿using Zenseless.Geometry;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Diagnostics;
 using System;
+using Zenseless.Base;
+using System.Diagnostics;
 
 namespace Zenseless.OpenGL
 {
@@ -35,7 +36,7 @@ namespace Zenseless.OpenGL
 			ErrorCode error;
 			while (ErrorCode.NoError != (error = GL.GetError()))
 			{
-				Console.WriteLine(error);
+				Console.WriteLine($"{DebugTools.GetSourcePositionForConsoleRef()}: OpenGL Error '{error}'");
 			}
 		}
 

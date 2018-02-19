@@ -120,24 +120,28 @@ namespace Zenseless.OpenGL
 		/// Unknown Link error!
 		/// or
 		/// Error linking shader
+		/// This will also delete all compiled shaders
 		/// </exception>
 		public void Link()
 		{
 			try
 			{
 				GL.LinkProgram(ProgramID);
+				GL.GetProgram(ProgramID, GetProgramParameterName.LinkStatus, out int status_code);
+				if (1 != status_code)
+				{
+					throw new ShaderException("Error linking shader", GL.GetProgramInfoLog(ProgramID));
+				}
+				IsLinked = true;
 			}
 			catch (Exception)
 			{
 				throw new ShaderException("Unknown Link error!", string.Empty);
 			}
-			GL.GetProgram(ProgramID, GetProgramParameterName.LinkStatus, out int status_code);
-			if (1 != status_code)
+			finally
 			{
-				throw new ShaderException("Error linking shader", GL.GetProgramInfoLog(ProgramID));
+				RemoveShaders();
 			}
-			IsLinked = true;
-			RemoveShaders();
 		}
 
 		/// <summary>

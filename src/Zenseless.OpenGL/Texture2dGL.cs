@@ -44,20 +44,6 @@ namespace Zenseless.OpenGL
 			var internalFormat = Convert(components, floatingPoint);
 			var inputPixelFormat = Convert(components);
 			var type = floatingPoint ? PixelType.UnsignedByte : PixelType.Float;
-			return Create(width, height, internalFormat, inputPixelFormat, type);
-		}
-
-		/// <summary>
-		/// Creates the specified width.
-		/// </summary>
-		/// <param name="width">The width.</param>
-		/// <param name="height">The height.</param>
-		/// <param name="internalFormat">The internal format.</param>
-		/// <param name="inputPixelFormat">The input pixel format.</param>
-		/// <param name="type">The type.</param>
-		/// <returns></returns>
-		public static Texture2dGL Create(int width, int height, PixelInternalFormat internalFormat, PixelFormat inputPixelFormat = PixelFormat.Rgba, PixelType type = PixelType.UnsignedByte)
-		{
 			var texture = new Texture2dGL();
 			//create empty texture of given size
 			texture.LoadPixels(IntPtr.Zero, width, height, internalFormat, inputPixelFormat, type);

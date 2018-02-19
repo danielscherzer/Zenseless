@@ -28,13 +28,9 @@ namespace Zenseless.OpenGL
 				IntPtr pointer = pinnedArray.AddrOfPinnedObject();
 				var width = data.GetLength(0);
 				var height = data.GetLength(1);
-				var texture = new Texture2dGL
-				{
-					Filter = TextureFilterMode.Mipmap
-				};
-				texture.Activate();
+				var texture = new Texture2dGL();
 				texture.LoadPixels(pointer, width, height, internalFormat, format, type);
-				texture.Deactivate();
+				texture.Filter = TextureFilterMode.Mipmap;
 				return texture;
 			}
 			finally

@@ -1,32 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Zenseless.HLGL
 {
 	/// <summary>
-	/// Implementation of a content manager for embedded resources
+	/// Implementation of a content manager
 	/// </summary>
-	/// <seealso cref="IContentLoader" />
-	public class ResourceContentManager : IContentManager
+	/// <seealso cref="IContentManager" />
+	public class ContentManager : IContentManager
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ResourceContentManager"/> class.
+		/// Initializes a new instance of the <see cref="ContentManager"/> class.
 		/// </summary>
-		/// <param name="resourceAssembly">The resource assembly.</param>
-		public ResourceContentManager(Assembly resourceAssembly)
+		/// <param name="loader">The loader.</param>
+		/// <exception cref="ArgumentNullException">loader</exception>
+		public ContentManager(INamedStreamLoader loader)
 		{
-			this.resourceAssembly = resourceAssembly;
-			resourceNames = resourceAssembly.GetManifestResourceNames();
+			this.loader = loader ?? throw new ArgumentNullException(nameof(loader));
 		}
 
 		/// <summary>
-		/// Enumerates all content resource keys.
+		/// Gets the underlying <seealso cref="INamedStreamLoader" /> loader instance.
 		/// </summary>
 		/// <value>
-		/// All content resource keys.
+		/// The <seealso cref="INamedStreamLoader" /> loader instance.
 		/// </value>
-		public IEnumerable<string> Names => resourceNames;
+		public INamedStreamLoader Loader => loader;
+
+		/// <summary>
+		/// Enumerates all content resource names.
+		/// </summary>
+		/// <value>
+		/// All content resource names.
+		/// </value>
+		public IEnumerable<string> Names => loader.Names;
 
 		/// <summary>
 		/// Registers an importer.
@@ -36,7 +43,7 @@ namespace Zenseless.HLGL
 		/// <exception cref="ArgumentException"></exception>
 		public void RegisterImporter<TYPE>(Func<IEnumerable<NamedStream>, TYPE> importer) where TYPE : class
 		{
-			if (importer is null) throw new ArgumentException($"The importer must not be null.");
+			if (importer is null) throw new ArgumentNullException($"The importer must not be null.");
 			importers.Add(typeof(TYPE), importer);
 		}
 		
@@ -44,33 +51,31 @@ namespace Zenseless.HLGL
 		/// Creates an instance of a given type from the resources with the specified keys.
 		/// </summary>
 		/// <typeparam name="TYPE">The type to create.</typeparam>
-		/// <param name="keys">A list of resource keys.</param>
+		/// <param name="names">A list of resource names.</param>
 		/// <returns>
 		/// An instance of the given type if an importer for the TYPE is registered.
 		/// </returns>
 		/// <exception cref="ArgumentException">
 		/// </exception>
-		public TYPE Load<TYPE>(IEnumerable<string> keys) where TYPE : class
+		public TYPE Load<TYPE>(IEnumerable<string> names) where TYPE : class
 		{
-			var resources = new List<NamedStream>();
-			foreach (var name in keys)
-			{ 
-				var fullName = this.GetFullName(name);
-				if (fullName is null) throw new ArgumentException($"The embedded resource '{name}' was not found.");
-				resources.Add(new NamedStream(fullName, resourceAssembly.GetManifestResourceStream(fullName)));
-			}
 			var type = typeof(TYPE);
 			if (importers.TryGetValue(type, out var importer))
 			{
+				var resources = new List<NamedStream>();
+				foreach (var name in names)
+				{
+					var fullName = Names.GetFullName(name);
+					resources.Add(loader.GetStream(fullName));
+				}
 				var result = importer.Invoke(resources) as TYPE;
-				foreach (var res in resources) res.Stream.Dispose();
+				resources.Dispose();
 				return result;
 			}
 			throw new ArgumentException($"No converter for type '{type.FullName}' was found.");
 		}
 
-		private readonly IEnumerable<string> resourceNames;
-		private readonly Assembly resourceAssembly;
+		private readonly INamedStreamLoader loader;
 		private Dictionary<Type, Func<IEnumerable<NamedStream>, object>> importers = new Dictionary<Type, Func<IEnumerable<NamedStream>, object>>();
 	}
 }

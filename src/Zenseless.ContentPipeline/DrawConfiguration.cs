@@ -1,17 +1,16 @@
-﻿using Zenseless.Geometry;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Collections.Generic;
+using Zenseless.Geometry;
+using Zenseless.HLGL;
+using Zenseless.OpenGL;
 
 namespace Zenseless.ContentPipeline
 {
-	//todo: make this into a node with typed inputs and outputs
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.HLGL.IDrawConfiguration" />
+	/// <seealso cref="IDrawConfiguration" />
 	public class DrawConfiguration : IDrawConfiguration
 	{
 		/// <summary>
@@ -180,11 +179,11 @@ namespace Zenseless.ContentPipeline
 		/// </exception>
 		public void UpdateMeshShader(DefaultMesh mesh, string shaderName)
 		{
-			if (string.IsNullOrWhiteSpace(shaderName)) throw new ArgumentException("A shaderName is required");
+			if (string.IsNullOrWhiteSpace(shaderName)) throw new ArgumentNullException("A shaderName is required");
 			var resShader = ResourceManager.Instance.Get<IShaderProgram>(shaderName);
 			if (resShader is null) throw new ArgumentException("Shader '" + shaderName + "' does not exist");
 			ShaderProgram = resShader.Value;
-			//if (ReferenceEquals(null, mesh)) throw new ArgumentException("A mesh is required");
+			//if (ReferenceEquals(null, mesh)) throw new ArgumentNullException("A mesh is required");
 			Vao = mesh is null ? null : VAOLoader.FromMesh(mesh, ShaderProgram);
 		}
 
