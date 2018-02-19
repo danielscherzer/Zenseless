@@ -45,8 +45,13 @@ namespace Zenseless.ContentPipeline
 		/// <param name="id">The identifier.</param>
 		public void Select(int id)
 		{
-			listBox.SelectedIndex = id;
-			ListBox_SelectedIndexChanged(null, null);
+			try
+			{
+				listBox.SelectedIndex = id;
+				ListBox_SelectedIndexChanged(null, null);
+			}
+			catch
+			{ }
 		}
 
 		/// <summary>

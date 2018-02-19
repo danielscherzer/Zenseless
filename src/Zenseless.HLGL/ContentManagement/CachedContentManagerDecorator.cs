@@ -32,14 +32,6 @@ namespace Zenseless.HLGL
 		public event EventHandler<NewCacheEntryEventArgs> NewCacheEntry;
 
 		/// <summary>
-		/// Gets the underlying <seealso cref="INamedStreamLoader" /> loader instance.
-		/// </summary>
-		/// <value>
-		/// The <seealso cref="INamedStreamLoader" /> loader instance.
-		/// </value>
-		public INamedStreamLoader Loader => ContentManager.Loader;
-
-		/// <summary>
 		/// Enumerates all content resource names.
 		/// </summary>
 		/// <value>

@@ -11,39 +11,87 @@ namespace Zenseless.HLGL
 	/// If a file is available for a resource, the file will be loaded and if changed during run-time the content is recreated
 	/// </summary>
 	/// <seealso cref="CachedContentManagerDecorator" />
-	public class FileContentManager : CachedContentManagerDecorator
+	public class FileContentManager : IContentManager
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FileContentManager"/> class.
 		/// </summary>
 		/// <param name="resourceAssembly"></param>
-		public FileContentManager(Assembly resourceAssembly) : base(new ContentManager(new ResourceLoader(resourceAssembly)))
+		public FileContentManager(Assembly resourceAssembly) : base()
 		{
-			NewCacheEntry += FileContentManagerDecorator_NewCacheEntry;
+			resLoader = new ResourceLoader(resourceAssembly);
+			cachedContentManager = new CachedContentManagerDecorator(new ContentManager(resLoader));
+			cachedContentManager.NewCacheEntry += FileContentManagerDecorator_NewCacheEntry;
 		}
-		
+
+		/// <summary>
+		/// Gets the last changed file path.
+		/// </summary>
+		/// <value>
+		/// The last changed file path.
+		/// </value>
+		public string LastChangedFilePath { get; private set; }
+
+		/// <summary>
+		/// Enumerates all content resource names.
+		/// </summary>
+		/// <value>
+		/// All content resource names.
+		/// </value>
+		public IEnumerable<string> Names => resLoader.Names;
+
 		/// <summary>
 		/// Checks for resource change.
 		/// </summary>
 		public void CheckForResourceChange()
 		{
-			if(changedInstances.TryDequeue(out var instanceData))
+			if(changedFiles.TryDequeue(out var fileChangeData))
 			{
-				var instance = instanceData.Instance;
+				var instance = fileChangeData.Instance;
 				var type = instance.GetType();
+				LastChangedFilePath = fileChangeData.FilePath;
 				if (updaters.TryGetValue(type, out var updater))
 				{
-					var namedStreams = OpenStreams(instanceData.Names);
+					var namedStreams = OpenStreams(fileChangeData.Names);
 					//check for stream access errors and if so try it later again
 					if (namedStreams is null)
 					{
-						changedInstances.Enqueue(instanceData);
+						changedFiles.Enqueue(fileChangeData);
 						return;
 					}
-					updater(instance, namedStreams);
-					namedStreams.Dispose();
+					try
+					{
+						updater(instance, namedStreams);
+					}
+					finally
+					{
+						namedStreams.Dispose();
+					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Creates an instance of a given type from the resources with the specified names.
+		/// </summary>
+		/// <typeparam name="TYPE">The type to create.</typeparam>
+		/// <param name="names">A list of resource names.</param>
+		/// <returns>
+		/// An instance of the given type.
+		/// </returns>
+		public TYPE Load<TYPE>(IEnumerable<string> names) where TYPE : class
+		{
+			return cachedContentManager.Load<TYPE>(names);
+		}
+
+		/// <summary>
+		/// Registers an importer.
+		/// </summary>
+		/// <typeparam name="TYPE">The return type of the importer.</typeparam>
+		/// <param name="importer">The importer instance.</param>
+		public void RegisterImporter<TYPE>(Func<IEnumerable<NamedStream>, TYPE> importer) where TYPE : class
+		{
+			cachedContentManager.RegisterImporter(importer);
 		}
 
 		/// <summary>
@@ -66,7 +114,7 @@ namespace Zenseless.HLGL
 		/// <param name="contentSearchDirectory">The content search directory. Content is found in this directory or subdirectories</param>		
 		public void SetContentSearchDirectory(string contentSearchDirectory)
 		{
-			var mapping = Loader.ResolveNamedStreamFiles(contentSearchDirectory);
+			var mapping = Names.FindFiles(contentSearchDirectory);
 			fileLoader = new FileLoader();
 			foreach (var watcher in watchers) watcher.Value.Dispose();
 			watchers.Clear();
@@ -76,22 +124,26 @@ namespace Zenseless.HLGL
 			};
 		}
 
-		private struct InstanceData
+		private struct FileChangeData
 		{
-			public InstanceData(object instance, IEnumerable<string> names)
+			public FileChangeData(string filePath, object instance, IEnumerable<string> names)
 			{
+				FilePath = filePath;
 				Instance = instance;
 				Names = names;
 			}
 
+			public string FilePath { get; }
 			public object Instance { get; }
 			public IEnumerable<string> Names { get; }
 		}
 
-		private ConcurrentQueue<InstanceData> changedInstances = new ConcurrentQueue<InstanceData>();
+		private ConcurrentQueue<FileChangeData> changedFiles = new ConcurrentQueue<FileChangeData>();
 		private FileLoader fileLoader;
 		private Dictionary<Type, Action<object, IEnumerable<NamedStream>>> updaters = new Dictionary<Type, Action<object, IEnumerable<NamedStream>>>();
 		private Dictionary<string, FileWatcher> watchers = new Dictionary<string, FileWatcher>();
+		private readonly ResourceLoader resLoader;
+		private readonly CachedContentManagerDecorator cachedContentManager;
 
 		private void FileContentManagerDecorator_NewCacheEntry(object sender, NewCacheEntryEventArgs e)
 		{
@@ -102,7 +154,7 @@ namespace Zenseless.HLGL
 				if (fileLoader.TryGetPath(fullName, out var filePath))
 				{
 					var watcher = GetWatcher(filePath);
-					watcher.Changed += (s, a) => changedInstances.Enqueue(new InstanceData(e.Instance, e.Names));
+					watcher.Changed += (s, a) => changedFiles.Enqueue(new FileChangeData(filePath, e.Instance, e.Names));
 				}
 			}
 		}
@@ -120,7 +172,7 @@ namespace Zenseless.HLGL
 					}
 					else
 					{
-						namedStreams.Add(Loader.GetStream(name));
+						namedStreams.Add(resLoader.GetStream(name));
 					}
 				}
 				catch

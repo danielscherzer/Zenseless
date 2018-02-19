@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace Zenseless.Geometry
 {
@@ -44,7 +45,7 @@ namespace Zenseless.Geometry
 		/// <returns></returns>
 		public static DefaultMesh FromObj(byte[] objByteData)
 		{
-			var parser = new ObjParser(objByteData);
+			var parser = new ObjParser(new MemoryStream(objByteData));
 			var uniqueVertexIDs = new Dictionary<ObjParser.Vertex, uint>(new VertexComparer());
 
 			var mesh = new DefaultMesh();

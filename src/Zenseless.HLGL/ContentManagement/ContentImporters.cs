@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Zenseless.Geometry;
 
 namespace Zenseless.HLGL
 {
@@ -44,6 +45,17 @@ namespace Zenseless.HLGL
 				}
 			}
 			throw new ArgumentException("No elements");
+		}
+
+		/// <summary>
+		/// Meshes the specified resources.
+		/// </summary>
+		/// <param name="resources">The resources.</param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException">No elements</exception>
+		public static DefaultMesh DefaultMesh(IEnumerable<NamedStream> resources)
+		{
+			return Obj2Mesh.FromObj(ByteBuffer(resources));
 		}
 	}
 }

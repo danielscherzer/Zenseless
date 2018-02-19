@@ -168,7 +168,19 @@ namespace Zenseless.ContentPipeline
 
 		private void GameWindowRender()
 		{
-			contentManager.CheckForResourceChange();
+			try
+			{
+				contentManager.CheckForResourceChange();
+			}
+			catch (ShaderException e)
+			{
+				e.Data[ShaderLoader.ExceptionDataFileName] = contentManager.LastChangedFilePath; //TODO: make cleaner after removal of old stuff
+				new FormShaderExceptionFacade().ShowModal(e);
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine(e.ToString());
+			}
 			ResourceManager?.CheckForShaderChange();
 			//render
 			Render?.Invoke();

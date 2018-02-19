@@ -20,14 +20,6 @@ namespace Zenseless.HLGL
 		}
 
 		/// <summary>
-		/// Gets the underlying <seealso cref="INamedStreamLoader" /> loader instance.
-		/// </summary>
-		/// <value>
-		/// The <seealso cref="INamedStreamLoader" /> loader instance.
-		/// </value>
-		public INamedStreamLoader Loader => loader;
-
-		/// <summary>
 		/// Enumerates all content resource names.
 		/// </summary>
 		/// <value>
@@ -68,6 +60,7 @@ namespace Zenseless.HLGL
 					var fullName = Names.GetFullName(name);
 					resources.Add(loader.GetStream(fullName));
 				}
+				if (0 == resources.Count) throw new ArgumentException("No input resources given!");
 				var result = importer.Invoke(resources) as TYPE;
 				resources.Dispose();
 				return result;

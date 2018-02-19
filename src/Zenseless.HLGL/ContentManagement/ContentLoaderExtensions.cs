@@ -19,7 +19,20 @@ namespace Zenseless.HLGL
 		/// <param name="fullNames">The reference list of full names</param>
 		/// <param name="shortName">The short name.</param>
 		/// <returns>The full name.</returns>
-		public static string GetFullName(this IEnumerable<string> fullNames, string shortName) => fullNames.FirstOrDefault((name) => name.ToLowerInvariant().Contains(shortName.ToLowerInvariant()));
+		public static string GetFullName(this IEnumerable<string> fullNames, string shortName)
+		{
+			if (fullNames == null)
+			{
+				throw new ArgumentNullException(nameof(fullNames));
+			}
+
+			if (shortName == null)
+			{
+				throw new ArgumentNullException(nameof(shortName));
+			}
+
+			return fullNames.FirstOrDefault((name) => name.ToLowerInvariant().Contains(shortName.ToLowerInvariant()));
+		}
 
 		/// <summary>
 		/// Gets the full names for a list of given shortNames.
@@ -29,6 +42,16 @@ namespace Zenseless.HLGL
 		/// <returns>The list of full names.</returns>
 		public static IEnumerable<string> GetFullNames(this IEnumerable<string> fullNames, IEnumerable<string> shortNames)
 		{
+			if (fullNames == null)
+			{
+				throw new ArgumentNullException(nameof(fullNames));
+			}
+
+			if (shortNames == null)
+			{
+				throw new ArgumentNullException(nameof(shortNames));
+			}
+
 			return from name in shortNames select fullNames.GetFullName(name);
 		}
 
@@ -54,27 +77,28 @@ namespace Zenseless.HLGL
 						names.Add(res);
 					}
 				}
+				if (0 == names.Count) throw new ArgumentException($"Wildcard expansion of '{name}' yielded no resources!");
 			}
 			else
 			{
+				if (null == contentLoader.Names.GetFullName(name)) throw new ArgumentException($"Content '{name}' was not found!");
 				names.Add(name);
 			}
 			return contentLoader.Load<TYPE>(names);
 		}
 
 		/// <summary>
-		/// Find files in the search directory that match the names of the streams. 
-		/// This is needed if you want to do automatic runtime content reloading if the content source file changes. 
-		/// This feature is disabled otherwise. The execution time of this command is dependent on how many files are found inside the given directory.
+		/// Find files in the search directory that match the names, in resource name form. 
+		/// This feature is disabled otherwise. The execution time of this command is dependent on the file count inside the given directory.
 		/// </summary>
-		/// <param name="loader"></param>
-		/// <param name="searchDirectory">The content search directory. Content is found in this directory or subdirectories</param>
-		public static IEnumerable<KeyValuePair<string, string>> ResolveNamedStreamFiles(this INamedStreamLoader loader, string searchDirectory)
+		/// <param name="names">The file names to find.</param>
+		/// <param name="searchDirectory">The search directory. Files are found in this directory or subdirectories</param>
+		public static IEnumerable<KeyValuePair<string, string>> FindFiles(this IEnumerable<string> names, string searchDirectory)
 		{
 			var files = Directory.EnumerateFiles(searchDirectory, "*.*", SearchOption.AllDirectories);
 			var relFileNames = from file in files select new Tuple<string, string>(FormResourceNameFromFileName(searchDirectory, file), file);
-			return from res in loader.Names
-					from file in relFileNames
+			return from res in names
+				   from file in relFileNames
 					where res.ToLowerInvariant().Contains(file.Item1)
 					select new KeyValuePair<string, string>(res, file.Item2);
 		}

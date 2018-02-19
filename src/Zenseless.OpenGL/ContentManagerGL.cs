@@ -26,9 +26,10 @@ namespace Zenseless.OpenGL
 			var mgr = new FileContentManager(resourceAssembly);
 			mgr.RegisterImporter(ContentImporters.String);
 			mgr.RegisterImporter(ContentImporters.ByteBuffer);
-			mgr.RegisterImporter(BitmapConverter);
-			mgr.RegisterImporter(TextureArrayConverter);
-			mgr.RegisterImporter(ShaderProgramConverter);
+			mgr.RegisterImporter(ContentImporters.DefaultMesh);
+			mgr.RegisterImporter(BitmapImporter);
+			mgr.RegisterImporter(TextureArrayImporter);
+			mgr.RegisterImporter(ShaderProgramImporter);
 			mgr.RegisterUpdater<Texture2dGL>(Update);
 			mgr.RegisterUpdater<ShaderProgramGL>(Update);
 			mgr.RegisterUpdater<TextureArray2dGL>(Update);
@@ -73,7 +74,7 @@ namespace Zenseless.OpenGL
 			}
 		}
 
-		private static ITexture2D BitmapConverter(IEnumerable<NamedStream> resources)
+		private static ITexture2D BitmapImporter(IEnumerable<NamedStream> resources)
 		{
 			var texture = new Texture2dGL();
 			Update(texture, resources);
@@ -85,24 +86,11 @@ namespace Zenseless.OpenGL
 			using (var reader = new StreamReader(res.Stream, true))
 			{
 				var shaderCode = reader.ReadToEnd();
-				try
-				{
-					shaderProgram.FromStrings(DefaultShader.VertexShaderScreenQuad, shaderCode);
-				}
-				catch (ShaderException e)
-				{
-					LogShaderException(e);
-				}
+				shaderProgram.FromStrings(DefaultShader.VertexShaderScreenQuad, shaderCode);
 			}
 		}
 
-		private static void LogShaderException(ShaderException e)
-		{
-			Console.WriteLine("*** " + e.Message);
-			Console.WriteLine(e.ShaderLog);
-		}
-
-		private static IShaderProgram ShaderProgramConverter(IEnumerable<NamedStream> resources)
+		private static IShaderProgram ShaderProgramImporter(IEnumerable<NamedStream> resources)
 		{
 			ShaderProgramGL shaderProgram = new ShaderProgramGL();
 			Update(shaderProgram, resources);
@@ -118,19 +106,12 @@ namespace Zenseless.OpenGL
 				Update(shaderProgram, resources.First());
 				return;
 			}
-			try
+			foreach (var res in resources)
 			{
-				foreach (var res in resources)
-				{
-					var shaderType = GetShaderTypeFromExtension(Path.GetExtension(res.Name));
-					shaderProgram.Compile(ShaderCode(res.Stream), shaderType);
-				}
-				shaderProgram.Link();
+				var shaderType = GetShaderTypeFromExtension(Path.GetExtension(res.Name));
+				shaderProgram.Compile(ShaderCode(res.Stream), shaderType);
 			}
-			catch(ShaderException e)
-			{
-				LogShaderException(e);
-			}
+			shaderProgram.Link();
 		}
 
 		private static string ShaderCode(Stream stream)
@@ -141,7 +122,7 @@ namespace Zenseless.OpenGL
 			}
 		}
 
-		private static ITexture2dArray TextureArrayConverter(IEnumerable<NamedStream> resources)
+		private static ITexture2dArray TextureArrayImporter(IEnumerable<NamedStream> resources)
 		{
 			var texArray = new TextureArray2dGL();
 			Update(texArray, resources);
@@ -171,5 +152,12 @@ namespace Zenseless.OpenGL
 			texArray.Filter = TextureFilterMode.Mipmap;
 			texArray.WrapFunction = TextureWrapFunction.ClampToEdge;
 		}
+		//private static VAO VAOImporter(IEnumerable<NamedStream> resources)
+		//{
+		//	Obj2Mesh.FromObj()
+		//	var texArray = new TextureArray2dGL();
+		//	Update(texArray, resources);
+		//	return texArray;
+		//}
 	}
 }

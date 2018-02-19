@@ -67,11 +67,11 @@ namespace Zenseless.Geometry
 		/// Initializes a new instance of the <see cref="ObjParser"/> class.
 		/// </summary>
 		/// <param name="data">The data.</param>
-		public ObjParser(byte[] data)
+		public ObjParser(Stream data)
 		{
 			char[] splitCharacters = new char[] { ' ' };
 			string line;
-			using (TextReader reader = new StreamReader((new MemoryStream(data))))
+			using (TextReader reader = new StreamReader(data))
 			{
 				while (!((line = reader.ReadLine()) is null))
 				{
