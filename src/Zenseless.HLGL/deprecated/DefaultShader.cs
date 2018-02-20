@@ -6,6 +6,15 @@
 	public static class DefaultShader
 	{
 		/// <summary>
+		/// The shader delimiter
+		/// </summary>
+		public const string ShaderDelimiter = "<><>";
+		/// <summary>
+		/// The shader program copy
+		/// </summary>
+		public const string ShaderProgramCopy = VertexShaderScreenQuad + ShaderDelimiter + FragmentShaderCopy;
+
+		/// <summary>
 		/// Vertex shader that creates a screen filling quad if called with DrawArrays(4)
 		/// </summary>
 		public const string VertexShaderScreenQuad = @"

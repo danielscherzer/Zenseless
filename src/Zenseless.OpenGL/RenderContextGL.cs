@@ -1,5 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
+using System.Collections.Generic;
 using Zenseless.HLGL;
 
 namespace Zenseless.OpenGL
@@ -21,6 +22,13 @@ namespace Zenseless.OpenGL
 			StateManager.Register<StateActiveFboGL, StateActiveFboGL>(new StateActiveFboGL());
 			StateManager.Register<StateActiveShaderGL, StateActiveShaderGL>(new StateActiveShaderGL());
 			StateManager.Register<IStateTyped<float>, States.ILineWidth>(new StateCommand<float>(GL.LineWidth, 1f));
+
+			IShaderProgram Create(string name)
+			{
+				var names = name.Split(new string[] { DefaultShader.ShaderDelimiter }, StringSplitOptions.RemoveEmptyEntries);
+				return ShaderLoader.FromStrings(names[0], names[1]);
+			}
+			typeCreatorMappings.Add(typeof(IShaderProgram), Create);
 		}
 
 		/// <summary>
@@ -58,16 +66,6 @@ namespace Zenseless.OpenGL
 		}
 
 		/// <summary>
-		/// Creates the draw configuration.
-		/// </summary>
-		/// <returns></returns>
-		/// <exception cref="NotImplementedException"></exception>
-		public IDrawConfiguration CreateDrawConfiguration()
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
 		/// Creates the render surface.
 		/// </summary>
 		/// <param name="width">The width.</param>
@@ -82,12 +80,20 @@ namespace Zenseless.OpenGL
 		}
 
 		/// <summary>
-		/// Creates the shader.
+		/// Gets the specified name.
 		/// </summary>
+		/// <typeparam name="TYPE">The type of the ype.</typeparam>
+		/// <param name="name">The name.</param>
 		/// <returns></returns>
-		public IShaderProgram CreateShader()
+		public TYPE Get<TYPE>(string name) where TYPE : class
 		{
-			return new ShaderProgramGL();
+			if(typeCreatorMappings.TryGetValue(typeof(TYPE), out var creator))
+			{
+				return creator.Invoke(name) as TYPE;
+			}
+			return null;
 		}
+
+		private Dictionary<Type, Func<string, object>> typeCreatorMappings = new Dictionary<Type, Func<string, object>>();
 	}
 }

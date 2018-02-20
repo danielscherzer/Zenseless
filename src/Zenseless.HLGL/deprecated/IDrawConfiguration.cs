@@ -46,11 +46,6 @@ namespace Zenseless.HLGL
 		/// Sets the input texture.
 		/// </summary>
 		/// <param name="name">The name.</param>
-		void SetInputTexture(string name);
-		/// <summary>
-		/// Sets the input texture.
-		/// </summary>
-		/// <param name="name">The name.</param>
 		/// <param name="image">The image.</param>
 		void SetInputTexture(string name, IRenderSurface image);
 		/// <summary>

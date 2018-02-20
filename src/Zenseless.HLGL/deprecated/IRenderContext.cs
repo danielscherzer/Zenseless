@@ -20,11 +20,7 @@
 		/// The state of the render.
 		/// </value>
 		IRenderState RenderState { get; }
-		/// <summary>
-		/// Creates the draw configuration.
-		/// </summary>
-		/// <returns></returns>
-		IDrawConfiguration CreateDrawConfiguration();
+
 		/// <summary>
 		/// Creates the render surface.
 		/// </summary>
@@ -35,16 +31,21 @@
 		/// <param name="floatingPoint">if set to <c>true</c> [floating point].</param>
 		/// <returns></returns>
 		IRenderSurface CreateRenderSurface(int width, int height, bool hasDepthBuffer = false, byte components = 4, bool floatingPoint = false);
-		/// <summary>
-		/// Creates the shader.
-		/// </summary>
-		/// <returns></returns>
-		IShaderProgram CreateShader();
+
 		/// <summary>
 		/// Draws the points.
 		/// </summary>
 		/// <param name="count">The count.</param>
 		void DrawPoints(int count);
+
+		/// <summary>
+		/// Gets the specified name.
+		/// </summary>
+		/// <typeparam name="TYPE">The type of the ype.</typeparam>
+		/// <param name="name">The name.</param>
+		/// <returns></returns>
+		TYPE Get<TYPE>(string name) where TYPE : class;
+
 		/// <summary>
 		/// Gets the frame buffer.
 		/// </summary>

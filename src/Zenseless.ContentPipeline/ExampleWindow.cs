@@ -66,14 +66,6 @@ namespace Zenseless.ContentPipeline
 		public event UpdateHandler Update;
 
 		/// <summary>
-		/// Experimental!: Gets the resource manager.
-		/// </summary>
-		/// <value>
-		/// The resource manager.
-		/// </value>
-		public ResourceManager ResourceManager { get; private set; }
-
-		/// <summary>
 		/// Gets the content manager.
 		/// </summary>
 		/// <value>
@@ -109,7 +101,6 @@ namespace Zenseless.ContentPipeline
 			gameWindow.Resize += GameWindow_Resize;
 			//register callback for keyboard
 			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
-			ResourceManager = resourceProvider as ResourceManager;
 
 			contentManager = ContentManagerGL.Create(Assembly.GetEntryAssembly());
 		}
@@ -148,7 +139,6 @@ namespace Zenseless.ContentPipeline
 		private readonly FileContentManager contentManager;
 		private CompositionContainer _container;
 		private GameWindow gameWindow;
-		[Import] private IResourceProvider resourceProvider = null;
 		private List<Bitmap> screenShots = null;
 
 		private void CreateIOCcontainer()
@@ -181,7 +171,6 @@ namespace Zenseless.ContentPipeline
 			{
 				Console.WriteLine(e.ToString());
 			}
-			ResourceManager?.CheckForShaderChange();
 			//render
 			Render?.Invoke();
 			screenShots?.Add(FrameBuffer.ToBitmap(false));  //no rotate flip for speed

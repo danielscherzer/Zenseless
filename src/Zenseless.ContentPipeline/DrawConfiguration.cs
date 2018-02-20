@@ -97,19 +97,20 @@ namespace Zenseless.ContentPipeline
 		/// Sets the input texture.
 		/// </summary>
 		/// <param name="name">The name.</param>
-		/// <param name="image">The image.</param>
-		public void SetInputTexture(string name, IRenderSurface image)
+		/// <param name="texture">The texture.</param>
+		public void SetInputTexture(string name, ITexture texture)
 		{
-			textures[name] = image.Texture;
+			textures[name] = texture;
 		}
 
 		/// <summary>
 		/// Sets the input texture.
 		/// </summary>
 		/// <param name="name">The name.</param>
-		public void SetInputTexture(string name)
+		/// <param name="image">The image.</param>
+		public void SetInputTexture(string name, IRenderSurface image)
 		{
-			textures[name] = ResourceManager.Instance.Get<ITexture>(name).Value;
+			textures[name] = image.Texture;
 		}
 
 		/// <summary>
@@ -171,28 +172,27 @@ namespace Zenseless.ContentPipeline
 		/// Updates the mesh shader.
 		/// </summary>
 		/// <param name="mesh">The mesh.</param>
-		/// <param name="shaderName">Name of the shader.</param>
-		/// <exception cref="ArgumentException">
-		/// A shaderName is required
+		/// <param name="shaderProgram">The shader program.</param>
+		/// <exception cref="ArgumentNullException">
+		/// mesh
 		/// or
-		/// Shader '" + shaderName + "' does not exist
+		/// shaderProgram
+		/// or
+		/// A shaderName is required
 		/// </exception>
-		public void UpdateMeshShader(DefaultMesh mesh, string shaderName)
+		/// <exception cref="ArgumentException">Shader '" + shaderName + "' does not exist</exception>
+		public void UpdateMeshShader(DefaultMesh mesh, IShaderProgram shaderProgram)
 		{
-			if (string.IsNullOrWhiteSpace(shaderName)) throw new ArgumentNullException("A shaderName is required");
-			var resShader = ResourceManager.Instance.Get<IShaderProgram>(shaderName);
-			if (resShader is null) throw new ArgumentException("Shader '" + shaderName + "' does not exist");
-			ShaderProgram = resShader.Value;
-			//if (ReferenceEquals(null, mesh)) throw new ArgumentNullException("A mesh is required");
+			ShaderProgram = shaderProgram ?? throw new ArgumentNullException(nameof(shaderProgram));
 			Vao = mesh is null ? null : VAOLoader.FromMesh(mesh, ShaderProgram);
 		}
-
+		
 		/// <summary>
-		/// Updates the uniforms.
-		/// </summary>
-		/// <typeparam name="DATA">The type of the ata.</typeparam>
-		/// <param name="name">The name.</param>
-		/// <param name="uniforms">The uniforms.</param>
+				/// Updates the uniforms.
+				/// </summary>
+				/// <typeparam name="DATA">The type of the ata.</typeparam>
+				/// <param name="name">The name.</param>
+				/// <param name="uniforms">The uniforms.</param>
 		public void UpdateUniforms<DATA>(string name, DATA uniforms) where DATA : struct
 		{
 			if (!buffers.TryGetValue(name, out BufferObject buffer))
@@ -305,6 +305,17 @@ namespace Zenseless.ContentPipeline
 		{
 			if (Vao is null) throw new InvalidOperationException("Specify mesh before setting instance attributes");
 			return ShaderProgram.GetResourceLocation(ShaderResourceType.Attribute, name);
+		}
+
+		/// <summary>
+		/// Updates the mesh shader.
+		/// </summary>
+		/// <param name="mesh">The mesh.</param>
+		/// <param name="shaderName">Name of the shader.</param>
+		/// <exception cref="NotImplementedException"></exception>
+		public void UpdateMeshShader(DefaultMesh mesh, string shaderName)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

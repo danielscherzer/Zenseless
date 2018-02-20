@@ -75,7 +75,6 @@
     <Compile Include="deprecated\StateCommand.cs" />
     <Compile Include="deprecated\TypedHandle.cs" />
     <Compile Include="deprecated\IResource.cs" />
-    <Compile Include="deprecated\IResourceProvider.cs" />
     <Compile Include="deprecated\IState.cs" />
     <Compile Include="deprecated\IStateTyped.cs" />
     <Compile Include="deprecated\StateManager.cs" />
