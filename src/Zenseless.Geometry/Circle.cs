@@ -8,7 +8,7 @@ namespace Zenseless.Geometry
 	/// </summary>
 	/// <seealso cref="System.IEquatable{Circle}" />
 	[Serializable]
-	public class Circle : IEquatable<Circle>
+	public class Circle : IEquatable<IReadOnlyCircle>, IReadOnlyCircle
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Circle"/> class.
@@ -21,6 +21,25 @@ namespace Zenseless.Geometry
 			CenterX = centerX;
 			CenterY = centerY;
 			Radius = radius;
+		}
+
+		/// <summary>
+		/// Gets the center.
+		/// </summary>
+		/// <value>
+		/// The center.
+		/// </value>
+		public Vector2 Center
+		{
+			get
+			{
+				return new Vector2(CenterX, CenterY);
+			}
+			set
+			{
+				CenterX = value.X;
+				CenterY = value.Y;
+			}
 		}
 
 		/// <summary>
@@ -63,15 +82,12 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="circle">The circle.</param>
 		/// <returns></returns>
-		public bool Intersects(Circle circle)
+		public bool Intersects(IReadOnlyCircle circle)
 		{
-			var rr = circle.Radius + Radius;
-			rr *= rr;
-			var xx = circle.CenterX - CenterX;
-			xx *= xx;
-			var yy = circle.CenterY - CenterY;
-			yy *= yy;
-			return rr > xx + yy;  
+			var r = circle.Radius + Radius;
+			var diff = circle.Center - Center;
+			var ll = diff.LengthSquared();
+			return r * r > diff.LengthSquared();
 		}
 
 		/// <summary>
@@ -107,7 +123,7 @@ namespace Zenseless.Geometry
 		/// <returns>
 		/// true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
 		/// </returns>
-		public bool Equals(Circle other)
+		public bool Equals(IReadOnlyCircle other)
 		{
 			if (other is null) return false;
 			return CenterX == other.CenterX && CenterY == other.CenterY && Radius == other.Radius;
@@ -122,7 +138,7 @@ namespace Zenseless.Geometry
 		/// </returns>
 		public override bool Equals(object other)
 		{
-			return Equals(other as Circle);
+			return Equals(other as IReadOnlyCircle);
 		}
 
 		/// <summary>

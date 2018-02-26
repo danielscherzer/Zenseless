@@ -15,6 +15,11 @@
 		public const string ShaderProgramCopy = VertexShaderScreenQuad + ShaderDelimiter + FragmentShaderCopy;
 
 		/// <summary>
+		/// The shader program color texture
+		/// </summary>
+		public const string ShaderProgramColorTexture = VertexShaderColorTexture + ShaderDelimiter + FragmentShaderColorTexture;
+
+		/// <summary>
 		/// Vertex shader that creates a screen filling quad if called with DrawArrays(4)
 		/// </summary>
 		public const string VertexShaderScreenQuad = @"

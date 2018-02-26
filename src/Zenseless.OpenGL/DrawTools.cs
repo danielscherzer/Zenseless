@@ -13,6 +13,28 @@ namespace Zenseless.OpenGL
 	public static class DrawTools
 	{
 		/// <summary>
+		/// Draws the circle.
+		/// </summary>
+		/// <param name="centerX">The center x.</param>
+		/// <param name="centerY">The center y.</param>
+		/// <param name="radius">The radius.</param>
+		/// <param name="corners">The segments.</param>
+		/// <param name="isFilled">Filled or border</param>
+		public static void DrawCircle(float centerX, float centerY, float radius, int corners, bool isFilled = true)
+		{
+			float delta = 2f * (float)Math.PI / corners;
+			var type = isFilled ? PrimitiveType.Polygon : PrimitiveType.LineLoop;
+			GL.Begin(type);
+			for (float alpha = 0.0f; alpha < 2 * Math.PI; alpha += delta)
+			{
+				float x = radius * (float)Math.Cos(alpha);
+				float y = radius * (float)Math.Sin(alpha);
+				GL.Vertex2(centerX + x, centerY + y);
+			}
+			GL.End();
+		}
+
+		/// <summary>
 		/// Draws a textured rectangle.
 		/// </summary>
 		/// <param name="rect">The rectangle coordinates.</param>
@@ -38,6 +60,16 @@ namespace Zenseless.OpenGL
 			{
 				Console.WriteLine($"{DebugTools.GetSourcePositionForConsoleRef()}: OpenGL Error '{error}'");
 			}
+		}
+
+		/// <summary>
+		/// To the open tk.
+		/// </summary>
+		/// <param name="v">The v.</param>
+		/// <returns></returns>
+		public static Vector2 ToOpenTK(this System.Numerics.Vector2 v)
+		{
+			return new Vector2(v.X, v.Y);
 		}
 
 		/// <summary>

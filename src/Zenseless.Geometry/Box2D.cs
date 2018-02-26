@@ -57,6 +57,7 @@ namespace Zenseless.Geometry
 		/// Maximal x coordinate. Setting the value will change the size of the box, while MinX and MinY will stay the same.
 		/// </summary>
 		public float MaxX { get { return MinX + SizeX; } set { SizeX = value - MinX; } }
+
 		/// <summary>
 		/// Maximal y coordinate. Setting the value will change the size of the box, 
 		/// while <see cref="MinX"/> and <see cref="MinY"/> will stay the same.

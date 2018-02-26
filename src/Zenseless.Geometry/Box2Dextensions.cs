@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace Zenseless.Geometry
 {
@@ -22,7 +23,33 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Create a Box2D from its center and size (calculates the min coordinates on creation)
+		/// Create a Box2D from min and max coordinates (calculates the size on creation)
+		/// </summary>
+		/// <param name="min">Minimal point</param>
+		/// <param name="max">Maximal point</param>
+		/// <returns>A new Box2D instance</returns>
+		public static Box2D CreateFromMinMax(Vector2 min, Vector2 max)
+		{
+			var rectangle = new Box2D(min.X, min.Y, max.X - min.X, max.Y - min.Y);
+			return rectangle;
+		}
+		/// <summary>
+		/// Creates a box from corner points.
+		/// </summary>
+		/// <param name="a">An input corner point.</param>
+		/// <param name="b">An input corner point.</param>
+		/// <returns>A box containing the points.</returns>
+		public static Box2D CreateFromPoints(Vector2 a, Vector2 b)
+		{
+			var minX = Math.Min(a.X, b.X);
+			var minY = Math.Min(a.Y, b.Y);
+			var maxX = Math.Max(a.X, b.X);
+			var maxY = Math.Max(a.Y, b.Y);
+			return CreateFromMinMax(minX, minY, maxX, maxY);
+		}
+
+		/// <summary>
+		/// Create a <seealso cref="Box2D"/> from its center and size (calculates the min coordinates on creation)
 		/// </summary>
 		/// <param name="centerX">Center x</param>
 		/// <param name="centerY">Center y</param>
@@ -40,12 +67,59 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Checks if point is inside the rectangle (including borders)
+		/// Creates a <seealso cref="Box2D"/> from a circle.
 		/// </summary>
-		/// <param name="rectangle">Rectangle to check</param>
-		/// <param name="point">Coordinates of the point</param>
-		/// <returns>true if point is inside the rectangle (including borders)</returns>
+		/// <param name="circle">The circle.</param>
+		/// <returns>A new Box2D instance</returns>
+		public static Box2D CreateFromCircle(IReadOnlyCircle circle)
+		{
+			var rectangle = new Box2D(0, 0, 2f * circle.Radius, 2f * circle.Radius)
+			{
+				CenterX = circle.CenterX,
+				CenterY = circle.CenterY
+			};
+			return rectangle;
+		}
+		
+		/// <summary>
+				/// Checks if point is inside the rectangle (including borders)
+				/// </summary>
+				/// <param name="rectangle">Rectangle to check</param>
+				/// <param name="point">Coordinates of the point</param>
+				/// <returns>true if point is inside the rectangle (including borders)</returns>
 		public static bool Contains(this IReadOnlyBox2D rectangle, Vector2 point) => rectangle.Contains(point.X, point.Y);
+
+		/// <summary>
+		/// Gets the center of the box.
+		/// </summary>
+		/// <param name="box">The box.</param>
+		/// <returns></returns>
+		public static Vector2 GetCenter(this IReadOnlyBox2D box)
+		{
+			return new Vector2(box.CenterX, box.CenterY);
+		}
+
+		/// <summary>
+		/// Merges the specified boxes.
+		/// </summary>
+		/// <param name="boxA">The box a.</param>
+		/// <param name="boxB">The box b.</param>
+		/// <returns>A box that contains boxA and boxB.</returns>
+		/// <exception cref="ArgumentNullException">
+		/// boxA
+		/// or
+		/// boxB
+		/// </exception>
+		public static Box2D Merge(this Box2D boxA, Box2D boxB)
+		{
+			if (boxA == null) throw new ArgumentNullException(nameof(boxA));
+			if (boxB == null) throw new ArgumentNullException(nameof(boxB));
+			var minX = Math.Min(boxA.MinX, boxB.MinX);
+			var minY = Math.Min(boxA.MinY, boxB.MinY);
+			var maxX = Math.Max(boxA.MaxX, boxB.MaxX);
+			var maxY = Math.Max(boxA.MaxY, boxB.MaxY);
+			return CreateFromMinMax(minX, minY, maxX, maxY);
+		}
 
 		/// <summary>
 		/// Pushes rectangleA inside rectangleB, but only in regards to the x-direction

@@ -14,12 +14,26 @@ namespace Zenseless.Geometry
 		/// The mathematical constant PI
 		/// </summary>
 		public static float PI = (float)Math.PI;
-		
+
 		/// <summary>
 		/// 2 * PI
 		/// </summary>
 		public static float TWO_PI = (float)(Math.PI * 2.0);
 
+		/// <summary>
+		/// Clamp the input value x in between min and max. 
+		/// If x smaller min return min; 
+		/// if x bigger max return max; 
+		/// else return x unchanged
+		/// </summary>
+		/// <param name="x">input value that will be clamped</param>
+		/// <param name="min">lower limit</param>
+		/// <param name="max">upper limit</param>
+		/// <returns>clamped version of x</returns>
+		public static int Clamp(this int x, int min, int max)
+		{
+			return Math.Min(max, Math.Max(min, x));
+		}
 		/// <summary>
 		/// Clamp the input value x in between min and max. 
 		/// If x smaller min return min; 
@@ -57,6 +71,18 @@ namespace Zenseless.Geometry
 		/// <param name="min">lower limit</param>
 		/// <param name="max">upper limit</param>
 		/// <returns>clamped version of v</returns>
+		public static Vector2 Clamp(this Vector2 v, float min, float max)
+		{
+			return new Vector2(Clamp(v.X, min, max), Clamp(v.Y, min, max));
+		}
+
+		/// <summary>
+		/// Clamp each component of the input vector v in between min and max. 
+		/// </summary>
+		/// <param name="v">input vector that will be clamped component-wise</param>
+		/// <param name="min">lower limit</param>
+		/// <param name="max">upper limit</param>
+		/// <returns>clamped version of v</returns>
 		public static Vector3 Clamp(this Vector3 v, float min, float max)
 		{
 			return new Vector3(Clamp(v.X, min, max), Clamp(v.Y, min, max), Clamp(v.Z, min, max));
@@ -76,6 +102,17 @@ namespace Zenseless.Geometry
 
 
 		/// <summary>
+		/// Calculates the determinant of the two vectors.
+		/// </summary>
+		/// <param name="a">Vector a.</param>
+		/// <param name="b">Vector b.</param>
+		/// <returns>The determinant</returns>
+		public static float Determinant(Vector2 a, Vector2 b)
+		{
+			return a.X * b.Y - a.Y * b.X;
+		}
+
+		/// <summary>
 		/// Returns the number of mipmap levels required for mipmapped filtering of an image.
 		/// </summary>
 		/// <param name="width">The image width in pixels.</param>
@@ -87,6 +124,26 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
+		/// Clock-wise normal to input vector.
+		/// </summary>
+		/// <param name="v">The input vector.</param>
+		/// <returns>A vector normal to the input vector</returns>
+		public static Vector2 CwNormalTo(this Vector2 v)
+		{
+			return new Vector2(v.Y, -v.X);
+		}
+
+		/// <summary>
+		/// Counter-clock-wise normal to input vector.
+		/// </summary>
+		/// <param name="v">The input vector.</param>
+		/// <returns>A vector normal to the input vector</returns>
+		public static Vector2 CcwNormalTo(this Vector2 v)
+		{
+			return new Vector2(-v.Y, v.X);
+		}
+
+		/// <summary>
 		/// Convert input uint from range [0,255] into float in range [0,1]
 		/// </summary>
 		/// <param name="v">input in range [0,255]</param>
@@ -95,7 +152,7 @@ namespace Zenseless.Geometry
 		{
 			return v / 255f;
 		}
-		
+
 		/// <summary>
 		/// Normalizes each input uint from range [0,255] into float in range [0,1]
 		/// </summary>
@@ -108,7 +165,7 @@ namespace Zenseless.Geometry
 		{
 			return new Vector4(x, y, z, w) / 255f;
 		}
-		
+
 		/// <summary>
 		/// Converts degrees to radians
 		/// </summary>
@@ -255,7 +312,7 @@ namespace Zenseless.Geometry
 		{
 			int i = 0;
 			var a = new float[16];
-			
+
 			a[i++] = input.M11;
 			a[i++] = input.M21;
 			a[i++] = input.M31;
@@ -280,13 +337,37 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Converts given Cartesian coordinates into polar coordinates
+		/// Converts given Cartesian coordinates into a polar angle.
+		/// Returns an angle [-PI, PI].
 		/// </summary>
 		/// <param name="cartesian">Cartesian input coordinates</param>
-		/// <returns>A vector with first component angle [-PI, PI] and second component radius</returns>
+		/// <returns>An angle [-PI, PI].</returns>
+		public static float PolarAngle(this Vector2 cartesian)
+		{
+			return (float)Math.Atan2(cartesian.Y, cartesian.X);
+		}
+
+		/// <summary>
+		/// Converts the given polar coordinates to Cartesian.
+		/// </summary>
+		/// <param name="polar">The polar coordinates. A vector with first component angle [-PI, PI] and second component radius.</param>
+		/// <returns>A Cartesian coordinate vector.</returns>
+		public static Vector2 ToCartesian(this Vector2 polar)
+		{
+			float x = polar.Y * (float)Math.Cos(polar.X);
+			float y = polar.Y * (float)Math.Sin(polar.X);
+			return new Vector2(x, y);
+		}
+
+		/// <summary>
+		/// Converts given Cartesian coordinates into polar coordinates.
+		/// Returns a vector with first component angle [-PI, PI] and second component radius.
+		/// </summary>
+		/// <param name="cartesian">Cartesian input coordinates</param>
+		/// <returns>A vector with first component angle [-PI, PI] and second component radius.</returns>
 		public static Vector2 ToPolar(this Vector2 cartesian)
 		{
-			float angle = (float)Math.Atan2(cartesian.Y, cartesian.X);
+			float angle = cartesian.PolarAngle();
 			float radius = cartesian.Length();
 			return new Vector2(angle, radius);
 		}
