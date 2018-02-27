@@ -55,6 +55,7 @@ namespace Zenseless.OpenGL
 		{
 			{ ".comp" , HLGL.ShaderType.ComputeShader },
 			{ ".frag" , HLGL.ShaderType.FragmentShader },
+			{ ".glsl" , HLGL.ShaderType.FragmentShader },
 			{ ".geom" , HLGL.ShaderType.GeometryShader },
 			{ ".tesc" , HLGL.ShaderType.TessControlShader },
 			{ ".tese" , HLGL.ShaderType.TessEvaluationShader },
@@ -97,16 +98,16 @@ namespace Zenseless.OpenGL
 			return shaderProgram;
 		}
 
-		private static void Update(ShaderProgramGL shaderProgram, IEnumerable<NamedStream> resources)
+		private static void Update(ShaderProgramGL shaderProgram, IEnumerable<NamedStream> namedStreams)
 		{
-			var count = resources.Count();
+			var count = namedStreams.Count();
 			if (0 == count) return;
 			if (1 == count)
 			{
-				Update(shaderProgram, resources.First());
+				Update(shaderProgram, namedStreams.First());
 				return;
 			}
-			foreach (var res in resources)
+			foreach (var res in namedStreams)
 			{
 				var shaderType = GetShaderTypeFromExtension(Path.GetExtension(res.Name));
 				shaderProgram.Compile(ShaderCode(res.Stream), shaderType);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using Zenseless.Base;
 
@@ -17,11 +18,24 @@ namespace Zenseless.HLGL
 		/// Initializes a new instance of the <see cref="FileContentManager"/> class.
 		/// </summary>
 		/// <param name="resourceAssembly"></param>
-		public FileContentManager(Assembly resourceAssembly) : base()
+		public FileContentManager(Assembly resourceAssembly)
 		{
-			resLoader = new ResourceLoader(resourceAssembly);
-			cachedContentManager = new CachedContentManagerDecorator(new ContentManager(resLoader));
+			var streamLoader = new StreamLoader();
+			namedStreamLoader = streamLoader;
+			AddMappings(streamLoader, resourceAssembly);
+			cachedContentManager = new CachedContentManagerDecorator(new ContentManager(namedStreamLoader));
 			cachedContentManager.NewCacheEntry += FileContentManagerDecorator_NewCacheEntry;
+		}
+
+		private static void AddMappings(StreamLoader streamLoader, Assembly resourceAssembly)
+		{
+			var resourceNames = resourceAssembly.GetManifestResourceNames();
+
+			foreach(var name in resourceNames)
+			{
+				Stream CreateStream() => resourceAssembly.GetManifestResourceStream(name);
+				streamLoader.AddMapping(name, CreateStream);
+			}
 		}
 
 		/// <summary>
@@ -38,7 +52,7 @@ namespace Zenseless.HLGL
 		/// <value>
 		/// All content resource names.
 		/// </value>
-		public IEnumerable<string> Names => resLoader.Names;
+		public IEnumerable<string> Names => namedStreamLoader.Names;
 
 		/// <summary>
 		/// Checks for resource change.
@@ -142,7 +156,7 @@ namespace Zenseless.HLGL
 		private FileLoader fileLoader;
 		private Dictionary<Type, Action<object, IEnumerable<NamedStream>>> updaters = new Dictionary<Type, Action<object, IEnumerable<NamedStream>>>();
 		private Dictionary<string, FileWatcher> watchers = new Dictionary<string, FileWatcher>();
-		private readonly ResourceLoader resLoader;
+		private readonly INamedStreamLoader namedStreamLoader;
 		private readonly CachedContentManagerDecorator cachedContentManager;
 
 		private void FileContentManagerDecorator_NewCacheEntry(object sender, NewCacheEntryEventArgs e)
@@ -168,11 +182,11 @@ namespace Zenseless.HLGL
 				{
 					if (fileLoader.Contains(name))
 					{
-						namedStreams.Add(fileLoader.GetStream(name));
+						namedStreams.Add(fileLoader.CreateStream(name));
 					}
 					else
 					{
-						namedStreams.Add(resLoader.GetStream(name));
+						namedStreams.Add(namedStreamLoader.CreateStream(name));
 					}
 				}
 				catch

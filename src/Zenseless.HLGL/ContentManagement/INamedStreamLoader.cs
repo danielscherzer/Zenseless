@@ -8,6 +8,13 @@ namespace Zenseless.HLGL
 	public interface INamedStreamLoader
 	{
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		bool Contains(string name);
+
+		/// <summary>
 		/// Enumerates all stream names.
 		/// </summary>
 		/// <value>
@@ -16,10 +23,10 @@ namespace Zenseless.HLGL
 		IEnumerable<string> Names { get; }
 
 		/// <summary>
-		/// Gets the stream with the given name.
+		/// Creates a stream with the given name.
 		/// </summary>
 		/// <param name="name">The name of the stream.</param>
 		/// <returns>A <seealso cref="NamedStream"/>.</returns>
-		NamedStream GetStream(string name);
+		NamedStream CreateStream(string name);
 	}
 }

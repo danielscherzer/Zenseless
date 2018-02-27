@@ -54,15 +54,15 @@ namespace Zenseless.HLGL
 			var type = typeof(TYPE);
 			if (importers.TryGetValue(type, out var importer))
 			{
-				var resources = new List<NamedStream>();
+				var namedStreams = new List<NamedStream>();
 				foreach (var name in names)
 				{
 					var fullName = Names.GetFullName(name);
-					resources.Add(loader.GetStream(fullName));
+					namedStreams.Add(loader.CreateStream(fullName));
 				}
-				if (0 == resources.Count) throw new ArgumentException("No input resources given!");
-				var result = importer.Invoke(resources) as TYPE;
-				resources.Dispose();
+				if (0 == namedStreams.Count) throw new ArgumentException("No input resources given!");
+				var result = importer.Invoke(namedStreams) as TYPE;
+				namedStreams.Dispose();
 				return result;
 			}
 			throw new ArgumentException($"No converter for type '{type.FullName}' was found.");

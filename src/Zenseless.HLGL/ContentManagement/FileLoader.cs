@@ -47,7 +47,7 @@ namespace Zenseless.HLGL
 		/// A <seealso cref="NamedStream" />.
 		/// </returns>
 		/// <exception cref="ArgumentException"></exception>
-		public NamedStream GetStream(string name)
+		public NamedStream CreateStream(string name)
 		{
 			if (mappings.TryGetValue(name, out var filePath))
 			{

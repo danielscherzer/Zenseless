@@ -93,6 +93,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Content\ScreenQuad.vert" />
+    <None Include="Content\Copy.frag" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Zenseless.OpenGL.nuspec" />
