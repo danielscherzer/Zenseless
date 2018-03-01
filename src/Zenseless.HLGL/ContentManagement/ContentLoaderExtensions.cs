@@ -21,17 +21,10 @@ namespace Zenseless.HLGL
 		/// <returns>The full name.</returns>
 		public static string GetFullName(this IEnumerable<string> fullNames, string shortName)
 		{
-			if (fullNames == null)
-			{
-				throw new ArgumentNullException(nameof(fullNames));
-			}
-
-			if (shortName == null)
-			{
-				throw new ArgumentNullException(nameof(shortName));
-			}
-
-			return fullNames.FirstOrDefault((name) => name.ToLowerInvariant().Contains(shortName.ToLowerInvariant()));
+			if (fullNames == null) throw new ArgumentNullException(nameof(fullNames));
+			if (shortName == null) throw new ArgumentNullException(nameof(shortName));
+			
+			return fullNames.First((name) => name.ToLowerInvariant().Contains(shortName.ToLowerInvariant()));
 		}
 
 		/// <summary>
@@ -42,16 +35,9 @@ namespace Zenseless.HLGL
 		/// <returns>The list of full names.</returns>
 		public static IEnumerable<string> GetFullNames(this IEnumerable<string> fullNames, IEnumerable<string> shortNames)
 		{
-			if (fullNames == null)
-			{
-				throw new ArgumentNullException(nameof(fullNames));
-			}
-
-			if (shortNames == null)
-			{
-				throw new ArgumentNullException(nameof(shortNames));
-			}
-
+			if (fullNames == null) throw new ArgumentNullException(nameof(fullNames));
+			if (shortNames == null) throw new ArgumentNullException(nameof(shortNames));
+			
 			return from name in shortNames select fullNames.GetFullName(name);
 		}
 
@@ -85,6 +71,19 @@ namespace Zenseless.HLGL
 				names.Add(name);
 			}
 			return contentLoader.Load<TYPE>(names);
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="contentLoader"></param>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public static IShaderProgram LoadPixelShader(this IContentLoader contentLoader, string name)
+		{
+			if (contentLoader == null) throw new ArgumentNullException(nameof(contentLoader));
+			
+			var names = new string[] { "screenQuad.vert", name };
+			return contentLoader.Load<IShaderProgram>(names);
 		}
 
 		/// <summary>

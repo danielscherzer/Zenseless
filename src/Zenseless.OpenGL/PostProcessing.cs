@@ -1,4 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL4;
+using System;
 using Zenseless.Base;
 using Zenseless.HLGL;
 
@@ -19,11 +20,9 @@ namespace Zenseless.OpenGL
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PostProcessing"/> class.
 		/// </summary>
-		/// <param name="fragmentShader">The fragment shader.</param>
-		/// <param name="vertexShader">The vertex shader.</param>
-		public PostProcessing(string fragmentShader = DefaultShader.FragmentShaderCopy, string vertexShader = DefaultShader.VertexShaderScreenQuad)
+		public PostProcessing(IShaderProgram shaderProgram)
 		{
-			shaderProgram = ShaderLoader.FromStrings(vertexShader, fragmentShader);
+			this.shaderProgram = shaderProgram ?? throw new ArgumentNullException(nameof(shaderProgram));
 		}
 
 		/// <summary>

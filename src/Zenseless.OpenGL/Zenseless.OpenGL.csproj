@@ -94,10 +94,17 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\ScreenQuad.vert" />
-    <None Include="Content\Copy.frag" />
+    <EmbeddedResource Include="Content\Copy.frag" />
+    <EmbeddedResource Include="Content\ColorTexture.frag" />
+    <EmbeddedResource Include="Content\ColorTexture.vert" />
+    <EmbeddedResource Include="Content\Particle.vert" />
+    <EmbeddedResource Include="Content\Checker.frag" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Zenseless.OpenGL.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\PointCircle.frag" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

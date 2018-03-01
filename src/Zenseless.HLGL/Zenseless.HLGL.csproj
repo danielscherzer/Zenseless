@@ -46,6 +46,7 @@
     <Compile Include="ContentManagement\INamedStreamLoader.cs" />
     <Compile Include="ContentManagement\NamedStreamExtensions.cs" />
     <Compile Include="ContentManagement\NewCacheEntryEventArgs.cs" />
+    <Compile Include="ContentManagement\ResourceLoading.cs" />
     <Compile Include="ContentManagement\StreamLoader.cs" />
     <Compile Include="StateManagement\BlendOperator.cs" />
     <Compile Include="StateManagement\BlendParameter.cs" />
@@ -53,7 +54,6 @@
     <Compile Include="StateManagement\BlendStates.cs" />
     <Compile Include="StateManagement\ClearColorState.cs" />
     <Compile Include="ContentManagement\ContentManager.cs" />
-    <Compile Include="deprecated\DefaultShader.cs" />
     <Compile Include="StateManagement\BoolState.cs" />
     <Compile Include="deprecated\IAnimation.cs" />
     <Compile Include="ContentManagement\IContentManager.cs" />
@@ -85,7 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zenseless.Base\Zenseless.Base.csproj">
-      <Project>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</Project>
+      <Project>{4de8bcd3-83df-48dd-b962-518c06d3491a}</Project>
       <Name>Zenseless.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zenseless.Geometry\Zenseless.Geometry.csproj">

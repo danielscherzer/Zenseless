@@ -39,14 +39,6 @@
 		void DrawPoints(int count);
 
 		/// <summary>
-		/// Gets the specified name.
-		/// </summary>
-		/// <typeparam name="TYPE">The type of the ype.</typeparam>
-		/// <param name="name">The name.</param>
-		/// <returns></returns>
-		TYPE Get<TYPE>(string name) where TYPE : class;
-
-		/// <summary>
 		/// Gets the frame buffer.
 		/// </summary>
 		/// <returns></returns>

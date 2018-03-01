@@ -10,15 +10,15 @@ namespace Zenseless.HLGL
 	public class StreamLoader : INamedStreamLoader
 	{
 		/// <summary>
-		/// Adds the mapping.
+		/// Adds a stream creator.
 		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="streamCreator"></param>
+		/// <param name="name">The name of the functor.</param>
+		/// <param name="streamCreator">A functor for creating a stream.</param>
 		/// <exception cref="ArgumentException"></exception>
-		public void AddMapping(string name, Func<Stream> streamCreator)
+		public void AddStreamCreator(string name, Func<Stream> streamCreator)
 		{
 			if (streamCreator == null) throw new ArgumentNullException(nameof(streamCreator));
-			mappings.Add(name, streamCreator);
+			namedCreators.Add(name, streamCreator);
 		}
 
 		/// <summary>
@@ -28,7 +28,7 @@ namespace Zenseless.HLGL
 		/// <returns>
 		///   <c>true</c> if the specified name is known; otherwise, <c>false</c>.
 		/// </returns>
-		public bool Contains(string name) => mappings.ContainsKey(name);
+		public bool Contains(string name) => namedCreators.ContainsKey(name);
 
 		/// <summary>
 		/// 
@@ -37,19 +37,19 @@ namespace Zenseless.HLGL
 		/// <returns></returns>
 		public NamedStream CreateStream(string name)
 		{
-			if (mappings.TryGetValue(name, out var createStream))
+			if (namedCreators.TryGetValue(name, out var createStream))
 			{
 				var stream = createStream.Invoke();
 				return new NamedStream(name, stream);
 			}
-			throw new ArgumentException($"The name mapping '{name}' was not found.");
+			throw new ArgumentException($"No creator for '{name}' was found.");
 		}
 
-		private Dictionary<string, Func<Stream>> mappings = new Dictionary<string, Func<Stream>>();
+		private Dictionary<string, Func<Stream>> namedCreators = new Dictionary<string, Func<Stream>>();
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public IEnumerable<string> Names => mappings.Keys;
+		public IEnumerable<string> Names => namedCreators.Keys;
 	}
 }

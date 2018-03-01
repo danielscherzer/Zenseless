@@ -23,7 +23,11 @@ namespace Zenseless.OpenGL
 		/// <returns>A content manager instance</returns>
 		public static FileContentManager Create(Assembly resourceAssembly)
 		{
-			var mgr = new FileContentManager(resourceAssembly);
+			var streamLoader = new StreamLoader();
+			streamLoader.AddMappings(resourceAssembly);
+			streamLoader.AddMappings(Assembly.GetExecutingAssembly());
+
+			var mgr = new FileContentManager(streamLoader);
 			mgr.RegisterImporter(ContentImporters.String);
 			mgr.RegisterImporter(ContentImporters.ByteBuffer);
 			mgr.RegisterImporter(ContentImporters.DefaultMesh);
@@ -82,15 +86,6 @@ namespace Zenseless.OpenGL
 			return texture;
 		}
 
-		private static void Update(IShaderProgram shaderProgram, NamedStream res)
-		{
-			using (var reader = new StreamReader(res.Stream, true))
-			{
-				var shaderCode = reader.ReadToEnd();
-				shaderProgram.FromStrings(DefaultShader.VertexShaderScreenQuad, shaderCode);
-			}
-		}
-
 		private static IShaderProgram ShaderProgramImporter(IEnumerable<NamedStream> resources)
 		{
 			ShaderProgramGL shaderProgram = new ShaderProgramGL();
@@ -101,12 +96,7 @@ namespace Zenseless.OpenGL
 		private static void Update(ShaderProgramGL shaderProgram, IEnumerable<NamedStream> namedStreams)
 		{
 			var count = namedStreams.Count();
-			if (0 == count) return;
-			if (1 == count)
-			{
-				Update(shaderProgram, namedStreams.First());
-				return;
-			}
+			if (2 > count) return;
 			foreach (var res in namedStreams)
 			{
 				var shaderType = GetShaderTypeFromExtension(Path.GetExtension(res.Name));

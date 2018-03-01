@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using Zenseless.Base;
 
 namespace Zenseless.HLGL
 {
@@ -17,25 +14,12 @@ namespace Zenseless.HLGL
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FileContentManager"/> class.
 		/// </summary>
-		/// <param name="resourceAssembly"></param>
-		public FileContentManager(Assembly resourceAssembly)
+		/// <param name="loader"></param>
+		public FileContentManager(INamedStreamLoader loader)
 		{
-			var streamLoader = new StreamLoader();
-			namedStreamLoader = streamLoader;
-			AddMappings(streamLoader, resourceAssembly);
+			namedStreamLoader = loader ?? throw new ArgumentNullException(nameof(loader));
 			cachedContentManager = new CachedContentManagerDecorator(new ContentManager(namedStreamLoader));
 			cachedContentManager.NewCacheEntry += FileContentManagerDecorator_NewCacheEntry;
-		}
-
-		private static void AddMappings(StreamLoader streamLoader, Assembly resourceAssembly)
-		{
-			var resourceNames = resourceAssembly.GetManifestResourceNames();
-
-			foreach(var name in resourceNames)
-			{
-				Stream CreateStream() => resourceAssembly.GetManifestResourceStream(name);
-				streamLoader.AddMapping(name, CreateStream);
-			}
 		}
 
 		/// <summary>
@@ -129,9 +113,8 @@ namespace Zenseless.HLGL
 		public void SetContentSearchDirectory(string contentSearchDirectory)
 		{
 			var mapping = Names.FindFiles(contentSearchDirectory);
+			if (!(fileLoader is null)) fileLoader.Dispose();
 			fileLoader = new FileLoader();
-			foreach (var watcher in watchers) watcher.Value.Dispose();
-			watchers.Clear();
 			foreach (var entry in mapping)
 			{
 				fileLoader.AddMapping(entry.Key, entry.Value);
@@ -155,7 +138,6 @@ namespace Zenseless.HLGL
 		private ConcurrentQueue<FileChangeData> changedFiles = new ConcurrentQueue<FileChangeData>();
 		private FileLoader fileLoader;
 		private Dictionary<Type, Action<object, IEnumerable<NamedStream>>> updaters = new Dictionary<Type, Action<object, IEnumerable<NamedStream>>>();
-		private Dictionary<string, FileWatcher> watchers = new Dictionary<string, FileWatcher>();
 		private readonly INamedStreamLoader namedStreamLoader;
 		private readonly CachedContentManagerDecorator cachedContentManager;
 
@@ -165,11 +147,8 @@ namespace Zenseless.HLGL
 			//create a file watcher for each resource
 			foreach (var fullName in e.Names)
 			{
-				if (fileLoader.TryGetPath(fullName, out var filePath))
-				{
-					var watcher = GetWatcher(filePath);
-					watcher.Changed += (s, a) => changedFiles.Enqueue(new FileChangeData(filePath, e.Instance, e.Names));
-				}
+				void OnChange(string filePath) => changedFiles.Enqueue(new FileChangeData(filePath, e.Instance, e.Names));
+				fileLoader.InstallWatcher(fullName, OnChange);
 			}
 		}
 
@@ -196,16 +175,6 @@ namespace Zenseless.HLGL
 				}
 			}
 			return namedStreams;
-		}
-
-		private FileWatcher GetWatcher(string filePath)
-		{
-			if(!watchers.TryGetValue(filePath, out var watcher))
-			{
-				watcher = new FileWatcher(filePath);
-				watchers.Add(filePath, watcher);
-			}
-			return watcher;
 		}
 	}
 }

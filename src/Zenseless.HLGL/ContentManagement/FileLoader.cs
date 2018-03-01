@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Zenseless.Base;
 
 namespace Zenseless.HLGL
 {
@@ -8,7 +9,7 @@ namespace Zenseless.HLGL
 	/// 
 	/// </summary>
 	/// <seealso cref="INamedStreamLoader" />
-	public class FileLoader : INamedStreamLoader
+	public class FileLoader : Disposable, INamedStreamLoader
 	{
 		/// <summary>
 		/// Enumerates all stream names.
@@ -58,13 +59,28 @@ namespace Zenseless.HLGL
 		}
 
 		/// <summary>
-		/// Tries to return the file path for a given name.
+		/// 
 		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="filePath">The file path</param>
-		/// <returns><c>true</c> if a filePath is available.</returns>
-		public bool TryGetPath(string name, out string filePath) => mappings.TryGetValue(name, out filePath);
+		protected override void DisposeResources()
+		{
+			foreach (var watcher in watchers) watcher.Value.Dispose();
+		}
 
 		private Dictionary<string, string> mappings = new Dictionary<string, string>();
+		private Dictionary<string, FileWatcher> watchers = new Dictionary<string, FileWatcher>();
+
+		internal void InstallWatcher(string fullName, Action<string> onChange)
+		{
+			if (onChange == null) throw new ArgumentNullException(nameof(onChange));
+			if (mappings.TryGetValue(fullName, out var filePath))
+			{
+				if (!watchers.TryGetValue(filePath, out var watcher))
+				{
+					watcher = new FileWatcher(filePath);
+					watchers.Add(filePath, watcher);
+				}
+				watcher.Changed += (s, a) => onChange.Invoke(filePath);
+			}
+		}
 	}
 }
