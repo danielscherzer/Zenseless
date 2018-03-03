@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Zenseless.HLGL
 {
 	/// <summary>
 	/// 
 	/// </summary>
+	[Serializable]
 	public struct NamedStream
 	{
 		/// <summary>

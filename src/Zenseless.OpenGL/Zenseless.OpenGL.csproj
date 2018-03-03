@@ -58,8 +58,6 @@
     <Compile Include="QueryObject.cs" />
     <Compile Include="FrameBuffer.cs" />
     <Compile Include="RenderBuffer.cs" />
-    <Compile Include="ResourceTextureBitmap.cs" />
-    <Compile Include="ResourceVertFragShaderString.cs" />
     <Compile Include="SpriteSheetAnimation.cs" />
     <Compile Include="FBO.cs" />
     <Compile Include="ShaderProgramGL.cs" />

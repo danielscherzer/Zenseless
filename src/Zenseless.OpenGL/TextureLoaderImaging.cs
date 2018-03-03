@@ -3,6 +3,7 @@
 	using OpenTK.Graphics.OpenGL4;
 	using System;
 	using System.IO;
+	using System.Windows.Media.Imaging;
 	using Zenseless.HLGL;
 	using SysMedia = System.Windows.Media;
 
@@ -16,14 +17,14 @@
 		/// </summary>
 		/// <param name="stream">The stream.</param>
 		/// <returns></returns>
-		public static ITexture FromStream(Stream stream)
+		public static ITexture FromStream(Stream stream) //TODO: not working
 		{
-			var source = new SysMedia.Imaging.BitmapImage();
+			var source = new BitmapImage();
 			source.BeginInit();
 			source.StreamSource = stream;
 			source.EndInit();
 			//TODO: flip bitmap image
-			var writable = new SysMedia.Imaging.WriteableBitmap(source);
+			var writable = new WriteableBitmap(source);
 			writable.Lock();
 			var internalFormat = SelectInternalPixelFormat(source.Format);
 			var inputPixelFormat = SelectPixelFormat(source.Format);

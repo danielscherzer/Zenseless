@@ -59,7 +59,7 @@ namespace Zenseless.HLGL
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="System.IDisposable" />
+	/// <seealso cref="IDisposable" />
 	public interface IShaderProgram : IDisposable
 	{
 		/// <summary>
@@ -88,16 +88,19 @@ namespace Zenseless.HLGL
 		/// Activates this instance.
 		/// </summary>
 		void Activate();
+		
 		/// <summary>
-		/// Compiles the specified s shader.
+		/// Compiles the specified shader type from the source code provided.
 		/// </summary>
-		/// <param name="sShader">The s shader.</param>
-		/// <param name="type">The type.</param>
+		/// <param name="sShader">The shader source code.</param>
+		/// <param name="type">The shader type.</param>
 		void Compile(string sShader, ShaderType type);
+		
 		/// <summary>
 		/// Deactivates this instance.
 		/// </summary>
 		void Deactivate();
+		
 		/// <summary>
 		/// Gets the resource location.
 		/// </summary>
@@ -105,6 +108,7 @@ namespace Zenseless.HLGL
 		/// <param name="name">The name.</param>
 		/// <returns></returns>
 		int GetResourceLocation(ShaderResourceType resourceType, string name);
+		
 		/// <summary>
 		/// Links this instance.
 		/// </summary>

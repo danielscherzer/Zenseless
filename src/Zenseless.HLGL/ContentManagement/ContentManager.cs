@@ -40,10 +40,10 @@ namespace Zenseless.HLGL
 		}
 		
 		/// <summary>
-		/// Creates an instance of a given type from the resources with the specified keys.
+		/// Creates an instance of a given type from the specified names.
 		/// </summary>
 		/// <typeparam name="TYPE">The type to create.</typeparam>
-		/// <param name="names">A list of resource names.</param>
+		/// <param name="names">A list of names.</param>
 		/// <returns>
 		/// An instance of the given type if an importer for the TYPE is registered.
 		/// </returns>
