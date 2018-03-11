@@ -1,5 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/6yeqn2p92vd8rddx?svg=true)](https://ci.appveyor.com/project/danielscherzer/zenseless)
-[![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Zenseless.ContentPipeline/)
+[![NuGet](https://img.shields.io/nuget/v/Zenseless.ContentPipeline.svg)](https://www.nuget.org/packages/Zenseless.ContentPipeline/)
 
 # Zenseless
 A Framework for real-time computer graphics using OpenGL. This framework is created for a university course in computer graphics. Documentation inside the package is incomplete! See the [change log](CHANGELOG.md) for changes, features and road map. It uses OpenTK(Nuget package at [OpenTk@Nuget](https://www.nuget.org/packages/OpenTK/3.0.0-pre) in its newest pre-release version. The [OpenTK Manual](https://github.com/mono/opentk/blob/master/Documentation/Manual.pdf).
