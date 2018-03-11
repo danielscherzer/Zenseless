@@ -7,7 +7,7 @@ namespace Zenseless.HLGL
 	/// Implementation of a content manager
 	/// </summary>
 	/// <seealso cref="IContentManager" />
-	public class ContentManager : IContentManager
+	public class ContentManager : IContentManager //TODO: check if we can decompose this class loader, importer
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ContentManager"/> class.
@@ -57,7 +57,7 @@ namespace Zenseless.HLGL
 				var namedStreams = new List<NamedStream>();
 				foreach (var name in names)
 				{
-					var fullName = Names.GetFullName(name);
+					var fullName = Names.GetFullName(name); //TODO: ?put name resolution only in extension methods
 					namedStreams.Add(loader.CreateStream(fullName));
 				}
 				if (0 == namedStreams.Count) throw new ArgumentException("No input resources given!");

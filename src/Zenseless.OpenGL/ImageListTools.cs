@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
+using Zenseless.Base;
 
-namespace Zenseless.Base
+namespace Zenseless.OpenGL
 {
 	/// <summary>
 	/// Contains tools for saving image lists. 
@@ -13,15 +14,6 @@ namespace Zenseless.Base
 	/// </summary>
 	public static class ImageListTools
 	{
-		/// <summary>
-		/// Save a list of images to the directory given by PathTools.GetCurrentProcessOutputDir(true) 
-		/// </summary>
-		/// <param name="images">Images to save</param>
-		public static void SaveToDefaultDir(this IEnumerable<Bitmap> images)
-		{
-			images.Save(PathTools.GetCurrentProcessOutputDir());
-		}
-
 		/// <summary>
 		/// Save a list of images to a given directory.
 		/// </summary>

@@ -5,7 +5,7 @@ using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
 
-namespace Zenseless.ContentPipeline
+namespace Zenseless.ExampleFramework
 {
 	/// <summary>
 	/// 

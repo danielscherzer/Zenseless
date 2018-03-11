@@ -6,6 +6,7 @@ namespace Zenseless.Base
 	/// Implements the default disposing behavior as recommended by Microsoft.
 	/// If you have resources that need disposing, subclass this class.
 	/// </summary>
+	[Serializable]
 	public abstract class Disposable : IDisposable
 	{
 		/// <summary>

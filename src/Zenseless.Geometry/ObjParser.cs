@@ -109,7 +109,7 @@ namespace Zenseless.Geometry
 							break;
 
 						case "f":
-							//TODO: add face
+							// add face
 							var face = new List<Vertex>();
 							faces.Add(face);
 							for (int i = 1; i < parameters.Length; ++i)

@@ -67,8 +67,9 @@ namespace Zenseless.HLGL
 			}
 			else
 			{
-				if (null == contentLoader.Names.GetFullName(name)) throw new ArgumentException($"Content '{name}' was not found!");
-				names.Add(name);
+				var fullName = contentLoader.Names.GetFullName(name);
+				if (fullName is null) throw new ArgumentException($"Content '{name}' was not found!");
+				names.Add(fullName);
 			}
 			return contentLoader.Load<TYPE>(names);
 		}
@@ -81,9 +82,9 @@ namespace Zenseless.HLGL
 		public static IShaderProgram LoadPixelShader(this IContentLoader contentLoader, string name)
 		{
 			if (contentLoader == null) throw new ArgumentNullException(nameof(contentLoader));
-			
 			var names = new string[] { "screenQuad.vert", name };
-			return contentLoader.Load<IShaderProgram>(names);
+			var fullNames = contentLoader.Names.GetFullNames(names);
+			return contentLoader.Load<IShaderProgram>(fullNames);
 		}
 
 		/// <summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using Zenseless.Base;
 
-namespace Zenseless.ContentPipeline
+namespace Zenseless.ExampleFramework
 {
 	internal class ExampleServices //TODO: instead of ExampleWindow
 	{

@@ -5,7 +5,7 @@ namespace Zenseless.Geometry
 {
 	/// <summary>
 	/// This class represents a mutable 2D axis aligned bounding box. 
-	/// It is a class, because Microsoft recommends structs to be immutable 
+	/// It is a class, because Microsoft recommends structures to be immutable 
 	/// and this class will be often used as a function parameter, so less
 	/// copying is necessary.
 	/// </summary>
@@ -105,33 +105,6 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Checks if point is inside the rectangle (including borders)
-		/// </summary>
-		/// <param name="x">x-coordinate of point</param>
-		/// <param name="y">y-coordinate of point</param>
-		/// <returns>true if point is inside the rectangle (including borders)</returns>
-		public bool Contains(float x, float y)
-		{
-			if (x < MinX || MaxX < x) return false;
-			if (y < MinY || MaxY < y) return false;
-			return true;
-		}
-
-		/// <summary>
-		/// Checks if given input rectangle is inside this (including borders)
-		/// </summary>
-		/// <param name="rectangle">input rectangle, will be tested if it is contained inside this</param>
-		/// <returns>true if given rectangle is inside this (including borders)</returns>
-		public bool Contains(IReadOnlyBox2D rectangle)
-		{
-			if (MinX > rectangle.MinX) return false;
-			if (MaxX < rectangle.MaxX) return false;
-			if (MinY > rectangle.MinY) return false;
-			if (MaxY < rectangle.MaxY) return false;
-			return true;
-		}
-
-		/// <summary>
 		/// Tests two rectangles for equal size and position
 		/// </summary>
 		/// <param name="other">second rectangle</param>
@@ -167,18 +140,6 @@ namespace Zenseless.Geometry
 				hashCode = (hashCode * 397) ^ SizeY.GetHashCode();
 				return hashCode;
 			}
-		}
-
-		/// <summary>
-		/// Test for intersection of two rectangles (excluding borders)
-		/// </summary>
-		/// <param name="rectangle">second rectangle</param>
-		/// <returns>true if the two rectangles overlap</returns>
-		public bool Intersects(IReadOnlyBox2D rectangle)
-		{
-			bool noXintersect = (MaxX <= rectangle.MinX) || (MinX >= rectangle.MaxX);
-			bool noYintersect = (MaxY <= rectangle.MinY) || (MinY >= rectangle.MaxY);
-			return !(noXintersect || noYintersect);
 		}
 
 		/// <summary>

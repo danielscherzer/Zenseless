@@ -3,7 +3,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Zenseless.ContentPipeline
+namespace Zenseless.ExampleFramework
 {
 	/// <summary>
 	/// 

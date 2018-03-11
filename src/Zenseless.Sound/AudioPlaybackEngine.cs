@@ -122,6 +122,7 @@ namespace Zenseless.Sound
 		/// </summary>
 		protected override void DisposeResources()
 		{
+			outputDevice.Stop();
 			outputDevice.Dispose();
 		}
 	}

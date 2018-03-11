@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Zenseless.Base
+namespace Zenseless.Base //TODO: rename base -> patterns
 {
 	/// <summary>
 	/// 

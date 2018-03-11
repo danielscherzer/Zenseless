@@ -12,7 +12,7 @@ using Zenseless.Base;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
 
-namespace Zenseless.ContentPipeline
+namespace Zenseless.ExampleFramework
 {
 	/// <summary>
 	/// Intended for use for small example programs in the <see cref="Zenseless"/> framework
@@ -22,7 +22,7 @@ namespace Zenseless.ContentPipeline
 	/// create a MEF composition container for IOC;
 	/// creates experimental versions of high level GL abstraction and resource handling; use with car and subject to change;
 	/// </summary>
-	public sealed class ExampleWindow
+	public sealed class ExampleWindow : Disposable
 	{
 		/// <summary>
 		/// Occurs when in the render loop a new render of the window should be handled. Usually once per frame
@@ -103,6 +103,7 @@ namespace Zenseless.ContentPipeline
 			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
 
 			contentManager = ContentManagerGL.Create(Assembly.GetEntryAssembly());
+			//contentManager.RegisterImporter();
 		}
 
 		/// <summary>
@@ -133,7 +134,7 @@ namespace Zenseless.ContentPipeline
 			//run the update loop, which calls our registered callbacks
 			gameWindow.Run();
 			screenShots?.ForEach((bmp) => bmp.RotateFlip()); //delayed rotate flip
-			screenShots?.SaveToDefaultDir();
+			screenShots?.Save(PathTools.GetCurrentProcessOutputDir());
 		}
 
 		private readonly FileContentManager contentManager;
@@ -201,6 +202,18 @@ namespace Zenseless.ContentPipeline
 			{
 				gameWindow.WindowState = WindowState.Fullscreen;
 			}
+		}
+
+		/// <summary>
+		/// Disposes the resources.
+		/// </summary>
+		protected override void DisposeResources()
+		{
+			if (!(screenShots is null)) foreach (var bitmap in screenShots) bitmap.Dispose();
+			//RenderContext.Dispose();
+			_container.Dispose();
+			gameWindow.Dispose();
+			//contentManager.
 		}
 	}
 }

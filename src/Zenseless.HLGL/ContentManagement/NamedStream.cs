@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Zenseless.Base;
 
 namespace Zenseless.HLGL
 {
@@ -7,7 +8,7 @@ namespace Zenseless.HLGL
 	/// 
 	/// </summary>
 	[Serializable]
-	public struct NamedStream
+	public class NamedStream : Disposable
 	{
 		/// <summary>
 		/// The name
@@ -25,8 +26,16 @@ namespace Zenseless.HLGL
 		/// <param name="stream">The stream.</param>
 		public NamedStream(string name, Stream stream)
 		{
-			Name = name;
-			Stream = stream;
+			Name = name ?? throw new ArgumentNullException(nameof(name));
+			Stream = stream ?? throw new ArgumentNullException(nameof(stream));
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		protected override void DisposeResources()
+		{
+			Stream.Dispose();
 		}
 	}
 }

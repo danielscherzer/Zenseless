@@ -82,6 +82,10 @@
       <Project>{C660F6AF-C100-4169-A9FB-61E1EBE87F34}</Project>
       <Name>Zenseless.OpenGL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Zenseless.Sound\Zenseless.Sound.csproj">
+      <Project>{78a88806-ad96-4821-b9ad-8fc060f6feb6}</Project>
+      <Name>Zenseless.Sound</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FormShaderException.resx">
