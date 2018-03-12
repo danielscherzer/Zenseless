@@ -65,32 +65,6 @@ namespace Zenseless.Geometry
 		public float Radius { get; set; }
 
 		/// <summary>
-		/// Determines whether the circle contains the specified point.
-		/// </summary>
-		/// <param name="point">The point to test.</param>
-		/// <returns>
-		///   <c>true</c> if the circle contains the specified point; otherwise, <c>false</c>.
-		/// </returns>
-		public bool Contains(Vector2 point)
-		{
-			var diff = point - new Vector2(CenterX, CenterY);
-			return Radius * Radius > diff.LengthSquared();
-		}
-
-		/// <summary>
-		/// Intersectses the specified circle.
-		/// </summary>
-		/// <param name="circle">The circle.</param>
-		/// <returns></returns>
-		public bool Intersects(IReadOnlyCircle circle)
-		{
-			var r = circle.Radius + Radius;
-			var diff = circle.Center - Center;
-			var ll = diff.LengthSquared();
-			return r * r > diff.LengthSquared();
-		}
-
-		/// <summary>
 		/// Implements the operator ==.
 		/// </summary>
 		/// <param name="a">a.</param>

@@ -3,7 +3,7 @@
 namespace Zenseless.Geometry
 {
 	/// <summary>
-	/// 
+	/// A read only interface to a circle
 	/// </summary>
 	public interface IReadOnlyCircle
 	{
@@ -35,21 +35,5 @@ namespace Zenseless.Geometry
 		/// The radius.
 		/// </value>
 		float Radius { get; }
-
-		/// <summary>
-		/// Determines whether the circle contains the specified point.
-		/// </summary>
-		/// <param name="point">The point to test.</param>
-		/// <returns>
-		///   <c>true</c> if the circle contains the specified point; otherwise, <c>false</c>.
-		/// </returns>
-		bool Contains(Vector2 point);
-		
-		/// <summary>
-		/// Intersects the specified circle.
-		/// </summary>
-		/// <param name="circle">The circle.</param>
-		/// <returns></returns>
-		bool Intersects(IReadOnlyCircle circle);
 	}
 }

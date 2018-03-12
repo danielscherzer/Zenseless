@@ -13,7 +13,7 @@ namespace Zenseless.OpenGL
 	public static class DrawTools
 	{
 		/// <summary>
-		/// Draws the circle.
+		/// Draws a circle. This is a slow immediate mode helper function.
 		/// </summary>
 		/// <param name="centerX">The center x.</param>
 		/// <param name="centerY">The center y.</param>

@@ -48,13 +48,14 @@
     <Compile Include="DefaultMesh.cs" />
     <Compile Include="IReadOnlyCircle.cs" />
     <Compile Include="IReadOnlyBox2D.cs" />
+    <Compile Include="IReadOnlyCircleExtensions.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="Mesh.cs" />
     <Compile Include="Meshes.cs" />
     <Compile Include="Obj2Mesh.cs" />
     <Compile Include="ObjParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadOnlyBox2Dextensions.cs" />
+    <Compile Include="IReadOnlyBox2Dextensions.cs" />
     <Compile Include="ShapeBuilder.cs" />
     <Compile Include="Transformation.cs" />
     <Compile Include="Transformation2D.cs" />
