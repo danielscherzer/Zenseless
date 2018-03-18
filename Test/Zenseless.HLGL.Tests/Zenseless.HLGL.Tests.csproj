@@ -40,16 +40,16 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Zenseless.HLGL\Zenseless.HLGL.csproj">
-      <Project>{227D6BE1-BA08-4030-A755-07288540931F}</Project>
-      <Name>Zenseless.HLGL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RenderStateTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Zenseless.HLGL\Zenseless.HLGL.csproj">
+      <Project>{227D6BE1-BA08-4030-A755-07288540931F}</Project>
+      <Name>Zenseless.HLGL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">

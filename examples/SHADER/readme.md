@@ -25,6 +25,3 @@ shader code: `uniform float time;`
 does not work on for instance Intel HW, `uniform float time` stays on `0`.
 
 **Solution:** explicit conversion: `GL.Uniform1(shader.GetResourceLocation(ShaderResourceType.Uniform, "time"), (float)timeSource.Elapsed.TotalSeconds);`
-
-## License
-[Apache 2.0](LICENSE)
