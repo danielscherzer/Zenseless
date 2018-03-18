@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Zenseless.HLGL
 {
@@ -7,6 +8,14 @@ namespace Zenseless.HLGL
 	/// </summary>
 	public interface IContentLoader
 	{
+		/// <summary>
+		/// Gets a list of registered importer types.
+		/// </summary>
+		/// <value>
+		/// The importer types.
+		/// </value>
+		IEnumerable<Type> ImporterTypes { get; }
+
 		/// <summary>
 		/// Enumerates all content resource names.
 		/// </summary>

@@ -23,6 +23,14 @@ namespace Zenseless.HLGL
 		}
 
 		/// <summary>
+		/// Gets a list of registered importer types.
+		/// </summary>
+		/// <value>
+		/// The importer types.
+		/// </value>
+		public IEnumerable<Type> ImporterTypes => cachedContentManager.ImporterTypes;
+
+		/// <summary>
 		/// Gets the last changed file path.
 		/// </summary>
 		/// <value>

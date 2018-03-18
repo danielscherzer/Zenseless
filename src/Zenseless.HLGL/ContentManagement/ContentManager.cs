@@ -20,6 +20,14 @@ namespace Zenseless.HLGL
 		}
 
 		/// <summary>
+		/// Gets a list of registered importer types.
+		/// </summary>
+		/// <value>
+		/// The importer types.
+		/// </value>
+		public IEnumerable<Type> ImporterTypes => importers.Keys;
+
+		/// <summary>
 		/// Enumerates all content resource names.
 		/// </summary>
 		/// <value>

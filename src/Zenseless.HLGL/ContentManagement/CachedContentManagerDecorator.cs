@@ -32,6 +32,14 @@ namespace Zenseless.HLGL
 		public event EventHandler<NewCacheEntryEventArgs> NewCacheEntry;
 
 		/// <summary>
+		/// Gets a list of registered importer types.
+		/// </summary>
+		/// <value>
+		/// The importer types.
+		/// </value>
+		public IEnumerable<Type> ImporterTypes => ContentManager.ImporterTypes;
+
+		/// <summary>
 		/// Enumerates all content resource names.
 		/// </summary>
 		/// <value>

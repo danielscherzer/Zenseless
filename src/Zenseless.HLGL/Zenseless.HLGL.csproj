@@ -85,7 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zenseless.Base\Zenseless.Base.csproj">
-      <Project>{4de8bcd3-83df-48dd-b962-518c06d3491a}</Project>
+      <Project>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</Project>
       <Name>Zenseless.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zenseless.Geometry\Zenseless.Geometry.csproj">
