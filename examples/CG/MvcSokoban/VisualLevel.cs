@@ -33,8 +33,7 @@ namespace MvcSokoban
 			shdTexColor = contentLoader.Load<IShaderProgram>("texColor.*");
 
 			levelGeometry = new VAO(PrimitiveType.Quads);
-			var quadPos = new Vector2[4]
-			{ Vector2.Zero, Vector2.UnitX, Vector2.One, Vector2.UnitY };
+			var quadPos = new Vector2[4] { Vector2.Zero, Vector2.UnitX, Vector2.One, Vector2.UnitY };
 			var locPosition = shdTexColor.GetResourceLocation(ShaderResourceType.Attribute, "position");
 			levelGeometry.SetAttribute(locPosition, quadPos, VertexAttribPointerType.Float, 2);
 
