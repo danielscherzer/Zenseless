@@ -1,11 +1,9 @@
 #version 430 core
 
-uniform Uniforms
-{
-	mat4 camera;
-};
+uniform mat4 camera;
+uniform sampler2D texHeightfield;
 
-in vec3 position;
+in vec4 position;
 in vec3 normal;
 in vec2 uv;
 
@@ -16,5 +14,8 @@ void main()
 {
 	n = normal;
 	uvs = uv;
-	gl_Position = camera * vec4(position, 1.0);
+	float height = texture(texHeightfield, uv).r;
+	vec4 newPos = position;
+	newPos.y = height * 1f;
+	gl_Position = camera * newPos;
 }
