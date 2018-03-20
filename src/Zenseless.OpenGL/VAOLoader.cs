@@ -34,7 +34,6 @@ namespace Zenseless.OpenGL
 				vao.SetAttribute(loc, mesh.TexCoord.ToArray(), VertexAttribPointerType.Float, 2);
 			}
 			vao.SetIndex(mesh.IDs.ToArray());
-			vao.PrimitiveType = PrimitiveType.Triangles;
 			return vao;
 		}
 	}

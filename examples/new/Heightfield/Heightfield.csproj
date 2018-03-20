@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Heightfield.cs" />
     <Compile Include="MainVisual.cs" />
+    <Compile Include="MeshVisual.cs" />
+    <Compile Include="TextureBinding.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -85,6 +87,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Content\Mountain_color.png" />
     <EmbeddedResource Include="Content\Mountain_height.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\stone.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

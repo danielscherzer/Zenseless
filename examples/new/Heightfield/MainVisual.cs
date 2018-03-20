@@ -1,4 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL4;
+using System;
 using System.Numerics;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
@@ -16,13 +17,17 @@ namespace Heightfield
 			Camera.Elevation = 15;
 
 			renderContext.RenderState.Set(BoolState<IDepthState>.Enabled);
-			renderContext.RenderState.Set(BoolState<IBackfaceCullingState>.Disabled);
+			renderContext.RenderState.Set(BoolState<IBackfaceCullingState>.Enabled);
 
-			shader = contentLoader.Load<IShaderProgram>("shader.*");
-			heightfield = contentLoader.Load<ITexture2D>("mountain_height");
-			color = contentLoader.Load<ITexture2D>("mountain_color");
+			var shader = contentLoader.Load<IShaderProgram>("shader.*");
 			var mesh = Meshes.CreatePlane(2, 2, 1024, 1024);
-			geometry = VAOLoader.FromMesh(mesh, shader);
+			var bindings = new TextureBinding[]
+			{
+				new TextureBinding("texHeightfield", contentLoader.Load<ITexture2D>("mountain_height")),
+				new TextureBinding("texColor", contentLoader.Load<ITexture2D>("mountain_color")),
+				new TextureBinding("texStone", contentLoader.Load<ITexture2D>("stone")),
+			};
+			mountain = new MeshVisual(mesh, shader, bindings);
 		}
 
 		public CameraOrbit Camera { get; private set; } = new CameraOrbit();
@@ -30,25 +35,15 @@ namespace Heightfield
 		internal void Render()
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			shader.Activate();
-			GL.ActiveTexture(TextureUnit.Texture0);
-			heightfield.Activate();
-			GL.Uniform1(shader.GetResourceLocation(ShaderResourceType.Uniform, "texHeightfield"), 0);
-			GL.ActiveTexture(TextureUnit.Texture1);
-			color.Activate();
-			GL.Uniform1(shader.GetResourceLocation(ShaderResourceType.Uniform, "texColor"), 1);
-			var mtxCamera = Camera.CalcMatrix().ToOpenTK();
-			GL.UniformMatrix4(shader.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref mtxCamera);
-			geometry.Draw();
-			color.Deactivate();
-			GL.ActiveTexture(TextureUnit.Texture0);
-			heightfield.Deactivate();
-			shader.Deactivate();
+
+			void SetUniforms(Func<string, int> GetLocation)
+			{
+				var mtxCamera = Camera.CalcMatrix().ToOpenTK();
+				GL.UniformMatrix4(GetLocation("camera"), true, ref mtxCamera);
+			}
+			mountain.Draw(SetUniforms);
 		}
 
-		private readonly IShaderProgram shader;
-		private readonly VAO geometry;
-		private readonly ITexture heightfield;
-		private readonly ITexture color;
+		private readonly MeshVisual mountain;
 	}
 }

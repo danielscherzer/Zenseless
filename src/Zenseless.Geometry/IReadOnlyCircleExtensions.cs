@@ -26,13 +26,13 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="circleA">The first circle.</param>
 		/// <param name="circleB">The second circle.</param>
-		/// <returns></returns>
+		/// <returns><c>true</c> if the circles overlap; otherwise, <c>false</c></returns>
 		public static bool Intersects(this IReadOnlyCircle circleA, IReadOnlyCircle circleB)
 		{
-			var r = circleB.Radius + circleA.Radius;
+			var rSum = circleB.Radius + circleA.Radius;
 			var diff = circleB.Center - circleA.Center;
 			var ll = diff.LengthSquared();
-			return r * r > diff.LengthSquared();
+			return rSum * rSum > diff.LengthSquared();
 		}
 	}
 }

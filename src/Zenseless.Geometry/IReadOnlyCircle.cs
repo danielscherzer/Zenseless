@@ -14,22 +14,25 @@ namespace Zenseless.Geometry
 		/// The center.
 		/// </value>
 		Vector2 Center { get; }
+		
 		/// <summary>
-		/// Gets or sets the center x.
+		/// Gets the center x-coordinate.
 		/// </summary>
 		/// <value>
-		/// The center x.
+		/// The center x-coordinate.
 		/// </value>
 		float CenterX { get; }
+		
 		/// <summary>
-		/// Gets or sets the center y.
+		/// Gets the center y-coordinate.
 		/// </summary>
 		/// <value>
-		/// The center y.
+		/// The center y-coordinate.
 		/// </value>
 		float CenterY { get; }
+		
 		/// <summary>
-		/// Gets or sets the radius.
+		/// Gets the radius.
 		/// </summary>
 		/// <value>
 		/// The radius.

@@ -49,6 +49,7 @@
     <Compile Include="IReadOnlyCircle.cs" />
     <Compile Include="IReadOnlyBox2D.cs" />
     <Compile Include="IReadOnlyCircleExtensions.cs" />
+    <Compile Include="IReadOnlyMesh.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="Mesh.cs" />
     <Compile Include="Meshes.cs" />

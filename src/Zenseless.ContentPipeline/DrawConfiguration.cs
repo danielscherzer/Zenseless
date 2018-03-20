@@ -306,16 +306,5 @@ namespace Zenseless.ExampleFramework
 			if (Vao is null) throw new InvalidOperationException("Specify mesh before setting instance attributes");
 			return ShaderProgram.GetResourceLocation(ShaderResourceType.Attribute, name);
 		}
-
-		/// <summary>
-		/// Updates the mesh shader.
-		/// </summary>
-		/// <param name="mesh">The mesh.</param>
-		/// <param name="shaderName">Name of the shader.</param>
-		/// <exception cref="NotImplementedException"></exception>
-		public void UpdateMeshShader(DefaultMesh mesh, string shaderName)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

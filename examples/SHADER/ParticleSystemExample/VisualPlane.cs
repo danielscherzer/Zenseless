@@ -29,7 +29,7 @@ namespace Example
 			renderState.Set(BoolState<IBackfaceCullingState>.Enabled);
 		}
 
-		private VAO plane = new VAO(PrimitiveType.Triangles);
+		private VAO plane;
 		private IShaderProgram shdPlane;
 		private readonly IRenderState renderState;
 	}

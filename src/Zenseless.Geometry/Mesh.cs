@@ -6,15 +6,25 @@ namespace Zenseless.Geometry
 	/// <summary>
 	/// A Mesh is a collection of attributes, like positions, normals and texture coordinates
 	/// </summary>
-	public class Mesh
+	public class Mesh : IReadOnlyMesh
 	{
 		/// <summary>
-		/// Gets the i ds.
+		/// Gets the list of attribute names.
 		/// </summary>
 		/// <value>
-		/// The i ds.
+		/// The attribute names.
+		/// </value>
+		public IEnumerable<string> AttributeNames => attributes.Keys;
+
+		/// <summary>
+		/// Gets the list of ids.
+		/// </summary>
+		/// <value>
+		/// The ids.
 		/// </value>
 		public List<uint> IDs { get; private set; } = new List<uint>();
+
+		IEnumerable<uint> IReadOnlyMesh.IDs => IDs;
 
 		/// <summary>
 		/// Adds the attribute.
@@ -61,6 +71,8 @@ namespace Zenseless.Geometry
 			}
 			throw new ArgumentException($"No attribute with name '{name}' stored.");
 		}
+
+		IEnumerable<ELEMENT_TYPE> IReadOnlyMesh.Get<ELEMENT_TYPE>(string name) => Get<ELEMENT_TYPE>(name);
 
 		private Dictionary<string, object> attributes = new Dictionary<string, object>();
 	}

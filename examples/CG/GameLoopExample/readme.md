@@ -1,4 +1,4 @@
-This first exercise has the goal of getting to know OpenGL. Just for this exercise we will not press OOP rules. This exercise does not require the Zenseless framework.
+This first example has the goal of getting to know OpenGL. Just for this exercise we will not press OOP rules. This exercise does not require the Zenseless framework.
 1. Execute program
 1. Give each vertex a different color
 	+ Note that OpenGL is a state machine. Color stays until other color is selected.

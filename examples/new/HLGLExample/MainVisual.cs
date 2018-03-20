@@ -18,7 +18,6 @@ namespace Example
 			Camera.Azimuth = 90;
 			Camera.Elevation = 20;
 
-			;
 			this.context = context;
 			frameBuffer = context.GetFrameBuffer();
 			surfaceGeometry = context.CreateRenderSurface(512, 512, true);

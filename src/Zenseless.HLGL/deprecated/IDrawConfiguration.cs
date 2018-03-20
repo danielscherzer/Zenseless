@@ -15,6 +15,7 @@ namespace Zenseless.HLGL
 		///   <c>true</c> if [backface culling]; otherwise, <c>false</c>.
 		/// </value>
 		bool BackfaceCulling { get; set; }
+		
 		/// <summary>
 		/// Gets or sets the instance count.
 		/// </summary>
@@ -22,6 +23,7 @@ namespace Zenseless.HLGL
 		/// The instance count.
 		/// </value>
 		int InstanceCount { get; set; }
+		
 		/// <summary>
 		/// Gets or sets a value indicating whether [shader point size].
 		/// </summary>
@@ -29,6 +31,7 @@ namespace Zenseless.HLGL
 		///   <c>true</c> if [shader point size]; otherwise, <c>false</c>.
 		/// </value>
 		bool ShaderPointSize { get; set; }
+		
 		/// <summary>
 		/// Gets or sets a value indicating whether [z buffer test].
 		/// </summary>
@@ -42,48 +45,49 @@ namespace Zenseless.HLGL
 		/// </summary>
 		/// <param name="context">The context.</param>
 		void Draw(IRenderContext context);
+		
 		/// <summary>
 		/// Sets the input texture.
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="image">The image.</param>
 		void SetInputTexture(string name, IRenderSurface image);
+		
 		/// <summary>
 		/// Updates the instance attribute.
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="data">The data.</param>
 		void UpdateInstanceAttribute(string name, float[] data);
+		
 		/// <summary>
 		/// Updates the instance attribute.
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="data">The data.</param>
 		void UpdateInstanceAttribute(string name, int[] data);
+		
 		/// <summary>
 		/// Updates the instance attribute.
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="data">The data.</param>
 		void UpdateInstanceAttribute(string name, Vector2[] data);
+		
 		/// <summary>
 		/// Updates the instance attribute.
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="data">The data.</param>
 		void UpdateInstanceAttribute(string name, Vector3[] data);
+		
 		/// <summary>
 		/// Updates the instance attribute.
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="data">The data.</param>
 		void UpdateInstanceAttribute(string name, Vector4[] data);
-		/// <summary>
-		/// Updates the mesh shader.
-		/// </summary>
-		/// <param name="mesh">The mesh.</param>
-		/// <param name="shaderName">Name of the shader.</param>
-		void UpdateMeshShader(DefaultMesh mesh, string shaderName);
+
 		/// <summary>
 		/// Updates the shader buffer.
 		/// </summary>
@@ -91,6 +95,7 @@ namespace Zenseless.HLGL
 		/// <param name="name">The name.</param>
 		/// <param name="uniformArray">The uniform array.</param>
 		void UpdateShaderBuffer<DATA_ELEMENT_TYPE>(string name, DATA_ELEMENT_TYPE[] uniformArray) where DATA_ELEMENT_TYPE : struct;
+		
 		/// <summary>
 		/// Updates the uniforms.
 		/// </summary>

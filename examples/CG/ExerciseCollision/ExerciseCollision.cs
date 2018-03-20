@@ -15,6 +15,7 @@ namespace Example
 
 			window.Update += (dt) =>
 			{
+				// handle input
 				var movementXAxis = Keyboard.GetState()[Key.Left] ? -1f : (Keyboard.GetState()[Key.Right] ? 1f : 0f);
 				model.Update(movementXAxis, dt);
 			};
@@ -22,7 +23,7 @@ namespace Example
 			window.Render += () =>
 			{
 				view.ClearScreen();
-				foreach(var shape in model.Shapes) view.DrawShape(shape);
+				foreach(var shape in model.ShapeBounds) view.DrawShape(shape);
 			};
 
 			window.Resize += view.Resize;
