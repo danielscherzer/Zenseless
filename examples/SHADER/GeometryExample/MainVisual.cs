@@ -47,7 +47,7 @@ namespace Example
 			}
 			//copy positions to GPU
 			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "in_position"), positions, VertexAttribPointerType.Float, 2);
-			//generate velocity arrray on CPU
+			//generate velocity array on CPU
 			float RndSpeed() => (Rnd01() - 0.5f) * 0.1f;
 			var velocities = new Vector2[pointCount];
 			for (int i = 0; i < pointCount; ++i)

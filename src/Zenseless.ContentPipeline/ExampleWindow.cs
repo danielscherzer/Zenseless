@@ -1,5 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Input;
 using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace Zenseless.ExampleFramework
 		/// <param name="width">The width.</param>
 		/// <param name="height">The height.</param>
 		public delegate void ResizeHandler(int width, int height);
+		
 		/// <summary>
 		/// Occurs when the window is resized.
 		/// </summary>
@@ -60,6 +62,7 @@ namespace Zenseless.ExampleFramework
 		/// </summary>
 		/// <param name="updatePeriod">The update period.</param>
 		public delegate void UpdateHandler(float updatePeriod);
+		
 		/// <summary>
 		/// Occurs when in the update loop a new update should be handled. Usually once per frame
 		/// </summary>
@@ -101,9 +104,19 @@ namespace Zenseless.ExampleFramework
 			gameWindow.Resize += GameWindow_Resize;
 			//register callback for keyboard
 			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
+			gameWindow.KeyDown += GameWindow_KeyDown;
 
 			contentManager = ContentManagerGL.Create(Assembly.GetEntryAssembly());
-			//contentManager.RegisterImporter();
+		}
+
+		private void GameWindow_KeyDown(object sender, KeyboardKeyEventArgs e)
+		{
+			switch (e.Key)
+			{
+				case Key.ScrollLock:
+					FrameBuffer.ToBitmap().SaveToClipboard();
+					break;
+			}
 		}
 
 		/// <summary>
@@ -120,7 +133,11 @@ namespace Zenseless.ExampleFramework
 		/// <summary>
 		/// Removes the default key handler.
 		/// </summary>
-		public void RemoveDefaultKeyHandler() => gameWindow.KeyDown -= INativeWindowExtensions.DefaultExampleWindowKeyEvents;
+		public void RemoveDefaultKeyHandler()
+		{
+			gameWindow.KeyDown -= GameWindow_KeyDown;
+			gameWindow.KeyDown -= INativeWindowExtensions.DefaultExampleWindowKeyEvents;
+		}
 
 		/// <summary>
 		/// Runs the window loop, which in turn calls the registered event handlers
@@ -168,7 +185,7 @@ namespace Zenseless.ExampleFramework
 				e.Data[ShaderLoader.ExceptionDataFileName] = contentManager.LastChangedFilePath; //TODO: make cleaner after removal of old stuff
 				new FormShaderExceptionFacade().ShowModal(e);
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				Console.WriteLine(e.ToString());
 			}
@@ -213,7 +230,7 @@ namespace Zenseless.ExampleFramework
 			//RenderContext.Dispose();
 			_container.Dispose();
 			gameWindow.Dispose();
-			//contentManager.
+			//contentManager
 		}
 	}
 }

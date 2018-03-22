@@ -1,6 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
-using System.Numerics;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;

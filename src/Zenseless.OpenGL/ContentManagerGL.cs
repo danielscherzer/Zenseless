@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Zenseless.Base;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 

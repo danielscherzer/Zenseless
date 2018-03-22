@@ -1,7 +1,7 @@
-﻿using Zenseless.Geometry;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Input;
 using System;
+using Zenseless.Geometry;
 
 namespace Zenseless.OpenGL
 {

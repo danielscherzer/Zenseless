@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
 using Zenseless.Base;
 using Zenseless.ExampleFramework;
 using Zenseless.OpenGL;
@@ -23,7 +22,7 @@ namespace Example
 			if (screenshot is null) return;
 			var name = Path.ChangeExtension(PathTools.GetCurrentProcessPath(), ".png");
 			screenshot.Save(name);
-			Clipboard.SetImage(screenshot);
+			screenshot.SaveToClipboard();
 		}
 	}
 }
