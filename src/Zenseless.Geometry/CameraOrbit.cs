@@ -4,9 +4,9 @@ using System.Numerics;
 namespace Zenseless.Geometry
 {
 	/// <summary>
-	/// 
+	/// An orbiting camera class
 	/// </summary>
-	public class CameraOrbit
+	public class CameraOrbit : ICamera
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CameraOrbit" /> class.
@@ -143,8 +143,7 @@ namespace Zenseless.Geometry
 		public Vector3 CalcPosition()
 		{
 			var view = CalcViewMatrix();
-			Matrix4x4 inverse;
-			if (!Matrix4x4.Invert(view, out inverse)) throw new ArithmeticException("Could not invert matrix");
+			if (!Matrix4x4.Invert(view, out Matrix4x4 inverse)) throw new ArithmeticException("Could not invert matrix");
 			return new Vector3(inverse.M14, inverse.M24, inverse.M34);
 		}
 

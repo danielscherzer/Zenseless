@@ -44,14 +44,35 @@ namespace Zenseless.OpenGL
 		/// </summary>
 		/// <param name="texture">The texture to save.</param>
 		/// <param name="buffer">The buffer to write to</param>
-		public static void ToBuffer(this ITexture2D texture, ref Vector4[] buffer)
+		public static void ToBuffer(this ITexture2D texture, ref Vector4[,] buffer)
 		{
-			if (buffer == null) throw new ArgumentNullException(nameof(buffer));
+			if (buffer is null) throw new ArgumentNullException(nameof(buffer));
 
 			try
 			{
 				texture.Activate();
 				GL.GetTexImage(TextureTarget.Texture2D, 0, PixelFormat.Rgba, PixelType.Float, buffer);
+				texture.Deactivate();
+			}
+			catch
+			{
+				texture.Deactivate();
+			}
+		}
+
+		/// <summary>
+		/// Saves a texture to a buffer.
+		/// </summary>
+		/// <param name="texture">The texture to save.</param>
+		/// <param name="buffer">The buffer to write to</param>
+		public static void ToBuffer(this ITexture2D texture, ref float[,] buffer)
+		{
+			if (buffer is null) throw new ArgumentNullException(nameof(buffer));
+
+			try
+			{
+				texture.Activate();
+				GL.GetTexImage(TextureTarget.Texture2D, 0, PixelFormat.Red, PixelType.Float, buffer);
 				texture.Deactivate();
 			}
 			catch

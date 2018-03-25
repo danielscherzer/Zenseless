@@ -1,7 +1,7 @@
-const float PI = 3.14159265359;
-
 uniform sampler2D image;
 uniform float iGlobalTime;
+
+const float PI = 3.14159265359;
 
 in vec2 uv;
 

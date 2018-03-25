@@ -59,10 +59,10 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Transforms the specified transform.
+		/// Transforms the mesh by the specified transform.
 		/// </summary>
 		/// <param name="m">The m.</param>
-		/// <param name="transform">The transform.</param>
+		/// <param name="transform">The transformation matrix.</param>
 		/// <returns></returns>
 		public static DefaultMesh Transform(this DefaultMesh m, Matrix4x4 transform)
 		{
@@ -80,6 +80,18 @@ namespace Zenseless.Geometry
 				mesh.Normal.Add(newN);
 			}
 			return mesh;
+		}
+
+		/// <summary>
+		/// Transforms the mesh by the specified transform.
+		/// </summary>
+		/// <param name="m">The m.</param>
+		/// <param name="transform">The transformation.</param>
+		/// <returns></returns>
+		public static DefaultMesh Transform(this DefaultMesh m, Transformation3D transform)
+		{
+			if (transform is null) throw new ArgumentNullException(nameof(transform));
+			return Transform(m, transform.GetLocalToWorld());
 		}
 
 		/// <summary>
@@ -157,36 +169,30 @@ namespace Zenseless.Geometry
 		{
 			var mesh = new DefaultMesh();
 			var plane = CreatePlane(roomSize, roomSize, 2, 2);
-			
-			var xform = new Transformation();
-			xform.TranslateGlobal(0, -roomSize / 2, 0);
+
+			var xFormCenter = new Translation3D(0, -roomSize / 2, 0);
 			plane.SetConstantUV(new Vector2(3, 0));
-			mesh.Add(plane.Transform(xform));
-			xform.RotateZGlobal(90f);
+			mesh.Add(plane.Transform(xFormCenter));
+			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 90f, xFormCenter)));
 			plane.SetConstantUV(new Vector2(1, 0));
-			mesh.Add(plane.Transform(xform));
-			xform.RotateZGlobal(90f);
+			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 180f, xFormCenter)));
 			plane.SetConstantUV(new Vector2(0, 0));
-			mesh.Add(plane.Transform(xform));
-			xform.RotateZGlobal(90f);
+			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 270f, xFormCenter)));
 			plane.SetConstantUV(new Vector2(2, 0));
-			mesh.Add(plane.Transform(xform));
-			xform.RotateYGlobal(270f);
+			mesh.Add(plane.Transform(new Rotation3D(Axis.X, 90f, xFormCenter)));
 			plane.SetConstantUV(new Vector2(0, 0));
-			mesh.Add(plane.Transform(xform));
+			mesh.Add(plane.Transform(new Rotation3D(Axis.X, -90f, xFormCenter)));
 
 			var sphere = Meshes.CreateSphere(sphereRadius, 4);
 			sphere.SetConstantUV(new Vector2(3, 0));
-			xform.Reset();
-			xform.TranslateGlobal(0.4f, -1 + sphereRadius, -0.2f);
-			mesh.Add(sphere.Transform(xform));
+			mesh.Add(sphere.Transform(new Translation3D(0.4f, -1 + sphereRadius, -0.2f)));
 
 			var cube = Meshes.CreateCubeWithNormals(cubeSize);
+			var trans = new Translation3D(-0.5f, -1 + 0.5f * cubeSize, 0.1f);
+			var translateAndRotY = new Rotation3D(Axis.Y, 35f, trans);
+
 			cube.SetConstantUV(new Vector2(3, 0));
-			xform.Reset();
-			xform.RotateYGlobal(35f);
-			xform.TranslateGlobal(-0.5f, -1 + 0.5f * cubeSize, 0.1f);
-			mesh.Add(cube.Transform(xform));
+			mesh.Add(cube.Transform(translateAndRotY));
 			return mesh;
 		}
 		/// <summary>

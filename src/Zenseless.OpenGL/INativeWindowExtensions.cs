@@ -40,6 +40,52 @@ namespace Zenseless.OpenGL
 		}
 
 		/// <summary>
+		/// Adds the first person camera events.
+		/// </summary>
+		/// <param name="window">The window.</param>
+		/// <param name="camera">The camera.</param>
+		public static CameraFirstPersonMovementState AddFirstPersonCameraEvents(this INativeWindow window, CameraFirstPerson camera)
+		{
+			window.Resize += (s, e) => camera.Aspect = (float)window.Width / window.Height;
+			window.MouseMove += (s, e) =>
+			{
+				if (ButtonState.Pressed == e.Mouse.LeftButton)
+				{
+					camera.Heading += 300 * e.XDelta / (float)window.Width;
+					camera.Tilt += 300 * e.YDelta / (float)window.Height;
+				}
+			};
+
+			var movementState = new CameraFirstPersonMovementState();
+			window.KeyDown += (s, e) =>
+			{
+				var delta = 1f;
+				switch (e.Key)
+				{
+					case Key.A: movementState.X = -delta; break;
+					case Key.D: movementState.X = delta; break;
+					case Key.Q: movementState.Y = -delta; break;
+					case Key.E: movementState.Y = delta; break;
+					case Key.W: movementState.Z = -delta; break;
+					case Key.S: movementState.Z = delta; break;
+				}
+			};
+			window.KeyUp += (s, e) =>
+			{
+				switch (e.Key)
+				{
+					case Key.A: movementState.X = 0f; break;
+					case Key.D: movementState.X = 0f; break;
+					case Key.Q: movementState.Y = 0f; break;
+					case Key.E: movementState.Y = 0f; break;
+					case Key.W: movementState.Z = 0f; break;
+					case Key.S: movementState.Z = 0f; break;
+				}
+			};
+			return movementState;
+		}
+
+		/// <summary>
 		/// Default key bindings: ESCAPE for closing; F11 for toggling full-screen
 		/// </summary>
 		/// <param name="sender">window that receives input system events. Should be a <see cref="INativeWindow"/>.</param>

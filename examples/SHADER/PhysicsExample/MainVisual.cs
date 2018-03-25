@@ -20,14 +20,6 @@ namespace Example
 			shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
 			var mesh = contentLoader.Load<DefaultMesh>("suzanne");
 			geometryBody = VAOLoader.FromMesh(mesh, shaderProgram);
-
-			var plane = Meshes.CreatePlane(100, 100, 10, 10);
-			var xForm = new Transformation();
-			xForm.TranslateLocal(0, -20, 0);
-			geometryPlane = VAOLoader.FromMesh(plane.Transform(xForm), shaderProgram);
-			//for AMD graphics cards
-			geometryPlane.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instancePosition"), new Vector3[] { Vector3.Zero }, VertexAttribPointerType.Float, 3, true);
-			geometryPlane.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instanceScale"), new float[] { 1 }, VertexAttribPointerType.Float, 1, true);
 		}
 
 		public CameraOrbit Camera { get { return camera; } }
@@ -56,7 +48,7 @@ namespace Example
 		}
 
 		private IShaderProgram shaderProgram;
-		private VAO geometryBody, geometryPlane;
+		private VAO geometryBody;
 		private CameraOrbit camera = new CameraOrbit();
 	}
 }

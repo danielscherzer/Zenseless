@@ -27,13 +27,9 @@ namespace Example
 			var mesh = Meshes.CreatePlane(10, 10, 10, 10);
 			var sphere = Meshes.CreateSphere(0.5f, 2);
 			sphere.SetConstantUV(new System.Numerics.Vector2(0.5f, 0.5f));
-			var xform = new Transformation();
-			xform.TranslateLocal(0, 2, -2);
-			mesh.Add(sphere.Transform(xform));
-			xform.TranslateGlobal(0, 0, 2);
-			mesh.Add(sphere.Transform(xform));
-			xform.TranslateGlobal(2, 0, -1);
-			mesh.Add(sphere.Transform(xform));
+			mesh.Add(sphere.Transform(new Translation3D(0, 2, -2)));
+			mesh.Add(sphere.Transform(new Translation3D(0, 2, 0)));
+			mesh.Add(sphere.Transform(new Translation3D(2, 2, -1)));
 			geometry = VAOLoader.FromMesh(mesh, shaderProgram);
 
 			shaderProgramDepth = contentLoader.Load<IShaderProgram>("depth.*");

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Zenseless.Base;
 using Zenseless.ExampleFramework;
+using Zenseless.OpenGL;
 
 namespace Heightfield
 {
@@ -11,7 +12,8 @@ namespace Heightfield
 			var window = new ExampleWindow();
 			window.SetContentSearchDirectory(Path.GetDirectoryName(PathTools.GetSourceFilePath()));
 			var visual = new MainVisual(window.RenderContext, window.ContentLoader);
-			window.AddMayaCameraEvents(visual.Camera);
+			var movementState = window.GameWindow.AddFirstPersonCameraEvents(visual.Camera);
+			window.Update += (dt) => movementState.Update(visual.Camera, dt);
 			window.Render += visual.Render;
 			window.Run();
 		}

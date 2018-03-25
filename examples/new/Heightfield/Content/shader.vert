@@ -16,6 +16,6 @@ void main()
 	uvs = uv;
 	float height = texture(texHeightfield, uv).r;
 	vec4 newPos = position;
-	newPos.y = height * 1f;
+	newPos.y = height * 0.5f;
 	gl_Position = camera * newPos;
 }

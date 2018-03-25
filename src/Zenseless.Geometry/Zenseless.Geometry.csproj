@@ -37,15 +37,18 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CameraFirstPersonMovementState.cs" />
     <Compile Include="Box3D.cs" />
     <Compile Include="Box2D.cs" />
     <Compile Include="Box2Dextensions.cs" />
+    <Compile Include="CameraFirstPerson.cs" />
     <Compile Include="CameraOrbit.cs" />
     <Compile Include="CatmullRomSpline.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="CircleExtensions.cs" />
     <Compile Include="ControlPoints.cs" />
     <Compile Include="DefaultMesh.cs" />
+    <Compile Include="ICamera.cs" />
     <Compile Include="IReadOnlyCircle.cs" />
     <Compile Include="IReadOnlyBox2D.cs" />
     <Compile Include="IReadOnlyCircleExtensions.cs" />
@@ -58,8 +61,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IReadOnlyBox2Dextensions.cs" />
     <Compile Include="ShapeBuilder.cs" />
-    <Compile Include="Transformation.cs" />
-    <Compile Include="Transformation2D.cs" />
+    <Compile Include="Transforms\Axis.cs" />
+    <Compile Include="Transforms\Rotation3D.cs" />
+    <Compile Include="Transforms\Scale3D.cs" />
+    <Compile Include="Transforms\Transformation2D.cs" />
+    <Compile Include="Transforms\Transformation3D.cs" />
+    <Compile Include="Transforms\Translation3D.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Zenseless.Geometry.nuspec" />

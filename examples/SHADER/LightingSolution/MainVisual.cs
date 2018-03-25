@@ -1,9 +1,9 @@
-﻿using Zenseless.Geometry;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
+using Zenseless.Geometry;
+using Zenseless.HLGL;
+using Zenseless.OpenGL;
 
 namespace Example
 {
@@ -12,7 +12,7 @@ namespace Example
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
 			camera.FarClip = 50;
-			camera.Distance = 5;
+			camera.Distance = 15;
 			camera.FovY = 30;
 
 			renderState.Set(BoolState<IDepthState>.Enabled);
@@ -22,25 +22,19 @@ namespace Example
 			var mesh = new DefaultMesh();
 			var roomSize = 8;
 			var plane = Meshes.CreatePlane(roomSize, roomSize, 2, 2);
-			var xform = new Transformation();
-			xform.TranslateGlobal(0, -roomSize / 2, 0);
-			mesh.Add(plane.Transform(xform));
-			xform.RotateZGlobal(90f);
-			mesh.Add(plane.Transform(xform));
-			xform.RotateZGlobal(90f);
-			mesh.Add(plane.Transform(xform));
-			xform.RotateZGlobal(90f);
-			mesh.Add(plane.Transform(xform));
-			xform.RotateYGlobal(90f);
-			mesh.Add(plane.Transform(xform));
-			xform.RotateYGlobal(180f);
-			mesh.Add(plane.Transform(xform));
+			var xFormCenter = new Translation3D(0, -roomSize / 2, 0);
+			mesh.Add(plane.Transform(xFormCenter));
+			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 90f, xFormCenter)));
+			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 180f, xFormCenter)));
+			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 270f, xFormCenter)));
+			mesh.Add(plane.Transform(new Rotation3D(Axis.X, 90f, xFormCenter)));
+			mesh.Add(plane.Transform(new Rotation3D(Axis.X, -90f, xFormCenter)));
 
 			var sphere = Meshes.CreateSphere(1);
 			sphere.SetConstantUV(new System.Numerics.Vector2(0, 0));
 			mesh.Add(sphere);
 			var suzanne = contentLoader.Load<DefaultMesh>("suzanne");
-			mesh.Add(suzanne.Transform(System.Numerics.Matrix4x4.CreateTranslation(2, 2, -2)));
+			mesh.Add(suzanne.Transform(new Translation3D(2, 2, -2)));
 			geometry = VAOLoader.FromMesh(mesh, shaderProgram);
 		}
 
