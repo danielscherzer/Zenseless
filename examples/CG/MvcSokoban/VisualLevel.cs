@@ -53,10 +53,10 @@ namespace MvcSokoban
 			shdTexColor.Activate();
 			texArray.Activate();
 			var fitBox = Box2DExtensions.CreateContainingBox(levelState.Width, levelState.Height, windowAspect);
-			var camera = Matrix4x4.CreateOrthographicOffCenter(fitBox.MinX, fitBox.MaxX, fitBox.MinY, fitBox.MaxY, 0, 1).ToOpenTK();
+			var camera = Matrix4x4.CreateOrthographicOffCenter(fitBox.MinX, fitBox.MaxX, fitBox.MinY, fitBox.MaxY, 0, 1);
 
 			GL.Uniform4(locTint, tint);
-			GL.UniformMatrix4(locCamera, false, ref camera);
+			ShaderProgramGL.Uniform(locCamera, camera, true);
 
 			levelGeometry.Draw(levelState.Width * levelState.Height);
 

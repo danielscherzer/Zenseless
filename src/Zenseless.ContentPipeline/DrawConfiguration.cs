@@ -274,7 +274,7 @@ namespace Zenseless.ExampleFramework
 				{
 					GL.ActiveTexture(TextureUnit.Texture0 + id);
 					namedTex.Value.Activate();
-					GL.Uniform1(ShaderProgram.GetResourceLocation(ShaderResourceType.Uniform, namedTex.Key), id);
+					ShaderProgram.Uniform(namedTex.Key, id);
 					++id;
 				}
 			}

@@ -1,5 +1,5 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
+using System.Numerics;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
@@ -10,15 +10,6 @@ namespace Example
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			camera.FarClip = 50;
-			camera.Distance = 8;
-			camera.Elevation = 30;
-
-			cameraLight.FarClip = 50;
-			cameraLight.Distance = 8;
-			cameraLight.Elevation = 44;
-			cameraLight.Azimuth = -100;
-
 			renderState.Set(BoolState<IDepthState>.Enabled);
 			renderState.Set(BoolState<IBackfaceCullingState>.Disabled);
 			fboShadowMap.Texture.Filter = TextureFilterMode.Nearest;
@@ -35,9 +26,7 @@ namespace Example
 
 		}
 
-		public CameraOrbit OrbitCamera { get { return camera; } }
-
-		public void Render()
+		public void Render(Transformation3D camera)
 		{
 			if (shaderProgram is null) return;
 			if (shaderProgramDepth is null) return;
@@ -47,16 +36,14 @@ namespace Example
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
 			fboShadowMap.Texture.Activate();
-			GL.Uniform3(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "ambient"), new Vector3(0.1f));
-			var cam = camera.CalcMatrix().ToOpenTK();
-			GL.UniformMatrix4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref cam);
+			shaderProgram.Uniform("ambient", new Vector3(0.1f));
+			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
 			geometry.Draw();
 			fboShadowMap.Texture.Deactivate();
 			shaderProgram.Deactivate();
 		}
 
-		private CameraOrbit camera = new CameraOrbit();
-		private CameraOrbit cameraLight = new CameraOrbit();
+		private Transformation3D cameraLight = new Orbit(8, -100, 44, new Perspective(farClip:50));
 		private IShaderProgram shaderProgram;
 		private IShaderProgram shaderProgramDepth;
 		private FBO fboShadowMap = new FBOwithDepth(Texture2dGL.Create(512, 512, 1, true));

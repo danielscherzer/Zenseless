@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace Zenseless.HLGL
+﻿namespace Zenseless.HLGL
 {
+	using System;
+	using System.Numerics;
+
 	/// <summary>
 	/// 
 	/// </summary>
@@ -113,5 +114,48 @@ namespace Zenseless.HLGL
 		/// Links this instance.
 		/// </summary>
 		void Link();
+
+		/// <summary>
+		/// Set int Uniform on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="value">The value to set.</param>
+		void Uniform(string name, int value);
+
+		/// <summary>
+		/// Set float Uniform on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="value">The value to set.</param>
+		void Uniform(string name, float value);
+
+		/// <summary>
+		/// Set Vector2 Uniform on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="vector">The vector.</param>
+		void Uniform(string name, in Vector2 vector);
+
+		/// <summary>
+		/// Set Vector3 Uniform on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="vector">The vector.</param>
+		void Uniform(string name, in Vector3 vector);
+
+		/// <summary>
+		/// Set Vector4 Uniform on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="vector">The vector.</param>
+		void Uniform(string name, in Vector4 vector);
+
+		/// <summary>
+		/// Set matrix uniforms on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="matrix">The input matrix.</param>
+		/// <param name="transpose">if set to <c>true</c> the matrix is transposed.</param>
+		void Uniform(string name, in Matrix4x4 matrix, bool transpose = false);
 	}
 }

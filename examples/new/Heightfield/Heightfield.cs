@@ -1,10 +1,10 @@
-﻿using System.IO;
-using Zenseless.Base;
-using Zenseless.ExampleFramework;
-using Zenseless.OpenGL;
-
-namespace Heightfield
+﻿namespace Heightfield
 {
+	using System.IO;
+	using Zenseless.Base;
+	using Zenseless.ExampleFramework;
+	using Zenseless.OpenGL;
+
 	class Heightfield
 	{
 		static void Main(string[] args)

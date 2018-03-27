@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\..\bin\Debug\Zenseless.Geometry.xml</DocumentationFile>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\..\bin\Release\Zenseless.Geometry.xml</DocumentationFile>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,14 +43,13 @@
     <Compile Include="Box3D.cs" />
     <Compile Include="Box2D.cs" />
     <Compile Include="Box2Dextensions.cs" />
-    <Compile Include="CameraFirstPerson.cs" />
-    <Compile Include="CameraOrbit.cs" />
+    <Compile Include="Intersection.cs" />
+    <Compile Include="Transforms\CameraFirstPerson.cs" />
     <Compile Include="CatmullRomSpline.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="CircleExtensions.cs" />
     <Compile Include="ControlPoints.cs" />
     <Compile Include="DefaultMesh.cs" />
-    <Compile Include="ICamera.cs" />
     <Compile Include="IReadOnlyCircle.cs" />
     <Compile Include="IReadOnlyBox2D.cs" />
     <Compile Include="IReadOnlyCircleExtensions.cs" />
@@ -62,6 +63,8 @@
     <Compile Include="IReadOnlyBox2Dextensions.cs" />
     <Compile Include="ShapeBuilder.cs" />
     <Compile Include="Transforms\Axis.cs" />
+    <Compile Include="Transforms\Orbit.cs" />
+    <Compile Include="Transforms\Perspective.cs" />
     <Compile Include="Transforms\Rotation3D.cs" />
     <Compile Include="Transforms\Scale3D.cs" />
     <Compile Include="Transforms\Transformation2D.cs" />

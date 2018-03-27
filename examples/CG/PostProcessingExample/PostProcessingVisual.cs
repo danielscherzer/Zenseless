@@ -38,8 +38,8 @@ namespace Example
 			renderToTexture.Texture.Activate();
 			shaderProgram.Activate();
 			//SetShaderParameter("effectScale", 0.1f);
-			SetShaderParameter("effectScale", 0.5f + 0.5f * (float)Math.Sin(time.AbsoluteTime - 0.5f));
-			SetShaderParameter("iGlobalTime", time.AbsoluteTime);
+			shaderProgram.Uniform("effectScale", 0.5f + 0.5f * (float)Math.Sin(time.AbsoluteTime - 0.5f));
+			shaderProgram.Uniform("iGlobalTime", time.AbsoluteTime);
 			DrawWindowFillingQuad();
 			shaderProgram.Deactivate();
 			renderToTexture.Texture.Deactivate();
@@ -52,11 +52,6 @@ namespace Example
 		private static void DrawWindowFillingQuad()
 		{
 			GL.DrawArrays(PrimitiveType.Quads, 0, 4);
-		}
-
-		private void SetShaderParameter(string name, float value)
-		{
-			GL.Uniform1(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, name), value);
 		}
 	}
 }

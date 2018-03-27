@@ -1,9 +1,9 @@
-﻿using Zenseless.Geometry;
-using System.Numerics;
-using SysColor = System.Drawing.Color;
-
-namespace Zenseless.OpenGL
+﻿namespace Zenseless.OpenGL
 {
+	using System.Numerics;
+	using Zenseless.Geometry;
+	using SysColor = System.Drawing.Color;
+
 	/// <summary>
 	/// 
 	/// </summary>

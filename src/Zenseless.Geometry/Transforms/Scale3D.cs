@@ -11,6 +11,16 @@ namespace Zenseless.Geometry
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Scale3D"/> class.
 		/// </summary>
+		/// <param name="uniformScale">The uniform scale factor.</param>
+		/// <param name="parent">The parent transformation</param>
+		public Scale3D(float uniformScale, Transformation3D parent = null) : base(parent)
+		{
+			matrix = Matrix4x4.CreateScale(uniformScale);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scale3D"/> class.
+		/// </summary>
 		/// <param name="x">The x.</param>
 		/// <param name="y">The y.</param>
 		/// <param name="z">The z.</param>
@@ -23,7 +33,7 @@ namespace Zenseless.Geometry
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Scale3D"/> class.
 		/// </summary>
-		/// <param name="scaleVector">The translation.</param>
+		/// <param name="scaleVector">The scale vector.</param>
 		/// <param name="parent">The parent transformation</param>
 		public Scale3D(Vector3 scaleVector, Transformation3D parent = null) : base(parent)
 		{

@@ -3,7 +3,7 @@
 namespace Zenseless.Geometry
 {
 	/// <summary>
-	/// An single axis rotation class
+	/// A single axis rotation class
 	/// </summary>
 	/// <seealso cref="Transformation3D" />
 	public partial class Rotation3D : Transformation3D

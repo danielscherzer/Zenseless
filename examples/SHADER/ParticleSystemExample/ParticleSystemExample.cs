@@ -14,11 +14,13 @@ namespace Example
 			var window = new ExampleWindow();
 			window.SetContentSearchDirectory(Path.GetDirectoryName(PathTools.GetSourceFilePath())); //would be faster if you only specify a subdirectory
 			var controller = new Controller();
+
+			var camera = window.GameWindow.CreateOrbitingCameraController(2, 70, 0.1f, 20f);
+			camera.Elevation = 15;
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
-			window.GameWindow.AddMayaCameraEvents(visual.OrbitCamera);
 
 			var time = new GameTime();
-			window.Render += visual.Render;
+			window.Render += () => visual.Render(camera);
 			window.Update += (t) => visual.Update(time.AbsoluteTime);
 			window.Run();
 		}

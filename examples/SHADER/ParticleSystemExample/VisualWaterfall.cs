@@ -21,10 +21,12 @@ namespace Example
 
 		public Particle Create(float creationTime)
 		{
-			var p = new Particle(creationTime);
-			p.LifeTime = 5f;
+			var p = new Particle(creationTime)
+			{
+				LifeTime = 5f
+			};
 			float Rnd01() => (float)random.NextDouble();
-			Func<float> RndCoord = () => (Rnd01() - 0.5f) * 2.0f;
+			float RndCoord() => (Rnd01() - 0.5f) * 2.0f;
 			//around emitter position
 			p.Position = emitterPos + new Vector3(RndCoord(), RndCoord(), RndCoord()) * .1f;
 			//start speed
@@ -71,7 +73,7 @@ namespace Example
 			particles.SetAttribute(shaderWaterfall.GetResourceLocation(ShaderResourceType.Attribute, "fade"), fade, VertexAttribPointerType.Float, 1);
 		}
 
-		public void Render(Matrix4 camera)
+		public void Render(in System.Numerics.Matrix4x4 camera)
 		{
 			if (shaderWaterfall is null) return;
 			renderState.Set(BlendStates.Additive);
@@ -80,9 +82,9 @@ namespace Example
 			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
 
 			shaderWaterfall.Activate();
-			GL.UniformMatrix4(shaderWaterfall.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref camera);
-			GL.Uniform1(shaderWaterfall.GetResourceLocation(ShaderResourceType.Uniform, "pointSize"), 0.3f);
-			//GL.Uniform1(shader.GetResourceLocation(ShaderResourceType.Uniform, "texParticle"), 0);
+			shaderWaterfall.Uniform("camera", camera);
+			shaderWaterfall.Uniform("pointSize", 0.3f);
+			//shader.Uniform("texParticle", 0);
 			texStar.Activate();
 			particles.Draw();
 			texStar.Deactivate();

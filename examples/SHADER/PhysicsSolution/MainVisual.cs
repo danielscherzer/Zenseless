@@ -12,9 +12,6 @@ namespace Example
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			camera.FarClip = 500;
-			camera.Distance = 30;
-
 			renderState.Set(BoolState<IDepthState>.Enabled);
 			renderState.Set(BoolState<IBackfaceCullingState>.Enabled);
 
@@ -23,9 +20,7 @@ namespace Example
 			geometry = VAOLoader.FromMesh(mesh, shaderProgram);
 		}
 
-		public CameraOrbit Camera { get { return camera; } }
-
-		public void Render(IEnumerable<IBody> bodies, float time)
+		public void Render(IEnumerable<IBody> bodies, float time, Transformation3D camera)
 		{
 			if (shaderProgram is null) return;
 			var instancePositions = new List<Vector3>();
@@ -40,15 +35,13 @@ namespace Example
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			GL.Uniform1(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "time"), time);
-			Matrix4 cam = camera.CalcMatrix().ToOpenTK();
-			GL.UniformMatrix4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref cam);
+			shaderProgram.Uniform("time", time);
+			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
 			geometry.Draw(instancePositions.Count);
 			shaderProgram.Deactivate();
 		}
 
 		private IShaderProgram shaderProgram;
 		private VAO geometry;
-		private CameraOrbit camera = new CameraOrbit();
 	}
 }

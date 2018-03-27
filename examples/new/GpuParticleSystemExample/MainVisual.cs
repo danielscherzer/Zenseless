@@ -20,11 +20,6 @@ namespace Example
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			camera.FarClip = 20;
-			camera.Distance = 2;
-			camera.FovY = 70;
-			camera.Elevation = 15;
-
 			InitParticles();
 			renderState.Set(BlendStates.AlphaBlend);
 			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
@@ -32,9 +27,7 @@ namespace Example
 			shaderProgram = contentLoader.Load<IShaderProgram>("particle.*");
 		}
 
-		public CameraOrbit OrbitCamera { get { return camera; } }
-
-		public void Render(float deltaTime)
+		public void Render(float deltaTime, Transformation3D camera)
 		{
 			if (shaderProgram is null) return;
 			//if ((destination - source).LengthSquared() < 0.01)
@@ -50,12 +43,11 @@ namespace Example
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			var cam = camera.CalcMatrix().ToOpenTK();
-			GL.UniformMatrix4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref cam);
-			GL.Uniform1(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "deltaTime"), deltaTime);
-			GL.Uniform3(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "source"), source.ToOpenTK());
-			GL.Uniform3(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "acceleration"), acceleration.ToOpenTK());
-			GL.Uniform1(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "particelCount"), particelCount);
+			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
+			shaderProgram.Uniform("deltaTime", deltaTime);
+			shaderProgram.Uniform("source", source);
+			shaderProgram.Uniform("acceleration", acceleration);
+			shaderProgram.Uniform("particelCount", particelCount);
 			var bindingIndex = shaderProgram.GetResourceLocation(ShaderResourceType.RWBuffer, "BufferParticle");
 			bufferParticles.ActivateBind(bindingIndex);
 			GL.DrawArrays(PrimitiveType.Points, 0, particelCount);
@@ -69,7 +61,6 @@ namespace Example
 		private IShaderProgram shaderProgram;
 		private BufferObject bufferParticles;
 		private const int particelCount = (int)1e5;
-		private CameraOrbit camera = new CameraOrbit();
 		private Random rnd = new Random(12);
 
 		private float Rnd01() => (float)rnd.NextDouble();

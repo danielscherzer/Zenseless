@@ -1,19 +1,19 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System;
-using System.Collections.Generic;
-using Zenseless.Base;
-using Zenseless.HLGL;
-
-namespace Zenseless.OpenGL
+﻿namespace Zenseless.OpenGL
 {
+	using OpenTK.Graphics.OpenGL4;
+	using System;
+	using System.Collections.Generic;
+	using System.Numerics;
+	using Zenseless.Base;
+	using Zenseless.HLGL;
 	using ShaderType = HLGL.ShaderType;
 	using TKShaderType = OpenTK.Graphics.OpenGL4.ShaderType;
 
 	/// <summary>
 	/// OpenGL shader program class
 	/// </summary>
-	/// <seealso cref="Zenseless.Base.Disposable" />
-	/// <seealso cref="Zenseless.HLGL.IShaderProgram" />
+	/// <seealso cref="Disposable" />
+	/// <seealso cref="IShaderProgram" />
 	/// TODO: create Shader classes to compile individual (fragment, vertex, ...) shaders
 	public class ShaderProgramGL : Disposable, IShaderProgram
 	{
@@ -142,6 +142,96 @@ namespace Zenseless.OpenGL
 			{
 				RemoveShaders();
 			}
+		}
+
+		/// <summary>
+		/// Set int Uniform on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="value">The value to set.</param>
+		/// <exception cref="NotImplementedException"></exception>
+		public void Uniform(string name, int value)
+		{
+			GL.Uniform1(GetResourceLocation(ShaderResourceType.Uniform, name), value);
+		}
+
+		/// <summary>
+		/// Set float Uniform on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="value">The value to set.</param>
+		public void Uniform(string name, float value)
+		{
+			GL.Uniform1(GetResourceLocation(ShaderResourceType.Uniform, name), value);
+		}
+
+		/// <summary>
+		/// Set Vector2 Uniform on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="vector">The vector.</param>
+		public void Uniform(string name, in Vector2 vector)
+		{
+			GL.Uniform2(GetResourceLocation(ShaderResourceType.Uniform, name), vector.X, vector.Y);
+		}
+
+		/// <summary>
+		/// Set Vector3 Uniform.
+		/// </summary>
+		/// <param name="location">The shader variable location.</param>
+		/// <param name="vector">The vector.</param>
+		public static void Uniform(int location, in Vector3 vector)
+		{
+			GL.Uniform3(location, vector.X, vector.Y, vector.Z);
+		}
+
+		/// <summary>
+		/// Set Vector3 Uniform on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="vector">The vector.</param>
+		public void Uniform(string name, in Vector3 vector)
+		{
+			Uniform(GetResourceLocation(ShaderResourceType.Uniform, name), vector);
+		}
+
+		/// <summary>
+		/// Set Vector4 Uniform on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="vector">The vector.</param>
+		public void Uniform(string name, in Vector4 vector)
+		{
+			GL.Uniform4(GetResourceLocation(ShaderResourceType.Uniform, name), vector.X, vector.Y, vector.Z, vector.W);
+		}
+
+		/// <summary>
+		/// Set matrix uniforms.
+		/// </summary>
+		/// <param name="location">The shader variable location.</param>
+		/// <param name="matrix">The input matrix.</param>
+		/// <param name="transpose">if set to <c>true</c> the matrix is transposed.</param>
+		public static void Uniform(int location, in Matrix4x4 matrix, bool transpose = false)
+		{
+			unsafe
+			{
+				fixed (float* matrix_ptr = &matrix.M11)
+				{
+					// Matrix4x4 has internally a transposed memory layout
+					GL.UniformMatrix4(location, 1, !transpose, matrix_ptr);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Set matrix uniforms on active shader. The correct shader has to be activated first!
+		/// </summary>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="matrix">The input matrix.</param>
+		/// <param name="transpose">if set to <c>true</c> the matrix is transposed.</param>
+		public void Uniform(string name, in Matrix4x4 matrix, bool transpose = false)
+		{
+			Uniform(GetResourceLocation(ShaderResourceType.Uniform, name), matrix, transpose);
 		}
 
 		/// <summary>

@@ -21,11 +21,6 @@ namespace Example
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			camera.FarClip = 20;
-			camera.Distance = 2;
-			camera.FovY = 70;
-			camera.Elevation = 15;
-
 			InitParticles();
 			renderState.Set(BoolState<IDepthState>.Enabled);
 			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
@@ -34,19 +29,16 @@ namespace Example
 			shaderProgram = contentLoader.Load<IShaderProgram>("particle.*");
 		}
 
-		public CameraOrbit OrbitCamera { get { return camera; } }
-
-		public double Render(float deltaTime)
+		public double Render(float deltaTime, Transformation3D camera)
 		{
 			if (shaderProgram is null) return 0;
 			var timerQueryResult = timeQuery.ResultLong * 1e-6;
 			timeQuery.Activate(QueryTarget.TimeElapsed);
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			var cam = camera.CalcMatrix().ToOpenTK();
-			GL.UniformMatrix4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref cam);
-			GL.Uniform1(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "deltaTime"), deltaTime);
-			GL.Uniform1(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "particelCount"), particelCount);
+			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
+			shaderProgram.Uniform("deltaTime", deltaTime);
+			shaderProgram.Uniform("particelCount", particelCount);
 			var bindingIndex = shaderProgram.GetResourceLocation(ShaderResourceType.RWBuffer, "BufferParticle");
 			bufferParticles.ActivateBind(bindingIndex);
 			GL.DrawArrays(PrimitiveType.Points, 0, particelCount);
@@ -60,7 +52,6 @@ namespace Example
 		private BufferObject bufferParticles;
 		private QueryObject timeQuery = new QueryObject();
 		private const int particelCount = (int)1e5;
-		private CameraOrbit camera = new CameraOrbit();
 
 		private void InitParticles()
 		{

@@ -1,9 +1,9 @@
-﻿using Zenseless.OpenGL;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Numerics;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
+using Zenseless.OpenGL;
 
 namespace Example
 {
@@ -11,26 +11,17 @@ namespace Example
 	{
 		public MainVisual(IRenderContext context, IContentLoader contentLoader)
 		{
-			camera.FarClip = 20;
-			camera.Distance = 3;
-			camera.FovY = 70;
-			camera.Elevation = 15;
-
 			context.RenderState.Set(BoolState<IDepthState>.Enabled);
 			context.RenderState.Set(BoolState<IBackfaceCullingState>.Enabled);
 
 			shaderProgram = contentLoader.Load<IShaderProgram>("particle.*");
 			//geometry = VAOLoader.FromMesh(Meshes.CreateSphere(0.01f, 2), shader);
-			geometry = VAOLoader.FromMesh(contentLoader.Load<DefaultMesh>("suzanne").Transform(Matrix4x4.CreateScale(0.01f)), shaderProgram);
+			geometry = VAOLoader.FromMesh(contentLoader.Load<DefaultMesh>("suzanne").Transform(new Scale3D(0.01f)), shaderProgram);
 
 			InitParticles();
 		}
 
-		public static readonly string ShaderName = nameof(shaderProgram);
-
-		public CameraOrbit OrbitCamera { get { return camera; } }
-
-		public void Render()
+		public void Render(Transformation3D camera)
 		{
 			if (shaderProgram is null) return;
 
@@ -50,19 +41,17 @@ namespace Example
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			var cam = camera.CalcMatrix().ToOpenTK();
-			GL.UniformMatrix4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref cam);
+			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
 			geometry.Draw(instanceCount);
 			shaderProgram.Deactivate();
 		}
 
 		private IShaderProgram shaderProgram;
-		private const int instanceCount = (int)30000;
+		private const int instanceCount = 30000;
 		private Vector3[] instancePosition = new Vector3[instanceCount];
 		private Vector3[] instanceVelocity = new Vector3[instanceCount];
 		private float[] instanceRotation = new float[instanceCount];
 		private Vector3[] instanceColor = new Vector3[instanceCount];
-		private CameraOrbit camera = new CameraOrbit();
 		private VAO geometry;
 
 		private void InitParticles()

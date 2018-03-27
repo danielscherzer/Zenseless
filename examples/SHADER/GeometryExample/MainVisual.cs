@@ -24,7 +24,7 @@ namespace Example
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			shaderProgram.Activate();
 			////ATTENTION: always give the time as a float if the uniform in the shader is a float
-			GL.Uniform1(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "time"), time);
+			shaderProgram.Uniform("time", time);
 			geometry.Draw();
 			shaderProgram.Deactivate();
 		}

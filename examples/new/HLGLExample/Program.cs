@@ -13,9 +13,11 @@ namespace Example
 		{
 			var window = new ExampleWindow();
 			window.SetContentSearchDirectory(Path.GetDirectoryName(PathTools.GetSourceFilePath())); //would be faster if you only specify a subdirectory
+			var orbit = window.GameWindow.CreateOrbitingCameraController(1.5f, 90f, 0.1f, 50f);
+			orbit.Azimuth = 90;
+			orbit.Elevation = 20;
 			var visual = new MainVisual(window.RenderContext, window.ContentLoader);
-			window.GameWindow.AddMayaCameraEvents(visual.Camera);
-			window.Render += visual.Render;
+			window.Render += () => visual.Render(orbit);
 			window.Run();
 		}
 	}

@@ -14,6 +14,9 @@ namespace Example
 		{
 			var window = new ExampleWindow();
 			window.SetContentSearchDirectory(Path.GetDirectoryName(PathTools.GetSourceFilePath())); //would be faster if you only specify a subdirectory
+
+			var camera = window.GameWindow.CreateOrbitingCameraController(1.8f, 70, 0.1f, 50f);
+			camera.TargetY = -0.3f;
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 
 			var globalTime = new GameTime();
@@ -23,17 +26,16 @@ namespace Example
 			{
 				if (doPostProcessing)
 				{
-					visual.DrawWithPostProcessing(globalTime.AbsoluteTime);
+					visual.DrawWithPostProcessing(globalTime.AbsoluteTime, camera);
 				}
 				else
 				{
-					visual.Draw();
+					visual.Draw(camera);
 				}
 			};
 
 			window.Update += (t) => doPostProcessing = !Keyboard.GetState()[Key.Space];
 			window.Resize += visual.Resize;
-			window.GameWindow.AddMayaCameraEvents(visual.OrbitCamera);
 			window.Run();
 		}
 	}

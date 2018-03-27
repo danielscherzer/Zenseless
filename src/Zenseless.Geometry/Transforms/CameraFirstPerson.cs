@@ -5,7 +5,7 @@ namespace Zenseless.Geometry
 	/// <summary>
 	/// A first person camera with position, heading, tilt
 	/// </summary>
-	public class CameraFirstPerson : ICamera
+	public class CameraFirstPerson
 	{
 		/// <summary>
 		/// Gets or sets the aspect ratio.

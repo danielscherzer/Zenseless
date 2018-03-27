@@ -19,8 +19,8 @@ namespace Example
 		{
 			shaderProgram.Activate();
 			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "position"), points, VertexAttribPointerType.Float, 3); //copy data to gpu mem
-			GL.Uniform1(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "pointSize"), resolutionMin * size);
-			GL.Uniform4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "color"), color);
+			shaderProgram.Uniform("pointSize", resolutionMin * size);
+			shaderProgram.Uniform("color", color);
 			geometry.Draw();
 			shaderProgram.Deactivate();
 		}

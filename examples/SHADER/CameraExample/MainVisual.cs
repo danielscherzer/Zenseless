@@ -10,13 +10,8 @@ namespace Example
 {
 	public class MainVisual
 	{
-		public CameraOrbit OrbitCamera { get { return camera; } }
-
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			camera.FarClip = 500;
-			camera.Distance = 30;
-
 			renderState.Set(BoolState<IDepthState>.Enabled);
 			renderState.Set(BoolState<IBackfaceCullingState>.Enabled);
 
@@ -26,23 +21,19 @@ namespace Example
 			UpdateAttributes(shaderProgram);
 		}
 
-		public void Render()
+		public void Render(Transformation3D camera)
 		{
 			if (shaderProgram is null) return;
 			var time = gameTime.AbsoluteTime;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			GL.Uniform1(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "time"), time);
-			float[] cam = camera.CalcMatrix().ToArray();
-			GL.UniformMatrix4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "camera"), 1, false, cam);
+			shaderProgram.Uniform("time", time);
+			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
 			geometry.Draw(particelCount);
 			shaderProgram.Deactivate();
 		}
 
-		public static readonly string ShaderName = nameof(shaderProgram);
-		private CameraOrbit camera = new CameraOrbit();
 		private const int particelCount = 500;
-
 		private IShaderProgram shaderProgram;
 		private GameTime gameTime = new GameTime();
 		private VAO geometry;

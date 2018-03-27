@@ -8,23 +8,15 @@ namespace Example
 {
 	public class MainVisual
 	{
-		public CameraOrbit Camera { get; private set; } = new CameraOrbit();
-
 		public MainVisual(IRenderContext context, IContentLoader contentLoader)
 		{
-			Camera.FarClip = 50f;
-			Camera.Distance = 1.5f;
-			Camera.FovY = 90f;
-			Camera.Azimuth = 90;
-			Camera.Elevation = 20;
-
 			this.context = context;
 			frameBuffer = context.GetFrameBuffer();
 			surfaceGeometry = context.CreateRenderSurface(512, 512, true);
 			suzanne.BackfaceCulling = true;
 			suzanne.SetInputTexture("chalet", contentLoader.Load<ITexture2D>("chalet.jpg"));
 			//model from https://sketchfab.com/models/e925320e1d5744d9ae661aeff61e7aef
-			var mesh = contentLoader.Load<DefaultMesh>("chalet.obj").Transform(Matrix4x4.CreateRotationX(-0.5f * MathHelper.PI));
+			var mesh = contentLoader.Load<DefaultMesh>("chalet.obj").Transform(new Rotation3D(Axis.X, -90f));
 			suzanne.UpdateMeshShader(mesh, contentLoader.Load<IShaderProgram>("shader.*"));
 			suzanne.ZBufferTest = true;
 
@@ -53,11 +45,11 @@ namespace Example
 			copyQuad.SetInputTexture("tex", surfaceGeometry);
 		}
 
-		public void Render()
+		public void Render(Transformation3D camera)
 		{
 			surfaceGeometry.Clear();
 
-			uniforms.camera = Matrix4x4.Transpose(Camera.CalcMatrix());
+			uniforms.camera = camera.CalcLocalToWorldRowMajorMatrix();
 			suzanne.UpdateUniforms(nameof(Uniforms), uniforms);
 			surfaceGeometry.Draw(suzanne);
 

@@ -14,7 +14,7 @@ namespace Heightfield
 			Camera.NearClip = 0.01f;
 			Camera.FarClip = 20f;
 			Camera.FovY = 70f;
-			Camera.Position = new Vector3(2, 3, 4);
+			Camera.Position = new Vector3(0, 0.5f, 1);
 
 			renderContext.RenderState.Set(BoolState<IDepthState>.Enabled);
 			renderContext.RenderState.Set(BoolState<IBackfaceCullingState>.Enabled);
@@ -42,8 +42,7 @@ namespace Heightfield
 
 			void SetUniforms(Func<string, int> GetLocation)
 			{
-				var mtxCamera = Camera.CalcMatrix().ToOpenTK();
-				GL.UniformMatrix4(GetLocation("camera"), true, ref mtxCamera);
+				ShaderProgramGL.Uniform(GetLocation("camera"), Camera.CalcMatrix());
 			}
 			mountain.Draw(SetUniforms);
 		}

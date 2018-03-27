@@ -64,7 +64,7 @@ namespace Example
 			particles.SetAttribute(shaderSmoke.GetResourceLocation(ShaderResourceType.Attribute, "fade"), fade, VertexAttribPointerType.Float, 1);
 		}
 
-		public void Render(Matrix4 camera)
+		public void Render(in System.Numerics.Matrix4x4 camera)
 		{
 			if (shaderSmoke is null) return;
 			renderState.Set(BlendStates.Additive);
@@ -73,8 +73,8 @@ namespace Example
 			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
 
 			shaderSmoke.Activate();
-			GL.UniformMatrix4(shaderSmoke.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref camera);
-			//GL.Uniform1(shader.GetResourceLocation(ShaderResourceType.Uniform, "texParticle"), 0);
+			shaderSmoke.Uniform("camera", camera);
+			//shader.Uniform("texParticle", 0);
 			texSmoke.Activate();
 			particles.Draw();
 			texSmoke.Deactivate();

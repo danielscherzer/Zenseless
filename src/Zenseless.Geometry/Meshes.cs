@@ -61,37 +61,27 @@ namespace Zenseless.Geometry
 		/// <summary>
 		/// Transforms the mesh by the specified transform.
 		/// </summary>
-		/// <param name="m">The m.</param>
-		/// <param name="transform">The transformation matrix.</param>
-		/// <returns></returns>
-		public static DefaultMesh Transform(this DefaultMesh m, Matrix4x4 transform)
-		{
-			var mesh = new DefaultMesh();
-			mesh.TexCoord.AddRange(m.TexCoord);
-			mesh.IDs.AddRange(m.IDs);
-			foreach (var pos in m.Position)
-			{
-				var newPos = Vector3.Transform(pos, transform);
-				mesh.Position.Add(newPos);
-			}
-			foreach (var n in m.Normal)
-			{
-				var newN = Vector3.Normalize(Vector3.TransformNormal(n, transform));
-				mesh.Normal.Add(newN);
-			}
-			return mesh;
-		}
-
-		/// <summary>
-		/// Transforms the mesh by the specified transform.
-		/// </summary>
-		/// <param name="m">The m.</param>
+		/// <param name="mesh">The mesh to transform.</param>
 		/// <param name="transform">The transformation.</param>
 		/// <returns></returns>
-		public static DefaultMesh Transform(this DefaultMesh m, Transformation3D transform)
+		public static DefaultMesh Transform(this DefaultMesh mesh, Transformation3D transform)
 		{
 			if (transform is null) throw new ArgumentNullException(nameof(transform));
-			return Transform(m, transform.GetLocalToWorld());
+			var matrix = transform.CalcLocalToWorldRowMajorMatrix();
+			var newMesh = new DefaultMesh();
+			newMesh.TexCoord.AddRange(mesh.TexCoord);
+			newMesh.IDs.AddRange(mesh.IDs);
+			foreach (var pos in mesh.Position)
+			{
+				var newPos = Vector3.Transform(pos, matrix);
+				newMesh.Position.Add(newPos);
+			}
+			foreach (var n in mesh.Normal)
+			{
+				var newN = Vector3.Normalize(Vector3.TransformNormal(n, matrix));
+				newMesh.Normal.Add(newN);
+			}
+			return newMesh;
 		}
 
 		/// <summary>
@@ -168,26 +158,25 @@ namespace Zenseless.Geometry
 		public static DefaultMesh CreateCornellBox(float roomSize = 2, float sphereRadius = 0.3f, float cubeSize = 0.6f)
 		{
 			var mesh = new DefaultMesh();
-			var plane = CreatePlane(roomSize, roomSize, 2, 2);
-
-			var xFormCenter = new Translation3D(0, -roomSize / 2, 0);
-			plane.SetConstantUV(new Vector2(3, 0));
-			mesh.Add(plane.Transform(xFormCenter));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 90f, xFormCenter)));
+			//off-center plane
+			var plane = CreatePlane(roomSize, roomSize, 2, 2).Transform(new Translation3D(0, -roomSize / 2, 0));
+			plane.SetConstantUV(new Vector2(0, 0));
+			mesh.Add(plane); //bottom
+			//rotate plane repeatedly to create box
+			mesh.Add(plane.Transform(new Rotation3D(Axis.X, 90f))); //front
+			mesh.Add(plane.Transform(new Rotation3D(Axis.X, -90f))); //back
 			plane.SetConstantUV(new Vector2(1, 0));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 180f, xFormCenter)));
-			plane.SetConstantUV(new Vector2(0, 0));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 270f, xFormCenter)));
+			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 90f))); //right
 			plane.SetConstantUV(new Vector2(2, 0));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.X, 90f, xFormCenter)));
+			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 270f))); //left
 			plane.SetConstantUV(new Vector2(0, 0));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.X, -90f, xFormCenter)));
+			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 180f))); //top
 
-			var sphere = Meshes.CreateSphere(sphereRadius, 4);
+			var sphere = CreateSphere(sphereRadius, 4);
 			sphere.SetConstantUV(new Vector2(3, 0));
 			mesh.Add(sphere.Transform(new Translation3D(0.4f, -1 + sphereRadius, -0.2f)));
 
-			var cube = Meshes.CreateCubeWithNormals(cubeSize);
+			var cube = CreateCubeWithNormals(cubeSize);
 			var trans = new Translation3D(-0.5f, -1 + 0.5f * cubeSize, 0.1f);
 			var translateAndRotY = new Rotation3D(Axis.Y, 35f, trans);
 

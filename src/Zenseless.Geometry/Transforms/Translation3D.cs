@@ -9,11 +9,11 @@ namespace Zenseless.Geometry
 	public class Translation3D : Transformation3D
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Translation"/> class.
+		/// Initializes a new instance of the <see cref="Translation3D"/> class.
 		/// </summary>
-		/// <param name="x">The x.</param>
-		/// <param name="y">The y.</param>
-		/// <param name="z">The z.</param>
+		/// <param name="x">The x-coordinate.</param>
+		/// <param name="y">The y-coordinate.</param>
+		/// <param name="z">The z-coordinate.</param>
 		/// <param name="parent">The parent transformation</param>
 		public Translation3D(float x, float y, float z, Transformation3D parent = null) : base(parent)
 		{
@@ -21,9 +21,9 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Translation"/> class.
+		/// Initializes a new instance of the <see cref="Translation3D"/> class.
 		/// </summary>
-		/// <param name="translation">The translation.</param>
+		/// <param name="translation">The translation vector.</param>
 		/// <param name="parent">The parent transformation</param>
 		public Translation3D(Vector3 translation, Transformation3D parent = null) : base(parent)
 		{

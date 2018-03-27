@@ -11,31 +11,35 @@ namespace Zenseless.OpenGL
 	public static class INativeWindowExtensions
 	{
 		/// <summary>
-		/// Add Maya like camera handling. 
+		/// Registered a perspective Transformation that will react on aspect changes of the window.
+		/// </summary>
+		/// <param name="window">The window.</param>
+		/// <param name="projection">The projection.</param>
+		public static void AddWindowAspectHandling(this INativeWindow window, Perspective projection)
+		{
+			window.Resize += (s, e) => projection.Aspect = (float)window.Width / window.Height;
+		}
+
+		/// <summary>
+		/// Add Maya like camera handling for orbiting camera. 
 		/// </summary>
 		/// <param name="window">window that receives input system events</param>
-		/// <param name="camera">orbit camera events should be routed too.</param>
-		public static void AddMayaCameraEvents(this INativeWindow window, CameraOrbit camera)
+		/// <param name="projection">Projection transformation.</param>
+		/// <param name="orbit">Orbit transformation.</param>
+		public static void AddMayaCameraEvents(this INativeWindow window, Perspective projection, Orbit orbit)
 		{
-			window.Resize += (s, e) => camera.Aspect = (float)window.Width / window.Height;
 			window.MouseMove += (s, e) =>
 			{
 				if (ButtonState.Pressed == e.Mouse.LeftButton)
 				{
-					camera.Azimuth += 300 * e.XDelta / (float)window.Width;
-					camera.Elevation += 300 * e.YDelta / (float)window.Height;
+					orbit.Azimuth += 300 * e.XDelta / (float)window.Width;
+					orbit.Elevation += 300 * e.YDelta / (float)window.Height;
 				}
 			};
 			window.MouseWheel += (s, e) =>
 			{
-				if (Keyboard.GetState().IsKeyDown(Key.ShiftLeft))
-				{
-					camera.FovY *= (float)Math.Pow(1.05, e.DeltaPrecise);
-				}
-				else
-				{
-					camera.Distance *= (float)Math.Pow(1.05, e.DeltaPrecise);
-				}
+				orbit.Distance *= (float)Math.Pow(1.05, e.DeltaPrecise);
+				orbit.Distance = Geometry.MathHelper.Clamp(orbit.Distance, projection.NearClip, projection.FarClip);
 			};
 		}
 
@@ -83,6 +87,24 @@ namespace Zenseless.OpenGL
 				}
 			};
 			return movementState;
+		}
+
+		/// <summary>
+		/// Creates an orbiting camera controller.
+		/// </summary>
+		/// <param name="window">The window were the event handlers should be registered.</param>
+		/// <param name="distance">The distance.</param>
+		/// <param name="fieldOfViewY">The field-of-view in y-direction.</param>
+		/// <param name="nearClip">The near clip plane distance.</param>
+		/// <param name="farClip">The far clip plane distance.</param>
+		/// <returns></returns>
+		public static Orbit CreateOrbitingCameraController(this INativeWindow window, float distance, float fieldOfViewY = 90f, float nearClip = 0.1f, float farClip = 1f)
+		{
+			var perspective = new Perspective(fieldOfViewY, nearClip, farClip);
+			window.AddWindowAspectHandling(perspective);
+			var orbit = new Orbit(distance, parent: perspective);
+			window.AddMayaCameraEvents(perspective, orbit);
+			return orbit;
 		}
 
 		/// <summary>

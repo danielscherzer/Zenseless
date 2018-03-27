@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="MainVisual.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="LightingSolution.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

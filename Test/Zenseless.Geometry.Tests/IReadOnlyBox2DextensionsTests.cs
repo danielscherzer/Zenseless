@@ -1,17 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Zenseless.Geometry.Tests
 {
 	[TestClass()]
-	public class Box2DTests
+	public class IReadOnlyBox2DextensionsTests
 	{
 		[TestMethod()]
-		[ExpectedException(typeof(System.NullReferenceException), "A Box2D of null was inappropriately allowed.")]
+		[ExpectedException(typeof(NullReferenceException), "A Box2D of null was inappropriately allowed.")]
 		public void IntersectsTestNull()
 		{
 			var a = new Box2D(0, 0, 1, 1);
 			var expectedA = new Box2D(a);
-			a.Intersects(null);
+			IReadOnlyBox2Dextensions.Intersects(a, null);
 		}
 
 		[TestMethod()]
@@ -77,5 +78,6 @@ namespace Zenseless.Geometry.Tests
 			Assert.IsNotNull(a);
 			Assert.IsNotNull(b);
 		}
+
 	}
 }

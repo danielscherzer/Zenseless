@@ -1,5 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using System.Numerics;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
@@ -16,13 +17,13 @@ namespace Example
 			this.renderState = renderState;
 		}
 
-		public void Draw(Matrix4 cam)
+		public void Draw(in Matrix4x4 cam)
 		{
 			if (shdPlane is null) return;
 
 			renderState.Set(BoolState<IBackfaceCullingState>.Disabled);
 			shdPlane.Activate();
-			GL.UniformMatrix4(shdPlane.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref cam);
+			shdPlane.Uniform("camera", cam);
 
 			plane.Draw();
 			shdPlane.Deactivate();

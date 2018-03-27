@@ -1,12 +1,12 @@
-﻿using Zenseless.Geometry;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using System;
-using Zenseless.Base;
-using System.Diagnostics;
-
-namespace Zenseless.OpenGL
+﻿namespace Zenseless.OpenGL
 {
+	using OpenTK.Graphics.OpenGL;
+	using System;
+	using System.Drawing;
+	using Zenseless.Base;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+
 	/// <summary>
 	/// 
 	/// </summary>
@@ -63,36 +63,15 @@ namespace Zenseless.OpenGL
 		}
 
 		/// <summary>
-		/// To the open tk.
+		/// Set color Uniform on active shader. The correct shader has to be activated first!
 		/// </summary>
-		/// <param name="v">The v.</param>
-		/// <returns></returns>
-		public static Vector2 ToOpenTK(this System.Numerics.Vector2 v)
+		/// <param name="shaderProgram">The shader program.</param>
+		/// <param name="name">The uniform variable name.</param>
+		/// <param name="color">The color.</param>
+		public static void Uniform(this IShaderProgram shaderProgram, string name, Color color)
 		{
-			return new Vector2(v.X, v.Y);
-		}
+			GL.Uniform4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, name), color);
 
-		/// <summary>
-		/// To the open tk.
-		/// </summary>
-		/// <param name="v">The v.</param>
-		/// <returns></returns>
-		public static Vector3 ToOpenTK(this System.Numerics.Vector3 v)
-		{
-			return new Vector3(v.X, v.Y, v.Z);
-		}
-
-		/// <summary>
-		/// To the open tk.
-		/// </summary>
-		/// <param name="m">The m.</param>
-		/// <returns></returns>
-		public static Matrix4 ToOpenTK(this System.Numerics.Matrix4x4 m)
-		{
-			return new Matrix4(m.M11, m.M12, m.M13, m.M14,
-				m.M21, m.M22, m.M23, m.M24,
-				m.M31, m.M32, m.M33, m.M34,
-				m.M41, m.M42, m.M43, m.M44);
 		}
 	}
 }

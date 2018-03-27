@@ -9,10 +9,6 @@ namespace Example
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			camera.FarClip = 50;
-			camera.Distance = 1.8f;
-			camera.TargetY = -0.3f;
-			camera.FovY = 70;
 			this.renderState = renderState;
 			shaderProgram = contentLoader.Load<IShaderProgram>("lambert.*");
 			shaderPostProcess = contentLoader.LoadPixelShader("ChromaticAberration");
@@ -22,33 +18,31 @@ namespace Example
 			geometry = VAOLoader.FromMesh(mesh, shaderProgram);
 		}
 
-		public CameraOrbit OrbitCamera { get { return camera; } }
 		private readonly IRenderState renderState;
 
-		public void Draw()
+		public void Draw(Transformation3D camera)
 		{
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			renderState.Set(BoolState<IDepthState>.Enabled);
 			renderState.Set(BoolState<IBackfaceCullingState>.Enabled);
 			shaderProgram.Activate();
-			var cam = camera.CalcMatrix().ToOpenTK();
-			GL.UniformMatrix4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref cam);
+			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
 			geometry.Draw();
 			shaderProgram.Deactivate();
 			renderState.Set(BoolState<IBackfaceCullingState>.Disabled);
 			renderState.Set(BoolState<IDepthState>.Disabled);
 		}
 
-		public void DrawWithPostProcessing(float time)
+		public void DrawWithPostProcessing(float time, Transformation3D camera)
 		{
 			renderToTexture.Activate(); //start drawing into texture
-			Draw();
+			Draw(camera);
 			renderToTexture.Deactivate(); //stop drawing into texture
 			renderToTexture.Texture.Activate(); //us this new texture
 			if (shaderPostProcess is null) return;
 			shaderPostProcess.Activate(); //activate post processing shader
-			GL.Uniform1(shaderPostProcess.GetResourceLocation(ShaderResourceType.Uniform, "iGlobalTime"), time);
+			shaderPostProcess.Uniform("iGlobalTime", time);
 			GL.DrawArrays(PrimitiveType.Quads, 0, 4); //draw quad
 			shaderPostProcess.Deactivate();
 			renderToTexture.Texture.Deactivate();
@@ -60,7 +54,6 @@ namespace Example
 			renderToTexture.Texture.WrapFunction = TextureWrapFunction.ClampToEdge;
 		}
 
-		private CameraOrbit camera = new CameraOrbit();
 		private FBO renderToTexture;
 		private IShaderProgram shaderPostProcess;
 		private IShaderProgram shaderProgram;

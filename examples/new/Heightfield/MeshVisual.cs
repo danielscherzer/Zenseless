@@ -38,7 +38,7 @@ namespace Heightfield
 			{
 				GL.ActiveTexture(TextureUnit.Texture0 + id);
 				binding.Texture.Activate();
-				GL.Uniform1(shader.GetResourceLocation(ShaderResourceType.Uniform, binding.Name), id);
+				shader.Uniform(binding.Name, id);
 				++id;
 			}
 		}
