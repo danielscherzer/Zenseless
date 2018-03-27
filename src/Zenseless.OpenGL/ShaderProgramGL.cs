@@ -213,14 +213,20 @@
 		/// <param name="transpose">if set to <c>true</c> the matrix is transposed.</param>
 		public static void Uniform(int location, in Matrix4x4 matrix, bool transpose = false)
 		{
-			unsafe
-			{
-				fixed (float* matrix_ptr = &matrix.M11)
-				{
-					// Matrix4x4 has internally a transposed memory layout
-					GL.UniformMatrix4(location, 1, !transpose, matrix_ptr);
-				}
-			}
+			//unsafe //TODO: check unsafe appveyor porlbems
+			//{
+			//	fixed (float* matrix_ptr = &matrix.M11)
+			//	{
+			//		// Matrix4x4 has internally a transposed memory layout
+			//		GL.UniformMatrix4(location, 1, !transpose, matrix_ptr);
+			//	}
+			//}
+			var m = new OpenTK.Matrix4(matrix.M11, matrix.M12, matrix.M13, matrix.M14,
+					matrix.M21, matrix.M22, matrix.M23, matrix.M24,
+					matrix.M31, matrix.M32, matrix.M33, matrix.M34,
+					matrix.M41, matrix.M42, matrix.M43, matrix.M44);
+
+			GL.UniformMatrix4(location, !transpose, ref m);
 		}
 
 		/// <summary>
