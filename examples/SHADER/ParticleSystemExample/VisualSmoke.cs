@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 using System;
+using System.Numerics;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
 
@@ -64,7 +64,7 @@ namespace Example
 			particles.SetAttribute(shaderSmoke.GetResourceLocation(ShaderResourceType.Attribute, "fade"), fade, VertexAttribPointerType.Float, 1);
 		}
 
-		public void Render(in System.Numerics.Matrix4x4 camera)
+		public void Render(in Matrix4x4 camera)
 		{
 			if (shaderSmoke is null) return;
 			renderState.Set(BlendStates.Additive);

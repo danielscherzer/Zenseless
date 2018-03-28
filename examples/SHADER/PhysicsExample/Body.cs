@@ -3,7 +3,7 @@
 namespace Example
 {
 	/// <summary>
-	/// Addepted from http://natureofcode.com/book/chapter-2-forces/
+	/// Adapted from http://natureofcode.com/book/chapter-2-forces/
 	/// </summary>
 	public class Body : IBody
 	{

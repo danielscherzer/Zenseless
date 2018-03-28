@@ -13,7 +13,7 @@ namespace Zenseless.ExampleFramework
 		/// Loads the layout.
 		/// </summary>
 		/// <param name="window">The window.</param>
-		public static void LoadLayout(this GameWindow window)
+		public static void LoadLayout(this INativeWindow window)
 		{
 			RegistryKey keyApp = RegistryLoaderForm.GetAppKey();
 			if (keyApp is null) return;
@@ -31,7 +31,7 @@ namespace Zenseless.ExampleFramework
 		/// Saves the layout.
 		/// </summary>
 		/// <param name="window">The window.</param>
-		public static void SaveLayout(this GameWindow window)
+		public static void SaveLayout(this INativeWindow window)
 		{
 			RegistryKey keyApp = RegistryLoaderForm.GetAppKey();
 			if (keyApp is null) return;

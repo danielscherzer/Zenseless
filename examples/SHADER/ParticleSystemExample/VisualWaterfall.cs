@@ -1,8 +1,8 @@
-﻿using Zenseless.HLGL;
-using Zenseless.OpenGL;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 using System;
+using System.Numerics;
+using Zenseless.HLGL;
+using Zenseless.OpenGL;
 
 namespace Example
 {
@@ -45,8 +45,8 @@ namespace Example
 			if (particle.Position.Y < 0)
 			{
 				//slightly different upward vectors
-				var direction = new Vector3(RndCoord(), Rnd01(), RndCoord()).Normalized();
-				var speed = particle.Velocity.Length;
+				var direction = Vector3.Normalize(new Vector3(RndCoord(), Rnd01(), RndCoord()));
+				var speed = particle.Velocity.Length();
 				//random perturb velocity to get more water like effects
 				particle.Velocity = direction * speed * 0.7f;
 			}
@@ -73,7 +73,7 @@ namespace Example
 			particles.SetAttribute(shaderWaterfall.GetResourceLocation(ShaderResourceType.Attribute, "fade"), fade, VertexAttribPointerType.Float, 1);
 		}
 
-		public void Render(in System.Numerics.Matrix4x4 camera)
+		public void Render(in Matrix4x4 camera)
 		{
 			if (shaderWaterfall is null) return;
 			renderState.Set(BlendStates.Additive);

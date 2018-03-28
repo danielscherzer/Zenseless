@@ -67,7 +67,6 @@
     <Compile Include="IScene.cs" />
     <Compile Include="VisualLevel.cs" />
     <Compile Include="LevelLogic.cs" />
-    <Compile Include="Drawable.cs" />
     <Compile Include="ILevel.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelHelper.cs" />
