@@ -39,7 +39,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CameraFirstPersonMovementState.cs" />
+    <Compile Include="Transforms\CameraFirstPersonMovementState.cs" />
     <Compile Include="Box3D.cs" />
     <Compile Include="Box2D.cs" />
     <Compile Include="Box2Dextensions.cs" />

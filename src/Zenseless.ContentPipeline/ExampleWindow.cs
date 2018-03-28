@@ -19,7 +19,7 @@ namespace Zenseless.ExampleFramework
 	/// Intended for use for small example programs in the <see cref="Zenseless"/> framework
 	/// creates a OpenTK.GameWindow;
 	/// reads command line arguments: 'capture' records each rendered frame into a png file; 'fullscreen'
-	/// handles keys: ESCAPE: closes application; F11: toggles full-screen; <see cref="RemoveDefaultKeyHandler"/>
+	/// handles keys: ESCAPE: closes application; F11: toggles full-screen; <see cref="RemoveDefaultKeyHandler"/> ROLL: makes a screen-shot to the clipboard
 	/// create a MEF composition container for IOC;
 	/// creates experimental versions of high level GL abstraction and resource handling; use with car and subject to change;
 	/// </summary>

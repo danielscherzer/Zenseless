@@ -5,7 +5,7 @@ namespace Zenseless.Geometry
 	/// <summary>
 	/// A first person camera with position, heading, tilt
 	/// </summary>
-	public class CameraFirstPerson
+	public class CameraFirstPerson //TODO: cleanup and use transforms
 	{
 		/// <summary>
 		/// Gets or sets the aspect ratio.
@@ -110,6 +110,10 @@ namespace Zenseless.Geometry
 			return mtxRotate * mtxTranslate;
 		}
 
+		/// <summary>
+		/// Applies the rotated movement.
+		/// </summary>
+		/// <param name="movement">The movement.</param>
 		public void ApplyRotatedMovement(Vector3 movement)
 		{
 			var rotation = CalcRotationMatrix();

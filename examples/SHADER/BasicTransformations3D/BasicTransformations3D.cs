@@ -1,7 +1,7 @@
-﻿using Zenseless.ExampleFramework;
-using Zenseless.Base;
-using System;
+﻿using System;
 using System.IO;
+using Zenseless.Base;
+using Zenseless.ExampleFramework;
 
 namespace Example
 {
@@ -17,7 +17,6 @@ namespace Example
 			var time = new GameTime();
 			window.Render += visual.Render;
 			window.Update += (dt) => visual.Update(time.AbsoluteTime);
-			//window.IsRecording = true;
 			window.Run();
 		}
 	}

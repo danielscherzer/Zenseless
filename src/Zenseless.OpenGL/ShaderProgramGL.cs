@@ -213,11 +213,11 @@
 		/// <param name="transpose">if set to <c>true</c> the matrix is transposed.</param>
 		public static void Uniform(int location, in Matrix4x4 matrix, bool transpose = false)
 		{
-			//unsafe //TODO: check unsafe appveyor porlbems
+			// Matrix4x4 has internally a transposed memory layout
+			//unsafe //TODO: check unsafe appveyor problems
 			//{
 			//	fixed (float* matrix_ptr = &matrix.M11)
 			//	{
-			//		// Matrix4x4 has internally a transposed memory layout
 			//		GL.UniformMatrix4(location, 1, !transpose, matrix_ptr);
 			//	}
 			//}

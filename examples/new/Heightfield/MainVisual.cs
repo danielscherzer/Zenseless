@@ -1,6 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
-using System.Numerics;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
@@ -11,11 +10,6 @@ namespace Heightfield
 	{
 		public MainVisual(IRenderContext renderContext, IContentLoader contentLoader)
 		{
-			Camera.NearClip = 0.01f;
-			Camera.FarClip = 20f;
-			Camera.FovY = 70f;
-			Camera.Position = new Vector3(0, 0.5f, 1);
-
 			renderContext.RenderState.Set(BoolState<IDepthState>.Enabled);
 			renderContext.RenderState.Set(BoolState<IBackfaceCullingState>.Enabled);
 
@@ -34,15 +28,13 @@ namespace Heightfield
 			mountain = new MeshVisual(mesh, shader, bindings);
 		}
 
-		public CameraFirstPerson Camera { get; private set; } = new CameraFirstPerson();
-
-		internal void Render()
+		internal void Render(Transformation3D camera)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
 			void SetUniforms(Func<string, int> GetLocation)
 			{
-				ShaderProgramGL.Uniform(GetLocation("camera"), Camera.CalcMatrix());
+				ShaderProgramGL.Uniform(GetLocation("camera"), camera.CalcLocalToWorldColumnMajorMatrix());
 			}
 			mountain.Draw(SetUniforms);
 		}
