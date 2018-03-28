@@ -51,11 +51,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Box2dExtensionsTests.cs" />
-    <Compile Include="CircleExtensionsTests.cs" />
+    <Compile Include="Box2dTests.cs" />
     <Compile Include="CircleTests.cs" />
     <Compile Include="IntersectionExtensionsTests.cs" />
-    <Compile Include="IReadOnlyBox2DextensionsTests.cs" />
     <Compile Include="MathHelperTests.cs" />
     <Compile Include="Transform2DTests.cs" />
   </ItemGroup>

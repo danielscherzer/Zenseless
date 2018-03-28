@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace Zenseless.Geometry
+﻿namespace Zenseless.Geometry
 {
 	/// <summary>
 	/// static class of <seealso cref="IReadOnlyBox2D"/> extension methods

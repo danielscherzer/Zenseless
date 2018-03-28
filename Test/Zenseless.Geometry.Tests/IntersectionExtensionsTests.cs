@@ -44,5 +44,13 @@ namespace Zenseless.Geometry.Tests
 			var circle = new Circle(1.5f, 1.5f, 1);
 			Assert.IsTrue(box.Intersects(circle));
 		}
+
+		[TestMethod()]
+		public void IntersectsTest6()
+		{
+			var box = new Box2D(0, 0, 1, 1);
+			var circle = new Circle(-0.5f, -0.5f, 1);
+			Assert.IsTrue(box.Intersects(circle));
+		}
 	}
 }
