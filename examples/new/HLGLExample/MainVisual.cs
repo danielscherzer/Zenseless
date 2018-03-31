@@ -58,7 +58,7 @@ namespace Example
 
 		private struct Uniforms
 		{
-			public Matrix4x4 camera;
+			public Matrix4x4 camera; //memory layout is row-major so transposed to GL
 		};
 
 		private IRenderContext context;

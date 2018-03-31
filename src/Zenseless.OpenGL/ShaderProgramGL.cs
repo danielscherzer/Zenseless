@@ -124,24 +124,14 @@
 		/// </exception>
 		public void Link()
 		{
-			try
+			GL.LinkProgram(ProgramID);
+			GL.GetProgram(ProgramID, GetProgramParameterName.LinkStatus, out int status_code);
+			RemoveShaders();
+			if (1 != status_code)
 			{
-				GL.LinkProgram(ProgramID);
-				GL.GetProgram(ProgramID, GetProgramParameterName.LinkStatus, out int status_code);
-				if (1 != status_code)
-				{
-					throw new ShaderException("Error linking shader", GL.GetProgramInfoLog(ProgramID));
-				}
-				IsLinked = true;
+				throw new ShaderException("Error linking shader", GL.GetProgramInfoLog(ProgramID));
 			}
-			catch (Exception)
-			{
-				throw new ShaderException("Unknown Link error!", string.Empty);
-			}
-			finally
-			{
-				RemoveShaders();
-			}
+			IsLinked = true;
 		}
 
 		/// <summary>

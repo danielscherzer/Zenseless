@@ -10,24 +10,19 @@ namespace Heightfield
 	{
 		public MeshVisual(DefaultMesh mesh, IShaderProgram shader, TextureBinding[] textureBindings)
 		{
-			this.shader = shader;
+			shaderProgram = shader;
 			geometry = VAOLoader.FromMesh(mesh, shader);
 			this.textureBindings = textureBindings;
 		}
 
-		public void Draw(Action<Func<string, int>> uniformSetter)
+		public void Draw()
 		{
-			shader.Activate();
 			BindTextures();
-			int GetLocation(string name) => shader.GetResourceLocation(ShaderResourceType.Uniform, name);
-
-			uniformSetter?.Invoke(GetLocation);
 			geometry.Draw();
 			UnbindTextures();
-			shader.Deactivate();
 		}
 
-		private IShaderProgram shader;
+		private readonly IShaderProgram shaderProgram;
 		private readonly VAO geometry;
 		private TextureBinding[] textureBindings;
 
@@ -38,7 +33,7 @@ namespace Heightfield
 			{
 				GL.ActiveTexture(TextureUnit.Texture0 + id);
 				binding.Texture.Activate();
-				shader.Uniform(binding.Name, id);
+				shaderProgram.Uniform(binding.Name, id);
 				++id;
 			}
 		}

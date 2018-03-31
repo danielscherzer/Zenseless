@@ -88,7 +88,7 @@
 			GL.Begin(PrimitiveType.LineStrip);
 			for (float t = 0; t <= points.Count - 1; t += 0.03f)
 			{
-				var activeSegment = CatmullRomSpline.FindSegmentLoop(t, points.Count);
+				var activeSegment = CatmullRomSpline.FindSegment(t, points.Count);
 				var pos = CatmullRomSpline.EvaluateSegment(points[activeSegment.Item1]
 					, points[activeSegment.Item2]
 					, tangents[activeSegment.Item1]

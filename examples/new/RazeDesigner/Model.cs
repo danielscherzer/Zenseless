@@ -15,7 +15,6 @@
 
 		public int SelectedPoint { get; private set; } = -1;
 		public IReadOnlyList<Vector2> Points { get => points; }
-		public IReadOnlyList<Vector2> Tangents { get => tangents; }
 
 		internal void BeginEdit(Vector2 coord)
 		{
@@ -30,7 +29,6 @@
 		private void Add(Vector2 coord)
 		{
 			points.Add(coord);
-			tangents = CatmullRomSpline.FiniteDifference(points);
 		}
 
 		internal void Delete(Vector2 coord)
@@ -38,7 +36,6 @@
 			if (-1 != SelectedPoint)
 			{
 				points.RemoveAt(SelectedPoint);
-				tangents = CatmullRomSpline.FiniteDifference(points);
 				SelectedPoint = -1;
 			}
 		}
@@ -55,7 +52,6 @@
 
 		private State state = State.Default;
 		private List<Vector2> points = new List<Vector2>();
-		private List<Vector2> tangents = new List<Vector2>();
 
 		internal void Move(Vector2 coord)
 		{
@@ -63,7 +59,6 @@
 			{
 				case State.MovePoint:
 					points[SelectedPoint] = coord;
-					tangents = CatmullRomSpline.FiniteDifference(points);
 					break;
 				default:
 					SelectedPoint = -1;

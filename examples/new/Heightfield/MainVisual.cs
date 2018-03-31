@@ -13,7 +13,6 @@ namespace Heightfield
 			renderContext.RenderState.Set(BoolState<IDepthState>.Enabled);
 			renderContext.RenderState.Set(BoolState<IBackfaceCullingState>.Enabled);
 
-			var shader = contentLoader.Load<IShaderProgram>("shader.*");
 			var mesh = Meshes.CreatePlane(2, 2, 1024, 1024);
 
 			var texHeightfield = contentLoader.Load<ITexture2D>("mountain_height");
@@ -25,20 +24,19 @@ namespace Heightfield
 				new TextureBinding("texColor", contentLoader.Load<ITexture2D>("mountain_color")),
 				new TextureBinding("texStone", contentLoader.Load<ITexture2D>("stone")),
 			};
-			mountain = new MeshVisual(mesh, shader, bindings);
+			shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
+			mountain = new MeshVisual(mesh, shaderProgram, bindings);
+			shaderProgram.Activate(); // only one shader
 		}
 
 		internal void Render(Transformation3D camera)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-			void SetUniforms(Func<string, int> GetLocation)
-			{
-				ShaderProgramGL.Uniform(GetLocation("camera"), camera.CalcLocalToWorldColumnMajorMatrix());
-			}
-			mountain.Draw(SetUniforms);
+			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
+			mountain.Draw();
 		}
 
 		private readonly MeshVisual mountain;
+		private readonly IShaderProgram shaderProgram;
 	}
 }

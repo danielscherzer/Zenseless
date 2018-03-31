@@ -3,8 +3,6 @@ using System;
 
 namespace Zenseless.HLGL.Tests
 {
-	using static States;
-
 	[TestClass()]
 	public class RenderStateTests
 	{
@@ -35,6 +33,15 @@ namespace Zenseless.HLGL.Tests
 			var renderState = new RenderState();
 			renderState.Register(null, BoolState<IDepthState>.Disabled);
 			var depthTest = renderState.Get<BoolState<IPointSpriteState>>().IsEnabled;
+		}
+
+		[TestMethod()]
+		[ExpectedException(typeof(ArgumentException))]
+		public void SetWrongTypeTest()
+		{
+			var renderState = new RenderState();
+			renderState.Register(null, BoolState<IDepthState>.Disabled);
+			renderState.Set(BoolState<IPointSpriteState>.Enabled);
 		}
 	}
 }

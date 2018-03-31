@@ -2,6 +2,8 @@
 {
 	using OpenTK.Input;
 	using System;
+	using System.IO;
+	using Zenseless.Base;
 	using Zenseless.ExampleFramework;
 	using Zenseless.OpenGL;
 
@@ -11,8 +13,9 @@
 		private static void Main()
 		{
 			var window = new ExampleWindow();
+			window.SetContentSearchDirectory(Path.GetDirectoryName(PathTools.GetSourceFilePath()));
 			var model = new Model();
-			var visual = new Visual(window.RenderContext.RenderState);
+			var visual = new Visual(window.RenderContext.RenderState, window.ContentLoader);
 			window.GameWindow.MouseDown += (s, e) =>
 			{
 				var coord = window.GameWindow.ConvertWindowPixelCoords(e.X, e.Y);
@@ -38,8 +41,8 @@
 				var coord = window.GameWindow.ConvertWindowPixelCoords(e.X, e.Y);
 				model.Move(coord);
 			};
-			window.Render += () => visual.Render(model.Points, model.Tangents
-				, model.SelectedPoint);
+			window.Render += () => visual.Render(model.Points, model.SelectedPoint);
+			window.Resize += visual.Resize;
 			window.GameWindow.WindowState = OpenTK.WindowState.Fullscreen;
 			window.Run();
 		}

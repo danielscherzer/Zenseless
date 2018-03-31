@@ -1,15 +1,14 @@
-﻿using Zenseless.Base;
-using Zenseless.HLGL;
-using OpenTK.Graphics.OpenGL4;
-using System;
+﻿using OpenTK.Graphics.OpenGL4;
 using System.Runtime.InteropServices;
+using Zenseless.Base;
+using Zenseless.HLGL;
 
 namespace Zenseless.OpenGL
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.Base.Disposable" />
+	/// <seealso cref="Disposable" />
 	public class BufferObject : Disposable
 	{
 		/// <summary>

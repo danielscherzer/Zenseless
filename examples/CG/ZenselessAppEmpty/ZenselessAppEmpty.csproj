@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Zenseless.ContentPipeline">
-      <Version>0.5.32</Version>
+      <Version>0.5.47</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -92,15 +92,28 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Finds the segment.
+		/// Finds the segment for a control point loop.
 		/// </summary>
-		/// <param name="t">The t.</param>
+		/// <param name="t">The parameter t. Starts at 0 and increases by 1 for each control point.</param>
 		/// <param name="pointCount">The point count.</param>
 		/// <returns></returns>
 		public static Tuple<int, int> FindSegmentLoop(float t, int pointCount)
 		{
 			var id = (int)Math.Floor(t);
 			return new Tuple<int, int>(id % pointCount, (id + 1) % pointCount);
+		}
+
+		/// <summary>
+		/// Finds the current segment (given by t) for a list of control points.
+		/// </summary>
+		/// <param name="t">The parameter t. Starts at 0 and increases by 1 for each control point.</param>
+		/// <param name="pointCount">The point count.</param>
+		/// <returns></returns>
+		public static Tuple<int, int> FindSegment(float t, int pointCount)
+		{
+			var id = (int)Math.Floor(t);
+			var id2 = Math.Min(id + 1, pointCount - 1);
+			return new Tuple<int, int>(id, id2);
 		}
 
 		/// <summary>
