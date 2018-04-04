@@ -45,7 +45,7 @@
     <Compile Include="Box2Dextensions.cs" />
     <Compile Include="Intersection.cs" />
     <Compile Include="Transforms\CameraFirstPerson.cs" />
-    <Compile Include="CatmullRomSpline.cs" />
+    <Compile Include="CubicHermiteSpline.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="CircleExtensions.cs" />
     <Compile Include="ControlPoints.cs" />

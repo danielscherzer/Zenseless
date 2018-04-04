@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Zenseless.Geometry;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Numerics;
 
@@ -50,6 +51,23 @@ namespace Zenseless.Geometry.Tests
 					}
 				}
 			}
+		}
+
+		[TestMethod()]
+		public void FastTruncateTest()
+		{
+			Assert.AreEqual(0, MathHelper.FastTruncate(0f));
+			Assert.AreEqual(0, MathHelper.FastTruncate(float.Epsilon));
+			Assert.AreEqual(0, MathHelper.FastTruncate(0.25f));
+			Assert.AreEqual(0, MathHelper.FastTruncate(-0.5f));
+			Assert.AreEqual(0, MathHelper.FastTruncate(0.75f));
+			Assert.AreEqual(0, MathHelper.FastTruncate(0.99f));
+			Assert.AreEqual(0, MathHelper.FastTruncate(-0.99999f));
+			Assert.AreEqual(12345, MathHelper.FastTruncate(12345f));
+			Assert.AreEqual(12345, MathHelper.FastTruncate(12345.99f));
+			Assert.AreEqual(-1, MathHelper.FastTruncate(-1f));
+			Assert.AreEqual(-1, MathHelper.FastTruncate(-1.99f));
+			Assert.AreEqual(-12345, MathHelper.FastTruncate(-12345.99f));
 		}
 	}
 }

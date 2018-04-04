@@ -1,8 +1,8 @@
-﻿using System;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
+using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Runtime.InteropServices;
-using OpenTK;
 using Zenseless.Base;
 
 namespace Zenseless.OpenGL
@@ -24,7 +24,7 @@ namespace Zenseless.OpenGL
 	/// <summary>
 	/// OpenGL Vertex Array Object
 	/// </summary>
-	/// <seealso cref="Zenseless.Base.Disposable" />
+	/// <seealso cref="Disposable" />
 	public class VAO : Disposable
 	{
 		/// <summary>
@@ -127,7 +127,7 @@ namespace Zenseless.OpenGL
 		/// <param name="bindingID">shader binding location</param>
 		/// <param name="data">array of Matrix4 inputs</param>
 		/// <param name="perInstance">if set to <c>true</c> [per instance].</param>
-		public void SetAttribute(int bindingID, Matrix4[] data, bool perInstance = false)
+		public void SetAttribute(int bindingID, Matrix4x4[] data, bool perInstance = false)
 		{
 			if (-1 == bindingID) return; //if matrix not used in shader or wrong name
 			Activate();
@@ -138,7 +138,7 @@ namespace Zenseless.OpenGL
 			buffer.Activate();
 			//set data format
 			int columnBytes = Marshal.SizeOf(typeof(Vector4));
-			int elementBytes = Marshal.SizeOf(typeof(Matrix4));
+			int elementBytes = Marshal.SizeOf(typeof(Matrix4x4));
 			for (int i = 0; i < 4; i++)
 			{
 				GL.VertexAttribPointer(bindingID + i, 4, VertexAttribPointerType.Float, false, elementBytes, columnBytes * i);
@@ -156,7 +156,7 @@ namespace Zenseless.OpenGL
 				GL.DisableVertexAttribArray(bindingID + i);
 			}
 		}
-
+		
 		/// <summary>
 		/// Draws the VAO data (instanced if specified).
 		/// </summary>

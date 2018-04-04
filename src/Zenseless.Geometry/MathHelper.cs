@@ -223,18 +223,28 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
+		/// Returns the integer part of the specified floating-point number. 
+		/// Works not for constructs like <code>1f - float.epsilon</code> because this is outside of floating point precision
+		/// </summary>
+		/// <param name="x">Input floating-point number</param>
+		/// <returns>The integer part.</returns>
+		public static int FastTruncate(this float x)
+		{	return (int)x;
+		}
+
+		/// <summary>
 		/// Returns the largest integer less than or equal to the specified floating-point number.
 		/// </summary>
 		/// <param name="x">Input floating-point number</param>
 		/// <returns>The largest integer less than or equal to x.</returns>
-		public static float Floor(this float x) => (float)Math.Floor(x);
+		public static float FloorF(this float x) => (float)Math.Floor(x);
 
 		/// <summary>
 		/// For each component returns the largest integer less than or equal to the specified floating-point number.
 		/// </summary>
 		/// <param name="v">Input vector</param>
 		/// <returns>For each component returns the largest integer less than or equal to the specified floating-point number.</returns>
-		public static Vector3 Floor(this Vector3 v) => new Vector3(Floor(v.X), Floor(v.Y), Floor(v.Z));
+		public static Vector3 Floor(this Vector3 v) => new Vector3(FloorF(v.X), FloorF(v.Y), FloorF(v.Z));
 
 		/// <summary>
 		/// Returns the value of x modulo y. This is computed as x - y * floor(x/y). 

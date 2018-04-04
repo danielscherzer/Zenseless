@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 using System;
+using System.Numerics;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
@@ -35,29 +35,27 @@ namespace Example
 		public float CameraAzimuth { get; set; }
 		public float CameraElevation { get; set; }
 
-		public static readonly string ShaderName = nameof(shaderProgram);
-
 		public void Render()
 		{
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			GL.UniformMatrix4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "camera"), true, ref camera);
+			shaderProgram.Uniform("camera", camera, true);
 			geometry.Draw(particelCount);
 			shaderProgram.Deactivate();
 		}
 
 		public void Update(float updatePeriod)
 		{
-			//todo student: use CameraDistance, CameraAzimuth, CameraElevation
-			var p = Matrix4.Transpose(Matrix4.CreatePerspectiveFieldOfView(0.5f, 1.0f, 0.1f, 100.0f));
+			//TODO student: use CameraDistance, CameraAzimuth, CameraElevation
+			var p = Matrix4x4.CreatePerspectiveFieldOfView(0.5f, 1.0f, 0.1f, 100.0f);
 			camera = p;
 		}
 
 		private const int particelCount = 500;
 
 		private IShaderProgram shaderProgram;
-		private Matrix4 camera = Matrix4.Identity;
+		private Matrix4x4 camera = Matrix4x4.Identity;
 		private VAO geometry;
 	}
 }

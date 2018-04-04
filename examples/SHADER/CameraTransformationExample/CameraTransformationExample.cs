@@ -1,8 +1,8 @@
-﻿using Zenseless.ExampleFramework;
-using OpenTK.Input;
+﻿using OpenTK.Input;
 using System;
 using System.IO;
 using Zenseless.Base;
+using Zenseless.ExampleFramework;
 
 namespace Example
 {

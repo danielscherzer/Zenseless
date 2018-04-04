@@ -62,7 +62,7 @@
 					break;
 				default:
 					SelectedPoint = -1;
-					var selectionCircle = new Circle(coord.X, coord.Y, 0.03f);
+					var selectionCircle = new Circle(coord.X, coord.Y, 0.06f);
 					for (int i = 0; i < points.Count; ++i)
 					{
 						if (selectionCircle.Contains(points[i]))

@@ -193,7 +193,7 @@ namespace Zenseless.ExampleFramework
 			Render?.Invoke();
 			screenShots?.Add(FrameBuffer.ToBitmap(false));  //no rotate flip for speed
 			DrawTools.WriteErrors();
-			//buffer swap of double buffering (http://gameprogrammingpatterns.com/double-buffer.html)
+			//buffer swap (and sync) of double buffering (http://gameprogrammingpatterns.com/double-buffer.html)
 			gameWindow.SwapBuffers();
 		}
 

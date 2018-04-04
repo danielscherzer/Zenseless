@@ -1,7 +1,7 @@
-﻿using Zenseless.ExampleFramework;
-using Zenseless.Base;
-using System;
+﻿using System;
 using System.IO;
+using Zenseless.Base;
+using Zenseless.ExampleFramework;
 using Zenseless.OpenGL;
 
 namespace Example

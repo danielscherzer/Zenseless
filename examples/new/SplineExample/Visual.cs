@@ -86,15 +86,10 @@
 		{
 			if (points.Count < 2) return;
 			GL.Begin(PrimitiveType.LineStrip);
-			for (float t = 0; t <= points.Count - 1; t += 0.03f)
+			var delta = 0.03f;
+			for (float t = 0; t <= points.Count - 1 + delta; t += delta)
 			{
-				var activeSegment = CatmullRomSpline.FindSegment(t, points.Count);
-				var pos = CatmullRomSpline.EvaluateSegment(points[activeSegment.Item1]
-					, points[activeSegment.Item2]
-					, tangents[activeSegment.Item1]
-					, tangents[activeSegment.Item2]
-					, t - (float)Math.Floor(t));
-
+				var pos = CubicHermiteSpline.EvaluateAt(points, tangents, t);
 				GL.Vertex2(pos.X, pos.Y);
 			}
 			GL.End();

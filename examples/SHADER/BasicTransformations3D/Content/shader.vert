@@ -1,6 +1,6 @@
-#version 430 core				
+#version 430 compatibility
 
-uniform mat4 camera;
+uniform mat4 camera = mat4(1.0);
 
 in vec4 position;
 in vec3 normal;

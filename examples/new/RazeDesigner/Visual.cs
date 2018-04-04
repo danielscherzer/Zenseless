@@ -1,33 +1,40 @@
 ﻿namespace Example
 {
 	using OpenTK.Graphics.OpenGL;
+	using System;
 	using System.Collections.Generic;
 	using System.Drawing;
-	using System.Linq;
 	using System.Numerics;
+	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 
 	public class Visual
 	{
 		public Visual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			shader = contentLoader.Load<IShaderProgram>("shader.*");
+			texSand = contentLoader.Load<ITexture2D>("dryCrackedsand");
+			texTruck = contentLoader.Load<ITexture2D>("truck");
+			shaderRoad = contentLoader.Load<IShaderProgram>("shader.*");
 			renderState.Set(BlendStates.AlphaBlend);
 			renderState.Set(BoolState<ILineSmoothState>.Enabled);
 			GL.Enable(EnableCap.PointSmooth);
+			//GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 		}
 
-		public void Render(IReadOnlyList<Vector2> points, int selectedPoint)
+		public void Render(IReadOnlyList<Vector2> points, int selectedPoint, float truckPos)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
-			//GL.LoadIdentity();
-			//GL.Ortho(-windowAspect, windowAspect, -1, 1, 0, 1);
+			GL.LoadIdentity();
+			GL.Ortho(-windowAspect, windowAspect, -1, 1, 0, 1);
 
-			shader.Activate();
+			shaderRoad.Activate();
+			texSand.Activate();
 
 			GL.LineWidth(3.0f);
 			DrawLineStrip(points);
-			shader.Deactivate();
+
+			texSand.Deactivate();
+			shaderRoad.Deactivate();
 
 			GL.Color3(Color.Red);
 			GL.PointSize(15.0f);
@@ -35,19 +42,32 @@
 
 			if(-1 != selectedPoint)
 			{
-				GL.Color3(Color.Red);
+				GL.Color3(Color.Blue);
 				GL.PointSize(25.0f);
 				DrawPoint(points[selectedPoint]);
 			}
+			var pos = CubicHermiteSpline.CatmullRomSpline(points, truckPos);
+			GL.Color3(Color.Green);
+			GL.PointSize(25.0f);
+			DrawPoint(pos);
 		}
 
-		private readonly IShaderProgram shader;
-		private float windowAspect;
+		internal Vector2 ConvertWindowCoords(Vector2 coordWindow)
+		{
+			var v = coordWindow;
+			v.X *= windowAspect;
+			return v;
+		}
 
 		internal void Resize(int width, int height)
 		{
 			windowAspect = width / (float)height;
 		}
+
+		private readonly ITexture texSand;
+		private readonly ITexture texTruck;
+		private readonly IShaderProgram shaderRoad;
+		private float windowAspect;
 
 		private void DrawPoint(Vector2 point)
 		{
@@ -66,16 +86,16 @@
 			GL.End();
 		}
 
-		private void DrawLineStrip(IEnumerable<Vector2> points)
+		private void DrawLineStrip(IReadOnlyList<Vector2> points)
 		{
 			GL.Begin(PrimitiveType.LineStripAdjacency);
-			var first = points.First();
+			var first = points[0];
 			GL.Vertex2(first.X, first.Y);
 			foreach (var point in points)
 			{
 				GL.Vertex2(point.X, point.Y);
 			}
-			var last = points.Last();
+			var last = points[points.Count - 1];
 			GL.Vertex2(last.X, last.Y);
 			GL.End();
 		}
