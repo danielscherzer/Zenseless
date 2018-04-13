@@ -1,7 +1,6 @@
 ﻿namespace Example
 {
 	using OpenTK.Graphics.OpenGL;
-	using System;
 	using System.Collections.Generic;
 	using System.Drawing;
 	using System.Numerics;
@@ -12,7 +11,7 @@
 	{
 		public Visual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			texSand = contentLoader.Load<ITexture2D>("dryCrackedsand");
+			texSand = contentLoader.Load<ITexture2D>("dryCrackedSand");
 			texTruck = contentLoader.Load<ITexture2D>("truck");
 			shaderRoad = contentLoader.Load<IShaderProgram>("shader.*");
 			renderState.Set(BlendStates.AlphaBlend);

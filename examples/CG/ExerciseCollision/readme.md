@@ -1,4 +1,4 @@
-After you are finished with the implementation this game should resemble the famous [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) video game.
+In this exercise we will create a game similar to the famous [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) video game.
 
 Implement the following items (25 points):
 1. Draw the player in a different shape than the asteroids.
@@ -16,4 +16,4 @@ Implement the following items (25 points):
 1. A shot that hits a smallest asteroid removes this asteroid.
 1. Asteroids should rotate with individual speeds.
 1. After all asteroids are destroyed a new level is started with more asteroids.
-1. Add other elements of [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) like a score system, UFOs, "thrust movement", ... (up to 5 points)
+1. Add other elements of [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) like a score system, UFOs, "thrust movement", ... or your own ideas. (up to 5 points)
