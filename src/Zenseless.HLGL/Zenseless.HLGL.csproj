@@ -49,6 +49,7 @@
     <Compile Include="ContentManagement\NamedStreamExtensions.cs" />
     <Compile Include="ContentManagement\NewCacheEntryEventArgs.cs" />
     <Compile Include="ContentManagement\ResourceLoading.cs" />
+    <Compile Include="ContentManagement\ContentSearchDirectoryAttribute.cs" />
     <Compile Include="ContentManagement\StreamLoader.cs" />
     <Compile Include="StateManagement\BlendOperator.cs" />
     <Compile Include="StateManagement\BlendParameter.cs" />

@@ -55,10 +55,10 @@ namespace Zenseless.HLGL
 			var names = new List<string>();
 			if (ContainsWildCard(name))
 			{
-				var regex = WildCardToRegular(name);
+				var regex = WildCardToRegular(name).ToLowerInvariant();
 				foreach (var res in contentLoader.Names)
 				{
-					if (Regex.IsMatch(res, regex))
+					if (Regex.IsMatch(res.ToLowerInvariant(), regex))
 					{
 						names.Add(res);
 					}

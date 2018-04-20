@@ -4,6 +4,6 @@ You will add shadow mapping to this example.
 1. Adapt the `depth*.glsl` shaders so that the shadow map texture stores the depth of the scene from the point of view of a light source.
 1. Adapt the other shaders to use the shadow map while rendering the scene.
 1. Add phong lighting (inside the shadow only ambient)
-1. Add a second shadow casting lightsource that moves
+1. Add a second shadow casting light source that moves
 1. Add depth biasing
 1. Add percentage-Closer-Filtering

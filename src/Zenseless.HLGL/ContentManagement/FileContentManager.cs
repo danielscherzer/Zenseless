@@ -120,8 +120,9 @@ namespace Zenseless.HLGL
 		/// <param name="contentSearchDirectory">The content search directory. Content is found in this directory or subdirectories</param>		
 		public void SetContentSearchDirectory(string contentSearchDirectory)
 		{
-			var mapping = Names.FindFiles(contentSearchDirectory);
 			if (!(fileLoader is null)) fileLoader.Dispose();
+			if (contentSearchDirectory is null) return;
+			var mapping = Names.FindFiles(contentSearchDirectory);
 			fileLoader = new FileLoader();
 			foreach (var entry in mapping)
 			{

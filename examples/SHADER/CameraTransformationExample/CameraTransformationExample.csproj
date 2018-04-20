@@ -95,6 +95,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AssemblyConfig.cs" />
     <Compile Include="MainVisual.cs" />
     <Compile Include="CameraTransformationExample.cs" />
   </ItemGroup>

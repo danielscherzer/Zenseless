@@ -1,19 +1,17 @@
-﻿using Zenseless.Geometry;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL4;
-using System.Numerics;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Graphics.OpenGL4;
+	using System.Numerics;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
+
 	public class MainVisual
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
 			renderState.Set(BoolState<IDepthState>.Enabled);
 			renderState.Set(BoolState<IBackfaceCullingState>.Enabled);
-			renderState.Set(BlendStates.AlphaBlend);
 
 			shaderProgram = contentLoader.Load<IShaderProgram>("phong.*");
 			var mesh = new DefaultMesh();
@@ -29,7 +27,7 @@ namespace Example
 			mesh.Add(plane.Transform(new Rotation3D(Axis.X, -90f)));
 
 			var sphere = Meshes.CreateSphere(1);
-			sphere.SetConstantUV(new System.Numerics.Vector2(0, 0));
+			sphere.SetConstantUV(Vector2.Zero); //all other meshes have texture coordinates
 			mesh.Add(sphere);
 			var suzanne = contentLoader.Load<DefaultMesh>("suzanne");
 			mesh.Add(suzanne.Transform(new Translation3D(2, 2, -2)));

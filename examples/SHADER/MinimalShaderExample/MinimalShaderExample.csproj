@@ -52,6 +52,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AssemblyConfig.cs" />
     <Compile Include="MinimalShaderExample.cs" />
   </ItemGroup>
   <ItemGroup>

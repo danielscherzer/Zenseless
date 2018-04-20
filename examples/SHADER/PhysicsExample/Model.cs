@@ -1,8 +1,8 @@
-﻿using OpenTK;
-using System.Collections.Generic;
-
-namespace Example
+﻿namespace Example
 {
+	using System.Collections.Generic;
+	using System.Numerics;
+
 	public class Model
 	{
 		public Model()
@@ -20,15 +20,16 @@ namespace Example
 
 		public void Update(float updatePeriod)
 		{
+#if SOLUTION
 			foreach (var b1 in bodies)
 			{
-				//todo student: apply global forces
 				foreach (var b2 in bodies)
 				{
 					if (b1 == b2) continue;
-					//todo student: apply pairwise forces
+					b1.ApplyForce(b1.AttractionFrom(b2));
 				}
 			}
+#endif
 			foreach (var body in bodies)
 			{
 				body.Update();

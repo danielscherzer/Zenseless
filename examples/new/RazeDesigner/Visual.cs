@@ -6,6 +6,7 @@
 	using System.Numerics;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
 
 	public class Visual
 	{
@@ -14,6 +15,7 @@
 			texSand = contentLoader.Load<ITexture2D>("dryCrackedSand");
 			texTruck = contentLoader.Load<ITexture2D>("truck");
 			shaderRoad = contentLoader.Load<IShaderProgram>("shader.*");
+			shaderTruck = contentLoader.Load<IShaderProgram>("colorTexture.*");
 			renderState.Set(BlendStates.AlphaBlend);
 			renderState.Set(BoolState<ILineSmoothState>.Enabled);
 			GL.Enable(EnableCap.PointSmooth);
@@ -46,9 +48,15 @@
 				DrawPoint(points[selectedPoint]);
 			}
 			var pos = CubicHermiteSpline.CatmullRomSpline(points, truckPos);
-			GL.Color3(Color.Green);
-			GL.PointSize(25.0f);
-			DrawPoint(pos);
+			GL.Color3(Color.White);
+			//GL.Color3(Color.Green);
+			//GL.PointSize(25.0f);
+			shaderTruck.Activate();
+			texTruck.Activate();
+			DrawTools.DrawTexturedRect(Box2DExtensions.CreateFromCenterSize(pos.X, pos.Y, 0.1f, 0.1f), Box2D.BOX01);
+			texTruck.Deactivate();
+			shaderTruck.Deactivate();
+			//DrawPoint(pos);
 		}
 
 		internal Vector2 ConvertWindowCoords(Vector2 coordWindow)
@@ -66,6 +74,7 @@
 		private readonly ITexture texSand;
 		private readonly ITexture texTruck;
 		private readonly IShaderProgram shaderRoad;
+		private readonly IShaderProgram shaderTruck;
 		private float windowAspect;
 
 		private void DrawPoint(Vector2 point)

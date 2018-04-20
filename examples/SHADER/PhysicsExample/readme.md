@@ -4,7 +4,7 @@
 
 1. Implement wind
 1. Implement downward gravity (every head falls down onto the plane). Very similar to wind.
-    - Plane geometry is prepared in the code
+    - Add a plane to better see the effects
 1. Implement bounce up at plane contact
 1. Implement friction - bounce becomes smaller over time
 1. Implement gravitational attraction (use your own gravitational constant, because real gravity is really small e.x.: 0.1)

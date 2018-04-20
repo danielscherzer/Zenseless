@@ -1,4 +1,6 @@
-﻿namespace Zenseless.Geometry
+﻿using System.Numerics;
+
+namespace Zenseless.Geometry
 {
 	/// <summary>
 	/// static class of <seealso cref="IReadOnlyBox2D"/> extension methods
@@ -20,6 +22,14 @@
 		}
 
 		/// <summary>
+		/// Checks if point is inside the rectangle (including borders)
+		/// </summary>
+		/// <param name="rectangle">Rectangle to check</param>
+		/// <param name="point">Coordinates of the point</param>
+		/// <returns>true if point is inside the rectangle (including borders)</returns>
+		public static bool Contains(this IReadOnlyBox2D rectangle, Vector2 point) => rectangle.Contains(point.X, point.Y);
+
+		/// <summary>
 		/// Checks if rectangle contains a second rectangle (including borders)
 		/// </summary>
 		/// <param name="a">container rectangle, will be tested if contains the other</param>
@@ -32,6 +42,16 @@
 			if (a.MinY > b.MinY) return false;
 			if (a.MaxY < b.MaxY) return false;
 			return true;
+		}
+
+		/// <summary>
+		/// Gets the center of the box.
+		/// </summary>
+		/// <param name="box">The box.</param>
+		/// <returns></returns>
+		public static Vector2 GetCenter(this IReadOnlyBox2D box)
+		{
+			return new Vector2(box.CenterX, box.CenterY);
 		}
 
 		/// <summary>

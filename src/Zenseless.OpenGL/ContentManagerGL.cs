@@ -1,41 +1,43 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-
-namespace Zenseless.OpenGL
+﻿namespace Zenseless.OpenGL
 {
+	using OpenTK.Graphics.OpenGL4;
+	using System;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.IO;
+	using System.Linq;
+	using System.Reflection;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+
 	/// <summary>
-	/// Creates a content manager that creates OpenGL object instances, like textures
+	/// Creates a content manager that creates OpenGL object instances, like textures, shaders
 	/// </summary>
 	public static class ContentManagerGL
 	{
 		/// <summary>
 		/// Creates a content manager that creates OpenGL object instances, like textures
 		/// </summary>
-		/// <param name="resourceAssembly">The resource assembly that contains the resources.</param>
+		/// <param name="resourceAssembly">The assembly that contains the resources.</param>
+		/// <param name="solutionMode">Should shaders be built with solution on or off</param>
 		/// <returns>A content manager instance</returns>
-		public static FileContentManager Create(Assembly resourceAssembly)
+		public static FileContentManager Create(Assembly resourceAssembly, bool solutionMode)
 		{
 			var streamLoader = new StreamLoader();
 			streamLoader.AddMappings(resourceAssembly);
-			streamLoader.AddMappings(Assembly.GetExecutingAssembly());
+			streamLoader.AddMappings(Assembly.GetExecutingAssembly()); //Zenseless.OpenGL resources
 
 			var mgr = new FileContentManager(streamLoader);
 			mgr.RegisterImporter(ContentImporters.String);
 			mgr.RegisterImporter(ContentImporters.ByteBuffer);
 			mgr.RegisterImporter(ContentImporters.DefaultMesh);
 			mgr.RegisterImporter(BitmapImporter);
-			mgr.RegisterImporter(TextureArrayImporter);
-			mgr.RegisterImporter(ShaderProgramImporter);
 			mgr.RegisterUpdater<Texture2dGL>(Update);
-			mgr.RegisterUpdater<ShaderProgramGL>(Update);
+			mgr.RegisterImporter(TextureArrayImporter);
 			mgr.RegisterUpdater<TextureArray2dGL>(Update);
+			mgr.RegisterImporter((namedStreams) => ShaderProgramImporter(namedStreams, solutionMode));
+			mgr.RegisterUpdater<ShaderProgramGL>((prog, namedStreams) => Update(prog, namedStreams, solutionMode));
+
 			return mgr;
 		}
 
@@ -85,31 +87,34 @@ namespace Zenseless.OpenGL
 			return texture;
 		}
 
-		private static IShaderProgram ShaderProgramImporter(IEnumerable<NamedStream> resources)
+		private static IShaderProgram ShaderProgramImporter(IEnumerable<NamedStream> resources, bool solutionMode)
 		{
 			ShaderProgramGL shaderProgram = new ShaderProgramGL();
-			Update(shaderProgram, resources);
+			Update(shaderProgram, resources, solutionMode);
 			return shaderProgram;
 		}
 
-		private static void Update(ShaderProgramGL shaderProgram, IEnumerable<NamedStream> namedStreams)
+		private static void Update(ShaderProgramGL shaderProgram, IEnumerable<NamedStream> namedStreams, bool solutionMode)
 		{
+			string ShaderCode(Stream stream)
+			{
+				using (var reader = new StreamReader(stream, true))
+				{
+					var code = reader.ReadToEnd();
+					if (solutionMode) code = code.Replace("#ifdef SOLUTION", "#if 1");
+					return code;
+				}
+			}
+
 			var count = namedStreams.Count();
 			if (2 > count) return;
 			foreach (var res in namedStreams)
 			{
 				var shaderType = GetShaderTypeFromExtension(Path.GetExtension(res.Name));
-				shaderProgram.Compile(ShaderCode(res.Stream), shaderType);
+				var shaderCode = ShaderCode(res.Stream);
+				shaderProgram.Compile(shaderCode, shaderType);
 			}
 			shaderProgram.Link();
-		}
-
-		private static string ShaderCode(Stream stream)
-		{
-			using (var reader = new StreamReader(stream, true))
-			{
-				return reader.ReadToEnd();
-			}
 		}
 
 		private static ITexture2dArray TextureArrayImporter(IEnumerable<NamedStream> resources)

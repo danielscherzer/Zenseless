@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-using Zenseless.Base;
-
-namespace Zenseless.HLGL
+﻿namespace Zenseless.HLGL
 {
+	using System;
+	using System.IO;
+	using Zenseless.Base;
+
 	/// <summary>
 	/// 
 	/// </summary>

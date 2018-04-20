@@ -1,18 +1,15 @@
-﻿using OpenTK.Input;
-using System;
-using System.IO;
-using Zenseless.Base;
-using Zenseless.ExampleFramework;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Input;
+	using System;
+	using Zenseless.ExampleFramework;
+
 	class Controller
 	{
 		[STAThread]
 		private static void Main()
 		{
 			var window = new ExampleWindow();
-			window.SetContentSearchDirectory(Path.GetDirectoryName(PathTools.GetSourceFilePath())); //would be faster if you only specify a subdirectory
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			window.GameWindow.MouseMove += (s, e) =>
 			{

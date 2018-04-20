@@ -36,6 +36,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AssemblyConfig.cs" />
     <Compile Include="MainVisual.cs" />
     <Compile Include="RenderToTextureExample.cs" />
   </ItemGroup>

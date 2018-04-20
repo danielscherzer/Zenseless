@@ -1,13 +1,13 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL4;
-using System;
-using System.Collections.Generic;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Graphics.OpenGL4;
+	using System;
+	using System.Collections.Generic;
+	using System.Numerics;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
+
 	public class MainVisual
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
@@ -37,7 +37,6 @@ namespace Example
 			shaderProgram.Uniform("time", time);
 			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
 			geometryBody.Draw(instancePositions.Count);
-			//geometryPlane.Draw(); //todo student: uncomment for gravity
 			shaderProgram.Deactivate();
 		}
 

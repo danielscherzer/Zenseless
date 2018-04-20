@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AssemblyConfig.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="RazeDesigner.cs" />
     <Compile Include="Visual.cs" />

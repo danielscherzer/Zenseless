@@ -52,8 +52,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AssemblyConfig.cs" />
     <Compile Include="MainVisual.cs" />
-    <Compile Include="SphereParticleExample.cs" />
+    <Compile Include="MeshParticleExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

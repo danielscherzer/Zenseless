@@ -1,10 +1,8 @@
-﻿using System;
-using System.IO;
-using Zenseless.Base;
-using Zenseless.ExampleFramework;
-
-namespace Example
+﻿namespace Example
 {
+	using System;
+	using Zenseless.ExampleFramework;
+
 	public class Controller
 	{
 
@@ -12,7 +10,6 @@ namespace Example
 		private static void Main()
 		{
 			var window = new ExampleWindow();
-			window.SetContentSearchDirectory(Path.GetDirectoryName(PathTools.GetSourceFilePath())); //would be faster if you only specify a subdirectory
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			window.Render += visual.Render;
 			window.Run();

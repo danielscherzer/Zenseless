@@ -100,7 +100,7 @@
     <EmbeddedResource Include="Content\Copy.frag" />
     <EmbeddedResource Include="Content\ColorTexture.frag" />
     <EmbeddedResource Include="Content\ColorTexture.vert" />
-    <EmbeddedResource Include="Content\Particle.vert" />
+    <EmbeddedResource Include="Content\ParticlePerspective.vert" />
     <EmbeddedResource Include="Content\Checker.frag" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />

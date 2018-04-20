@@ -86,8 +86,6 @@ namespace Zenseless.Geometry
 
 		private static Tuple<Vector2, Vector2> FinitDifferenceTangens(IReadOnlyList<Vector2> points, Tuple<int, int> segment)
 		{
-			Vector2 FiniteDifference(Vector2 pointLeft, Vector2 pointRight) => 0.5f * (pointRight - pointLeft);
-
 			var p0 = points[segment.Item1];
 			var p1 = points[segment.Item2];
 			var pBefore = 0 == segment.Item1 ? p0 : points[segment.Item1 - 1];

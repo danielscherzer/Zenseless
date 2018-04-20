@@ -1,18 +1,15 @@
-﻿using System;
-using System.IO;
-using Zenseless.Base;
-using Zenseless.ExampleFramework;
-using Zenseless.OpenGL;
-
-namespace Example
+﻿namespace Example
 {
+	using System;
+	using Zenseless.ExampleFramework;
+	using Zenseless.OpenGL;
+
 	public class Controller
 	{
 		[STAThread]
 		private static void Main()
 		{
 			var window = new ExampleWindow();
-			window.SetContentSearchDirectory(Path.GetDirectoryName(PathTools.GetSourceFilePath())); //would be faster if you only specify a subdirectory
 			var orbit = window.GameWindow.CreateOrbitingCameraController(1.5f, 90f, 0.1f, 50f);
 			orbit.Azimuth = 90;
 			orbit.Elevation = 20;

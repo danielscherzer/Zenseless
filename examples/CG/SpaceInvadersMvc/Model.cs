@@ -56,7 +56,7 @@ namespace SpaceInvadersMvc
 
 		public IEnumerable<IReadOnlyBox2D> Bullets { get { return bullets; } }
 
-		public Box2D Player { get { return player; } }
+		public IReadOnlyBox2D Player { get { return player; } }
 
 		private bool Lost { get; set; }
 

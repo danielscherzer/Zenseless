@@ -2,9 +2,7 @@
 {
 	using OpenTK.Input;
 	using System;
-	using System.IO;
 	using System.Numerics;
-	using Zenseless.Base;
 	using Zenseless.ExampleFramework;
 	using Zenseless.OpenGL;
 
@@ -14,7 +12,6 @@
 		private static void Main()
 		{
 			var window = new ExampleWindow();
-			window.SetContentSearchDirectory(Path.GetDirectoryName(PathTools.GetSourceFilePath()));
 			var model = new Model();
 			var visual = new Visual(window.RenderContext.RenderState, window.ContentLoader);
 

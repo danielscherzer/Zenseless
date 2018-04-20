@@ -106,7 +106,14 @@ namespace Zenseless.ExampleFramework
 			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
 			gameWindow.KeyDown += GameWindow_KeyDown;
 
-			contentManager = ContentManagerGL.Create(Assembly.GetEntryAssembly());
+			var assembly = Assembly.GetEntryAssembly();
+			//check if entry assembly was built with SOLUTION attribute
+			var solutionMode = !(assembly.GetCustomAttribute<SolutionAttribute>() is null);
+
+			contentManager = ContentManagerGL.Create(assembly, solutionMode);
+
+			var contentDir = assembly.GetCustomAttribute<ContentSearchDirectoryAttribute>()?.ContentSearchDirectory;
+			contentManager.SetContentSearchDirectory(contentDir);
 		}
 
 		private void GameWindow_KeyDown(object sender, KeyboardKeyEventArgs e)
@@ -117,17 +124,6 @@ namespace Zenseless.ExampleFramework
 					FrameBuffer.ToBitmap().SaveToClipboard();
 					break;
 			}
-		}
-
-		/// <summary>
-		/// Sets the content search directory. 
-		/// This is needed if you want to do automatic runtime content reloading if the content source file changes. 
-		/// This feature is disabled otherwise. The execution time of this command is dependent on how many files are found inside the given directory.
-		/// </summary>
-		/// <param name="contentSearchDirectory">The content search directory. Content is found in this directory or subdirectories</param>
-		public void SetContentSearchDirectory(string contentSearchDirectory)
-		{
-			contentManager.SetContentSearchDirectory(contentSearchDirectory);
 		}
 
 		/// <summary>

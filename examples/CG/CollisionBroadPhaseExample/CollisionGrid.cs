@@ -1,10 +1,10 @@
-﻿using Zenseless.Geometry;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
-
-namespace Example
+﻿namespace Example
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Numerics;
+	using Zenseless.Geometry;
+
 	public class CollisionGrid
 	{
 		public delegate void CollisionHandler(IBox2DCollider a, IBox2DCollider b);
@@ -41,12 +41,13 @@ namespace Example
 			int minY = Math.Max((int)Math.Floor((objectBounds.MinY - Bounds.MinY) / CellSize.Y), 0);
 			int maxY = Math.Min((int)Math.Floor((objectBounds.MaxY - Bounds.MinY) / CellSize.Y), CellCountY - 1);
 
+			//TODO: check Game Gems tricks
 			// Loop over the cells the object overlaps and insert the object.
 			for (int y = minY; y <= maxY; ++y)
 			{
 				for (int x = minX; x <= maxX; ++x)
 				{
-					cells[x, y].Add(objectBounds); 
+					cells[x, y].Add(objectBounds);
 				}
 			}
 		}
@@ -61,7 +62,7 @@ namespace Example
 
 		public void FindAllCollisions(IEnumerable<IBox2DCollider> colliders, CollisionHandler Handler)
 		{
-			if (ReferenceEquals(null, Handler)) return;
+			if (Handler is null) return;
 			Clear();
 			foreach (var collider in colliders)
 			{
@@ -74,6 +75,7 @@ namespace Example
 					var cell = cells[x, y];
 					for(int i = 0; i < cell.Count; ++i)
 					{
+						//check each collider against every other collider
 						for (int j = i + 1; j < cell.Count; ++j)
 						{
 							Handler(cell[i], cell[j]);
