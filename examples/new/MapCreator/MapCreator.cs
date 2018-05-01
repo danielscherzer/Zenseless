@@ -20,7 +20,6 @@
 				}
 			};
 			window.Render += () => visual.Render(model.Paths, model.Points);
-			window.GameWindow.WindowState = OpenTK.WindowState.Fullscreen;
 			window.Run();
 		}
 	}

@@ -1,3 +1,5 @@
+#version 430 core
+
 const float PI = 3.14159265359;
 
 uniform sampler2D image;
@@ -19,7 +21,7 @@ void main () {
     float angle = atan(range11.y, range11.x); //angel of current pixel [-PI..PI] 
 
 	//distort angle
-	float amplitude = 3.5;
+	float amplitude = 7.5;
 	float frequency = 0.05;
 	float startOffset = 0.5;
 

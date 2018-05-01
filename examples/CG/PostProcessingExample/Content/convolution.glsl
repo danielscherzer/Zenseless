@@ -1,3 +1,5 @@
+#version 430 core
+
 const float PI = 3.14159265359;
 
 uniform sampler2D image;
@@ -42,8 +44,8 @@ void main()
 	{
 		for (int j = 0; j < 3; ++j) 
 		{
-			vec3 sample = texelFetch(image, ivec2(gl_FragCoord) + ivec2(i - 1, j - 1), 0).rgb;
-			color += edgeDetection2[j][i] * sample;
+			vec3 aSample = texelFetch(image, ivec2(gl_FragCoord) + ivec2(i - 1, j - 1), 0).rgb;
+			color += edgeDetection2[j][i] * aSample;
 		}
 	}
 	//color /= 9;

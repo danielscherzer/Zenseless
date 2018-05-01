@@ -101,7 +101,7 @@ namespace Zenseless.OpenGL
 		{
 			var parameterSource = ConvertSource(source);
 			var parameterDestination = ConvertDestination(destination);
-			GL.BlendFunc(parameterSource, parameterDestination);
+			GL.BlendFunc(0, parameterSource, parameterDestination);
 		}
 	}
 }

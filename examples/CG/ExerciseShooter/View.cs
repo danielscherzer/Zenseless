@@ -16,7 +16,7 @@
 			texBullet = contentLoader.Load<ITexture2D>("blueLaserRay");
 
 			GL.Enable(EnableCap.Blend); //enable blending
-			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+			GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 			GL.BlendEquation(BlendEquationMode.FuncAdd);
 			GL.Enable(EnableCap.Texture2D); //enable texturing
 		}

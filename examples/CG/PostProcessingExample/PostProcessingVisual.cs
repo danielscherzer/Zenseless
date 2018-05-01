@@ -17,6 +17,9 @@ namespace Example
 				shaderProgram = contentLoader.LoadPixelShader("Grayscale");
 				shaderProgram = contentLoader.LoadPixelShader("Sepia");
 				shaderProgram = contentLoader.LoadPixelShader("Vignetting");
+				shaderProgram = contentLoader.LoadPixelShader("ChromaticAberration");
+				shaderProgram = contentLoader.LoadPixelShader("convolution");
+				shaderProgram = contentLoader.LoadPixelShader("EdgeDetect");
 				shaderProgram = contentLoader.LoadPixelShader("Ripple");
 				shaderProgram = contentLoader.LoadPixelShader("Swirl");
 			}

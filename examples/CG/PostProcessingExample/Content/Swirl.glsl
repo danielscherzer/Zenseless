@@ -1,3 +1,5 @@
+#version 430 core
+
 const float PI = 3.14159265359;
 
 uniform sampler2D image;

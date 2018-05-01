@@ -1,3 +1,5 @@
+#version 430 core
+
 uniform sampler2D image;
 uniform float effectScale = 0.3;
 

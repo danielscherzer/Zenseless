@@ -1,17 +1,17 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System;
-using System.Drawing;
-using System.Numerics;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Graphics.OpenGL4;
+	using System;
+	using System.Drawing;
+	using System.Numerics;
+	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
+
 	public class RendererPoints
 	{
 		public RendererPoints(IContentLoader contentLoader)
 		{
-			shaderProgram = contentLoader.Load<IShaderProgram>(new string[] { "particle.vert", "pointCircle.frag"});
+			shaderProgram = contentLoader.Load<IShaderProgram>(new string[] { "particlePerspective.vert", "pointCircle.frag"});
 			geometry = new VAO(PrimitiveType.Points);
 		}
 

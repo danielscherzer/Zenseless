@@ -1,7 +1,9 @@
-uniform sampler2D image;
-uniform float iGlobalTime;
+#version 430 core
 
 const float PI = 3.14159265359;
+
+uniform sampler2D image;
+uniform float effectScale = 0.3;
 
 in vec2 uv;
 
@@ -42,10 +44,11 @@ void main()
 	{
 		for (int j = 0; j < 3; ++j) 
 		{
-			vec3 sample = texelFetch(image, ivec2(gl_FragCoord) + ivec2(i - 1, j - 1), 0).rgb;
-			color += edgeDetection2[j][i] * sample;
+			vec3 aSample = texelFetch(image, ivec2(gl_FragCoord) + ivec2(i - 1, j - 1), 0).rgb;
+			color += edgeDetection2[j][i] * aSample;
 		}
 	}
+	//color /= 9;
 
 	gl_FragColor = vec4(color, 1.0);
 }
