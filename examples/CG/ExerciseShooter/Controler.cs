@@ -1,9 +1,9 @@
-﻿using OpenTK.Input;
-using System;
-using Zenseless.ExampleFramework;
-
-namespace SpaceInvadersMvc
+﻿namespace SpaceInvadersMvc
 {
+	using OpenTK.Input;
+	using System;
+	using Zenseless.ExampleFramework;
+
 	class Controler
 	{
 		[STAThread]
@@ -12,14 +12,20 @@ namespace SpaceInvadersMvc
 			using (var window = new ExampleWindow())
 			{
 				var model = new Model();
-				var view = new View(window.RenderContext.RenderState, window.ContentLoader);
+				var view = new View(window.ContentLoader);
 				var sound = new Sound(window.ContentLoader);
 				model.OnShoot += (sender, args) => { sound.Shoot(); };
 				model.OnEnemyDestroy += (sender, args) => { sound.DestroyEnemy(); };
 				model.OnLost += (sender, args) => { sound.Lost(); };
 				sound.Background();
 
-				window.Render += () => view.DrawScreen(model.Enemies, model.Bullets, model.Player);
+				window.Render += () =>
+				{
+					view.Clear();
+					view.DrawEnemies(model.Enemies);
+					view.DrawBullets(model.Bullets);
+					view.DrawPlayer(model.Player);
+				};
 				window.Update += (dt) => Update(model);
 				window.Run();
 			}

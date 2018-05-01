@@ -12,7 +12,7 @@ namespace Example
 			var window = new ExampleWindow();
 			var model = new Model();
 			var view = new View();
-
+			
 			window.Update += (dt) =>
 			{
 				// handle input

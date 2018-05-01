@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Zenseless.Base;
-using Zenseless.Geometry;
-
-namespace SpaceInvadersMvc
+﻿namespace SpaceInvadersMvc
 {
+	using System;
+	using System.Collections.Generic;
+	using Zenseless.Base;
+	using Zenseless.Geometry;
+
 	public class Model
 	{
 		public event EventHandler OnShoot;
@@ -12,7 +12,7 @@ namespace SpaceInvadersMvc
 		public event EventHandler OnLost;
 
 		private GameTime time;
-		private Box2D player = new Box2D(0.0f, -1.0f, 0.0789f, 0.15f);
+		private Box2D player = new Box2D(0.0f, -1.0f, 0.12f, 0.15f);
 		private List<Box2D> enemies = new List<Box2D>();
 		private List<Box2D> bullets = new List<Box2D>();
 		private PeriodicUpdate shootCoolDown = new PeriodicUpdate(0.1f);
@@ -77,7 +77,7 @@ namespace SpaceInvadersMvc
 		{
 			player.MinX += time.DeltaTime * axisUpDown;
 			//limit player position [left, right]
-			player.MinX = Math.Min(1.0f - player.SizeX, Math.Max(-1.0f, player.MinX));
+			player.MinX = MathHelper.Clamp(player.MinX, -1f, 1.0f - player.SizeX);
 
 			if (shoot && !shootCoolDown.Enabled)
 			{
@@ -97,7 +97,7 @@ namespace SpaceInvadersMvc
 				{
 					//game lost
 					Lost = true;
-					if (!(OnLost is null)) OnLost(this, null);
+					OnLost?.Invoke(this, null);
 				}
 				foreach (var bullet in bullets)
 				{

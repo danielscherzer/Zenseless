@@ -1,32 +1,38 @@
-﻿using OpenTK.Graphics.OpenGL;
-using System.Collections.Generic;
-using System.Drawing;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-
-namespace SpaceInvadersMvc
+﻿namespace SpaceInvadersMvc
 {
+	using OpenTK.Graphics.OpenGL;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
 
 	public class View
 	{
-		public View(IRenderState renderState, IContentLoader contentLoader)
+		public View(IContentLoader contentLoader)
 		{
+			//load textures from embedded resources
 			texPlayer = contentLoader.Load<ITexture2D>("blueships1");
 			texEnemy = contentLoader.Load<ITexture2D>("redship4");
 			texBullet = contentLoader.Load<ITexture2D>("blueLaserRay");
 
-			renderState.Set(BlendStates.AlphaBlend);
-			GL.Enable(EnableCap.Texture2D); //TODO: only for non shader pipeline relevant -> remove at some point
+			GL.Enable(EnableCap.Blend); //enable blending
+			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+			GL.BlendEquation(BlendEquationMode.FuncAdd);
+			GL.Enable(EnableCap.Texture2D); //enable texturing
 		}
 
-		public void DrawScreen(IEnumerable<IReadOnlyBox2D> enemies, IEnumerable<IReadOnlyBox2D> bullets, IReadOnlyBox2D player)
+		public void Clear()
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			GL.LoadIdentity();
 			GL.Color3(Color.White);
+		}
 
-			DrawSpriteBatch(enemies, texEnemy);
-			DrawSpriteBatch(bullets, texBullet);
+		public void DrawEnemies(IEnumerable<IReadOnlyBox2D> enemies) => DrawSpriteBatch(enemies, texEnemy);
+		public void DrawBullets(IEnumerable<IReadOnlyBox2D> bullets) => DrawSpriteBatch(bullets, texBullet);
+
+		public void DrawPlayer(IReadOnlyBox2D player)
+		{
 			texPlayer.Activate();
 			Draw(player);
 			texPlayer.Deactivate();

@@ -1,0 +1,9 @@
+﻿<UserControl x:Class="ExampleBrowser.View.ExamplePageView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:cal="http://www.caliburnproject.org"
+		xmlns:WpfOpenGL="clr-namespace:WpfOpenGlControl;assembly=WpfOpenGlControl">
+	<Grid>
+		<WpfOpenGL:WpfOpenGLControl x:Name="gl" cal:Message.Attach="[Event GlRender] = [Action GlRender]"/>
+	</Grid>
+</UserControl>

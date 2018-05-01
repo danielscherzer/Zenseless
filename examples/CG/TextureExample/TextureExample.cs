@@ -1,12 +1,12 @@
-﻿using OpenTK.Graphics.OpenGL;
-using System;
-using System.Drawing;
-using Zenseless.ExampleFramework;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Graphics.OpenGL;
+	using System;
+	using System.Drawing;
+	using Zenseless.ExampleFramework;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+
 	/// <summary>
 	/// Example that shows loading and using textures. 
 	/// It loads 2 textures: one for the background and one for a space ship.
@@ -45,10 +45,10 @@ namespace Example
 			DrawTexturedRect(new Box2D(-.25f, -.25f, .5f, .5f), texShip);
 		}
 
-		private static void DrawTexturedRect(IReadOnlyBox2D Rect, ITexture tex)
+		private static void DrawTexturedRect(IReadOnlyBox2D Rect, ITexture texture)
 		{
 			//the texture has to be enabled before use
-			tex.Activate();
+			texture.Activate();
 			GL.Begin(PrimitiveType.Quads);
 			//when using textures we have to set a texture coordinate for each vertex
 			//by using the TexCoord command BEFORE the Vertex command
@@ -58,7 +58,7 @@ namespace Example
 			GL.TexCoord2(0.0f, 1.0f); GL.Vertex2(Rect.MinX, Rect.MaxY);
 			GL.End();
 			//the texture is disabled, so no other draw calls use this texture
-			tex.Deactivate();
+			texture.Deactivate();
 		}
 	}
 }

@@ -5,33 +5,33 @@
 	using SysColor = System.Drawing.Color;
 
 	/// <summary>
-	/// 
+	/// Class for color system transformations
 	/// </summary>
 	public static class ColorSystems
 	{
 		/// <summary>
-		/// Converts hsb (Hue, Saturation and Brightness) color value into rgb
+		/// Converts HSB (Hue, Saturation and Brightness) color value into RGB
 		/// </summary>
-		/// <param name="h">Hue [0..1]</param>
-		/// <param name="s">Saturation [0..1]</param>
-		/// <param name="b">Brightness [0..1]</param>
+		/// <param name="hue">Hue [0..1]</param>
+		/// <param name="saturation">Saturation [0..1]</param>
+		/// <param name="brightness">Brightness [0..1]</param>
 		/// <returns>
-		/// rgb color
+		/// RGB color
 		/// </returns>
-		public static Vector3 Hsb2rgb(float h, float s, float b)
+		public static Vector3 Hsb2rgb(float hue, float saturation, float brightness)
 		{
-			s = MathHelper.Clamp(s, 0, 1);
-			b = MathHelper.Clamp(b, 0, 1);
-			var v3 = new Vector3(3.0f);
-			var i = h * 6.0f;
-			var j = new Vector3(i, i + 4.0f, i + 2.0f).Mod(6.0f);
+			saturation = MathHelper.Clamp(saturation, 0f, 1f);
+			brightness = MathHelper.Clamp(brightness, 0f, 1f);
+			var v3 = new Vector3(3f);
+			var i = hue * 6f;
+			var j = new Vector3(i, i + 4f, i + 2f).Mod(6f);
 			var k = Vector3.Abs(j - v3);
 			var l = k - Vector3.One;
-			var rgb = l.Clamp(0.0f, 1.0f);
-			return b * Vector3.Lerp(Vector3.One, rgb, s);
+			var rgb = l.Clamp(0f, 1f);
+			return brightness * Vector3.Lerp(Vector3.One, rgb, saturation);
 		}
 
-		//todo: transformation not correct
+		//TODO: transformation not correct
 		//public static Vector3 Color2Hsb(SysColor color)
 		//{
 		//	return new Vector3(color.GetHue() / 360f, color.GetSaturation(), color.GetBrightness());

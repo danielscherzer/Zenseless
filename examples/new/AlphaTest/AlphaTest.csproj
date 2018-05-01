@@ -4,17 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C5389961-2C98-4528-AFF3-99D287C62D4A}</ProjectGuid>
+    <ProjectGuid>{E948FC1E-F631-4916-B626-3C0B1A1994B3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpaceInvadersMvc</RootNamespace>
-    <AssemblyName>SpaceInvadersMvc</AssemblyName>
+    <RootNamespace>Example</RootNamespace>
+    <AssemblyName>AlphaTest</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -36,20 +36,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controler.cs" />
-    <Compile Include="Model.cs" />
-    <Compile Include="Sound.cs" />
-    <Compile Include="View.cs" />
+    <Compile Include="AlphaTestExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Content\laser.wav" />
-    <EmbeddedResource Include="Content\redship4.png" />
-    <EmbeddedResource Include="Content\blueLaserRay.png" />
-    <EmbeddedResource Include="Content\blueships1.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="OpenTK">
@@ -76,10 +68,6 @@
     <ProjectReference Include="..\..\..\src\Zenseless.OpenGL\Zenseless.OpenGL.csproj">
       <Project>{C660F6AF-C100-4169-A9FB-61E1EBE87F34}</Project>
       <Name>Zenseless.OpenGL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\src\Zenseless.Sound\Zenseless.Sound.csproj">
-      <Project>{78A88806-AD96-4821-B9AD-8FC060F6FEB6}</Project>
-      <Name>Zenseless.Sound</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

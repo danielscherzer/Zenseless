@@ -108,7 +108,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleParticleSystem2D", "e
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceInvaders", "examples\CG\SpaceInvaders\SpaceInvaders.csproj", "{F532D63E-3438-452D-8180-4F493980754E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceInvadersMvc", "examples\CG\SpaceInvadersMvc\SpaceInvadersMvc.csproj", "{C5389961-2C98-4528-AFF3-99D287C62D4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseShooter", "examples\CG\ExerciseShooter\ExerciseShooter.csproj", "{C5389961-2C98-4528-AFF3-99D287C62D4A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureAnimExample", "examples\CG\TextureAnimExample\TextureAnimExample.csproj", "{2415A5B0-6C43-4519-B2CA-A8B4A35394C2}"
 EndProject
@@ -164,6 +164,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenselessSourceAppEmpty", "examples\ZenselessSourceAppEmpty\ZenselessSourceAppEmpty.csproj", "{DCE6FA93-2963-470C-8EE2-077FF5F96FEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breakout", "examples\new\Breakout\Breakout.csproj", "{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Color", "examples\new\Color\Color.csproj", "{593B1C87-D6FE-48C4-9740-9776BEA1FEB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleBrowser", "examples\new\ExampleBrowser\ExampleBrowser.csproj", "{8376421E-113D-4D47-AE84-0367DD329D45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaTest", "examples\new\AlphaTest\AlphaTest.csproj", "{E948FC1E-F631-4916-B626-3C0B1A1994B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -447,6 +453,18 @@ Global
 		{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{593B1C87-D6FE-48C4-9740-9776BEA1FEB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{593B1C87-D6FE-48C4-9740-9776BEA1FEB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{593B1C87-D6FE-48C4-9740-9776BEA1FEB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{593B1C87-D6FE-48C4-9740-9776BEA1FEB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8376421E-113D-4D47-AE84-0367DD329D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8376421E-113D-4D47-AE84-0367DD329D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8376421E-113D-4D47-AE84-0367DD329D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8376421E-113D-4D47-AE84-0367DD329D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E948FC1E-F631-4916-B626-3C0B1A1994B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E948FC1E-F631-4916-B626-3C0B1A1994B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E948FC1E-F631-4916-B626-3C0B1A1994B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E948FC1E-F631-4916-B626-3C0B1A1994B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -524,6 +542,9 @@ Global
 		{7200D8E8-FE98-44BD-A2AF-1CC5C2DFD078} = {4AD70E1B-FC00-4433-BDC0-D366B1E0FCCC}
 		{DCE6FA93-2963-470C-8EE2-077FF5F96FEE} = {4AD70E1B-FC00-4433-BDC0-D366B1E0FCCC}
 		{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D} = {CB237D59-2840-48EB-888F-965EDB20E868}
+		{593B1C87-D6FE-48C4-9740-9776BEA1FEB5} = {CB237D59-2840-48EB-888F-965EDB20E868}
+		{8376421E-113D-4D47-AE84-0367DD329D45} = {CB237D59-2840-48EB-888F-965EDB20E868}
+		{E948FC1E-F631-4916-B626-3C0B1A1994B3} = {CB237D59-2840-48EB-888F-965EDB20E868}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CA293D8-FC78-4BF1-BA73-543451A6B7AB}

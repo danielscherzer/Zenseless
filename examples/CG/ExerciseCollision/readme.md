@@ -11,7 +11,7 @@ Implement the following items (25 points):
 1. The Player can shoot.
 1. Shot cool down - you can only shoot at regular intervals.
 1. A shot that hits an asteroid breaks it into two smaller asteroids, which move away from each other.
-1. Each asteroid that collides (with player or other asteroid) should break up into two smaller asteroids that move away from each other.
+1. An asteroid that collides (with player or other asteroid) should break up into two smaller asteroids that move away from each other.
 1. There should be a smallest asteroid size.
 1. A shot that hits a smallest asteroid removes this asteroid.
 1. Asteroids should rotate with individual speeds.

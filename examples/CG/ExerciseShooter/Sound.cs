@@ -1,11 +1,11 @@
-﻿using Zenseless.Sound;
-using Zenseless.Base;
-using Zenseless.HLGL;
-using System.IO;
-using System;
-
-namespace SpaceInvadersMvc
+﻿namespace SpaceInvadersMvc
 {
+	using System;
+	using System.IO;
+	using Zenseless.Base;
+	using Zenseless.HLGL;
+	using Zenseless.Sound;
+
 	/// <summary>
 	/// All sounds should have the same sampling frequency, otherwise mixing them will throw an exception.
 	/// </summary>
