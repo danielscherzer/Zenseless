@@ -21,6 +21,7 @@ namespace Example
 				renderer.DrawPlayer(model.Player);
 			};
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

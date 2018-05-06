@@ -12,6 +12,7 @@
 			var visual = new MainVisual(window.ContentLoader);
 			window.Render += visual.Render;
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

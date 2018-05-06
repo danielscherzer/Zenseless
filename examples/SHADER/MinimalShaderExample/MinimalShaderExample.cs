@@ -60,6 +60,7 @@ namespace Example
 			var visual = new MyVisual();
 			window.Render += visual.Render;
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

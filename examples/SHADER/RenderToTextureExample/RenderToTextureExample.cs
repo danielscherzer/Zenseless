@@ -35,6 +35,7 @@
 			window.Update += (t) => doPostProcessing = !Keyboard.GetState()[Key.Space];
 			window.Resize += visual.Resize;
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

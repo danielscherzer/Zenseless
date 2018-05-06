@@ -34,6 +34,7 @@ namespace MvcSokoban
 			window.Resize += (w, h) => renderer.ResizeWindow(w, h);
 			window.Render += () => sceneManager.Render();
 			window.Run();
+			window.Dispose();
 		}
 
 		private static GameKey KeyBindings(Key key)

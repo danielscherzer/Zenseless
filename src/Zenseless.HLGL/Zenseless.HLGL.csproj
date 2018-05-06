@@ -51,6 +51,8 @@
     <Compile Include="ContentManagement\ResourceLoading.cs" />
     <Compile Include="ContentManagement\ContentSearchDirectoryAttribute.cs" />
     <Compile Include="ContentManagement\StreamLoader.cs" />
+    <Compile Include="handler\IAfterRendering.cs" />
+    <Compile Include="handler\IBeforeRendering.cs" />
     <Compile Include="StateManagement\BlendOperator.cs" />
     <Compile Include="StateManagement\BlendParameter.cs" />
     <Compile Include="StateManagement\BlendState.cs" />

@@ -14,6 +14,7 @@
 			var time = new GameTime();
 			window.Render += () => visual.Render(time.DeltaTime);
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

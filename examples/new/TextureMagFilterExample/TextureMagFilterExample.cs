@@ -54,6 +54,7 @@ namespace Example
 			window.Render += visual.Render;
 			window.Update += visual.Update;
 			window.Run();
+			window.Dispose();
 		}
 
 		private static void DrawTexturedRect(IReadOnlyBox2D rect, ITexture tex, IReadOnlyBox2D texCoords)

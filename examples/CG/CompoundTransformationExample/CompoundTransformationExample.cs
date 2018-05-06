@@ -14,6 +14,7 @@ namespace Example
 			window.Update += logic.Update;
 			window.Render += () => visual.Render(logic.Birds);
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

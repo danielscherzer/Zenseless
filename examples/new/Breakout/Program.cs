@@ -23,6 +23,7 @@ namespace Example
 				view.DrawBall(logic.Ball);
 			};
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace Zenseless.HLGL
 		/// <summary>
 		/// Gets this instance.
 		/// </summary>
-		/// <typeparam name="TYPE">The type of the ype.</typeparam>
+		/// <typeparam name="TYPE">The type of the instance.</typeparam>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
 		public TYPE Get<TYPE>() where TYPE : IEquatable<TYPE>
@@ -39,7 +39,7 @@ namespace Zenseless.HLGL
 		/// <summary>
 		/// Sets the specified value.
 		/// </summary>
-		/// <typeparam name="TYPE">The type of the ype.</typeparam>
+		/// <typeparam name="TYPE">The type of the value</typeparam>
 		/// <param name="value">The value.</param>
 		/// <exception cref="ArgumentException"></exception>
 		public void Set<TYPE>(TYPE value) where TYPE : IEquatable<TYPE>
@@ -48,22 +48,29 @@ namespace Zenseless.HLGL
 			if (states.TryGetValue(type, out Data data))
 			{
 				if (value.Equals(data.Value)) return; //do nothing if same value
-				data.Value = value;
-				var update = data.UpdateHandler as Action<TYPE>;
-				update?.Invoke(value);
+				data.Update(value);
 			}
 			else throw new ArgumentException(TypeNotRegisteredMessage(type));
 		}
 
 		private class Data
 		{
-			public object UpdateHandler, Value;
+			public object Value { get; private set; }
 
 			public Data(object updateHandler, object value)
 			{
-				UpdateHandler = updateHandler;
+				this.updateHandler = updateHandler;
 				Value = value;
 			}
+
+			public void Update<TYPE>(TYPE value)
+			{
+				Value = value;
+				var update = updateHandler as Action<TYPE>;
+				update?.Invoke(value);
+			}
+
+			private readonly object updateHandler;
 		};
 
 		private Dictionary<Type, Data> states = new Dictionary<Type, Data>();

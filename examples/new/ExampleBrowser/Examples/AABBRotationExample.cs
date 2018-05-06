@@ -5,27 +5,28 @@ using System.ComponentModel.Composition;
 using System.Drawing;
 using Zenseless.Base;
 using Zenseless.Geometry;
+using Zenseless.HLGL;
 
 namespace ExampleBrowser
 {
 	using Line = Tuple<Vector2, Vector2>;
 
+	[ExampleDisplayName]
 	[Export(typeof(IExample))]
 	class AABBRotationExample : IExample
 	{
 		private GameTime time = new GameTime();
 		private const float size = 0.7f;
 		private Line stick = new Line(new Vector2(-size, -size), new Vector2(size, size));
-		private Box2D stickAABB;
 
-		//private AABBRotationExample(IRenderState renderState)
-		//{
-		//	renderState.Set(BlendStates.AlphaBlend);
-		//	renderState.Set(BoolState<ILineSmoothState>.Enabled);
-
-		//	GL.LineWidth(5.0f);
-		//	renderState.Set(new ClearColorState(1, 1, 1, 1));
-		//}
+		[ImportingConstructor]
+		private AABBRotationExample([Import] IRenderState renderState)
+		{
+			renderState.Set(BlendStates.AlphaBlend);
+			renderState.Set(BoolState<ILineSmoothState>.Enabled);
+			GL.LineWidth(5.0f);
+			renderState.Set(new ClearColorState(1, 1, 1, 1));
+		}
 
 		private static Line RotateLine(Line stick, float rotationAngle)
 		{
@@ -67,7 +68,7 @@ namespace ExampleBrowser
 			var maxX = Math.Max(stick.Item1.X, stick.Item2.X);
 			var minY = Math.Min(stick.Item1.Y, stick.Item2.Y);
 			var maxY = Math.Max(stick.Item1.Y, stick.Item2.Y);
-			stickAABB = Box2DExtensions.CreateFromMinMax(minX, minY, maxX, maxY);
+			var stickAABB = Box2DExtensions.CreateFromMinMax(minX, minY, maxX, maxY);
 
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 

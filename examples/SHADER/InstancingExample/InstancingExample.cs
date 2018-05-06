@@ -13,6 +13,7 @@
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			window.Render += visual.Render;
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

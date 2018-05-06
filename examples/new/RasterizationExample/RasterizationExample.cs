@@ -1,12 +1,12 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using Zenseless.Base;
-using Zenseless.ExampleFramework;
-using Zenseless.OpenGL;
-
-namespace Example
+﻿namespace Example
 {
+	using System;
+	using System.Drawing;
+	using System.IO;
+	using Zenseless.Base;
+	using Zenseless.ExampleFramework;
+	using Zenseless.OpenGL;
+
 	public class MyApplication
 	{
 		[STAThread]
@@ -19,6 +19,7 @@ namespace Example
 			window.Render += rasterizer.Render;
 			window.Render += () => screenshot = FrameBuffer.ToBitmap();
 			window.Run();
+			window.Dispose();
 			if (screenshot is null) return;
 			var name = Path.ChangeExtension(PathTools.GetCurrentProcessPath(), ".png");
 			screenshot.Save(name);

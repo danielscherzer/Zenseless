@@ -1,20 +1,19 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL4;
-using OpenTK.Input;
-using OpenTK.Platform;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using Zenseless.Base;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-
-namespace Zenseless.ExampleFramework
+﻿namespace Zenseless.ExampleFramework
 {
+	using OpenTK;
+	using OpenTK.Graphics.OpenGL4;
+	using OpenTK.Input;
+	using OpenTK.Platform;
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel.Composition;
+	using System.ComponentModel.Composition.Hosting;
+	using System.Drawing;
+	using System.Linq;
+	using Zenseless.Base;
+	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
+
 	/// <summary>
 	/// Intended for use for small example programs in the <see cref="Zenseless"/> framework
 	/// creates a OpenTK.GameWindow;
@@ -74,7 +73,7 @@ namespace Zenseless.ExampleFramework
 		/// <value>
 		/// The content manager.
 		/// </value>
-		public IContentLoader ContentLoader => contentManager;
+		public IContentLoader ContentLoader { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ExampleWindow"/> class.
@@ -91,11 +90,11 @@ namespace Zenseless.ExampleFramework
 				ClientSize = new Size(width, height), //do not set extents in the constructor, because windows 10 with enabled scale != 100% scales our given sizes in the constructor of GameWindow
 			};
 
-			ProcessCommandLineArguments();
+			CreateIOCcontainer();
 
 			RenderContext = new RenderContextGL();
 
-			CreateIOCcontainer();
+			ProcessCommandLineArguments(ref updateRenderRate);
 
 			gameWindow.TargetUpdateFrequency = updateRenderRate;
 			gameWindow.TargetRenderFrequency = updateRenderRate;
@@ -106,14 +105,9 @@ namespace Zenseless.ExampleFramework
 			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
 			gameWindow.KeyDown += GameWindow_KeyDown;
 
-			var assembly = Assembly.GetEntryAssembly();
-			//check if entry assembly was built with SOLUTION attribute
-			var solutionMode = !(assembly.GetCustomAttribute<SolutionAttribute>() is null);
-
-			contentManager = ContentManagerGL.Create(assembly, solutionMode);
-
-			var contentDir = assembly.GetCustomAttribute<ContentSearchDirectoryAttribute>()?.ContentSearchDirectory;
-			contentManager.SetContentSearchDirectory(contentDir);
+			var contentLoader = new ContentLoader();
+			beforeRenderingCallbacks.Add(contentLoader);
+			ContentLoader = contentLoader;
 		}
 
 		private void GameWindow_KeyDown(object sender, KeyboardKeyEventArgs e)
@@ -142,18 +136,28 @@ namespace Zenseless.ExampleFramework
 		{
 			//register a callback for updating the game logic
 			gameWindow.UpdateFrame += (sender, e) => Update?.Invoke((float)gameWindow.TargetUpdatePeriod);
+
 			//registers a callback for drawing a frame
-			gameWindow.RenderFrame += (sender, e) => GameWindowRender();
+			gameWindow.RenderFrame += RenderFrame;
+
 			//run the update loop, which calls our registered callbacks
 			gameWindow.Run();
-			screenShots?.ForEach((bmp) => bmp.RotateFlip()); //delayed rotate flip
-			screenShots?.Save(PathTools.GetCurrentProcessOutputDir());
 		}
 
-		private readonly FileContentManager contentManager;
+		private void RenderFrame(object sender, FrameEventArgs e)
+		{
+			beforeRenderingCallbacks.ForEach((i) => i.BeforeRendering());
+			Render?.Invoke();
+			afterRenderingCallbacks.ForEach((i) => i.AfterRendering());
+			DrawTools.WriteErrors();
+			//buffer swap (and sync) of double buffering (http://gameprogrammingpatterns.com/double-buffer.html)
+			gameWindow.SwapBuffers();
+		}
+
 		private CompositionContainer _container;
 		private GameWindow gameWindow;
-		private List<Bitmap> screenShots = null;
+		private List<IAfterRendering> afterRenderingCallbacks = new List<IAfterRendering>();
+		private List<IBeforeRendering> beforeRenderingCallbacks = new List<IBeforeRendering>();
 
 		private void CreateIOCcontainer()
 		{
@@ -166,31 +170,8 @@ namespace Zenseless.ExampleFramework
 			}
 			catch (CompositionException e)
 			{
-				Console.WriteLine(e.ToString());
+				Console.WriteLine($"Example Window error: {e}");
 			}
-		}
-
-		private void GameWindowRender()
-		{
-			try
-			{
-				contentManager.CheckForResourceChange();
-			}
-			catch (ShaderException e)
-			{
-				e.Data[ShaderLoader.ExceptionDataFileName] = contentManager.LastChangedFilePath; //TODO: make cleaner after removal of old stuff
-				new FormShaderExceptionFacade().ShowModal(e);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e.ToString());
-			}
-			//render
-			Render?.Invoke();
-			screenShots?.Add(FrameBuffer.ToBitmap(false));  //no rotate flip for speed
-			DrawTools.WriteErrors();
-			//buffer swap (and sync) of double buffering (http://gameprogrammingpatterns.com/double-buffer.html)
-			gameWindow.SwapBuffers();
 		}
 
 		/// <summary>
@@ -204,12 +185,13 @@ namespace Zenseless.ExampleFramework
 			Resize?.Invoke(gameWindow.Width, gameWindow.Height);
 		}
 
-		private void ProcessCommandLineArguments()
+		private void ProcessCommandLineArguments(ref double updateRenderRate)
 		{
 			var args = Environment.GetCommandLineArgs().Skip(1).Select(element => element.ToLowerInvariant());
 			if (args.Contains("capture"))
 			{
-				screenShots = new List<Bitmap>();
+				afterRenderingCallbacks.Add(new FrameGrabber(PathTools.GetCurrentProcessOutputDir()));
+				updateRenderRate = 30;
 			}
 			if (args.Contains("fullscreen"))
 			{
@@ -222,7 +204,14 @@ namespace Zenseless.ExampleFramework
 		/// </summary>
 		protected override void DisposeResources()
 		{
-			if (!(screenShots is null)) foreach (var bitmap in screenShots) bitmap.Dispose();
+			foreach(var callback in afterRenderingCallbacks)
+			{
+				(callback as IDisposable)?.Dispose();
+			}
+			foreach (var callback in beforeRenderingCallbacks)
+			{
+				(callback as IDisposable)?.Dispose();
+			}
 			//RenderContext.Dispose();
 			_container.Dispose();
 			gameWindow.Dispose();

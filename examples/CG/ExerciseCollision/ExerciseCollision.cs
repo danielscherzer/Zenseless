@@ -29,6 +29,7 @@ namespace Example
 			window.Resize += view.Resize;
 
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

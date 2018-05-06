@@ -21,6 +21,7 @@
 			window.Render += () => visual.Render(camera);
 			window.Update += (t) => visual.Update(time.AbsoluteTime);
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

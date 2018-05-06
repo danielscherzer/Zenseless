@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="ContentLoader.cs" />
     <Compile Include="DrawConfiguration.cs" />
     <Compile Include="ExampleServices.cs" />
     <Compile Include="ExampleWindow.cs" />

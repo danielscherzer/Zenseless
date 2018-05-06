@@ -51,6 +51,7 @@
     <Compile Include="ColorSystems.cs" />
     <Compile Include="BufferObject.cs" />
     <Compile Include="ContentManagerGL.cs" />
+    <Compile Include="handler\FrameGrabber.cs" />
     <Compile Include="ImageListTools.cs" />
     <Compile Include="INativeWindowExtensions.cs" />
     <Compile Include="MeshGL.cs" />

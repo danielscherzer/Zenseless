@@ -28,6 +28,7 @@
 				};
 				window.Update += (dt) => Update(model);
 				window.Run();
+				window.Dispose();
 			}
 		}
 

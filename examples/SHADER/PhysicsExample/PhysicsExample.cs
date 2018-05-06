@@ -19,6 +19,7 @@
 			window.Render += () => visual.Render(model.Bodies, time.AbsoluteTime, camera);
 			window.Update += model.Update;
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

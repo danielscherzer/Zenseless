@@ -23,6 +23,7 @@
 			var visual = new MyVisual(window.RenderContext.RenderState, window.ContentLoader);
 			window.Render += visual.Render;
 			window.Run();
+			window.Dispose();
 		}
 
 		private MyVisual(IRenderState renderState, IContentLoader contentLoader)

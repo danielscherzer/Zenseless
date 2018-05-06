@@ -38,7 +38,7 @@ namespace Example
 
 		private void Update(float updatePeriod)
 		{
-			if (texCoord.SizeX > 200f || texCoord.SizeX < 1f) scaleFactor = -scaleFactor;
+			if (texCoord.SizeX > 100f || texCoord.SizeX < 1f) scaleFactor = -scaleFactor;
 			float factor = scaleFactor * updatePeriod;
 			texCoord.SizeX *= 1 + factor;
 			texCoord.SizeY *= 1 + factor;
@@ -53,6 +53,7 @@ namespace Example
 			window.Render += visual.Render;
 			window.Update += visual.Update;
 			window.Run();
+			window.Dispose();
 		}
 
 		private static void DrawTexturedRect(IReadOnlyBox2D rect, ITexture tex, IReadOnlyBox2D texCoords)

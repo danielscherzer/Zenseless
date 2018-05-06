@@ -16,6 +16,7 @@
 			window.Render += visual.Render;
 			window.Update += (dt) => visual.Update(time.AbsoluteTime);
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

@@ -12,6 +12,7 @@ namespace Example
 			var view = new View();
 			window.Render += () => view.Draw();
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

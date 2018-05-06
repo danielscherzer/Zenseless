@@ -8,6 +8,7 @@
 	using Zenseless.Geometry;
 	using Zenseless.OpenGL;
 
+	[ExampleDisplayName]
 	[Export(typeof(IExample))]
 	public class ColorExample : IExample
 	{

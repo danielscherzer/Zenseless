@@ -1,0 +1,28 @@
+﻿using System;
+using System.ComponentModel.Composition;
+using Zenseless.HLGL;
+using Zenseless.OpenGL;
+
+namespace ExampleBrowser.View
+{
+	[Export(typeof(IRenderState)), PartCreationPolicy(CreationPolicy.NonShared)]
+	class RenderState : IRenderState
+	{
+		private readonly Zenseless.HLGL.RenderState renderState;
+
+		public RenderState()
+		{
+			renderState = RenderStateGL.Create();
+		}
+
+		public TYPE Get<TYPE>() where TYPE : IEquatable<TYPE>
+		{
+			return renderState.Get<TYPE>();
+		}
+
+		public void Set<TYPE>(TYPE value) where TYPE : IEquatable<TYPE>
+		{
+			renderState.Set(value);
+		}
+	}
+}

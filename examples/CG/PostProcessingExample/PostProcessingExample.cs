@@ -26,6 +26,7 @@ namespace Example
 				}
 			};
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

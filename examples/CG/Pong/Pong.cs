@@ -15,6 +15,7 @@ namespace Pong
 			window.Update += (t) => Window_Update(logic, t);
 			window.Render += () => visual.Render(logic.Paddle1, logic.Paddle2, logic.Ball, logic.Player1Points, logic.Player2Points);
 			window.Run();
+			window.Dispose();
 		}
 
 		private static void Window_Update(Logic logic, float updatePeriod)

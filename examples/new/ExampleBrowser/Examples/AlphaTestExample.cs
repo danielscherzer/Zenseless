@@ -1,15 +1,17 @@
-﻿namespace Example
+﻿namespace ExampleBrowser
 {
 	using OpenTK.Graphics;
 	using OpenTK.Graphics.OpenGL;
-	using System;
-	using Zenseless.ExampleFramework;
+	using System.ComponentModel.Composition;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 
-	class MyVisual
+	[ExampleDisplayName]
+	[Export(typeof(IExample))]
+	class AlphaTestExample : IExample
 	{
-		private MyVisual(IRenderState renderState)
+		[ImportingConstructor]
+		private AlphaTestExample([Import] IRenderState renderState)
 		{
 			//background clear color
 			renderState.Set(new ClearColorState(1, 1, 1, 1));
@@ -17,7 +19,7 @@
 			GL.Enable(EnableCap.AlphaTest);
 		}
 
-		private void Render()
+		public void Render()
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 
@@ -26,15 +28,6 @@
 			var colorB = new Color4(0f, 1f, 1f, 0f);
 
 			DrawRect(rect, colorA, colorB);
-		}
-
-		[STAThread]
-		private static void Main()
-		{
-			var window = new ExampleWindow();
-			var visual = new MyVisual(window.RenderContext.RenderState);
-			window.Render += visual.Render;
-			window.Run();
 		}
 
 		private void DrawRect(IReadOnlyBox2D rectangle, Color4 colorA, Color4 colorB)

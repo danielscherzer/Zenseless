@@ -140,6 +140,7 @@ namespace Example
 			window.Update += (t) => controller.Update(t, (timing) => window.GameWindow.Title = $"{Math.Round(timing)}ms");
 			window.Render += controller.Render;
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

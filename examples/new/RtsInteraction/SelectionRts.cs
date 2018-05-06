@@ -61,6 +61,7 @@
 			};
 			window.Update += model.Update;
 			window.Run();
+			window.Dispose();
 		}
 	}
 }

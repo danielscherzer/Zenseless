@@ -21,6 +21,7 @@
 			};
 			window.Render += () => visual.Render(model.Paths, model.Points);
 			window.Run();
+			window.Dispose();
 		}
 	}
 }
