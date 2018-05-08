@@ -15,9 +15,9 @@ namespace ExampleBrowser
 	[Export(typeof(IExample))]
 	class AABBRotationExample : IExample
 	{
-		private GameTime time = new GameTime();
 		private const float size = 0.7f;
 		private Line stick = new Line(new Vector2(-size, -size), new Vector2(size, size));
+		private float angle = 0f;
 
 		[ImportingConstructor]
 		private AABBRotationExample([Import] IRenderState renderState)
@@ -60,9 +60,6 @@ namespace ExampleBrowser
 
 		public void Render()
 		{
-			time.NewFrame();
-			float angle = -time.DeltaTime * 0.6f;
-
 			stick = RotateLine(stick, angle);
 			var minX = Math.Min(stick.Item1.X, stick.Item2.X);
 			var maxX = Math.Max(stick.Item1.X, stick.Item2.X);
@@ -80,6 +77,11 @@ namespace ExampleBrowser
 
 			GL.Color3(Color.Black);
 			DrawAABB(Box2DExtensions.CreateFromCenterSize(0, 0, 0.02f, 0.02f));
+		}
+
+		public void Update(ITime time)
+		{
+			angle = -time.DeltaTime * 0.6f;
 		}
 	}
 }

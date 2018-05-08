@@ -8,7 +8,8 @@ namespace Example
 {
 	public class MyVisual
 	{
-		private ITexture texBird;
+		private readonly ITexture texEarth;
+		private readonly ITexture texGreenMoon;
 
 		public MyVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
@@ -16,15 +17,17 @@ namespace Example
 			renderState.Set(BlendStates.AlphaBlend); //for transparency in textures we use blending
 			GL.Enable(EnableCap.Texture2D); //TODO: only for non shader pipeline relevant -> remove at some point
 
-			texBird = contentLoader.Load<ITexture2D>("bird1");
+			texEarth = contentLoader.Load<ITexture2D>("earth");
+			texGreenMoon = contentLoader.Load<ITexture2D>("planet");
 		}
 
-		public void Render(IEnumerable<IReadOnlyBox2D> birds)
+		public void Render(in IReadOnlyBox2D earth, IEnumerable<IReadOnlyBox2D> birds)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
+			DrawTexturedRect(earth, texEarth);
 			foreach (var bird in birds)
 			{
-				DrawTexturedRect(bird, texBird);
+				DrawTexturedRect(bird, texGreenMoon);
 			}
 		}
 

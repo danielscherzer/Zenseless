@@ -81,12 +81,12 @@
 		/// <param name="width">The window width.</param>
 		/// <param name="height">The window height.</param>
 		/// <param name="updateRenderRate">The update and render rate.</param>
-		public ExampleWindow(int width = 512, int height = 512, double updateRenderRate = 60)
+		public ExampleWindow(int width = 1024, int height = 1024, double updateRenderRate = 60)
 		{
 			gameWindow = new GameWindow
 			{
 				X = 200, //DPI scaling screws everything up, so use some hacked values
-				Y = 100,
+				Y = 50,
 				ClientSize = new Size(width, height), //do not set extents in the constructor, because windows 10 with enabled scale != 100% scales our given sizes in the constructor of GameWindow
 			};
 

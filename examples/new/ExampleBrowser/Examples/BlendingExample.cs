@@ -3,6 +3,7 @@
 	using OpenTK.Graphics;
 	using OpenTK.Graphics.OpenGL;
 	using System.ComponentModel.Composition;
+	using Zenseless.Base;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 
@@ -38,6 +39,10 @@
 			GL.Translate(1f, 0f, 0f);
 			DrawRect(rectB, colorB);
 			DrawRect(rectA, colorA);
+		}
+
+		public void Update(ITime time)
+		{
 		}
 
 		private void DrawRect(IReadOnlyBox2D rectangle, Color4 color)

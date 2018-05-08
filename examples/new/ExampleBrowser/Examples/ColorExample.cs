@@ -12,12 +12,11 @@
 	[Export(typeof(IExample))]
 	public class ColorExample : IExample
 	{
-		private GameTime time = new GameTime();
+		private float hue = 0f;
 
 		public void Render()
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
-			var hue = (float)(Math.Sin(time.AbsoluteTime) * 0.5 + 0.5);
 			const int count = 16;
 			var boxSize = 1.9f / count;
 			for (int xI = 0; xI < count; ++xI)
@@ -32,6 +31,11 @@
 					DrawRect(new Box2D(x, y, boxSize, boxSize), color);
 				}
 			}
+		}
+
+		public void Update(ITime time)
+		{
+			hue = (float)(Math.Sin(time.AbsoluteTime) * 0.5 + 0.5);
 		}
 
 		private void DrawRect(IReadOnlyBox2D rectangle, Vector3 color)

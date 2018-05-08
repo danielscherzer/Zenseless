@@ -72,9 +72,13 @@
     <Compile Include="Examples\AlphaTestExample.cs" />
     <Compile Include="Examples\BlendingExample.cs" />
     <Compile Include="Examples\ColorExample.cs" />
+    <Compile Include="Examples\TextureExample.cs" />
+    <Compile Include="Examples\TextureMagFilterExample.cs" />
+    <Compile Include="Examples\TextureMinFilterExample.cs" />
     <Compile Include="IExample.cs" />
     <Compile Include="ExampleDisplayNameAttribute.cs" />
     <Compile Include="IExampleMetaData.cs" />
+    <Compile Include="View\ContentLoader.cs" />
     <Compile Include="View\ExamplePageViewModel.cs" />
     <Compile Include="View\RenderState.cs" />
     <Compile Include="View\ShellViewModel.cs" />
@@ -94,6 +98,10 @@
       <Project>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</Project>
       <Name>Zenseless.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Zenseless.ContentPipeline\Zenseless.ContentPipeline.csproj">
+      <Project>{6810de78-7764-4c8c-ada7-e7d31ae6c259}</Project>
+      <Name>Zenseless.ContentPipeline</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\Zenseless.Geometry\Zenseless.Geometry.csproj">
       <Project>{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}</Project>
       <Name>Zenseless.Geometry</Name>
@@ -106,6 +114,15 @@
       <Project>{C660F6AF-C100-4169-A9FB-61E1EBE87F34}</Project>
       <Name>Zenseless.OpenGL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\mountains.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\water.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\redship4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

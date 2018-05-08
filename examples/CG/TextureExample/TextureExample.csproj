@@ -43,9 +43,6 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.md" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Content\**\*.*" />
   </ItemGroup>
   <ItemGroup>
