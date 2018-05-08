@@ -16,7 +16,7 @@
 
 			window.Render += () => visual.Render(orbit, orbit.CalcPosition());
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

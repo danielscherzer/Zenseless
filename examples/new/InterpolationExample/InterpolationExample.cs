@@ -16,7 +16,7 @@ namespace Example
 			window.Render += () => visual.Render(model.MovingObject);
 			window.Update += (dt) => model.Update(time.AbsoluteTime);
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

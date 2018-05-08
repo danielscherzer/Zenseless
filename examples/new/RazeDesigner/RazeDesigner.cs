@@ -56,7 +56,7 @@
 			window.Resize += visual.Resize;
 			//window.GameWindow.WindowState = OpenTK.WindowState.Fullscreen;
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

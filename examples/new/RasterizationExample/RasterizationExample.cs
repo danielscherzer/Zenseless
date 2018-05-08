@@ -19,7 +19,7 @@
 			window.Render += rasterizer.Render;
 			window.Render += () => screenshot = FrameBuffer.ToBitmap();
 			window.Run();
-			window.Dispose();
+
 			if (screenshot is null) return;
 			var name = Path.ChangeExtension(PathTools.GetCurrentProcessPath(), ".png");
 			screenshot.Save(name);

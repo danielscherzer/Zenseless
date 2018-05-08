@@ -27,7 +27,7 @@ namespace Example
 
 			window.RenderFrame += (s, a) => draw();
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

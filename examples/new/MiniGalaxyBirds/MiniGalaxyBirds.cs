@@ -23,7 +23,7 @@ namespace MiniGalaxyBirds
 			window.Render += () => window.GameWindow.Title = $"{time.FPS}FPS";
 
 			window.Run();
-			window.Dispose();
+
 		}
 
 		private static void HandleInput(GameLogic gameLogic, float time)

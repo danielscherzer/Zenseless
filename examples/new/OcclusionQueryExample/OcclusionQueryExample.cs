@@ -70,7 +70,7 @@ namespace Example
 			window.Update += visual.Update;
 			window.Render += visual.Render;
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

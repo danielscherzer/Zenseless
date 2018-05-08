@@ -63,7 +63,7 @@ namespace SpaceInvaders
 			window.Render += controller.Render;
 			window.Update += (dt) => controller.Update(dt);
 			window.Run();
-			window.Dispose();
+
 		}
 
 		private void Update(float timeDelta, float axisUpDown, bool shoot)

@@ -27,7 +27,7 @@ namespace Example
 			{
 			}
 			window.Run();
-			window.Dispose();
+
 		}
 
 		private static void LoadLevelData(string levelFile, GameLogic logic, SpriteRenderer renderer)

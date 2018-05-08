@@ -36,7 +36,7 @@ namespace Example
 				renderer.DrawPoint(model.Emitter, Color.Red);
 			};
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

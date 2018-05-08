@@ -34,7 +34,7 @@ namespace Reversi
 				logic.Move(gridPos); //do move
 			};
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

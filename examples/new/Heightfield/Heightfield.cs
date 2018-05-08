@@ -17,7 +17,7 @@
 			var visual = new MainVisual(window.RenderContext, window.ContentLoader);
 			window.Render += () => visual.Render(camera);
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

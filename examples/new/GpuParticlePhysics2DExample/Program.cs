@@ -29,7 +29,7 @@
 			window.GameWindow.MouseDown += (s, a) => updateMouseState(a);
 			window.Render += visual.Render;
 			window.Run();
-			window.Dispose();
+
 		}
 
 		private static int GetDrawState(OpenTK.Input.MouseState mouse)

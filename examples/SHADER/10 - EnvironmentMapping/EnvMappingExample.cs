@@ -14,7 +14,7 @@
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			window.Render += () => visual.Render(orbit, orbit.CalcPosition());
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

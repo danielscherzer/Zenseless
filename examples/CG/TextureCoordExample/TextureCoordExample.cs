@@ -65,7 +65,7 @@ namespace Example
 			window.Render += visual.Render;
 			window.Update += visual.Update;
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

@@ -34,7 +34,7 @@ namespace Example
 			window.Render += () => Visual.DrawScreen(gameState); //this draws the game using OpenGL
 			//app.Render += () => VisualConsole.DrawScreen(gameState); //this draws the game to the console
 			window.Run();
-			window.Dispose();
+
 		}
 
 		private static void HandleInput(GameState gameState, int button, float x, float y)

@@ -14,7 +14,7 @@ namespace Example
 			window.Update += logic.Update;
 			window.Render += () => visual.Render(logic.Earth, logic.GetPlanets());
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

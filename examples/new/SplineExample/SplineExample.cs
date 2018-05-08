@@ -42,7 +42,7 @@
 				, model.TangentHandles, model.SelectedPoint, model.SelectedTangent);
 			window.GameWindow.WindowState = OpenTK.WindowState.Fullscreen;
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }

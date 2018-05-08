@@ -14,7 +14,7 @@
 			var time = new GameTime();
 			window.Render += () => visual.Render(time.AbsoluteTime);
 			window.Run();
-			window.Dispose();
+
 		}
 	}
 }
