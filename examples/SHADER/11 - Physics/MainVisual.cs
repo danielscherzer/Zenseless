@@ -34,7 +34,7 @@
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			shaderProgram.Uniform("time", time);
+			shaderProgram.Uniform(nameof(time), time);
 			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
 			geometryBody.Draw(instancePositions.Count);
 			shaderProgram.Deactivate();

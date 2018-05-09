@@ -2,7 +2,7 @@
 
 uniform float deltaTime;
 uniform mat4x4 camera;
-uniform int particleCount;
+uniform float pointResolutionScale;
 
 out vec3 baseColor;
 
@@ -36,7 +36,7 @@ void update(inout Particle p)
 	//set vertex outputs
 	vec4 pos = camera * vec4(p.position, 1.0);
 	gl_Position = pos;
-	gl_PointSize = p.size / pos.z; //points get smaller with distance
+	gl_PointSize = p.size / pos.z * pointResolutionScale; //points get smaller with distance
 	baseColor = unpackUnorm4x8(p.color).xyz;
 }
 

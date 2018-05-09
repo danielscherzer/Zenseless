@@ -13,6 +13,7 @@
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			var time = new GameTime();
 			window.Render += () => visual.Render(time.AbsoluteTime);
+			window.Resize += visual.Resize;
 			window.Run();
 
 		}

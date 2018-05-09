@@ -26,7 +26,7 @@ namespace Example
 			drawParticles.ShaderPointSize = true;
 			drawParticles.UpdateShaderBuffer("Particles", InitParticles());
 			drawParticles.UpdateMeshShader(null, contentLoader.Load<IShaderProgram>("particles.*"));
-			drawParticles.InstanceCount = particelCount;
+			drawParticles.InstanceCount = particleCount;
 		}
 
 		public void Render()
@@ -44,7 +44,7 @@ namespace Example
 			drawParticles.SetInputTexture("texObstacles", imageObstacles);
 			frameBuffer.Draw(paintObstacles);
 
-			var uniforms = new Uniforms((float)(random.NextDouble() * 2 - 1), (float)particelCount);
+			var uniforms = new Uniforms((float)(random.NextDouble() * 2 - 1), (float)particleCount);
 			drawParticles.UpdateUniforms("Uniforms", uniforms);
 			frameBuffer.Draw(drawParticles);
 		}
@@ -60,7 +60,7 @@ namespace Example
 		private IRenderSurface imageObstaclesLastFrame;
 		private DrawConfiguration paintObstacles = new DrawConfiguration();
 		private DrawConfiguration drawParticles = new DrawConfiguration();
-		private const int particelCount = (int)1e5;
+		private const int particleCount = (int)1e5;
 		private Random random = new Random();
 
 		private Particle[] InitParticles()
@@ -68,8 +68,8 @@ namespace Example
 			var rnd = new Random(12);
 			float RndCoord() => (float)(rnd.NextDouble() * 2 - 1);
 
-			var data = new Particle[particelCount];
-			for (int i = 0; i < particelCount; ++i)
+			var data = new Particle[particleCount];
+			for (int i = 0; i < particleCount; ++i)
 			{
 				data[i].position = new Vector2(RndCoord(), RndCoord());
 				data[i].velocity = new Vector2(RndCoord(), RndCoord()) * 0.01f;
@@ -80,13 +80,13 @@ namespace Example
 
 	struct Uniforms
 	{
-		private float v;
-		private float particelCount;
+		private readonly float v;
+		private readonly float particleCount;
 
-		public Uniforms(float v, float particelCount)
+		public Uniforms(float v, float particleCount)
 		{
 			this.v = v;
-			this.particelCount = particelCount;
+			this.particleCount = particleCount;
 		}
 	}
 }

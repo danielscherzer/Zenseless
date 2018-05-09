@@ -23,8 +23,8 @@ namespace Example
 			var rnd = new Random(12);
 			float Rnd01() => (float)rnd.NextDouble();
 			float RndCoord() => (Rnd01() - 0.5f) * 35.0f;
-			var instancePositions = new Vector3[particelCount];
-			for (int i = 0; i < particelCount; ++i)
+			var instancePositions = new Vector3[particleCount];
+			for (int i = 0; i < particleCount; ++i)
 			{
 				instancePositions[i] = new Vector3(RndCoord(), RndCoord(), RndCoord());
 			}
@@ -40,8 +40,8 @@ namespace Example
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			shaderProgram.Uniform("camera", camera, true);
-			geometry.Draw(particelCount);
+			shaderProgram.Uniform(nameof(camera), camera, true);
+			geometry.Draw(particleCount);
 			shaderProgram.Deactivate();
 		}
 
@@ -52,7 +52,7 @@ namespace Example
 			camera = p;
 		}
 
-		private const int particelCount = 500;
+		private const int particleCount = 500;
 
 		private IShaderProgram shaderProgram;
 		private Matrix4x4 camera = Matrix4x4.Identity;

@@ -17,6 +17,7 @@
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			var time = new GameTime();
 			window.Render += () => window.GameWindow.Title = $"{visual.Render(time.DeltaTime, orbit):F2}msec";
+			window.Resize += visual.Resize;
 			window.Run();
 
 		}

@@ -82,8 +82,8 @@ namespace Example
 			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
 
 			shaderWaterfall.Activate();
-			shaderWaterfall.Uniform("camera", camera);
-			shaderWaterfall.Uniform("pointSize", 0.3f);
+			shaderWaterfall.Uniform(nameof(camera), camera);
+			shaderWaterfall.Uniform("pointSize", smallerWindowSideResolution * 0.00083f);
 			//shader.Uniform("texParticle", 0);
 			texStar.Activate();
 			particles.Draw();
@@ -96,11 +96,17 @@ namespace Example
 			GL.DepthMask(true);
 		}
 
+		internal void Resize(int width, int height)
+		{
+			smallerWindowSideResolution = Math.Min(width, height);
+		}
+
 		private IShaderProgram shaderWaterfall;
 		private ITexture texStar;
 		private VAO particles = new VAO(PrimitiveType.Points);
 		private ParticleSystem<Particle> particleSystem = new ParticleSystem<Particle>(10000);
 		private Random random = new Random();
+		private int smallerWindowSideResolution;
 		private readonly IRenderState renderState;
 		private readonly Vector3 emitterPos;
 	}

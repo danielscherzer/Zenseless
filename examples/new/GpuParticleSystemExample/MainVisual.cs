@@ -44,15 +44,21 @@ namespace Example
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
 			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
-			shaderProgram.Uniform("deltaTime", deltaTime);
-			shaderProgram.Uniform("source", source);
-			shaderProgram.Uniform("acceleration", acceleration);
-			shaderProgram.Uniform("particelCount", particelCount);
+			shaderProgram.Uniform(nameof(deltaTime), deltaTime);
+			shaderProgram.Uniform(nameof(source), source);
+			shaderProgram.Uniform(nameof(acceleration), acceleration);
+			shaderProgram.Uniform(nameof(particleCount), particleCount);
+			shaderProgram.Uniform("pointResolutionScale", smallerWindowSideResolution * 0.07f);
 			var bindingIndex = shaderProgram.GetResourceLocation(ShaderResourceType.RWBuffer, "BufferParticle");
 			bufferParticles.ActivateBind(bindingIndex);
-			GL.DrawArrays(PrimitiveType.Points, 0, particelCount);
+			GL.DrawArrays(PrimitiveType.Points, 0, particleCount);
 			bufferParticles.Deactivate();
 			shaderProgram.Deactivate();
+		}
+
+		internal void Resize(int width, int height)
+		{
+			smallerWindowSideResolution = Math.Min(width, height);
 		}
 
 		private Vector3 source = Vector3.Zero;
@@ -60,8 +66,9 @@ namespace Example
 		private Vector3 acceleration = new Vector3(0, 0, 0);
 		private IShaderProgram shaderProgram;
 		private BufferObject bufferParticles;
-		private const int particelCount = (int)1e5;
+		private const int particleCount = (int)1e5;
 		private Random rnd = new Random(12);
+		private float smallerWindowSideResolution;
 
 		private float Rnd01() => (float)rnd.NextDouble();
 		private float RndCoord() => Rnd01() * 2 - 1;
@@ -70,8 +77,8 @@ namespace Example
 		{
 			bufferParticles = new BufferObject(BufferTarget.ShaderStorageBuffer);
 
-			var data = new Particle[particelCount];
-			for (int i = 0; i < particelCount; ++i)
+			var data = new Particle[particleCount];
+			for (int i = 0; i < particleCount; ++i)
 			{
 				data[i].position = source;
 

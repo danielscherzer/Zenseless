@@ -19,6 +19,7 @@
 
 			var time = new GameTime();
 			window.Render += () => visual.Render(camera);
+			window.Resize += visual.Resize;
 			window.Update += (t) => visual.Update(time.AbsoluteTime);
 			window.Run();
 

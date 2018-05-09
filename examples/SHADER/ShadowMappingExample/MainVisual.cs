@@ -49,7 +49,7 @@ namespace Example
 			shaderProgram.Uniform("ambient", new Vector3(0.1f));
 			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
 #if SOLUTION
-			shaderProgram.Uniform("light", light);
+			shaderProgram.Uniform(nameof(light), light);
 #endif
 			geometry.Draw();
 			fboShadowMap.Texture.Deactivate();

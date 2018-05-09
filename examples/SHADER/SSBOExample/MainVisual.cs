@@ -35,18 +35,24 @@ namespace Example
 			GL.PointSize(1.0f);
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			shaderProgram.Activate();
-			shaderProgram.Uniform("deltaTime", deltaTime);
-			shaderProgram.Uniform("particelCount", particelCount);
+			shaderProgram.Uniform(nameof(deltaTime), deltaTime);
+			shaderProgram.Uniform("pointResolutionScale", smallerWindowSideResolution * 0.0007f);
 			var bindingIndex = shaderProgram.GetResourceLocation(ShaderResourceType.RWBuffer, "BufferParticle");
 			bufferParticles.ActivateBind(bindingIndex);
-			GL.DrawArrays(PrimitiveType.Points, 0, particelCount);
+			GL.DrawArrays(PrimitiveType.Points, 0, particleCount);
 			bufferParticles.Deactivate();
 			shaderProgram.Deactivate();
 		}
 
+		internal void Resize(int width, int height)
+		{
+			smallerWindowSideResolution = Math.Min(width, height);
+		}
+
 		private IShaderProgram shaderProgram;
 		private BufferObject bufferParticles;
-		private const int particelCount = (int)1e4;
+		private int smallerWindowSideResolution;
+		private const int particleCount = (int)1e4;
 
 		private void InitParticles()
 		{
@@ -57,8 +63,8 @@ namespace Example
 
 			bufferParticles = new BufferObject(BufferTarget.ShaderStorageBuffer);
 
-			var data = new Particle[particelCount];
-			for (int i = 0; i < particelCount; ++i)
+			var data = new Particle[particleCount];
+			for (int i = 0; i < particleCount; ++i)
 			{
 				data[i].position = new Vector2(RndCoord(), RndCoord());
 				data[i].velocity = new Vector2(RndSpeed(), RndSpeed());

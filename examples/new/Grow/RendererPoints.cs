@@ -20,7 +20,7 @@
 			shaderProgram.Activate();
 			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "position"), points, VertexAttribPointerType.Float, 3); //copy data to gpu mem
 			shaderProgram.Uniform("pointSize", resolutionMin * size);
-			shaderProgram.Uniform("color", color);
+			shaderProgram.Uniform(nameof(color), color);
 			geometry.Draw();
 			shaderProgram.Deactivate();
 		}

@@ -18,20 +18,27 @@ namespace Example
 			UpdateGeometry(shaderProgram);
 		}
 
-		public void Render(float time)
+		internal void Render(float time)
 		{
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			shaderProgram.Activate();
 			////ATTENTION: always give the time as a float if the uniform in the shader is a float
-			shaderProgram.Uniform("time", time);
+			shaderProgram.Uniform(nameof(time), time);
+			shaderProgram.Uniform("pointSize", smallerWindowSideResolution * 0.07f);
 			geometry.Draw();
 			shaderProgram.Deactivate();
+		}
+
+		internal void Resize(int width, int height)
+		{
+			smallerWindowSideResolution = Math.Min(width, height);
 		}
 
 		private const int pointCount = 500;
 		private IShaderProgram shaderProgram;
 		private VAO geometry;
+		private int smallerWindowSideResolution;
 
 		private void UpdateGeometry(IShaderProgram shaderProgram)
 		{

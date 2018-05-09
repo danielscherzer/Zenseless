@@ -32,6 +32,12 @@ namespace Example
 			visualWaterfall.Render(cam);
 		}
 
+		internal void Resize(int width, int height)
+		{
+			visualSmoke.Resize(width, height);
+			visualWaterfall.Resize(width, height);
+		}
+
 		private VisualPlane plane;
 		private readonly VisualSmoke visualSmoke;
 		private readonly VisualWaterfall visualWaterfall;

@@ -1,4 +1,4 @@
-#version 430 core				
+#version 430 core
 
 uniform mat4 camera;
 uniform float pointSize = 1;

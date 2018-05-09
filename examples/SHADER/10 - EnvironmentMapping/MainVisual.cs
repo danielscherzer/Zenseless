@@ -33,7 +33,7 @@ namespace Example
 			shaderProgram.Activate();
 			envMap.Activate();
 			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
-			shaderProgram.Uniform("cameraPosition", cameraPosition);
+			shaderProgram.Uniform(nameof(cameraPosition), cameraPosition);
 			geometry.Draw();
 			envMap.Deactivate();
 			shaderProgram.Deactivate();

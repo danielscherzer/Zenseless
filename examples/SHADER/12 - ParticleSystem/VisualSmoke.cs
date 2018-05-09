@@ -43,6 +43,11 @@ namespace Example
 			return p;
 		}
 
+		internal void Resize(int width, int height)
+		{
+			smallerWindowSideResolution = Math.Min(width, height);
+		}
+
 		public void Update(float time)
 		{
 			if (shaderSmoke is null) return;
@@ -73,7 +78,8 @@ namespace Example
 			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
 
 			shaderSmoke.Activate();
-			shaderSmoke.Uniform("camera", camera);
+			shaderSmoke.Uniform(nameof(camera), camera);
+			shaderSmoke.Uniform("pointSize", smallerWindowSideResolution * 0.002f);
 			//shader.Uniform("texParticle", 0);
 			texSmoke.Activate();
 			particles.Draw();
@@ -91,5 +97,6 @@ namespace Example
 		private VAO particles = new VAO(PrimitiveType.Points);
 		private ParticleSystem<Particle> particleSystem = new ParticleSystem<Particle>(1000);
 		private Random random = new Random();
+		private int smallerWindowSideResolution;
 	}
 }

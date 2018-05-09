@@ -28,7 +28,7 @@ namespace Example
 			shaderProgram.Uniform("ambient", new Vector3(0.1f));
 			shaderProgram.Uniform("lightPosition", new Vector3(0, 0.9f, -0.5f));
 			shaderProgram.Uniform("lightColor", new Vector3(0.8f));
-			shaderProgram.Uniform("cameraPosition", cameraPosition);
+			shaderProgram.Uniform(nameof(cameraPosition), cameraPosition);
 			var bindingIndex = shaderProgram.GetResourceLocation(ShaderResourceType.UniformBuffer, "bufferMaterials");
 			bufferMaterials.ActivateBind(bindingIndex);
 			geometry.Draw();

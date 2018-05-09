@@ -1,7 +1,7 @@
 #version 430 core
 
 uniform float deltaTime;
-uniform int particleCount;
+uniform float pointResolutionScale;
 
 out vec3 baseColor;
 
@@ -33,7 +33,7 @@ void update(inout Particle p)
 	}
 
 	//set vertex outputs
-	gl_PointSize = p.size;
+	gl_PointSize = p.size * pointResolutionScale;
 	baseColor = p.color;
 	gl_Position = vec4(p.position, 0.5, 1.0);
 }
