@@ -15,7 +15,7 @@
 		{
 			this.contentLoader = contentLoader ?? throw new ArgumentNullException(nameof(contentLoader));
 			soundEngine = new AudioPlaybackEngine();
-			laser = contentLoader.Load<byte[]>("laser"); //content manager will cache it, but its still faster to keep a direct reference
+			laser = contentLoader.Load<byte[]>("laser.wav"); //content manager will cache it, but its still faster to keep a direct reference
 		}
 
 		public void Background()

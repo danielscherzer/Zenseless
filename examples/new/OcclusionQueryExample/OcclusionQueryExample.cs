@@ -15,7 +15,7 @@ namespace Example
 	{
 		private MyVisual(IRenderState renderState)
 		{
-			renderState.Set(BoolState<IDepthState>.Enabled); //for query to work
+			renderState.Set(new DepthTest(true)); //for query to work
 
 			queryA = new QueryObject();
 			queryB = new QueryObject();

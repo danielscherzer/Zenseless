@@ -46,7 +46,6 @@
     </Compile>
     <Compile Include="FormShaderExceptionFacade.cs" />
     <Compile Include="FormTools.cs" />
-    <Compile Include="experimental\ICommand.cs" />
     <Compile Include="experimental\ICreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="experimental\Reference.cs" />

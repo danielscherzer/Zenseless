@@ -25,6 +25,41 @@
 	public sealed class ExampleWindow : Disposable
 	{
 		/// <summary>
+		/// Initializes a new instance of the <see cref="ExampleWindow"/> class.
+		/// </summary>
+		/// <param name="width">The window width.</param>
+		/// <param name="height">The window height.</param>
+		/// <param name="updateRenderRate">The update and render rate.</param>
+		public ExampleWindow(int width = 1024, int height = 1024, double updateRenderRate = 60)
+		{
+			gameWindow = new GameWindow
+			{
+				X = 200, //DPI scaling screws everything up, so use some hacked values
+				Y = 10,
+				ClientSize = new Size(width, height), //do not set extents in the constructor, because windows 10 with enabled scale != 100% scales our given sizes in the constructor of GameWindow
+			};
+
+			CreateIOCcontainer();
+
+			RenderContext = new RenderContextGL();
+
+			ProcessCommandLineArguments(ref updateRenderRate);
+
+			gameWindow.TargetUpdateFrequency = updateRenderRate;
+			gameWindow.TargetRenderFrequency = updateRenderRate;
+			gameWindow.VSync = VSyncMode.On;
+			//register callback for resizing of window
+			gameWindow.Resize += GameWindow_Resize;
+			//register callback for keyboard
+			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
+			gameWindow.KeyDown += GameWindow_KeyDown;
+
+			var contentLoader = new ContentLoader();
+			beforeRenderingCallbacks.Add(contentLoader);
+			ContentLoader = contentLoader;
+		}
+
+		/// <summary>
 		/// Occurs when in the render loop a new render of the window should be handled. Usually once per frame
 		/// </summary>
 		public event Action Render;
@@ -50,7 +85,7 @@
 		/// <param name="width">The width.</param>
 		/// <param name="height">The height.</param>
 		public delegate void ResizeHandler(int width, int height);
-		
+
 		/// <summary>
 		/// Occurs when the window is resized.
 		/// </summary>
@@ -61,7 +96,7 @@
 		/// </summary>
 		/// <param name="updatePeriod">The update period.</param>
 		public delegate void UpdateHandler(float updatePeriod);
-		
+
 		/// <summary>
 		/// Occurs when in the update loop a new update should be handled. Usually once per frame
 		/// </summary>
@@ -74,41 +109,6 @@
 		/// The content manager.
 		/// </value>
 		public IContentLoader ContentLoader { get; }
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ExampleWindow"/> class.
-		/// </summary>
-		/// <param name="width">The window width.</param>
-		/// <param name="height">The window height.</param>
-		/// <param name="updateRenderRate">The update and render rate.</param>
-		public ExampleWindow(int width = 1024, int height = 1024, double updateRenderRate = 60)
-		{
-			gameWindow = new GameWindow
-			{
-				X = 200, //DPI scaling screws everything up, so use some hacked values
-				Y = 50,
-				ClientSize = new Size(width, height), //do not set extents in the constructor, because windows 10 with enabled scale != 100% scales our given sizes in the constructor of GameWindow
-			};
-
-			CreateIOCcontainer();
-
-			RenderContext = new RenderContextGL();
-
-			ProcessCommandLineArguments(ref updateRenderRate);
-
-			gameWindow.TargetUpdateFrequency = updateRenderRate;
-			gameWindow.TargetRenderFrequency = updateRenderRate;
-			gameWindow.VSync = VSyncMode.On;
-			//register callback for resizing of window
-			gameWindow.Resize += GameWindow_Resize;
-			//register callback for keyboard
-			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
-			gameWindow.KeyDown += GameWindow_KeyDown;
-
-			var contentLoader = new ContentLoader();
-			beforeRenderingCallbacks.Add(contentLoader);
-			ContentLoader = contentLoader;
-		}
 
 		private void GameWindow_KeyDown(object sender, KeyboardKeyEventArgs e)
 		{

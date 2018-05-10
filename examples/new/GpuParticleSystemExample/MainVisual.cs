@@ -22,8 +22,8 @@ namespace Example
 		{
 			InitParticles();
 			renderState.Set(BlendStates.AlphaBlend);
-			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
-			renderState.Set(BoolState<IPointSpriteState>.Enabled);
+			renderState.Set(new ShaderPointSize(true));
+			renderState.Set(new PointSprite(true));
 			shaderProgram = contentLoader.Load<IShaderProgram>("particle.*");
 		}
 

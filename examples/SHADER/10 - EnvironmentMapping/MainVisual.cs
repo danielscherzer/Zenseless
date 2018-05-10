@@ -1,4 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL4;
+using System.Collections.Generic;
 using System.Numerics;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
@@ -11,36 +12,38 @@ namespace Example
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
 			renderState.Set(new ClearColorState(1, 1, 1, 1));
-			renderState.Set(BoolState<IDepthState>.Enabled);
-			renderState.Set(BoolState<IBackfaceCullingState>.Enabled);
+			renderState.Set(new DepthTest(true));
+			renderState.Set(new BackFaceCulling(true));
 
-			envMap = contentLoader.Load<ITexture2D>("beach");
+			var envMap = contentLoader.Load<ITexture2D>("beach");
 			envMap.WrapFunction = TextureWrapFunction.MirroredRepeat;
 			envMap.Filter = TextureFilterMode.Linear;
+			var textBinding = new TextureBinding[] { new TextureBinding(nameof(envMap), envMap) };
 
-			shaderProgram = contentLoader.Load<IShaderProgram>("envMapping.*");
+			var shaderProgram = contentLoader.Load<IShaderProgram>("envMapping.*");
 
-			var sphere = Meshes.CreateSphere(1, 4);
-			var envSphere = sphere.SwitchTriangleMeshWinding();
-			//var refSphere = sphere.
-			geometry = VAOLoader.FromMesh(envSphere, shaderProgram);
+			var sphere = Meshes.CreateSphere(1f, 4);
+#if SOLUTION
+			visuals.Add(new MeshVisual(sphere, shaderProgram, textBinding));
+#endif
+			var envSphere = sphere.Transform(new Scale3D(200f)).SwitchTriangleMeshWinding();
+			visuals.Add(new MeshVisual(envSphere, shaderProgram, textBinding));
 		}
 
 		public void Render(Transformation3D camera, Vector3 cameraPosition)
 		{
-			if (shaderProgram is null) return;
+			void SetUniforms(IShaderProgram shaderProgram)
+			{
+				shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
+				shaderProgram.Uniform(nameof(cameraPosition), cameraPosition);
+			}
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			shaderProgram.Activate();
-			envMap.Activate();
-			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
-			shaderProgram.Uniform(nameof(cameraPosition), cameraPosition);
-			geometry.Draw();
-			envMap.Deactivate();
-			shaderProgram.Deactivate();
+			foreach(var visual in visuals)
+			{
+				visual.Draw(SetUniforms);
+			}
 		}
 
-		private IShaderProgram shaderProgram;
-		private ITexture envMap;
-		private VAO geometry;
+		private readonly List<MeshVisual> visuals = new List<MeshVisual>();
 	}
 }

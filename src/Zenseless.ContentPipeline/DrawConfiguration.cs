@@ -63,11 +63,10 @@ namespace Zenseless.ExampleFramework
 		public void Draw(IRenderContext context)
 		{
 			var stateManager = context.StateManager;
-			context.RenderState.Set(new BoolState<IShaderPointSizeState>(ShaderPointSize));
-			context.RenderState.Set(new BoolState<IDepthState>(ZBufferTest));
-			context.RenderState.Set(new BoolState<IBackfaceCullingState>(BackfaceCulling));
-
-			stateManager.Get<StateActiveShaderGL, StateActiveShaderGL>().ShaderProgram = ShaderProgram;
+			context.RenderState.Set(new ShaderPointSize(ShaderPointSize));
+			context.RenderState.Set(new DepthTest(ZBufferTest));
+			context.RenderState.Set(new BackFaceCulling(BackfaceCulling));
+			context.RenderState.Set(new ActiveShader(ShaderProgram));
 
 			BindTextures();
 			ActivateBuffers();
@@ -222,7 +221,7 @@ namespace Zenseless.ExampleFramework
 		/// <summary>
 		/// The textures
 		/// </summary>
-		private Dictionary<string, ITexture> textures = new Dictionary<string, ITexture>();
+		private readonly Dictionary<string, ITexture> textures = new Dictionary<string, ITexture>();
 		/// <summary>
 		/// The buffers
 		/// </summary>

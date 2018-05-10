@@ -18,11 +18,13 @@ namespace Zenseless.OpenGL
 			var renderState = new RenderState();
 			renderState.Register(Update, BlendStates.Opaque);
 			renderState.Register((c) => GL.ClearColor(c.Red, c.Green, c.Blue, c.Alpha), new ClearColorState(0f, 0f, 0f, 1f));
-			renderState.Register((s) => Update(s.IsEnabled, EnableCap.DepthTest), new BoolState<IDepthState>(false));
-			renderState.Register((s) => Update(s.IsEnabled, EnableCap.CullFace), new BoolState<IBackfaceCullingState>(false));
-			renderState.Register((s) => Update(s.IsEnabled, EnableCap.ProgramPointSize), new BoolState<IShaderPointSizeState>(false));
-			renderState.Register((s) => Update(s.IsEnabled, EnableCap.PointSprite), new BoolState<IPointSpriteState>(false));
-			renderState.Register((s) => Update(s.IsEnabled, EnableCap.LineSmooth), new BoolState<ILineSmoothState>(false));
+			renderState.Register((s) => Update(s.Enabled, EnableCap.DepthTest), new DepthTest(false));
+			renderState.Register((s) => Update(s.Enabled, EnableCap.CullFace), new BackFaceCulling(false));
+			renderState.Register((s) => Update(s.Enabled, EnableCap.ProgramPointSize), new ShaderPointSize(false));
+			renderState.Register((s) => Update(s.Enabled, EnableCap.PointSprite), new PointSprite(false));
+			renderState.Register((s) => Update(s.Enabled, EnableCap.LineSmooth), new LineSmoothing(false));
+			renderState.Register((s) => GL.LineWidth(s.Value), new LineWidth(1f));
+			renderState.Register((s) => s.ShaderProgram?.Activate(), new ActiveShader(null));
 			return renderState;
 		}
 

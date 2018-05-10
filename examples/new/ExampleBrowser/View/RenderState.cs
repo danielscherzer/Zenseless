@@ -15,12 +15,12 @@ namespace ExampleBrowser.View
 			renderState = RenderStateGL.Create();
 		}
 
-		public TYPE Get<TYPE>() where TYPE : IEquatable<TYPE>
+		public TYPE Get<TYPE>() where TYPE : struct
 		{
 			return renderState.Get<TYPE>();
 		}
 
-		public void Set<TYPE>(TYPE value) where TYPE : IEquatable<TYPE>
+		public void Set<TYPE>(TYPE value) where TYPE : struct
 		{
 			renderState.Set(value);
 		}

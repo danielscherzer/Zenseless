@@ -13,8 +13,8 @@ namespace Example
 		{
 			rendererPoints = new RendererPoints(contentLoader);
 			renderState.Set(BlendStates.Additive);
-			renderState.Set(BoolState<IPointSpriteState>.Enabled);
-			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
+			renderState.Set(new PointSprite(true));
+			renderState.Set(new ShaderPointSize(true));
 		}
 
 		public void Clear()

@@ -18,8 +18,9 @@
 			viewport2Model.TranslateLocal(1f, 1f);
 
 			context.RenderState.Set(BlendStates.AlphaBlend);
-			context.RenderState.Set(BoolState<ILineSmoothState>.Enabled);
-			GL.LineWidth(2f);
+			context.RenderState.Set(new LineSmoothing(true));
+			context.RenderState.Set(new LineWidth(2f));
+
 			GL.Color3(1f, 1f, 1f);
 		}
 

@@ -23,9 +23,9 @@ namespace ExampleBrowser
 		private AABBRotationExample([Import] IRenderState renderState)
 		{
 			renderState.Set(BlendStates.AlphaBlend);
-			renderState.Set(BoolState<ILineSmoothState>.Enabled);
-			GL.LineWidth(5.0f);
+			renderState.Set(new LineSmoothing(true));
 			renderState.Set(new ClearColorState(1, 1, 1, 1));
+			renderState.Set(new LineWidth(5f));
 		}
 
 		private static Line RotateLine(Line stick, float rotationAngle)

@@ -11,8 +11,8 @@
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			renderState.Set(BoolState<IDepthState>.Enabled);
-			renderState.Set(BoolState<IBackfaceCullingState>.Enabled);
+			renderState.Set(new DepthTest(true));
+			renderState.Set(new BackFaceCulling(true));
 
 			shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
 			var mesh = Meshes.CreateSphere(0.03f, 2);

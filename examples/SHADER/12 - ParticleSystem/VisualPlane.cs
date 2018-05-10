@@ -19,13 +19,13 @@ namespace Example
 		{
 			if (shdPlane is null) return;
 
-			renderState.Set(BoolState<IBackfaceCullingState>.Disabled);
+			renderState.Set(new BackFaceCulling(false));
 			shdPlane.Activate();
 			shdPlane.Uniform(nameof(camera), camera);
 
 			plane.Draw();
 			shdPlane.Deactivate();
-			renderState.Set(BoolState<IBackfaceCullingState>.Enabled);
+			renderState.Set(new BackFaceCulling(true));
 		}
 
 		private VAO plane;

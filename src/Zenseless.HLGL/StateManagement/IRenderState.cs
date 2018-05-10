@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Zenseless.HLGL
+﻿namespace Zenseless.HLGL
 {
 	/// <summary>
 	/// 
@@ -12,12 +10,12 @@ namespace Zenseless.HLGL
 		/// </summary>
 		/// <typeparam name="TYPE">The type of the ype.</typeparam>
 		/// <returns></returns>
-		TYPE Get<TYPE>() where TYPE : IEquatable<TYPE>;
+		TYPE Get<TYPE>() where TYPE : struct;
 		/// <summary>
 		/// Sets the specified value.
 		/// </summary>
 		/// <typeparam name="TYPE">The type of the ype.</typeparam>
 		/// <param name="value">The value.</param>
-		void Set<TYPE>(TYPE value) where TYPE : IEquatable<TYPE>;
+		void Set<TYPE>(TYPE value) where TYPE : struct;
 	}
 }

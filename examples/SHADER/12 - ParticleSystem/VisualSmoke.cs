@@ -74,8 +74,8 @@ namespace Example
 			if (shaderSmoke is null) return;
 			renderState.Set(BlendStates.Additive);
 			GL.DepthMask(false);
-			renderState.Set(BoolState<IPointSpriteState>.Enabled);
-			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
+			renderState.Set(new PointSprite(true));
+			renderState.Set(new ShaderPointSize(true));
 
 			shaderSmoke.Activate();
 			shaderSmoke.Uniform(nameof(camera), camera);
@@ -86,8 +86,8 @@ namespace Example
 			texSmoke.Deactivate();
 			shaderSmoke.Deactivate();
 
-			renderState.Set(BoolState<IShaderPointSizeState>.Disabled);
-			renderState.Set(BoolState<IPointSpriteState>.Disabled);
+			renderState.Set(new ShaderPointSize(false));
+			renderState.Set(new PointSprite(false));
 			renderState.Set(BlendStates.Opaque);
 			GL.DepthMask(true);
 		}

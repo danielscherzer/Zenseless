@@ -17,7 +17,6 @@
 			shaderRoad = contentLoader.Load<IShaderProgram>("shader.*");
 			shaderTruck = contentLoader.Load<IShaderProgram>("colorTexture.*");
 			renderState.Set(BlendStates.AlphaBlend);
-			renderState.Set(BoolState<ILineSmoothState>.Enabled);
 			GL.Enable(EnableCap.PointSmooth);
 			//GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 		}
@@ -31,7 +30,6 @@
 			shaderRoad.Activate();
 			texSand.Activate();
 
-			GL.LineWidth(3.0f);
 			DrawLineStrip(points);
 
 			texSand.Deactivate();

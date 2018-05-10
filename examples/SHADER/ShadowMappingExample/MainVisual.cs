@@ -10,8 +10,8 @@ namespace Example
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			renderState.Set(BoolState<IDepthState>.Enabled);
-			renderState.Set(BoolState<IBackfaceCullingState>.Disabled);
+			renderState.Set(new DepthTest(true));
+			renderState.Set(new BackFaceCulling(false));
 			fboShadowMap.Texture.Filter = TextureFilterMode.Nearest;
 
 			shaderProgram = contentLoader.Load<IShaderProgram>("shadowMap.*");

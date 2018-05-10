@@ -1,13 +1,21 @@
-﻿using System;
-using OpenTK.Graphics.OpenGL4;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-
-namespace Heightfield
+﻿namespace Zenseless.OpenGL
 {
+	using System;
+	using OpenTK.Graphics.OpenGL4;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+
+	/// <summary>
+	/// 
+	/// </summary>
 	public class MeshVisual
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MeshVisual"/> class.
+		/// </summary>
+		/// <param name="mesh">The mesh.</param>
+		/// <param name="shader">The shader.</param>
+		/// <param name="textureBindings">The texture bindings.</param>
 		public MeshVisual(DefaultMesh mesh, IShaderProgram shader, TextureBinding[] textureBindings)
 		{
 			shaderProgram = shader;
@@ -15,16 +23,22 @@ namespace Heightfield
 			this.textureBindings = textureBindings;
 		}
 
-		public void Draw()
+		/// <summary>
+		/// Draws this instance.
+		/// </summary>
+		public void Draw(Action<IShaderProgram> uniformSetter = null)
 		{
+			shaderProgram.Activate();
 			BindTextures();
+			uniformSetter?.Invoke(shaderProgram);
 			geometry.Draw();
 			UnbindTextures();
+			shaderProgram.Deactivate();
 		}
 
 		private readonly IShaderProgram shaderProgram;
 		private readonly VAO geometry;
-		private TextureBinding[] textureBindings;
+		private readonly TextureBinding[] textureBindings;
 
 		private void BindTextures()
 		{

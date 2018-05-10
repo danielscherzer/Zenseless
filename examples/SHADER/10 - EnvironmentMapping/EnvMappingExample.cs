@@ -10,7 +10,7 @@
 		private static void Main()
 		{
 			var window = new ExampleWindow();
-			var orbit = window.GameWindow.CreateOrbitingCameraController(0, 70, 0.01f, 50f);
+			var orbit = window.GameWindow.CreateOrbitingCameraController(3f, 70f, 0.1f, 500f);
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			window.Render += () => visual.Render(orbit, orbit.CalcPosition());
 			window.Run();

@@ -21,7 +21,6 @@ namespace Example
 			{
 				asteroid[i] = asteroid[i] * Rnd(); //scale circle vertices with random values;
 			}
-			GL.LineWidth(3.0f);
 		}
 
 		public void ClearScreen()

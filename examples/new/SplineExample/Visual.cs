@@ -10,10 +10,13 @@
 
 	public class Visual
 	{
+		private readonly IRenderState renderState;
+
 		public Visual(IRenderState renderState)
 		{
+			this.renderState = renderState ?? throw new ArgumentNullException(nameof(renderState));
 			renderState.Set(BlendStates.AlphaBlend);
-			renderState.Set(BoolState<ILineSmoothState>.Enabled);
+			renderState.Set(new LineSmoothing(true));
 			GL.Enable(EnableCap.PointSmooth);
 		}
 
@@ -22,11 +25,11 @@
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 
 			GL.Color3(Color.White);
-			GL.LineWidth(3.0f);
+			renderState.Set(new LineWidth(3f));
 			DrawSpline(points, tangents);
 
 			GL.Color3(Color.Green);
-			GL.LineWidth(2.0f);
+			renderState.Set(new LineWidth(2f));
 			DrawLines(points, tangentHandles);
 
 			GL.Color3(Color.Red);

@@ -1,15 +1,15 @@
 ﻿namespace Zenseless.OpenGL
 {
-	using Zenseless.Base;
-	using Zenseless.HLGL;
 	using OpenTK.Graphics.OpenGL;
 	using System;
 	using System.Collections.Generic;
-	
+	using Zenseless.Base;
+	using Zenseless.HLGL;
+
 	/// <summary>
-										/// Implements an FBO exception.
-										/// </summary>
-										/// <seealso cref="System.Exception" />
+	/// Implements an FBO exception.
+	/// </summary>
+	/// <seealso cref="Exception" />
 	[Serializable]
 	public class FBOException : Exception
 	{
@@ -23,14 +23,14 @@
 	/// <summary>
 	/// Frame buffer object class that handles rendering to texture(s).
 	/// </summary>
-	/// <seealso cref="Zenseless.Base.Disposable" />
+	/// <seealso cref="Disposable" />
 	public class FBO : Disposable
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FBO"/> class.
 		/// </summary>
 		/// <param name="texture">The texture to draw to. The FBO will try to dispose the texture when the FBO is disposed.</param>
-		/// <exception cref="Zenseless.OpenGL.FBOException">
+		/// <exception cref="FBOException">
 		/// Given texture is null or texture dimensions do not match primary texture
 		/// </exception>
 		public FBO(ITexture2D texture)
@@ -45,7 +45,7 @@
 		/// Attaches the specified texture. The FBO will try to dispose the texture when the FBO is disposed.
 		/// </summary>
 		/// <param name="texture">The texture to attach.</param>
-		/// <exception cref="Zenseless.OpenGL.FBOException">
+		/// <exception cref="FBOException">
 		/// Given texture is null or texture dimensions do not match primary texture
 		/// </exception>
 		public void Attach(ITexture2D texture)
@@ -57,7 +57,7 @@
 			}
 			else
 			{
-				if(Texture.Width != texture.Width || Texture.Height != texture.Height)
+				if (Texture.Width != texture.Width || Texture.Height != texture.Height)
 					throw new FBOException($"Given Texture dimension ({texture.Width},{texture.Height}) " +
 						$"do not match primary texture ({Texture.Width},{Texture.Height})");
 			}
@@ -72,13 +72,6 @@
 			}
 		}
 
-		/// <summary>
-		/// Gets a value indicating whether this instance is active.
-		/// </summary>
-		/// <value>
-		///   <c>true</c> if this instance is active; otherwise, <c>false</c>.
-		/// </value>
-		public bool IsActive {  get { return currentFrameBufferHandle == m_FBOHandle; } }
 		/// <summary>
 		/// Gets the texture.
 		/// </summary>
@@ -116,24 +109,11 @@
 			currentFrameBufferHandle = lastFBO;
 		}
 
-		/// <summary>
-		/// The m fbo handle
-		/// </summary>
 		private uint m_FBOHandle = 0;
-		/// <summary>
-		/// The last fbo
-		/// </summary>
 		private uint lastFBO = 0;
-		/// <summary>
-		/// The current frame buffer handle
-		/// </summary>
 		private static uint currentFrameBufferHandle = 0;
 		private List<ITexture2D> attachments = new List<ITexture2D>();
 
-		/// <summary>
-		/// Gets the status message.
-		/// </summary>
-		/// <returns></returns>
 		private string GetStatusMessage()
 		{
 			switch (GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer))

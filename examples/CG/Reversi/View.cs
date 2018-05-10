@@ -13,6 +13,7 @@ namespace Reversi
 		public View(IRenderState renderState, IContentLoader contentLoader)
 		{
 			renderState.Set(BlendStates.AlphaBlend);
+			renderState.Set(new LineWidth(5f));
 			texWhite = contentLoader.Load<ITexture2D>("white");
 			texBlack = contentLoader.Load<ITexture2D>("black");
 			texTable = contentLoader.Load<ITexture2D>("pool_table");
@@ -71,7 +72,6 @@ namespace Reversi
 			texTable.Deactivate();
 			//grid
 			GL.Color3(Color.Black);
-			GL.LineWidth(3.0f);
 			GL.Begin(PrimitiveType.Lines);
 			for (int i = 0; i <= gameState.GridWidth; ++i)
 			{
@@ -104,7 +104,6 @@ namespace Reversi
 			float x = x_ + 0.5f;
 			float y = y_ + 0.5f;
 			float radius = 0.48f;
-			GL.LineWidth(4.0f);
 			GL.Begin(PrimitiveType.LineLoop);
 			GL.Vertex2(x - radius, y - radius);
 			GL.Vertex2(x + radius, y - radius);

@@ -1,15 +1,15 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System.Numerics;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Graphics.OpenGL4;
+	using System.Numerics;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+
 	public class MainVisual
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			renderState.Set(BoolState<IDepthState>.Enabled);
+			renderState.Set(new DepthTest(true));
 			plane = new VisualPlane(renderState, contentLoader);
 
 			visualSmoke = new VisualSmoke(Vector3.Zero, new Vector3(.2f, 0, 0), renderState, contentLoader);

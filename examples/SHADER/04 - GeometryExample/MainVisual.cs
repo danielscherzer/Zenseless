@@ -11,8 +11,8 @@ namespace Example
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
 			renderState.Set(BlendStates.Additive);
-			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
-			renderState.Set(BoolState<IPointSpriteState>.Enabled);
+			renderState.Set(new ShaderPointSize(true));
+			renderState.Set(new PointSprite(true));
 
 			shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
 			UpdateGeometry(shaderProgram);

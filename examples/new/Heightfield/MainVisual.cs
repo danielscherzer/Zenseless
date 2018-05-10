@@ -10,8 +10,8 @@ namespace Heightfield
 	{
 		public MainVisual(IRenderContext renderContext, IContentLoader contentLoader)
 		{
-			renderContext.RenderState.Set(BoolState<IDepthState>.Enabled);
-			renderContext.RenderState.Set(BoolState<IBackfaceCullingState>.Enabled);
+			renderContext.RenderState.Set(new DepthTest(true));
+			renderContext.RenderState.Set(new BackFaceCulling(true));
 
 			var mesh = Meshes.CreatePlane(2, 2, 1024, 1024);
 
@@ -26,14 +26,12 @@ namespace Heightfield
 			};
 			shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
 			mountain = new MeshVisual(mesh, shaderProgram, bindings);
-			shaderProgram.Activate(); // only one shader
 		}
 
 		internal void Render(Transformation3D camera)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
-			mountain.Draw();
+			mountain.Draw((shader) => shader.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix()));
 		}
 
 		private readonly MeshVisual mountain;

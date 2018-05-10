@@ -23,8 +23,8 @@ namespace Example
 			InitParticles();
 			//for transparency in textures we use blending
 			renderState.Set(BlendStates.Additive);
-			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
-			renderState.Set(BoolState<IPointSpriteState>.Enabled);
+			renderState.Set(new ShaderPointSize(true));
+			renderState.Set(new PointSprite(true));
 
 			shaderProgram = contentLoader.Load<IShaderProgram>("particle.*");
 		}

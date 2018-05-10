@@ -9,8 +9,8 @@ namespace Example
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			//renderState.Set(BoolState<IDepthState>.Enabled);
-			renderState.Set(BoolState<IBackfaceCullingState>.Enabled);
+			renderState.Set(new DepthTest(true));
+			renderState.Set(new BackFaceCulling(true));
 			//texDiffuse = contentLoader.Load<ITexture2D>("capsule0");
 			shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
 			//load geometry

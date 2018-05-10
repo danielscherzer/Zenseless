@@ -78,8 +78,8 @@ namespace Example
 			if (shaderWaterfall is null) return;
 			renderState.Set(BlendStates.Additive);
 			GL.DepthMask(false);
-			renderState.Set(BoolState<IPointSpriteState>.Enabled);
-			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
+			renderState.Set(new PointSprite(true));
+			renderState.Set(new ShaderPointSize(true));
 
 			shaderWaterfall.Activate();
 			shaderWaterfall.Uniform(nameof(camera), camera);
@@ -90,8 +90,8 @@ namespace Example
 			texStar.Deactivate();
 			shaderWaterfall.Deactivate();
 
-			renderState.Set(BoolState<IShaderPointSizeState>.Disabled);
-			renderState.Set(BoolState<IPointSpriteState>.Disabled);
+			renderState.Set(new ShaderPointSize(false));
+			renderState.Set(new PointSprite(false));
 			renderState.Set(BlendStates.Opaque);
 			GL.DepthMask(true);
 		}

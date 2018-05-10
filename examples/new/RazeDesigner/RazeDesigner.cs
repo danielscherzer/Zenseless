@@ -54,7 +54,6 @@
 			};
 			window.Render += () => visual.Render(model.Points, model.SelectedPoint, truckPosition);
 			window.Resize += visual.Resize;
-			//window.GameWindow.WindowState = OpenTK.WindowState.Fullscreen;
 			window.Run();
 
 		}

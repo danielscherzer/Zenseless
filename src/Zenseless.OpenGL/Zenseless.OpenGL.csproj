@@ -55,6 +55,7 @@
     <Compile Include="ImageListTools.cs" />
     <Compile Include="INativeWindowExtensions.cs" />
     <Compile Include="MeshGL.cs" />
+    <Compile Include="MeshVisual.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderContextGL.cs" />
     <Compile Include="FBOwithDepth.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="ShaderLoader.cs" />
     <Compile Include="SpriteSheetRenderer.cs" />
     <Compile Include="StateActiveFboGL.cs" />
-    <Compile Include="StateActiveShaderGL.cs" />
     <Compile Include="Texture2dGL.cs" />
     <Compile Include="TextureArray2dGL.cs" />
     <Compile Include="TextureFont.cs" />

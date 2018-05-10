@@ -19,7 +19,8 @@
 			copyToFrameBuffer = new PostProcessing(contentLoader.LoadPixelShader("copy.frag"));
 
 			renderState.Set(BlendStates.AlphaBlend);
-			renderState.Set(BoolState<ILineSmoothState>.Enabled);
+			renderState.Set(new LineSmoothing(true));
+			renderState.Set(new LineWidth(5f));
 			GL.Enable(EnableCap.PointSmooth);
 		}
 
@@ -28,7 +29,6 @@
 			var random = new Random(12);
 			fbo.Activate();
 			GL.Clear(ClearBufferMask.ColorBufferBit);
-			GL.LineWidth(5f);
 			foreach (var path in paths)
 			{
 				byte[] color = new byte[2];

@@ -10,12 +10,12 @@ namespace Zenseless.HLGL.Tests
 		public void RegisterTest()
 		{
 			var renderState = new RenderState();
-			renderState.Register(null, BoolState<IDepthState>.Disabled);
-			Assert.IsFalse(renderState.Get<BoolState<IDepthState>>().IsEnabled);
-			renderState.Set(BoolState<IDepthState>.Enabled);
-			Assert.IsTrue(renderState.Get<BoolState<IDepthState>>().IsEnabled);
-			renderState.Set(BoolState<IDepthState>.Disabled);
-			Assert.IsFalse(renderState.Get<BoolState<IDepthState>>().IsEnabled);
+			renderState.Register(null, new DepthTest(false));
+			Assert.IsFalse(renderState.Get<DepthTest>().Enabled);
+			renderState.Set(new DepthTest(true));
+			Assert.IsTrue(renderState.Get<DepthTest>().Enabled);
+			renderState.Set(new DepthTest(false));
+			Assert.IsFalse(renderState.Get<DepthTest>().Enabled);
 		}
 
 		[TestMethod()]
@@ -23,7 +23,7 @@ namespace Zenseless.HLGL.Tests
 		public void UnregisteredTest()
 		{
 			var renderState = new RenderState();
-			var depthTest = renderState.Get<BoolState<IDepthState>>().IsEnabled;
+			var depthTest = renderState.Get<DepthTest>().Enabled;
 		}
 
 		[TestMethod()]
@@ -31,8 +31,8 @@ namespace Zenseless.HLGL.Tests
 		public void RegisterWrongTypeTest()
 		{
 			var renderState = new RenderState();
-			renderState.Register(null, BoolState<IDepthState>.Disabled);
-			var depthTest = renderState.Get<BoolState<IPointSpriteState>>().IsEnabled;
+			renderState.Register(null, new DepthTest(false));
+			var depthTest = renderState.Get<PointSprite>().Enabled;
 		}
 
 		[TestMethod()]
@@ -40,8 +40,8 @@ namespace Zenseless.HLGL.Tests
 		public void SetWrongTypeTest()
 		{
 			var renderState = new RenderState();
-			renderState.Register(null, BoolState<IDepthState>.Disabled);
-			renderState.Set(BoolState<IPointSpriteState>.Enabled);
+			renderState.Register(null, new DepthTest(false));
+			renderState.Set(new PointSprite(true));
 		}
 	}
 }

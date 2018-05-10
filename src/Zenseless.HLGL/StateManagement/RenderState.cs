@@ -14,7 +14,7 @@ namespace Zenseless.HLGL
 		/// <typeparam name="TYPE">The type of the instance.</typeparam>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
-		public TYPE Get<TYPE>() where TYPE : IEquatable<TYPE>
+		public TYPE Get<TYPE>() where TYPE : struct
 		{
 			var type = typeof(TYPE);
 			if (states.TryGetValue(type, out Data data))
@@ -30,7 +30,7 @@ namespace Zenseless.HLGL
 		/// <typeparam name="TYPE">The type of the ype.</typeparam>
 		/// <param name="update">The update.</param>
 		/// <param name="defaultValue"></param>
-		public void Register<TYPE>(Action<TYPE> update, TYPE defaultValue) where TYPE : IEquatable<TYPE>
+		public void Register<TYPE>(Action<TYPE> update, TYPE defaultValue) where TYPE : struct
 		{
 			//TODO: decide what to do if the type is already registered? currently the old registration is overwritten
 			states.Add(typeof(TYPE), new Data(update, defaultValue));
@@ -42,7 +42,7 @@ namespace Zenseless.HLGL
 		/// <typeparam name="TYPE">The type of the value</typeparam>
 		/// <param name="value">The value.</param>
 		/// <exception cref="ArgumentException"></exception>
-		public void Set<TYPE>(TYPE value) where TYPE : IEquatable<TYPE>
+		public void Set<TYPE>(TYPE value) where TYPE : struct
 		{
 			var type = typeof(TYPE);
 			if (states.TryGetValue(type, out Data data))

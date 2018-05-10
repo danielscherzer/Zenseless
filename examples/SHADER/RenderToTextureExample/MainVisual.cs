@@ -24,14 +24,14 @@ namespace Example
 		{
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			renderState.Set(BoolState<IDepthState>.Enabled);
-			renderState.Set(BoolState<IBackfaceCullingState>.Enabled);
+			renderState.Set(new DepthTest(true));
+			renderState.Set(new BackFaceCulling(true));
 			shaderProgram.Activate();
 			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
 			geometry.Draw();
 			shaderProgram.Deactivate();
-			renderState.Set(BoolState<IBackfaceCullingState>.Disabled);
-			renderState.Set(BoolState<IDepthState>.Disabled);
+			renderState.Set(new BackFaceCulling(false));
+			renderState.Set(new DepthTest(false));
 		}
 
 		public void DrawWithPostProcessing(float time, Transformation3D camera)

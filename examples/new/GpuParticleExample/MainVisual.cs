@@ -22,9 +22,9 @@ namespace Example
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
 			InitParticles();
-			renderState.Set(BoolState<IDepthState>.Enabled);
-			renderState.Set(BoolState<IShaderPointSizeState>.Enabled);
-			renderState.Set(BoolState<IPointSpriteState>.Enabled);
+			renderState.Set(new DepthTest(true));
+			renderState.Set(new ShaderPointSize(true));
+			renderState.Set(new PointSprite(true));
 
 			shaderProgram = contentLoader.Load<IShaderProgram>("particle.*");
 		}
