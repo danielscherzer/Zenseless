@@ -51,7 +51,7 @@ namespace Zenseless.HLGL
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="image">The image.</param>
-		void SetInputTexture(string name, IRenderSurface image);
+		void SetInputTexture(string name, IOldRenderSurface image);
 		
 		/// <summary>
 		/// Updates the instance attribute.

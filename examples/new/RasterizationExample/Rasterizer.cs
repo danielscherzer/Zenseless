@@ -22,7 +22,7 @@ namespace Example
 			fbo = new FBO(texRenderSurface);
 		}
 
-		private FBO fbo;
+		private IRenderSurface fbo;
 		private PostProcessing copyToFrameBuffer;
 		private DrawHandler drawHandler;
 

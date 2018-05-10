@@ -49,7 +49,7 @@ namespace Example
 		}
 
 		private GameTime time = new GameTime();
-		private FBO renderToTexture;
+		private IRenderSurface renderToTexture;
 		private IShaderProgram shaderProgram;
 
 		private static void DrawWindowFillingQuad()

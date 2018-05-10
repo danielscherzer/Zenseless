@@ -56,7 +56,6 @@ namespace MvcSokoban
 
 		public void ResizeWindow(int width, int height)
 		{
-			GL.Viewport(0, 0, width, height);
 			font.ResizeWindow(width, height);
 			windowAspect = width / (float)height;
 		}

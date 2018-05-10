@@ -59,7 +59,7 @@ namespace Example
 		private Transformation3D cameraLight = new Orbit(8, -100, 44, new Perspective(farClip:50));
 		private IShaderProgram shaderProgram;
 		private IShaderProgram shaderProgramDepth;
-		private FBO fboShadowMap = new FBOwithDepth(Texture2dGL.Create(512, 512, 1, true));
+		private IRenderSurface fboShadowMap = new FBOwithDepth(Texture2dGL.Create(512, 512, 1, true));
 		private VAO geometry;
 	}
 }

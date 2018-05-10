@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
-using Zenseless.ExampleFramework;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-
-namespace Example
+﻿namespace Example
 {
+	using System.Collections.Generic;
+	using System.Numerics;
+	using Zenseless.ExampleFramework;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+
 	public class MainVisual
 	{
 		public MainVisual(IRenderContext context, IContentLoader contentLoader)
 		{
 			this.context = context;
 			frameBuffer = context.GetFrameBuffer();
-			surfaceGeometry = context.CreateRenderSurface(512, 512, true);
+			surfaceGeometry = context.CreateRenderSurface(1024, 1024, true);
 			suzanne.BackfaceCulling = true;
 			suzanne.SetInputTexture("chalet", contentLoader.Load<ITexture2D>("chalet.jpg"));
 			//model from https://sketchfab.com/models/e925320e1d5744d9ae661aeff61e7aef
@@ -62,8 +62,8 @@ namespace Example
 		};
 
 		private IRenderContext context;
-		private IRenderSurface frameBuffer;
-		private IRenderSurface surfaceGeometry;
+		private IOldRenderSurface frameBuffer;
+		private IOldRenderSurface surfaceGeometry;
 		private Uniforms uniforms = new Uniforms();
 		private DrawConfiguration suzanne = new DrawConfiguration();
 		private DrawConfiguration copyQuad = new DrawConfiguration();

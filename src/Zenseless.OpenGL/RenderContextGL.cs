@@ -49,7 +49,7 @@ namespace Zenseless.OpenGL
 		/// Gets the frame buffer.
 		/// </summary>
 		/// <returns></returns>
-		public IRenderSurface GetFrameBuffer()
+		public IOldRenderSurface GetFrameBuffer()
 		{
 			return new RenderSurfaceGL();
 		}
@@ -63,7 +63,7 @@ namespace Zenseless.OpenGL
 		/// <param name="components">The components.</param>
 		/// <param name="floatingPoint">if set to <c>true</c> [floating point].</param>
 		/// <returns></returns>
-		public IRenderSurface CreateRenderSurface(int width, int height, bool hasDepthBuffer = false, byte components = 4, bool floatingPoint = false)
+		public IOldRenderSurface CreateRenderSurface(int width, int height, bool hasDepthBuffer = false, byte components = 4, bool floatingPoint = false)
 		{
 			return new RenderSurfaceGL(width, height, hasDepthBuffer, components, floatingPoint);
 		}

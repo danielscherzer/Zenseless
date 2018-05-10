@@ -107,7 +107,7 @@ namespace Zenseless.ExampleFramework
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="image">The image.</param>
-		public void SetInputTexture(string name, IRenderSurface image)
+		public void SetInputTexture(string name, IOldRenderSurface image)
 		{
 			textures[name] = image.Texture;
 		}

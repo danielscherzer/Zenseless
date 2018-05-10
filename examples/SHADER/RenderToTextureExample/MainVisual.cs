@@ -54,7 +54,7 @@ namespace Example
 			renderToTexture.Texture.WrapFunction = TextureWrapFunction.ClampToEdge;
 		}
 
-		private FBO renderToTexture;
+		private IRenderSurface renderToTexture;
 		private IShaderProgram shaderPostProcess;
 		private IShaderProgram shaderProgram;
 		private VAO geometry;

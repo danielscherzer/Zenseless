@@ -9,7 +9,7 @@
 
 	public class Visual
 	{
-		private readonly FBO fbo;
+		private readonly IRenderSurface fbo;
 		private readonly PostProcessing copyToFrameBuffer;
 		
 		public Visual(IRenderState renderState, IContentLoader contentLoader)

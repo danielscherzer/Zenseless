@@ -1,7 +1,6 @@
 ﻿namespace Zenseless.ExampleFramework
 {
 	using OpenTK;
-	using OpenTK.Graphics.OpenGL4;
 	using OpenTK.Input;
 	using OpenTK.Platform;
 	using System;
@@ -32,7 +31,7 @@
 		/// <param name="updateRenderRate">The update and render rate.</param>
 		public ExampleWindow(int width = 1024, int height = 1024, double updateRenderRate = 60)
 		{
-			gameWindow = new GameWindow
+			gameWindow = new GameWindow()
 			{
 				X = 200, //DPI scaling screws everything up, so use some hacked values
 				Y = 10,
@@ -181,7 +180,7 @@
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		private void GameWindow_Resize(object sender, EventArgs e)
 		{
-			GL.Viewport(0, 0, gameWindow.Width, gameWindow.Height);
+			RenderContext.RenderState.Set(new Viewport(0, 0, gameWindow.Width, gameWindow.Height));
 			Resize?.Invoke(gameWindow.Width, gameWindow.Height);
 		}
 

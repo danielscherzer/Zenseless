@@ -30,7 +30,7 @@
 		/// <param name="components">The components.</param>
 		/// <param name="floatingPoint">if set to <c>true</c> [floating point].</param>
 		/// <returns></returns>
-		IRenderSurface CreateRenderSurface(int width, int height, bool hasDepthBuffer = false, byte components = 4, bool floatingPoint = false);
+		IOldRenderSurface CreateRenderSurface(int width, int height, bool hasDepthBuffer = false, byte components = 4, bool floatingPoint = false);
 
 		/// <summary>
 		/// Draws the points.
@@ -42,6 +42,6 @@
 		/// Gets the frame buffer.
 		/// </summary>
 		/// <returns></returns>
-		IRenderSurface GetFrameBuffer();
+		IOldRenderSurface GetFrameBuffer();
 	}
 }

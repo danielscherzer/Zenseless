@@ -16,6 +16,11 @@ namespace Zenseless.OpenGL
 		public static RenderState Create()
 		{
 			var renderState = new RenderState();
+
+			int[] vp = new int[4];
+			GL.GetInteger(GetPName.Viewport, vp);
+			renderState.Register((s) => GL.Viewport(s.X, s.Y, s.Width, s.Height), new Viewport(vp[0], vp[1], vp[2], vp[3]));
+
 			renderState.Register(Update, BlendStates.Opaque);
 			renderState.Register((c) => GL.ClearColor(c.Red, c.Green, c.Blue, c.Alpha), new ClearColorState(0f, 0f, 0f, 1f));
 			renderState.Register((s) => Update(s.Enabled, EnableCap.DepthTest), new DepthTest(false));
@@ -24,8 +29,34 @@ namespace Zenseless.OpenGL
 			renderState.Register((s) => Update(s.Enabled, EnableCap.PointSprite), new PointSprite(false));
 			renderState.Register((s) => Update(s.Enabled, EnableCap.LineSmooth), new LineSmoothing(false));
 			renderState.Register((s) => GL.LineWidth(s.Value), new LineWidth(1f));
-			renderState.Register((s) => s.ShaderProgram?.Activate(), new ActiveShader(null));
+			renderState.Register((s) => Update(s.ShaderProgram), new ActiveShader(null));
+			renderState.Register((s) => Update(s.RenderSurface), new ActiveRenderSurface(null));
 			return renderState;
+		}
+
+		private static void Update(IRenderSurface renderSurface)
+		{
+			if(renderSurface is null)
+			{
+				//TODO: view port
+				GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+			}
+			else
+			{
+				
+			}
+		}
+
+		private static void Update(IShaderProgram shaderProgram)
+		{
+			if (shaderProgram is null)
+			{
+				GL.UseProgram(0);
+			}
+			else
+			{
+				shaderProgram.Activate();
+			}
 		}
 
 		private static void Update(bool enabled, EnableCap cap)

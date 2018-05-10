@@ -55,9 +55,9 @@ namespace Example
 			public Vector2 velocity;
 		}
 
-		private IRenderSurface frameBuffer;
-		private IRenderSurface imageObstacles;
-		private IRenderSurface imageObstaclesLastFrame;
+		private IOldRenderSurface frameBuffer;
+		private IOldRenderSurface imageObstacles;
+		private IOldRenderSurface imageObstaclesLastFrame;
 		private DrawConfiguration paintObstacles = new DrawConfiguration();
 		private DrawConfiguration drawParticles = new DrawConfiguration();
 		private const int particleCount = (int)1e5;

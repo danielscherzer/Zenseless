@@ -3,7 +3,7 @@
 	/// <summary>
 	/// 
 	/// </summary>
-	public interface IRenderSurface
+	public interface IOldRenderSurface
 	{
 		/// <summary>
 		/// Gets the texture.

@@ -53,6 +53,8 @@
     <Compile Include="ContentManagement\StreamLoader.cs" />
     <Compile Include="handler\IAfterRendering.cs" />
     <Compile Include="handler\IBeforeRendering.cs" />
+    <Compile Include="IRenderSurface.cs" />
+    <Compile Include="StateManagement\ActiveRenderSurface.cs" />
     <Compile Include="StateManagement\ActiveShader.cs" />
     <Compile Include="StateManagement\BackFaceCulling.cs" />
     <Compile Include="StateManagement\BlendOperator.cs" />
@@ -67,7 +69,7 @@
     <Compile Include="deprecated\IDrawConfiguration.cs" />
     <Compile Include="StateManagement\DepthTest.cs" />
     <Compile Include="StateManagement\IRenderState.cs" />
-    <Compile Include="deprecated\IRenderSurface.cs" />
+    <Compile Include="deprecated\IOldRenderSurface.cs" />
     <Compile Include="IShaderProgram.cs" />
     <Compile Include="deprecated\IStateManager.cs" />
     <Compile Include="ITexture.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="deprecated\IState.cs" />
     <Compile Include="deprecated\StateManager.cs" />
     <Compile Include="StateManagement\ShaderPointSize.cs" />
+    <Compile Include="StateManagement\Viewport.cs" />
     <Compile Include="TextureBinding.cs" />
   </ItemGroup>
   <ItemGroup>

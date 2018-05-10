@@ -53,7 +53,6 @@ namespace MiniGalaxyBirds
 		public void ResizeWindow(int width, int height)
 		{
 			float deltaX = 0.5f * ((width / (float)height) - 1.0f);
-			GL.Viewport(0, 0, width, height);
 			GL.MatrixMode(MatrixMode.Projection);
 			GL.LoadIdentity();
 			minX = -deltaX;

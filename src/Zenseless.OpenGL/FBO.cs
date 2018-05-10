@@ -24,7 +24,7 @@
 	/// Frame buffer object class that handles rendering to texture(s).
 	/// </summary>
 	/// <seealso cref="Disposable" />
-	public class FBO : Disposable
+	public class FBO : Disposable, IRenderSurface
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FBO"/> class.
@@ -104,7 +104,7 @@
 		/// </summary>
 		public void Deactivate()
 		{
-			GL.BindFramebuffer(FramebufferTarget.FramebufferExt, lastFBO);
+			GL.BindFramebuffer(FramebufferTarget.Framebuffer, lastFBO);
 			GL.PopAttrib();
 			currentFrameBufferHandle = lastFBO;
 		}

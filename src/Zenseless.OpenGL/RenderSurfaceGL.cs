@@ -9,9 +9,9 @@ namespace Zenseless.OpenGL
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.Base.Disposable" />
-	/// <seealso cref="Zenseless.HLGL.IRenderSurface" />
-	public class RenderSurfaceGL : Disposable, IRenderSurface
+	/// <seealso cref="Disposable" />
+	/// <seealso cref="IOldRenderSurface" />
+	public class RenderSurfaceGL : Disposable, IOldRenderSurface
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RenderSurfaceGL"/> class.
