@@ -4,13 +4,15 @@ namespace Example
 {
 	internal class Node
 	{
-		public Box2D Boundaries;
-		public Transformation3D Transformation;
-
-		public Node(Box2D boundaries, Transformation3D transform = null)
+		public Node(Box2D boundaries, Transformation3D transform = null, TransformationNode transformNode = null)
 		{
 			Boundaries = boundaries;
 			Transformation = transform;
+			TransformNode = transformNode;
 		}
+
+		public Box2D Boundaries { get; }
+		public Transformation3D Transformation { get; }
+		public TransformationNode TransformNode { get; }
 	}
 }

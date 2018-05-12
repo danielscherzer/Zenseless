@@ -38,10 +38,13 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="TransformationNode.cs" />
     <Compile Include="CompoundTransformationExample.cs" />
+    <Compile Include="MatrixTransform.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="MyVisual.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="Transformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

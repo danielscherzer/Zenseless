@@ -1,11 +1,11 @@
-﻿using OpenTK.Graphics.OpenGL;
-using System.Collections.Generic;
-using System.Drawing;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Graphics.OpenGL;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+
 	public class MyVisual
 	{
 		private readonly ITexture texEarth;
