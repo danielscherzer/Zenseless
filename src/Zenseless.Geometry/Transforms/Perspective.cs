@@ -1,13 +1,13 @@
-﻿using System;
-using System.Numerics;
-
-namespace Zenseless.Geometry
+﻿namespace Zenseless.Geometry
 {
+	using System;
+	using System.Numerics;
+
 	/// <summary>
-	/// Implements a Perspective transformation
+	/// Implements a Perspective transformation that allows incremental changes
 	/// </summary>
-	/// <seealso cref="TransformationHierarchyNode" />
-	public class Perspective : TransformationHierarchyNode
+	/// <seealso cref="ITransformation" />
+	public class Perspective : ITransformation
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Perspective"/> class.
@@ -16,8 +16,9 @@ namespace Zenseless.Geometry
 		/// <param name="aspect">The aspect ratio.</param>
 		/// <param name="nearClip">The near clip plane distance.</param>
 		/// <param name="farClip">The far clip plane distance.</param>
-		public Perspective(float fieldOfViewY = 90f, float nearClip = 0.1f, float farClip = 1f, float aspect = 1f) : base(null)
+		public Perspective(float fieldOfViewY = 90f, float nearClip = 0.1f, float farClip = 1f, float aspect = 1f)
 		{
+			cachedMatrix = new CachedCalculatedValue<Matrix4x4>(CalculateProjectionMatrix);
 			Aspect = aspect;
 			FarClip = farClip;
 			FieldOfViewY = fieldOfViewY;
@@ -35,7 +36,7 @@ namespace Zenseless.Geometry
 			get => _aspect; set
 			{
 				_aspect = Math.Max(value, float.Epsilon);
-				UpdateMatrix();
+				cachedMatrix.Invalidate();
 			}
 		}
 
@@ -50,7 +51,7 @@ namespace Zenseless.Geometry
 			get => _farClip; set
 			{
 				_farClip = Math.Max(value, NearClip);
-				UpdateMatrix();
+				cachedMatrix.Invalidate();
 			}
 		}
 
@@ -66,9 +67,17 @@ namespace Zenseless.Geometry
 			set
 			{
 				_fieldOfViewY = MathHelper.Clamp(value, float.Epsilon, 179.9f);
-				UpdateMatrix();
+				cachedMatrix.Invalidate();
 			}
 		}
+
+		/// <summary>
+		/// Gets the transformation matrix in row-major style.
+		/// </summary>
+		/// <value>
+		/// The matrix.
+		/// </value>
+		public Matrix4x4 Matrix => cachedMatrix.Value;
 
 		/// <summary>
 		/// Gets or sets the near clipping plane distance.
@@ -81,7 +90,7 @@ namespace Zenseless.Geometry
 			get => _nearClip; set
 			{
 				_nearClip = Math.Max(value, float.Epsilon);
-				UpdateMatrix();
+				cachedMatrix.Invalidate();
 			}
 		}
 
@@ -89,11 +98,12 @@ namespace Zenseless.Geometry
 		private float _farClip = 1f;
 		private float _fieldOfViewY = 90f;
 		private float _nearClip = 0.1f;
+		private CachedCalculatedValue<Matrix4x4> cachedMatrix;
 
-		private void UpdateMatrix()
+		private Matrix4x4 CalculateProjectionMatrix()
 		{
 			var fov = MathHelper.DegreesToRadians(FieldOfViewY);
-			matrix = Matrix4x4.CreatePerspectiveFieldOfView(fov, Aspect, NearClip, FarClip);
+			return Matrix4x4.CreatePerspectiveFieldOfView(fov, Aspect, NearClip, FarClip);
 		}
 	}
 }

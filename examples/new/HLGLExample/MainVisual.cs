@@ -45,11 +45,11 @@
 			copyQuad.SetInputTexture("tex", surfaceGeometry);
 		}
 
-		public void Render(TransformationHierarchyNode camera)
+		public void Render(ITransformation camera)
 		{
 			surfaceGeometry.Clear();
 
-			uniforms.camera = camera.CalcGlobalTransformation();
+			uniforms.camera = camera.Matrix;
 			suzanne.UpdateUniforms(nameof(Uniforms), uniforms);
 			surfaceGeometry.Draw(suzanne);
 

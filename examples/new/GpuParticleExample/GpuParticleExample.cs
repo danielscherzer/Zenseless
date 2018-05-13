@@ -11,12 +11,12 @@
 		private static void Main()
 		{
 			var window = new ExampleWindow();
-			var orbit = window.GameWindow.CreateOrbitingCameraController(3, 70, 0.1f, 20);
-			orbit.Elevation = 35;
-			orbit.Azimuth = 60;
+			var camera = window.GameWindow.CreateOrbitingCameraController(3, 70, 0.1f, 20);
+			camera.View.Elevation = 35;
+			camera.View.Azimuth = 60;
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			var time = new GameTime();
-			window.Render += () => window.GameWindow.Title = $"{visual.Render(time.DeltaTime, orbit):F2}msec";
+			window.Render += () => window.GameWindow.Title = $"{visual.Render(time.DeltaTime, camera):F2}msec";
 			window.Resize += visual.Resize;
 			window.Run();
 

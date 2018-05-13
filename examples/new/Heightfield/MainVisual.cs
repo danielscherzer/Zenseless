@@ -1,11 +1,10 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-
-namespace Heightfield
+﻿namespace Heightfield
 {
+	using OpenTK.Graphics.OpenGL4;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
+
 	internal class MainVisual
 	{
 		public MainVisual(IRenderContext renderContext, IContentLoader contentLoader)
@@ -28,10 +27,10 @@ namespace Heightfield
 			mountain = new MeshVisual(mesh, shaderProgram, bindings);
 		}
 
-		internal void Render(TransformationHierarchyNode camera)
+		internal void Render(ITransformation camera)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			mountain.Draw((shader) => shader.Uniform("camera", camera.CalcGlobalTransformation(), true));
+			mountain.Draw((shader) => shader.Uniform("camera", camera));
 		}
 
 		private readonly MeshVisual mountain;

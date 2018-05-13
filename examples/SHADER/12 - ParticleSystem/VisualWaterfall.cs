@@ -82,7 +82,7 @@ namespace Example
 			renderState.Set(new ShaderPointSize(true));
 
 			shaderWaterfall.Activate();
-			shaderWaterfall.Uniform(nameof(camera), camera);
+			shaderWaterfall.Uniform(nameof(camera), camera, true);
 			shaderWaterfall.Uniform("pointSize", smallerWindowSideResolution * 0.00083f);
 			//shader.Uniform("texParticle", 0);
 			texStar.Activate();

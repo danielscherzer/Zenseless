@@ -78,7 +78,7 @@ namespace Example
 			renderState.Set(new ShaderPointSize(true));
 
 			shaderSmoke.Activate();
-			shaderSmoke.Uniform(nameof(camera), camera);
+			shaderSmoke.Uniform(nameof(camera), camera, true);
 			shaderSmoke.Uniform("pointSize", smallerWindowSideResolution * 0.002f);
 			//shader.Uniform("texParticle", 0);
 			texSmoke.Activate();

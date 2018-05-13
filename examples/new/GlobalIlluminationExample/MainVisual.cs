@@ -19,12 +19,12 @@ namespace Example
 			bufferMaterials.Set(Meshes.CreateCornellBoxMaterial(), BufferUsageHint.StaticDraw);
 		}
 
-		public void Render(TransformationHierarchyNode camera, in Vector3 cameraPosition)
+		public void Render(ITransformation camera, in Vector3 cameraPosition)
 		{
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
+			shaderProgram.Uniform("camera", camera);
 			shaderProgram.Uniform("ambient", new Vector3(0.1f));
 			shaderProgram.Uniform("lightPosition", new Vector3(0, 0.9f, -0.5f));
 			shaderProgram.Uniform("lightColor", new Vector3(0.8f));

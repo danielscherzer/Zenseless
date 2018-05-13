@@ -1,13 +1,13 @@
-﻿using System;
-using System.Numerics;
-
-namespace Zenseless.Geometry
+﻿namespace Zenseless.Geometry
 {
+	using System;
+	using System.Numerics;
+
 	/// <summary>
 	/// Implements a orbiting transformation
 	/// </summary>
-	/// <seealso cref="TransformationHierarchyNode" />
-	public class Orbit : TransformationHierarchyNode
+	/// <seealso cref="ITransformation" />
+	public class Orbit : ITransformation
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Orbit"/> class.
@@ -15,9 +15,9 @@ namespace Zenseless.Geometry
 		/// <param name="distance">The distance to the target.</param>
 		/// <param name="azimuth">The azimuth or heading.</param>
 		/// <param name="elevation">The elevation or tilt.</param>
-		/// <param name="parent">The parent transformation.</param>
-		public Orbit(float distance = 1f, float azimuth = 0f, float elevation = 0f, TransformationHierarchyNode parent = null) : base(parent)
+		public Orbit(float distance = 1f, float azimuth = 0f, float elevation = 0f)
 		{
+			cachedMatrixView = new CachedCalculatedValue<Matrix4x4>(CalcViewMatrix);
 			Azimuth = azimuth;
 			Distance = distance;
 			Elevation = elevation;
@@ -31,10 +31,11 @@ namespace Zenseless.Geometry
 		/// </value>
 		public float Azimuth
 		{
-			get => _azimuth; set
+			get => _azimuth;
+			set
 			{
 				_azimuth = value;
-				UpdateMatrix();
+				cachedMatrixView.Invalidate();
 			}
 		}
 
@@ -46,10 +47,11 @@ namespace Zenseless.Geometry
 		/// </value>
 		public float Distance
 		{
-			get => _distance; set
+			get => _distance;
+			set
 			{
 				_distance = value;
-				UpdateMatrix();
+				cachedMatrixView.Invalidate();
 			}
 		}
 
@@ -65,9 +67,17 @@ namespace Zenseless.Geometry
 			set
 			{
 				_elevation = value;
-				UpdateMatrix();
+				cachedMatrixView.Invalidate();
 			}
 		}
+
+		/// <summary>
+		/// Gets the transformation matrix in row-major style.
+		/// </summary>
+		/// <value>
+		/// The matrix.
+		/// </value>
+		public Matrix4x4 Matrix => cachedMatrixView.Value;
 
 		/// <summary>
 		/// Gets or sets the target, the point the camera is looking at.
@@ -81,7 +91,7 @@ namespace Zenseless.Geometry
 			set
 			{
 				_target = value;
-				UpdateMatrix();
+				cachedMatrixView.Invalidate();
 			}
 		}
 
@@ -97,7 +107,7 @@ namespace Zenseless.Geometry
 			set
 			{
 				_target.X = value;
-				UpdateMatrix();
+				cachedMatrixView.Invalidate();
 			}
 		}
 
@@ -113,7 +123,7 @@ namespace Zenseless.Geometry
 			set
 			{
 				_target.Y = value;
-				UpdateMatrix();
+				cachedMatrixView.Invalidate();
 			}
 		}
 
@@ -129,7 +139,7 @@ namespace Zenseless.Geometry
 			set
 			{
 				_target.Z = value;
-				UpdateMatrix();
+				cachedMatrixView.Invalidate();
 			}
 		}
 
@@ -140,7 +150,7 @@ namespace Zenseless.Geometry
 		/// <exception cref="ArithmeticException">Could not invert matrix</exception>
 		public Vector3 CalcPosition()
 		{
-			if (!Matrix4x4.Invert(matrix, out Matrix4x4 inverse)) throw new ArithmeticException("Could not invert matrix");
+			if (!Matrix4x4.Invert(Matrix, out Matrix4x4 inverse)) throw new ArithmeticException("Could not invert matrix");
 			return inverse.Translation;
 		}
 
@@ -148,14 +158,15 @@ namespace Zenseless.Geometry
 		private float _distance = 0f;
 		private float _elevation = 0f;
 		private Vector3 _target = Vector3.Zero;
+		private CachedCalculatedValue<Matrix4x4> cachedMatrixView;
 
-		private void UpdateMatrix()
+		private Matrix4x4 CalcViewMatrix()
 		{
 			var mtxDistance = Matrix4x4.CreateTranslation(0, 0, -Distance);
 			var mtxElevation = Matrix4x4.CreateRotationX(MathHelper.DegreesToRadians(Elevation));
 			var mtxAzimut = Matrix4x4.CreateRotationY(MathHelper.DegreesToRadians(Azimuth));
 			var mtxTarget = Matrix4x4.CreateTranslation(-Target);
-			matrix = mtxTarget * mtxAzimut * mtxElevation * mtxDistance;
+			return mtxTarget * mtxAzimut * mtxElevation * mtxDistance;
 		}
 	}
 }

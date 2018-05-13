@@ -1,12 +1,12 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System.Collections.Generic;
-using System.Numerics;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Graphics.OpenGL4;
+	using System.Collections.Generic;
+	using System.Numerics;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
+
 	public class MainVisual
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
@@ -30,11 +30,11 @@ namespace Example
 			visuals.Add(new MeshVisual(envSphere, shaderProgram, textBinding));
 		}
 
-		public void Render(TransformationHierarchyNode camera, Vector3 cameraPosition)
+		public void Render(ITransformation camera, Vector3 cameraPosition)
 		{
 			void SetUniforms(IShaderProgram shaderProgram)
 			{
-				shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
+				shaderProgram.Uniform("camera", camera);
 				shaderProgram.Uniform(nameof(cameraPosition), cameraPosition);
 			}
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);

@@ -22,11 +22,11 @@
 			visualWaterfall.Update(time);
 		}
 
-		public void Render(TransformationHierarchyNode camera)
+		public void Render(ITransformation camera)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			var cam = Matrix4x4.Transpose(camera.CalcGlobalTransformation());
+			var cam = camera.Matrix;
 			plane.Draw(cam);
 			visualSmoke.Render(cam);
 			visualWaterfall.Render(cam);

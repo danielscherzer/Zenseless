@@ -1,11 +1,7 @@
-﻿using System.Numerics;
-
-namespace Zenseless.Geometry
+﻿namespace Zenseless.Geometry
 {
 	/// <summary>
-	/// Transformation class that abstracts from matrices.
-	/// It can return transformation matrices in row-major or column-major style.
-	/// Internally it works with the row-major matrices (<seealso cref="Matrix4x4"/>).
+	/// Transformation class that supports hierarchical transformations via parent relationships.
 	/// </summary>
 	public class TransformationHierarchyNode
 	{
@@ -16,17 +12,18 @@ namespace Zenseless.Geometry
 		public TransformationHierarchyNode(TransformationHierarchyNode parent)
 		{
 			Parent = parent;
+			LocalTransformation = Transformation.Identity;
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TransformationHierarchyNode"/> class.
 		/// </summary>
-		/// <param name="transformation">The node transformation.</param>
+		/// <param name="localTransformation">The node transformation.</param>
 		/// <param name="parent">The parent transformation hierarchy node.</param>
-		public TransformationHierarchyNode(ITransformation transformation, TransformationHierarchyNode parent)
+		public TransformationHierarchyNode(ITransformation localTransformation, TransformationHierarchyNode parent)
 		{
-			Transformation = transformation;
 			Parent = parent;
+			LocalTransformation = localTransformation ?? throw new System.ArgumentNullException(nameof(localTransformation));
 		}
 
 		/// <summary>
@@ -43,22 +40,20 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The transformation.
 		/// </value>
-		public ITransformation Transformation { get; set; }
+		public ITransformation LocalTransformation { get; set; }
 
 		/// <summary>
-		/// Gets a local to world transformation matrix in row-major form. 
+		/// Gets a local to world transformation. 
 		/// This includes the whole transformation chain with all parents
 		/// </summary>
 		/// <returns></returns>
-		public Matrix4x4 CalcGlobalTransformation()
+		public Transformation CalcGlobalTransformation()
 		{
-			if (Parent is null) return matrix;
-			return matrix * Parent.CalcGlobalTransformation();
+			if (Parent is null) return new Transformation(LocalTransformation.Matrix);
+			debugCounter++;
+			return Transformation.Combine(LocalTransformation, Parent.CalcGlobalTransformation());
 		}
 
-		/// <summary>
-		/// The matrix field for descendants
-		/// </summary>
-		protected Matrix4x4 matrix = Matrix4x4.Identity;
+		public static int debugCounter = 0;
 	}
 }

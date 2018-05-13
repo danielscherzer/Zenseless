@@ -13,10 +13,10 @@
 			var window = new ExampleWindow();
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 
-			var orbit = window.GameWindow.CreateOrbitingCameraController(3, 70, 0.1f, 20f);
-			orbit.Elevation = 15;
+			var camera = window.GameWindow.CreateOrbitingCameraController(3, 70, 0.1f, 20f);
+			camera.View.Elevation = 15;
 
-			window.Render += () => visual.Render(orbit);
+			window.Render += () => visual.Render(camera);
 			window.Run();
 
 		}

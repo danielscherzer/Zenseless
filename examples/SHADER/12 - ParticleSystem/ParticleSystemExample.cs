@@ -14,7 +14,7 @@
 			var controller = new Controller();
 
 			var camera = window.GameWindow.CreateOrbitingCameraController(2, 70, 0.1f, 20f);
-			camera.Elevation = 15;
+			camera.View.Elevation = 15;
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 
 			var time = new GameTime();

@@ -29,14 +29,14 @@ namespace Example
 			shaderProgram = contentLoader.Load<IShaderProgram>("particle.*");
 		}
 
-		public double Render(float deltaTime, TransformationHierarchyNode camera)
+		public double Render(float deltaTime, ITransformation camera)
 		{
 			if (shaderProgram is null) return 0;
 			var timerQueryResult = timeQuery.ResultLong * 1e-6;
 			timeQuery.Activate(QueryTarget.TimeElapsed);
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
+			shaderProgram.Uniform("camera", camera);
 			shaderProgram.Uniform(nameof(deltaTime), deltaTime);
 			shaderProgram.Uniform("pointResolutionScale", smallerWindowSideResolution * 0.001f);
 			var bindingIndex = shaderProgram.GetResourceLocation(ShaderResourceType.RWBuffer, "BufferParticle");

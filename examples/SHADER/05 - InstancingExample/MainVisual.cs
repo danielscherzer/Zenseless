@@ -24,7 +24,7 @@
 			InitParticles();
 		}
 
-		public void Render(TransformationHierarchyNode camera)
+		public void Render(ITransformation camera)
 		{
 #if SOLUTION
 			for (int i = 0; i < instanceCount; ++i)
@@ -44,7 +44,7 @@
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
 #if SOLUTION
-			shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
+			shaderProgram.Uniform("camera", camera);
 #endif
 			geometry.Draw(instanceCount);
 			shaderProgram.Deactivate();

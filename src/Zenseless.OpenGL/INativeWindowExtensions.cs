@@ -1,10 +1,10 @@
-﻿using OpenTK;
-using OpenTK.Input;
-using System;
-using Zenseless.Geometry;
-
-namespace Zenseless.OpenGL
+﻿namespace Zenseless.OpenGL
 {
+	using OpenTK;
+	using OpenTK.Input;
+	using System;
+	using Zenseless.Geometry;
+
 	/// <summary>
 	/// Extension method class for OpenTK.INativeWindow
 	/// </summary>
@@ -98,13 +98,15 @@ namespace Zenseless.OpenGL
 		/// <param name="nearClip">The near clip plane distance.</param>
 		/// <param name="farClip">The far clip plane distance.</param>
 		/// <returns></returns>
-		public static Orbit CreateOrbitingCameraController(this INativeWindow window, float distance, float fieldOfViewY = 90f, float nearClip = 0.1f, float farClip = 1f)
+		public static Camera<Orbit, Perspective> CreateOrbitingCameraController(this INativeWindow window, float distance, float fieldOfViewY = 90f, float nearClip = 0.1f, float farClip = 1f)
 		{
 			var perspective = new Perspective(fieldOfViewY, nearClip, farClip);
 			window.AddWindowAspectHandling(perspective);
-			var orbit = new Orbit(distance, parent: perspective);
+			var orbit = new Orbit(distance);
 			window.AddMayaCameraEvents(perspective, orbit);
-			return orbit;
+
+			var camera = new Camera<Orbit, Perspective>(orbit, perspective);
+			return camera;
 		}
 
 		/// <summary>

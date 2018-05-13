@@ -4,7 +4,8 @@
 	using System.Numerics;
 
 	/// <summary>
-	/// Immutable transformation structure that abstracts from matrices.
+	/// Immutable transformation structure that abstracts from matrices. 
+	/// Do not use the parameterless default constructor because he initializes the transform not to the identity, but to the 0 transform.
 	/// Internally it works with the row-major matrices (<seealso cref="Matrix4x4"/>).
 	/// </summary>
 	public struct Transformation : ITransformation
@@ -39,22 +40,19 @@
 		/// <summary>
 		/// Combines the two specified transforms.
 		/// </summary>
-		/// <param name="transform">The transform.</param>
+		/// <param name="localTransform">The local transform.</param>
 		/// <param name="parent">The parent transform.</param>
 		/// <returns></returns>
-		public static Transformation Combine(in ITransformation transform, in ITransformation parent)
+		public static Transformation Combine(in ITransformation localTransform, in ITransformation parent)
 		{
-			return new Transformation(transform.Matrix * parent.Matrix);
+			return new Transformation(localTransform.Matrix * parent.Matrix);
 		}
 
 		/// <summary>
 		/// Creates an identity transform.
 		/// </summary>
 		/// <returns></returns>
-		public static Transformation Identity()
-		{
-			return new Transformation(Matrix4x4.Identity);
-		}
+		public static Transformation Identity => new Transformation(Matrix4x4.Identity);
 
 		/// <summary>
 		/// Creates a scale transform.

@@ -37,12 +37,12 @@
 			geometryToon = VAOLoader.FromMesh(suzanne.Transform(Transformation.Translation(2, 0, 0)), shaderProgramToon);
 		}
 
-		public void Render(TransformationHierarchyNode cameraXform, in Vector3 cameraPosition)
+		public void Render(ITransformation cameraXform, in Vector3 cameraPosition)
 		{
 			if (shaderProgramPhong is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			var camera = cameraXform.CalcGlobalTransformation();
+			var camera = cameraXform.Matrix;
 
 			shaderProgramPhong.Activate();
 			shaderProgramPhong.Uniform("light1Direction", Vector3.Normalize(new Vector3(-1, -1, 1)));

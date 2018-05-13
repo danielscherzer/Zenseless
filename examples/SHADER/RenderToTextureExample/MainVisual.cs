@@ -20,14 +20,14 @@ namespace Example
 
 		private readonly IRenderState renderState;
 
-		public void Draw(TransformationHierarchyNode camera)
+		public void Draw(ITransformation camera)
 		{
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			renderState.Set(new DepthTest(true));
 			renderState.Set(new BackFaceCulling(true));
 			shaderProgram.Activate();
-			shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
+			shaderProgram.Uniform("camera", camera);
 
 			geometry.Draw();
 			shaderProgram.Deactivate();
@@ -35,7 +35,7 @@ namespace Example
 			renderState.Set(new DepthTest(false));
 		}
 
-		public void DrawWithPostProcessing(float time, TransformationHierarchyNode camera)
+		public void DrawWithPostProcessing(float time, ITransformation camera)
 		{
 			renderToTexture.Activate(); //start drawing into texture
 			Draw(camera);

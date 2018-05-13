@@ -39,6 +39,8 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CachedCalculatedValue.cs" />
+    <Compile Include="Transforms\Camera.cs" />
     <Compile Include="Transforms\CameraFirstPersonMovementState.cs" />
     <Compile Include="Box3D.cs" />
     <Compile Include="Box2D.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="IReadOnlyBox2Dextensions.cs" />
     <Compile Include="ShapeBuilder.cs" />
     <Compile Include="Transforms\Axis.cs" />
+    <Compile Include="Transforms\Extensions.cs" />
     <Compile Include="Transforms\ITransformation.cs" />
     <Compile Include="Transforms\Orbit.cs" />
     <Compile Include="Transforms\Perspective.cs" />

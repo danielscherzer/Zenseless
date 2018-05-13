@@ -14,7 +14,7 @@
 			var window = new ExampleWindow();
 
 			var camera = window.GameWindow.CreateOrbitingCameraController(1.8f, 70, 0.1f, 50f);
-			camera.TargetY = -0.3f;
+			camera.View.TargetY = -0.3f;
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 
 			var globalTime = new GameTime();

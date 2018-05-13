@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 using System;
+using System.Numerics;
 using Zenseless.Base;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
@@ -21,14 +21,14 @@ namespace Example
 			UpdateAttributes(shaderProgram);
 		}
 
-		public void Render(TransformationHierarchyNode camera)
+		public void Render(ITransformation camera)
 		{
 			if (shaderProgram is null) return;
 			var time = gameTime.AbsoluteTime;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
 			shaderProgram.Uniform(nameof(time), time);
-			shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
+			shaderProgram.Uniform("camera", camera);
 			geometry.Draw(particleCount);
 			shaderProgram.Deactivate();
 		}

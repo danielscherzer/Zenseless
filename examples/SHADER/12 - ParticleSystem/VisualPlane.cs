@@ -21,7 +21,7 @@ namespace Example
 
 			renderState.Set(new BackFaceCulling(false));
 			shdPlane.Activate();
-			shdPlane.Uniform(nameof(camera), camera);
+			shdPlane.Uniform(nameof(camera), camera, true);
 
 			plane.Draw();
 			shdPlane.Deactivate();
