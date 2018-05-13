@@ -17,32 +17,32 @@
 			var mesh = new DefaultMesh();
 			var roomSize = 8;
 			//off-center plane
-			var plane = Meshes.CreatePlane(roomSize, roomSize, 2, 2).Transform(new Translation3D(0, -roomSize / 2, 0));
+			var plane = Meshes.CreatePlane(roomSize, roomSize, 2, 2).Transform(Transformation.Translation(0, -roomSize / 2, 0));
 			mesh.Add(plane);
 			//rotate plane to create box
-			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 90f)));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 180f)));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 270f)));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.X, 90f)));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.X, -90f)));
+			mesh.Add(plane.Transform(Transformation.Rotation(90f, Axis.Z)));
+			mesh.Add(plane.Transform(Transformation.Rotation(180f, Axis.Z)));
+			mesh.Add(plane.Transform(Transformation.Rotation(270f, Axis.Z)));
+			mesh.Add(plane.Transform(Transformation.Rotation(90f, Axis.X)));
+			mesh.Add(plane.Transform(Transformation.Rotation(-90f, Axis.X)));
 
 			var sphere = Meshes.CreateSphere(1);
 			sphere.SetConstantUV(Vector2.Zero); //all other meshes have texture coordinates
 			mesh.Add(sphere);
 			var suzanne = contentLoader.Load<DefaultMesh>("suzanne");
-			mesh.Add(suzanne.Transform(new Translation3D(2, 2, -2)));
+			mesh.Add(suzanne.Transform(Transformation.Translation(2, 2, -2)));
 			geometryPhong = VAOLoader.FromMesh(mesh, shaderProgramPhong);
 
 			shaderProgramToon = contentLoader.Load<IShaderProgram>("toon.*");
-			geometryToon = VAOLoader.FromMesh(suzanne.Transform(new Translation3D(2, 0, 0)), shaderProgramToon);
+			geometryToon = VAOLoader.FromMesh(suzanne.Transform(Transformation.Translation(2, 0, 0)), shaderProgramToon);
 		}
 
-		public void Render(Transformation3D cameraXform, in Vector3 cameraPosition)
+		public void Render(TransformationHierarchyNode cameraXform, in Vector3 cameraPosition)
 		{
 			if (shaderProgramPhong is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			var camera = cameraXform.CalcLocalToWorldColumnMajorMatrix();
+			var camera = cameraXform.CalcGlobalTransformation();
 
 			shaderProgramPhong.Activate();
 			shaderProgramPhong.Uniform("light1Direction", Vector3.Normalize(new Vector3(-1, -1, 1)));
@@ -55,7 +55,7 @@
 			shaderProgramPhong.Uniform("light3Color", new Vector4(0, 0, 1f, 1f));
 			shaderProgramPhong.Uniform(nameof(ambientLightColor), ambientLightColor);
 			shaderProgramPhong.Uniform(nameof(materialColor), materialColor);
-			shaderProgramPhong.Uniform(nameof(camera), camera);
+			shaderProgramPhong.Uniform(nameof(camera), camera, true);
 			shaderProgramPhong.Uniform(nameof(cameraPosition), cameraPosition);
 			geometryPhong.Draw();
 			shaderProgramPhong.Deactivate();
@@ -65,7 +65,7 @@
 			shaderProgramToon.Uniform(nameof(light2Position), light2Position);
 			shaderProgramToon.Uniform(nameof(ambientLightColor), ambientLightColor);
 			shaderProgramToon.Uniform(nameof(materialColor), materialColor);
-			shaderProgramToon.Uniform(nameof(camera), camera);
+			shaderProgramToon.Uniform(nameof(camera), camera, true);
 			shaderProgramToon.Uniform(nameof(cameraPosition), cameraPosition);
 
 			geometryToon.Draw();

@@ -3,32 +3,38 @@
 namespace Zenseless.Geometry
 {
 	/// <summary>
-	/// Implements a translation transformation
+	/// Implements a translation transformation that allows incremental changes
 	/// </summary>
-	/// <seealso cref="Transformation3D" />
-	public class Translation3D : Transformation3D
+	/// <seealso cref="ITransformation" />
+	public class Translation : ITransformation
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Translation3D"/> class.
+		/// Initializes a new instance of the <see cref="Translation"/> class.
 		/// </summary>
 		/// <param name="x">The x-coordinate.</param>
 		/// <param name="y">The y-coordinate.</param>
 		/// <param name="z">The z-coordinate.</param>
-		/// <param name="parent">The parent transformation</param>
-		public Translation3D(float x, float y, float z, Transformation3D parent = null) : base(parent)
+		public Translation(float x, float y, float z)
 		{
 			matrix = Matrix4x4.CreateTranslation(x, y, z);
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Translation3D"/> class.
+		/// Initializes a new instance of the <see cref="Translation"/> class.
 		/// </summary>
 		/// <param name="translation">The translation vector.</param>
-		/// <param name="parent">The parent transformation</param>
-		public Translation3D(Vector3 translation, Transformation3D parent = null) : base(parent)
+		public Translation(Vector3 translation)
 		{
 			matrix = Matrix4x4.CreateTranslation(translation);
 		}
+
+		/// <summary>
+		/// Gets the transformation matrix in row-major style.
+		/// </summary>
+		/// <value>
+		/// The matrix.
+		/// </value>
+		public Matrix4x4 Matrix { get => matrix; }
 
 		/// <summary>
 		/// Gets or sets the x-coordinate.
@@ -36,7 +42,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The x-coordinate.
 		/// </value>
-		public float Tx { get { return matrix.M41; } set { matrix.M41 = value; } }
+		public float Tx { get { return Matrix.M41; } set { matrix.M41 = value; } }
 
 		/// <summary>
 		/// Gets or sets the y-coordinate.
@@ -44,7 +50,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The y-coordinate.
 		/// </value>
-		public float Ty { get { return matrix.M42; } set { matrix.M42 = value; } }
+		public float Ty { get { return Matrix.M42; } set { matrix.M42 = value; } }
 
 		/// <summary>
 		/// Gets or sets the z-coordinate.
@@ -52,7 +58,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The z-coordinate.
 		/// </value>
-		public float Tz { get { return matrix.M43; } set { matrix.M43 = value; } }
+		public float Tz { get { return Matrix.M43; } set { matrix.M43 = value; } }
 
 		/// <summary>
 		/// Gets or sets the translation vector.
@@ -60,7 +66,8 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The translation vector.
 		/// </value>
-		public Vector3 Translation { get { return matrix.Translation; } set { matrix.Translation = value; } }
+		public Vector3 Vector { get { return Matrix.Translation; } set { matrix.Translation = value; } }
 
+		private Matrix4x4 matrix;
 	}
 }

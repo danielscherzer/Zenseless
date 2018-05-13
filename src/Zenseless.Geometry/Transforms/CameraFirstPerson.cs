@@ -104,7 +104,6 @@ namespace Zenseless.Geometry
 		/// <returns></returns>
 		public Matrix4x4 CalcViewMatrix()
 		{
-			var t = new Translation3D(-Position);
 			var mtxTranslate = Matrix4x4.Transpose(Matrix4x4.CreateTranslation(-Position));
 			var mtxRotate = CalcRotationMatrix();
 			return mtxRotate * mtxTranslate;

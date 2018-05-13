@@ -6,8 +6,8 @@ namespace Zenseless.Geometry
 	/// <summary>
 	/// Implements a orbiting transformation
 	/// </summary>
-	/// <seealso cref="Transformation3D" />
-	public class Orbit : Transformation3D
+	/// <seealso cref="TransformationHierarchyNode" />
+	public class Orbit : TransformationHierarchyNode
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Orbit"/> class.
@@ -16,7 +16,7 @@ namespace Zenseless.Geometry
 		/// <param name="azimuth">The azimuth or heading.</param>
 		/// <param name="elevation">The elevation or tilt.</param>
 		/// <param name="parent">The parent transformation.</param>
-		public Orbit(float distance = 1f, float azimuth = 0f, float elevation = 0f, Transformation3D parent = null) : base(parent)
+		public Orbit(float distance = 1f, float azimuth = 0f, float elevation = 0f, TransformationHierarchyNode parent = null) : base(parent)
 		{
 			Azimuth = azimuth;
 			Distance = distance;

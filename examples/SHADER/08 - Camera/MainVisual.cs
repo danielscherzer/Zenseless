@@ -21,14 +21,14 @@ namespace Example
 			UpdateAttributes(shaderProgram);
 		}
 
-		public void Render(Transformation3D camera)
+		public void Render(TransformationHierarchyNode camera)
 		{
 			if (shaderProgram is null) return;
 			var time = gameTime.AbsoluteTime;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
 			shaderProgram.Uniform(nameof(time), time);
-			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
+			shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
 			geometry.Draw(particleCount);
 			shaderProgram.Deactivate();
 		}

@@ -63,13 +63,15 @@
     <Compile Include="IReadOnlyBox2Dextensions.cs" />
     <Compile Include="ShapeBuilder.cs" />
     <Compile Include="Transforms\Axis.cs" />
+    <Compile Include="Transforms\ITransformation.cs" />
     <Compile Include="Transforms\Orbit.cs" />
     <Compile Include="Transforms\Perspective.cs" />
-    <Compile Include="Transforms\Rotation3D.cs" />
-    <Compile Include="Transforms\Scale3D.cs" />
+    <Compile Include="Transforms\Rotation.cs" />
+    <Compile Include="Transforms\Scale.cs" />
+    <Compile Include="Transforms\Transformation.cs" />
     <Compile Include="Transforms\Transformation2D.cs" />
-    <Compile Include="Transforms\Transformation3D.cs" />
-    <Compile Include="Transforms\Translation3D.cs" />
+    <Compile Include="Transforms\TransformationHierarchyNode.cs" />
+    <Compile Include="Transforms\Translation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Zenseless.Geometry.nuspec" />

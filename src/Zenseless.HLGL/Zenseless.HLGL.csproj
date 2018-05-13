@@ -54,6 +54,7 @@
     <Compile Include="handler\IAfterRendering.cs" />
     <Compile Include="handler\IBeforeRendering.cs" />
     <Compile Include="IRenderSurface.cs" />
+    <Compile Include="ShaderExtensions.cs" />
     <Compile Include="StateManagement\ActiveRenderSurface.cs" />
     <Compile Include="StateManagement\ActiveShader.cs" />
     <Compile Include="StateManagement\BackFaceCulling.cs" />

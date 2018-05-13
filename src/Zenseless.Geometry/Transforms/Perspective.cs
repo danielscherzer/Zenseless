@@ -6,8 +6,8 @@ namespace Zenseless.Geometry
 	/// <summary>
 	/// Implements a Perspective transformation
 	/// </summary>
-	/// <seealso cref="Transformation3D" />
-	public class Perspective : Transformation3D
+	/// <seealso cref="TransformationHierarchyNode" />
+	public class Perspective : TransformationHierarchyNode
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Perspective"/> class.

@@ -26,15 +26,15 @@ namespace Example
 #if SOLUTION
 			visuals.Add(new MeshVisual(sphere, shaderProgram, textBinding));
 #endif
-			var envSphere = sphere.Transform(new Scale3D(200f)).SwitchTriangleMeshWinding();
+			var envSphere = sphere.Transform(Transformation.Scale(200f)).SwitchTriangleMeshWinding();
 			visuals.Add(new MeshVisual(envSphere, shaderProgram, textBinding));
 		}
 
-		public void Render(Transformation3D camera, Vector3 cameraPosition)
+		public void Render(TransformationHierarchyNode camera, Vector3 cameraPosition)
 		{
 			void SetUniforms(IShaderProgram shaderProgram)
 			{
-				shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
+				shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
 				shaderProgram.Uniform(nameof(cameraPosition), cameraPosition);
 			}
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);

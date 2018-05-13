@@ -100,6 +100,24 @@ namespace Zenseless.Geometry
 			return new Vector4(Clamp(v.X, min, max), Clamp(v.Y, min, max), Clamp(v.Z, min, max), Clamp(v.W, min, max));
 		}
 
+		/// <summary>
+		/// Creates a rotation matrix.
+		/// </summary>
+		/// <param name="degrees">The angle of rotation in degrees.</param>
+		/// <param name="axis">The axis of rotation.</param>
+		/// <returns>The <seealso cref="Matrix4x4"/></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static Matrix4x4 CreateRotation(float degrees, Axis axis = Axis.Z)
+		{
+			var radians = DegreesToRadians(degrees);
+			switch (axis)
+			{
+				case Axis.X: return Matrix4x4.CreateRotationX(radians);
+				case Axis.Y: return Matrix4x4.CreateRotationY(radians);
+				case Axis.Z: return Matrix4x4.CreateRotationZ(radians);
+				default: throw new ArgumentException($"Unknown axis:{axis}");
+			}
+		}
 
 		/// <summary>
 		/// Calculates the determinant of the two vectors.

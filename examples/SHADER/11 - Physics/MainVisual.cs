@@ -19,7 +19,7 @@
 			geometryBody = VAOLoader.FromMesh(mesh, shaderProgram);
 		}
 
-		public void Render(IEnumerable<IBody> bodies, float time, Transformation3D camera)
+		public void Render(IEnumerable<IBody> bodies, float time, TransformationHierarchyNode camera)
 		{
 			if (shaderProgram is null) return;
 			var instancePositions = new List<Vector3>();
@@ -35,7 +35,7 @@
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
 			shaderProgram.Uniform(nameof(time), time);
-			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
+			shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
 			geometryBody.Draw(instancePositions.Count);
 			shaderProgram.Deactivate();
 		}

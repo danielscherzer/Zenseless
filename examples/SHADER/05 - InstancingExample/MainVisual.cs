@@ -17,14 +17,14 @@
 			shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
 			var mesh = Meshes.CreateSphere(0.03f, 2);
 #if SOLUTION
-			mesh = contentLoader.Load<DefaultMesh>("suzanne").Transform(new Scale3D(0.03f));
+			mesh = contentLoader.Load<DefaultMesh>("suzanne").Transform(Transformation.Scale(0.03f));
 #endif
 			geometry = VAOLoader.FromMesh(mesh, shaderProgram);
 
 			InitParticles();
 		}
 
-		public void Render(Transformation3D camera)
+		public void Render(TransformationHierarchyNode camera)
 		{
 #if SOLUTION
 			for (int i = 0; i < instanceCount; ++i)
@@ -44,7 +44,7 @@
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
 #if SOLUTION
-			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
+			shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
 #endif
 			geometry.Draw(instanceCount);
 			shaderProgram.Deactivate();

@@ -27,7 +27,7 @@ namespace Example
 			shaderProgram = contentLoader.Load<IShaderProgram>("particle.*");
 		}
 
-		public void Render(float deltaTime, Transformation3D camera)
+		public void Render(float deltaTime, TransformationHierarchyNode camera)
 		{
 			if (shaderProgram is null) return;
 			//if ((destination - source).LengthSquared() < 0.01)
@@ -43,7 +43,7 @@ namespace Example
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
+			shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
 			shaderProgram.Uniform(nameof(deltaTime), deltaTime);
 			shaderProgram.Uniform(nameof(source), source);
 			shaderProgram.Uniform(nameof(acceleration), acceleration);

@@ -28,10 +28,10 @@ namespace Heightfield
 			mountain = new MeshVisual(mesh, shaderProgram, bindings);
 		}
 
-		internal void Render(Transformation3D camera)
+		internal void Render(TransformationHierarchyNode camera)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			mountain.Draw((shader) => shader.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix()));
+			mountain.Draw((shader) => shader.Uniform("camera", camera.CalcGlobalTransformation(), true));
 		}
 
 		private readonly MeshVisual mountain;

@@ -3,42 +3,47 @@
 namespace Zenseless.Geometry
 {
 	/// <summary>
-	/// Implements a translation transformation
+	/// Implements a scale transformation that allows incremental changes
 	/// </summary>
-	/// <seealso cref="Transformation3D" />
-	public class Scale3D : Transformation3D
+	/// <seealso cref="ITransformation" />
+	public class Scale : ITransformation
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Scale3D"/> class.
+		/// Initializes a new instance of the <see cref="Scale"/> class.
 		/// </summary>
 		/// <param name="uniformScale">The uniform scale factor.</param>
-		/// <param name="parent">The parent transformation</param>
-		public Scale3D(float uniformScale, Transformation3D parent = null) : base(parent)
+		public Scale(float uniformScale)
 		{
 			matrix = Matrix4x4.CreateScale(uniformScale);
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Scale3D"/> class.
+		/// Initializes a new instance of the <see cref="Scale"/> class.
 		/// </summary>
-		/// <param name="x">The x.</param>
-		/// <param name="y">The y.</param>
-		/// <param name="z">The z.</param>
-		/// <param name="parent">The parent transformation</param>
-		public Scale3D(float x, float y, float z, Transformation3D parent = null) : base(parent)
+		/// <param name="sx">The x.</param>
+		/// <param name="sy">The y.</param>
+		/// <param name="sz">The z.</param>
+		public Scale(float sx, float sy, float sz)
 		{
-			matrix = Matrix4x4.CreateScale(x, y, z);
+			matrix = Matrix4x4.CreateScale(sx, sy, sz);
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Scale3D"/> class.
+		/// Initializes a new instance of the <see cref="Scale"/> class.
 		/// </summary>
 		/// <param name="scaleVector">The scale vector.</param>
-		/// <param name="parent">The parent transformation</param>
-		public Scale3D(Vector3 scaleVector, Transformation3D parent = null) : base(parent)
+		public Scale(Vector3 scaleVector)
 		{
 			matrix = Matrix4x4.CreateScale(scaleVector);
 		}
+
+		/// <summary>
+		/// Gets the transformation matrix in row-major style.
+		/// </summary>
+		/// <value>
+		/// The matrix.
+		/// </value>
+		public Matrix4x4 Matrix => matrix;
 
 		/// <summary>
 		/// Gets or sets the x-coordinate.
@@ -63,5 +68,7 @@ namespace Zenseless.Geometry
 		/// The z-coordinate.
 		/// </value>
 		public float Sz { get { return matrix.M33; } set { matrix.M33 = value; } }
+
+		private Matrix4x4 matrix;
 	}
 }

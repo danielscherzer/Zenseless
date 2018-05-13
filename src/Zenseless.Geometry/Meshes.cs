@@ -64,21 +64,19 @@ namespace Zenseless.Geometry
 		/// <param name="mesh">The mesh to transform.</param>
 		/// <param name="transform">The transformation.</param>
 		/// <returns></returns>
-		public static DefaultMesh Transform(this DefaultMesh mesh, Transformation3D transform)
+		public static DefaultMesh Transform(this DefaultMesh mesh, Matrix4x4 transform)
 		{
-			if (transform is null) throw new ArgumentNullException(nameof(transform));
-			var matrix = transform.CalcLocalToWorldRowMajorMatrix();
 			var newMesh = new DefaultMesh();
 			newMesh.TexCoord.AddRange(mesh.TexCoord);
 			newMesh.IDs.AddRange(mesh.IDs);
 			foreach (var pos in mesh.Position)
 			{
-				var newPos = Vector3.Transform(pos, matrix);
+				var newPos = Vector3.Transform(pos, transform);
 				newMesh.Position.Add(newPos);
 			}
 			foreach (var n in mesh.Normal)
 			{
-				var newN = Vector3.Normalize(Vector3.TransformNormal(n, matrix));
+				var newN = Vector3.Normalize(Vector3.TransformNormal(n, transform));
 				newMesh.Normal.Add(newN);
 			}
 			return newMesh;
@@ -159,26 +157,25 @@ namespace Zenseless.Geometry
 		{
 			var mesh = new DefaultMesh();
 			//off-center plane
-			var plane = CreatePlane(roomSize, roomSize, 2, 2).Transform(new Translation3D(0, -roomSize / 2, 0));
+			var plane = CreatePlane(roomSize, roomSize, 2, 2).Transform(Transformation.Translation(0, -roomSize / 2, 0));
 			plane.SetConstantUV(new Vector2(0, 0));
 			mesh.Add(plane); //bottom
 			//rotate plane repeatedly to create box
-			mesh.Add(plane.Transform(new Rotation3D(Axis.X, 90f))); //front
-			mesh.Add(plane.Transform(new Rotation3D(Axis.X, -90f))); //back
+			mesh.Add(plane.Transform(Transformation.Rotation(90f, Axis.X))); //front
+			mesh.Add(plane.Transform(Transformation.Rotation(-90f, Axis.X))); //back
 			plane.SetConstantUV(new Vector2(1, 0));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 90f))); //right
+			mesh.Add(plane.Transform(Transformation.Rotation(90f, Axis.Z))); //right
 			plane.SetConstantUV(new Vector2(2, 0));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 270f))); //left
+			mesh.Add(plane.Transform(Transformation.Rotation(270f, Axis.Z))); //left
 			plane.SetConstantUV(new Vector2(0, 0));
-			mesh.Add(plane.Transform(new Rotation3D(Axis.Z, 180f))); //top
+			mesh.Add(plane.Transform(Transformation.Rotation(180f, Axis.Z))); //top
 
 			var sphere = CreateSphere(sphereRadius, 4);
 			sphere.SetConstantUV(new Vector2(3, 0));
-			mesh.Add(sphere.Transform(new Translation3D(0.4f, -1 + sphereRadius, -0.2f)));
+			mesh.Add(sphere.Transform(Transformation.Translation(0.4f, -1 + sphereRadius, -0.2f)));
 
 			var cube = CreateCubeWithNormals(cubeSize);
-			var trans = new Translation3D(-0.5f, -1 + 0.5f * cubeSize, 0.1f);
-			var translateAndRotY = new Rotation3D(Axis.Y, 35f, trans);
+			var translateAndRotY = Transformation.Combine(Transformation.Rotation(35f, Axis.Y), Transformation.Translation(-0.5f, -1 + 0.5f * cubeSize, 0.1f));
 
 			cube.SetConstantUV(new Vector2(3, 0));
 			mesh.Add(cube.Transform(translateAndRotY));

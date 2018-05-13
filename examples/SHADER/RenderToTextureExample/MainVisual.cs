@@ -20,21 +20,22 @@ namespace Example
 
 		private readonly IRenderState renderState;
 
-		public void Draw(Transformation3D camera)
+		public void Draw(TransformationHierarchyNode camera)
 		{
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			renderState.Set(new DepthTest(true));
 			renderState.Set(new BackFaceCulling(true));
 			shaderProgram.Activate();
-			shaderProgram.Uniform("camera", camera.CalcLocalToWorldColumnMajorMatrix());
+			shaderProgram.Uniform("camera", camera.CalcGlobalTransformation(), true);
+
 			geometry.Draw();
 			shaderProgram.Deactivate();
 			renderState.Set(new BackFaceCulling(false));
 			renderState.Set(new DepthTest(false));
 		}
 
-		public void DrawWithPostProcessing(float time, Transformation3D camera)
+		public void DrawWithPostProcessing(float time, TransformationHierarchyNode camera)
 		{
 			renderToTexture.Activate(); //start drawing into texture
 			Draw(camera);

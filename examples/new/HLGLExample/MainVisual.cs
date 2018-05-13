@@ -16,7 +16,7 @@
 			suzanne.BackfaceCulling = true;
 			suzanne.SetInputTexture("chalet", contentLoader.Load<ITexture2D>("chalet.jpg"));
 			//model from https://sketchfab.com/models/e925320e1d5744d9ae661aeff61e7aef
-			var mesh = contentLoader.Load<DefaultMesh>("chalet.obj").Transform(new Rotation3D(Axis.X, -90f));
+			var mesh = contentLoader.Load<DefaultMesh>("chalet.obj").Transform(Transformation.Rotation(-90f, Axis.X));
 			suzanne.UpdateMeshShader(mesh, contentLoader.Load<IShaderProgram>("shader.*"));
 			suzanne.ZBufferTest = true;
 
@@ -45,11 +45,11 @@
 			copyQuad.SetInputTexture("tex", surfaceGeometry);
 		}
 
-		public void Render(Transformation3D camera)
+		public void Render(TransformationHierarchyNode camera)
 		{
 			surfaceGeometry.Clear();
 
-			uniforms.camera = camera.CalcLocalToWorldRowMajorMatrix();
+			uniforms.camera = camera.CalcGlobalTransformation();
 			suzanne.UpdateUniforms(nameof(Uniforms), uniforms);
 			surfaceGeometry.Draw(suzanne);
 
