@@ -1,4 +1,6 @@
-﻿namespace Zenseless.Geometry
+﻿using System.Collections.Generic;
+
+namespace Zenseless.Geometry
 {
 	/// <summary>
 	/// Transformation class that supports hierarchical transformations via parent relationships.
@@ -11,8 +13,9 @@
 		/// <param name="parent">The parent transformation hierarchy node.</param>
 		public TransformationHierarchyNode(TransformationHierarchyNode parent)
 		{
-			Parent = parent;
+			globalTransform = new CachedCalculatedValue<Transformation>(CalcGlobalTransformation);
 			LocalTransformation = Transformation.Identity;
+			Parent = parent;
 		}
 
 		/// <summary>
@@ -20,19 +23,30 @@
 		/// </summary>
 		/// <param name="localTransformation">The node transformation.</param>
 		/// <param name="parent">The parent transformation hierarchy node.</param>
-		public TransformationHierarchyNode(ITransformation localTransformation, TransformationHierarchyNode parent)
+		public TransformationHierarchyNode(Transformation localTransformation, TransformationHierarchyNode parent)
 		{
+			globalTransform = new CachedCalculatedValue<Transformation>(CalcGlobalTransformation);
+			LocalTransformation = localTransformation;
 			Parent = parent;
-			LocalTransformation = localTransformation ?? throw new System.ArgumentNullException(nameof(localTransformation));
 		}
 
 		/// <summary>
-		/// Gets the parent transformation hierarchy node.
+		/// Gets the children.
 		/// </summary>
 		/// <value>
-		/// The parent transformation.
+		/// The children.
 		/// </value>
-		public TransformationHierarchyNode Parent { get; }
+		public IReadOnlyList<TransformationHierarchyNode> Children => children;
+
+		/// <summary>
+		/// Invalidates this instance and its children.
+		/// </summary>
+		public void Invalidate()
+		{
+			globalTransform.Invalidate();
+			foreach (var child in children) child.Invalidate();
+		}
+
 
 		/// <summary>
 		/// Gets or sets the transformation.
@@ -40,20 +54,58 @@
 		/// <value>
 		/// The transformation.
 		/// </value>
-		public ITransformation LocalTransformation { get; set; }
-
-		/// <summary>
-		/// Gets a local to world transformation. 
-		/// This includes the whole transformation chain with all parents
-		/// </summary>
-		/// <returns></returns>
-		public Transformation CalcGlobalTransformation()
+		public Transformation LocalTransformation
 		{
-			if (Parent is null) return new Transformation(LocalTransformation.Matrix);
-			debugCounter++;
-			return Transformation.Combine(LocalTransformation, Parent.CalcGlobalTransformation());
+			get => localTransform;
+			set
+			{
+				localTransform = value;
+				Invalidate();
+			}
 		}
 
-		public static int debugCounter = 0;
+		/// <summary>
+		/// Gets the global transformation (local to world transformation). 
+		/// This includes the whole transformation chain with all parents.
+		/// </summary>
+		/// <value>
+		/// The global transformation.
+		/// </value>
+		public Transformation GlobalTransformation => globalTransform.Value;
+
+		/// <summary>
+		/// Gets or sets the parent transformation hierarchy node.
+		/// </summary>
+		/// <value>
+		/// The parent transformation.
+		/// </value>
+		public TransformationHierarchyNode Parent
+		{
+			get => parent;
+			set
+			{
+				if (!(parent is null))
+				{
+					parent.children.Remove(this);
+				}
+				if (!(value is null))
+				{
+					value.children.Add(this);
+				}
+				parent = value;
+				Invalidate();
+			}
+		}
+
+		private readonly List<TransformationHierarchyNode> children = new List<TransformationHierarchyNode>();
+		private CachedCalculatedValue<Transformation> globalTransform;
+		private TransformationHierarchyNode parent;
+		private Transformation localTransform;
+
+		private Transformation CalcGlobalTransformation()
+		{
+			if (Parent is null) return LocalTransformation;
+			return Transformation.Combine(LocalTransformation, Parent.GlobalTransformation);
+		}
 	}
 }

@@ -1,13 +1,15 @@
 ﻿namespace Zenseless.Geometry
 {
 	using System;
+	using System.ComponentModel;
 	using System.Numerics;
+	using System.Runtime.CompilerServices;
 
 	/// <summary>
 	/// Implements a orbiting transformation
 	/// </summary>
 	/// <seealso cref="ITransformation" />
-	public class Orbit : ITransformation
+	public class Orbit : NotifyPropertyChanged, ITransformation
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Orbit"/> class.
@@ -18,9 +20,11 @@
 		public Orbit(float distance = 1f, float azimuth = 0f, float elevation = 0f)
 		{
 			cachedMatrixView = new CachedCalculatedValue<Matrix4x4>(CalcViewMatrix);
+			PropertyChanged += (s, a) => cachedMatrixView.Invalidate();
 			Azimuth = azimuth;
 			Distance = distance;
 			Elevation = elevation;
+
 		}
 
 		/// <summary>
@@ -35,7 +39,7 @@
 			set
 			{
 				_azimuth = value;
-				cachedMatrixView.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -51,7 +55,7 @@
 			set
 			{
 				_distance = value;
-				cachedMatrixView.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -67,7 +71,7 @@
 			set
 			{
 				_elevation = value;
-				cachedMatrixView.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -91,7 +95,7 @@
 			set
 			{
 				_target = value;
-				cachedMatrixView.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -107,7 +111,7 @@
 			set
 			{
 				_target.X = value;
-				cachedMatrixView.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -123,7 +127,7 @@
 			set
 			{
 				_target.Y = value;
-				cachedMatrixView.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -139,7 +143,7 @@
 			set
 			{
 				_target.Z = value;
-				cachedMatrixView.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 

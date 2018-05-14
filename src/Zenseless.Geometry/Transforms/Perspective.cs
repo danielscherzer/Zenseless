@@ -7,7 +7,7 @@
 	/// Implements a Perspective transformation that allows incremental changes
 	/// </summary>
 	/// <seealso cref="ITransformation" />
-	public class Perspective : ITransformation
+	public class Perspective : NotifyPropertyChanged, ITransformation
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Perspective"/> class.
@@ -19,6 +19,7 @@
 		public Perspective(float fieldOfViewY = 90f, float nearClip = 0.1f, float farClip = 1f, float aspect = 1f)
 		{
 			cachedMatrix = new CachedCalculatedValue<Matrix4x4>(CalculateProjectionMatrix);
+			PropertyChanged += (s, a) => cachedMatrix.Invalidate();
 			Aspect = aspect;
 			FarClip = farClip;
 			FieldOfViewY = fieldOfViewY;
@@ -36,7 +37,7 @@
 			get => _aspect; set
 			{
 				_aspect = Math.Max(value, float.Epsilon);
-				cachedMatrix.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -51,7 +52,7 @@
 			get => _farClip; set
 			{
 				_farClip = Math.Max(value, NearClip);
-				cachedMatrix.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -67,7 +68,7 @@
 			set
 			{
 				_fieldOfViewY = MathHelper.Clamp(value, float.Epsilon, 179.9f);
-				cachedMatrix.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -90,7 +91,7 @@
 			get => _nearClip; set
 			{
 				_nearClip = Math.Max(value, float.Epsilon);
-				cachedMatrix.Invalidate();
+				RaisePropertyChanged();
 			}
 		}
 

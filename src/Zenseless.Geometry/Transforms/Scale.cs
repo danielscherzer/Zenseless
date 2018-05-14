@@ -6,7 +6,7 @@ namespace Zenseless.Geometry
 	/// Implements a scale transformation that allows incremental changes
 	/// </summary>
 	/// <seealso cref="ITransformation" />
-	public class Scale : ITransformation
+	public class Scale : NotifyPropertyChanged, ITransformation
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Scale"/> class.
@@ -51,7 +51,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The x-coordinate.
 		/// </value>
-		public float Sx { get { return matrix.M11; } set { matrix.M11 = value; } }
+		public float Sx { get { return matrix.M11; } set { matrix.M11 = value; RaisePropertyChanged(); } }
 
 		/// <summary>
 		/// Gets or sets the y-coordinate.
@@ -59,7 +59,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The y-coordinate.
 		/// </value>
-		public float Sy { get { return matrix.M22; } set { matrix.M22 = value; } }
+		public float Sy { get { return matrix.M22; } set { matrix.M22 = value; RaisePropertyChanged(); } }
 
 		/// <summary>
 		/// Gets or sets the z-coordinate.
@@ -67,7 +67,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The z-coordinate.
 		/// </value>
-		public float Sz { get { return matrix.M33; } set { matrix.M33 = value; } }
+		public float Sz { get { return matrix.M33; } set { matrix.M33 = value; RaisePropertyChanged(); } }
 
 		private Matrix4x4 matrix;
 	}

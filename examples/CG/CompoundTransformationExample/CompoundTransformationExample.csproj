@@ -42,7 +42,6 @@
     <Compile Include="Model.cs" />
     <Compile Include="MyVisual.cs" />
     <Compile Include="Node.cs" />
-    <Compile Include="TransformNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

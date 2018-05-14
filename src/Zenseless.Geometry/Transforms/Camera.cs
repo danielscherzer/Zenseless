@@ -1,5 +1,6 @@
 ﻿namespace Zenseless.Geometry
 {
+	using System.ComponentModel;
 	using System.Numerics;
 
 	/// <summary>
@@ -7,7 +8,7 @@
 	/// </summary>
 	/// <typeparam name="VIEW">The type of the view.</typeparam>
 	/// <typeparam name="PROJECTION">The type of the projection.</typeparam>
-	public class Camera<VIEW, PROJECTION> : ITransformation where VIEW : ITransformation where PROJECTION : ITransformation
+	public class Camera<VIEW, PROJECTION> : ITransformation where VIEW : INotifyPropertyChanged, ITransformation where PROJECTION : INotifyPropertyChanged, ITransformation
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Camera{VIEW, PROJECTION}"/> class.
@@ -18,7 +19,10 @@
 		{
 			View = view;
 			Projection = projection;
-			node = new TransformationHierarchyNode(view, new TransformationHierarchyNode(projection, null));
+			var parent = new TransformationHierarchyNode(new Transformation(projection), null);
+			Projection.PropertyChanged += (s, a) => parent.LocalTransformation = new Transformation(projection);
+			node = new TransformationHierarchyNode(new Transformation(view), parent);
+			view.PropertyChanged += (s, a) => node.LocalTransformation = new Transformation(view);
 		}
 
 		/// <summary>
@@ -27,7 +31,7 @@
 		/// <value>
 		/// The matrix.
 		/// </value>
-		public Matrix4x4 Matrix => node.CalcGlobalTransformation().Matrix;
+		public Matrix4x4 Matrix => node.GlobalTransformation.Matrix;
 
 		/// <summary>
 		/// Gets the projection transformation.

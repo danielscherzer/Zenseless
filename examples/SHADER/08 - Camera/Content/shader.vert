@@ -13,7 +13,7 @@ out vec3 n;
 void main() 
 {
 	n = normal;
-
+	
 	vec3 pos = position;
 	pos += instancePosition + time * instanceSpeed;
 

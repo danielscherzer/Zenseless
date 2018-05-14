@@ -38,6 +38,7 @@
 				if(IsCacheDirty)
 				{
 					value = calculateValue();
+					IsCacheDirty = false;
 				}
 				return value;
 			}

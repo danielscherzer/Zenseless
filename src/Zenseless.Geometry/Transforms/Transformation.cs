@@ -6,7 +6,7 @@
 	/// <summary>
 	/// Immutable transformation structure that abstracts from matrices. 
 	/// Do not use the parameterless default constructor because he initializes the transform not to the identity, but to the 0 transform.
-	/// Internally it works with the row-major matrices (<seealso cref="Matrix4x4"/>).
+	/// Internally it uses row-major matrices (<seealso cref="Matrix4x4"/>).
 	/// </summary>
 	public struct Transformation : ITransformation
 	{
@@ -17,6 +17,15 @@
 		public Transformation(in Matrix4x4 matrix)
 		{
 			Matrix = matrix;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Transformation" /> structure.
+		/// </summary>
+		/// <param name="transformation">The transformation.</param>
+		public Transformation(in ITransformation transformation)
+		{
+			Matrix = transformation.Matrix;
 		}
 
 		/// <summary>

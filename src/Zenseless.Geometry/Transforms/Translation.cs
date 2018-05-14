@@ -6,7 +6,7 @@ namespace Zenseless.Geometry
 	/// Implements a translation transformation that allows incremental changes
 	/// </summary>
 	/// <seealso cref="ITransformation" />
-	public class Translation : ITransformation
+	public class Translation : NotifyPropertyChanged, ITransformation
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Translation"/> class.
@@ -42,7 +42,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The x-coordinate.
 		/// </value>
-		public float Tx { get { return Matrix.M41; } set { matrix.M41 = value; } }
+		public float Tx { get { return Matrix.M41; } set { matrix.M41 = value; RaisePropertyChanged(); } }
 
 		/// <summary>
 		/// Gets or sets the y-coordinate.
@@ -50,7 +50,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The y-coordinate.
 		/// </value>
-		public float Ty { get { return Matrix.M42; } set { matrix.M42 = value; } }
+		public float Ty { get { return Matrix.M42; } set { matrix.M42 = value; RaisePropertyChanged(); } }
 
 		/// <summary>
 		/// Gets or sets the z-coordinate.
@@ -58,7 +58,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The z-coordinate.
 		/// </value>
-		public float Tz { get { return Matrix.M43; } set { matrix.M43 = value; } }
+		public float Tz { get { return Matrix.M43; } set { matrix.M43 = value; RaisePropertyChanged(); } }
 
 		/// <summary>
 		/// Gets or sets the translation vector.
@@ -66,7 +66,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The translation vector.
 		/// </value>
-		public Vector3 Vector { get { return Matrix.Translation; } set { matrix.Translation = value; } }
+		public Vector3 Vector { get { return Matrix.Translation; } set { matrix.Translation = value; RaisePropertyChanged(); } }
 
 		private Matrix4x4 matrix;
 	}
