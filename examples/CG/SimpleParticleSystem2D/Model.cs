@@ -36,7 +36,7 @@ namespace Example
 		{
 			foreach (var particle in particles)
 			{
-				particle.ApplyForce(new Vector2(.03f, .1f)); //wind: upward draft, slightly to the right
+				particle.ApplyForce(new Vector2(.3f, -.3f)); //wind: upward draft, slightly to the right
 				particle.Update(deltaTime);
 				var lifeTime = 5f;  //particles life 5 seconds
 				particle.Age += deltaTime / lifeTime;

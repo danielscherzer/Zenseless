@@ -1,12 +1,12 @@
-﻿using Zenseless.HLGL;
-using OpenTK.Graphics.OpenGL4;
-
-namespace Zenseless.OpenGL
+﻿namespace Zenseless.OpenGL
 {
+	using Zenseless.HLGL;
+	using OpenTK.Graphics.OpenGL4;
+
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.OpenGL.FBO" />
+	/// <seealso cref="FBO" />
 	public class FBOwithDepth : FBO
 	{
 		/// <summary>
@@ -30,9 +30,6 @@ namespace Zenseless.OpenGL
 			depth.Dispose();
 		}
 
-		/// <summary>
-		/// The depth
-		/// </summary>
 		private RenderBuffer depth;
 	}
 }

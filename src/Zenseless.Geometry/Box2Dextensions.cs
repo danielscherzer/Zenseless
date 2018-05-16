@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace Zenseless.Geometry
@@ -34,18 +36,20 @@ namespace Zenseless.Geometry
 			return rectangle;
 		}
 		/// <summary>
-		/// Creates a box from corner points.
+		/// Creates an axis aligned box that contains all input points.
 		/// </summary>
-		/// <param name="a">An input corner point.</param>
-		/// <param name="b">An input corner point.</param>
+		/// <param name="points">Input points</param>
 		/// <returns>A box containing the points.</returns>
-		public static Box2D CreateFromPoints(Vector2 a, Vector2 b)
+		public static Box2D CreateFromPoints(this IEnumerable<Vector2> points)
 		{
-			var minX = Math.Min(a.X, b.X);
-			var minY = Math.Min(a.Y, b.Y);
-			var maxX = Math.Max(a.X, b.X);
-			var maxY = Math.Max(a.Y, b.Y);
-			return CreateFromMinMax(minX, minY, maxX, maxY);
+			var min = points.First();
+			var max = min;
+			foreach (var point in points.Skip(1))
+			{
+				min = Vector2.Min(min, point);
+				max = Vector2.Max(max, point);
+			}
+			return CreateFromMinMax(min, max);
 		}
 
 		/// <summary>
@@ -175,8 +179,19 @@ namespace Zenseless.Geometry
 		/// <param name="M">transformation matrix to apply</param>
 		public static void TransformCenter(this Box2D rectangle, Matrix3x2 M)
 		{
-			Vector2 center = new Vector2(rectangle.CenterX, rectangle.CenterY);
-			var newCenter = Vector2.Transform(center, M);
+			var newCenter = Vector2.Transform(rectangle.GetCenter(), M);
+			rectangle.CenterX = newCenter.X;
+			rectangle.CenterY = newCenter.Y;
+		}
+
+		/// <summary>
+		/// Transforms the center of a rectangle
+		/// </summary>
+		/// <param name="rectangle">The rectangle to transform.</param>
+		/// <param name="transformation">Transformation to apply.</param>
+		public static void TransformCenter(this Box2D rectangle, Transformation transformation)
+		{
+			var newCenter = transformation.Transform(rectangle.GetCenter());
 			rectangle.CenterX = newCenter.X;
 			rectangle.CenterY = newCenter.Y;
 		}

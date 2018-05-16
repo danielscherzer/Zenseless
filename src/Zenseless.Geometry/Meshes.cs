@@ -62,21 +62,21 @@ namespace Zenseless.Geometry
 		/// Transforms the mesh by the specified transform.
 		/// </summary>
 		/// <param name="mesh">The mesh to transform.</param>
-		/// <param name="transform">The transformation.</param>
+		/// <param name="transformation">The transformation.</param>
 		/// <returns></returns>
-		public static DefaultMesh Transform(this DefaultMesh mesh, Matrix4x4 transform)
+		public static DefaultMesh Transform(this DefaultMesh mesh, Transformation transformation)
 		{
 			var newMesh = new DefaultMesh();
 			newMesh.TexCoord.AddRange(mesh.TexCoord);
 			newMesh.IDs.AddRange(mesh.IDs);
 			foreach (var pos in mesh.Position)
 			{
-				var newPos = Vector3.Transform(pos, transform);
+				var newPos = transformation.Transform(pos);
 				newMesh.Position.Add(newPos);
 			}
 			foreach (var n in mesh.Normal)
 			{
-				var newN = Vector3.Normalize(Vector3.TransformNormal(n, transform));
+				var newN = Vector3.Normalize(Vector3.TransformNormal(n, transformation.Matrix));
 				newMesh.Normal.Add(newN);
 			}
 			return newMesh;

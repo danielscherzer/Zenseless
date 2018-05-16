@@ -9,7 +9,7 @@
 	public class MyVisual
 	{
 		private readonly ITexture texEarth;
-		private readonly ITexture texGreenMoon;
+		private readonly ITexture texGreen;
 
 		public MyVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
@@ -18,16 +18,16 @@
 			GL.Enable(EnableCap.Texture2D); //TODO: only for non shader pipeline relevant -> remove at some point
 
 			texEarth = contentLoader.Load<ITexture2D>("earth");
-			texGreenMoon = contentLoader.Load<ITexture2D>("planet");
+			texGreen = contentLoader.Load<ITexture2D>("planet");
 		}
 
 		public void Render(in IReadOnlyBox2D earth, IEnumerable<IReadOnlyBox2D> birds)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
-			DrawTexturedRect(earth, texEarth);
+			DrawTexturedRect(earth, texGreen);
 			foreach (var bird in birds)
 			{
-				DrawTexturedRect(bird, texGreenMoon);
+				DrawTexturedRect(bird, texEarth);
 			}
 		}
 

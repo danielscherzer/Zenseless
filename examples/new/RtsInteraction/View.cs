@@ -12,10 +12,6 @@
 		{
 			texTank = contentLoader.Load<ITexture2D>("tank");
 			shaderColorTexture = contentLoader.Load<IShaderProgram>("ColorTexture.*");
-			model2viewport.TranslateLocal(-1f, -1f);
-			model2viewport.ScaleLocal(2f, 2f);
-			viewport2Model.ScaleLocal(0.5f, 0.5f);
-			viewport2Model.TranslateLocal(1f, 1f);
 
 			context.RenderState.Set(BlendStates.AlphaBlend);
 			context.RenderState.Set(new LineSmoothing(true));
@@ -101,8 +97,7 @@
 			shaderColorTexture.Deactivate();
 		}
 
-		private Transformation2D model2viewport = new Transformation2D();
-		private Transformation2D viewport2Model = new Transformation2D();
+		private readonly Transformation viewport2Model = Transformation.Combine(Transformation.Translation(1f, 1f), Transformation.Scale(.5f));
 		private readonly ITexture2D texTank;
 		private readonly IShaderProgram shaderColorTexture;
 	}

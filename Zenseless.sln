@@ -130,7 +130,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "09 - Lighting", "examples\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11 - Physics", "examples\SHADER\11 - Physics\11 - Physics.csproj", "{ADFE07A0-D2B7-42A7-8DDC-C0F1D441ACC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderToTextureExample", "examples\SHADER\RenderToTextureExample\RenderToTextureExample.csproj", "{06D368A6-B600-4323-BDBC-EA5B9486C145}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "13 - RenderToTexture", "examples\SHADER\13 - RenderToTexture\13 - RenderToTexture.csproj", "{06D368A6-B600-4323-BDBC-EA5B9486C145}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02 - ShaderDebugDialogExample", "examples\SHADER\02 - ShaderDebugDialogExample\02 - ShaderDebugDialogExample.csproj", "{AB2FC8A2-9741-42B7-9170-D713B5125D78}"
 EndProject
@@ -152,6 +152,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breakout", "examples\new\Breakout\Breakout.csproj", "{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleBrowser", "examples\new\ExampleBrowser\ExampleBrowser.csproj", "{8376421E-113D-4D47-AE84-0367DD329D45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformation", "examples\CG\Transformation\Transformation.csproj", "{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -411,6 +413,10 @@ Global
 		{8376421E-113D-4D47-AE84-0367DD329D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8376421E-113D-4D47-AE84-0367DD329D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8376421E-113D-4D47-AE84-0367DD329D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -482,6 +488,7 @@ Global
 		{DCE6FA93-2963-470C-8EE2-077FF5F96FEE} = {4AD70E1B-FC00-4433-BDC0-D366B1E0FCCC}
 		{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{8376421E-113D-4D47-AE84-0367DD329D45} = {CB237D59-2840-48EB-888F-965EDB20E868}
+		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CA293D8-FC78-4BF1-BA73-543451A6B7AB}

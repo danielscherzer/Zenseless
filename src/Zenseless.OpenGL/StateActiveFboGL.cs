@@ -5,7 +5,7 @@ namespace Zenseless.OpenGL
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.HLGL.IState" />
+	/// <seealso cref="IState" />
 	public class StateActiveFboGL : IState
 	{
 		/// <summary>

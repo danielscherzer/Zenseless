@@ -9,6 +9,14 @@ namespace Zenseless.HLGL
 	public class RenderState : IRenderState
 	{
 		/// <summary>
+		/// Delegate type for the handling of state updates
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="oldState">The old state.</param>
+		/// <param name="newState">The new state.</param>
+		public delegate void UpdateHandler<T>(in T oldState, in T newState);
+
+		/// <summary>
 		/// Gets this instance.
 		/// </summary>
 		/// <typeparam name="TYPE">The type of the instance.</typeparam>

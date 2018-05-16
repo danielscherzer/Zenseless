@@ -1,10 +1,10 @@
-﻿using Zenseless.Geometry;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-using OpenTK.Graphics.OpenGL4;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Graphics.OpenGL4;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
+
 	public class MainVisual
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
@@ -22,13 +22,11 @@ namespace Example
 
 		public void Draw(ITransformation camera)
 		{
-			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			renderState.Set(new DepthTest(true));
 			renderState.Set(new BackFaceCulling(true));
 			shaderProgram.Activate();
 			shaderProgram.Uniform("camera", camera);
-
 			geometry.Draw();
 			shaderProgram.Deactivate();
 			renderState.Set(new BackFaceCulling(false));
@@ -40,8 +38,7 @@ namespace Example
 			renderToTexture.Activate(); //start drawing into texture
 			Draw(camera);
 			renderToTexture.Deactivate(); //stop drawing into texture
-			renderToTexture.Texture.Activate(); //us this new texture
-			if (shaderPostProcess is null) return;
+			renderToTexture.Texture.Activate(); //use this new texture
 			shaderPostProcess.Activate(); //activate post processing shader
 			shaderPostProcess.Uniform("iGlobalTime", time);
 			GL.DrawArrays(PrimitiveType.Quads, 0, 4); //draw quad

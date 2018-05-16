@@ -59,13 +59,18 @@
 			}
 			catch (ShaderException e)
 			{
-				e.Data[ShaderLoader.ExceptionDataFileName] = contentManager.LastChangedFilePath; //TODO: make cleaner after removal of old stuff
-				new FormShaderExceptionFacade().ShowModal(e);
+				ShaderErrorHandling(e);
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine(e.ToString());
 			}
+		}
+
+		private void ShaderErrorHandling(ShaderException e)
+		{
+			e.Data[ShaderLoader.ExceptionDataFileName] = contentManager.LastChangedFilePath; //TODO: make cleaner after removal of old stuff
+			new FormShaderExceptionFacade().ShowModal(e);
 		}
 
 		/// <summary>
@@ -78,7 +83,19 @@
 		/// </returns>
 		public TYPE Load<TYPE>(IEnumerable<string> names) where TYPE : class
 		{
-			return contentManager.Load<TYPE>(names);
+			try
+			{
+				return contentManager.Load<TYPE>(names);
+			}
+			catch (ShaderException e)
+			{
+				ShaderErrorHandling(e);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.ToString());
+			}
+			return null;
 		}
 	}
 }

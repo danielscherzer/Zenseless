@@ -71,7 +71,7 @@ namespace Zenseless.Geometry
 		/// <param name="min">lower limit</param>
 		/// <param name="max">upper limit</param>
 		/// <returns>clamped version of v</returns>
-		public static Vector2 Clamp(this Vector2 v, float min, float max)
+		public static Vector2 Clamp(this in Vector2 v, float min, float max)
 		{
 			return new Vector2(Clamp(v.X, min, max), Clamp(v.Y, min, max));
 		}
@@ -83,7 +83,7 @@ namespace Zenseless.Geometry
 		/// <param name="min">lower limit</param>
 		/// <param name="max">upper limit</param>
 		/// <returns>clamped version of v</returns>
-		public static Vector3 Clamp(this Vector3 v, float min, float max)
+		public static Vector3 Clamp(this in Vector3 v, float min, float max)
 		{
 			return new Vector3(Clamp(v.X, min, max), Clamp(v.Y, min, max), Clamp(v.Z, min, max));
 		}
@@ -95,7 +95,7 @@ namespace Zenseless.Geometry
 		/// <param name="min">lower limit</param>
 		/// <param name="max">upper limit</param>
 		/// <returns>clamped version of v</returns>
-		public static Vector4 Clamp(this Vector4 v, float min, float max)
+		public static Vector4 Clamp(this in Vector4 v, float min, float max)
 		{
 			return new Vector4(Clamp(v.X, min, max), Clamp(v.Y, min, max), Clamp(v.Z, min, max), Clamp(v.W, min, max));
 		}
@@ -125,7 +125,7 @@ namespace Zenseless.Geometry
 		/// <param name="a">Vector a.</param>
 		/// <param name="b">Vector b.</param>
 		/// <returns>The determinant</returns>
-		public static float Determinant(Vector2 a, Vector2 b)
+		public static float Determinant(in Vector2 a, in Vector2 b)
 		{
 			return a.X * b.Y - a.Y * b.X;
 		}
@@ -146,7 +146,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="v">The input vector.</param>
 		/// <returns>A vector normal to the input vector</returns>
-		public static Vector2 CwNormalTo(this Vector2 v)
+		public static Vector2 CwNormalTo(this in Vector2 v)
 		{
 			return new Vector2(v.Y, -v.X);
 		}
@@ -156,7 +156,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="v">The input vector.</param>
 		/// <returns>A vector normal to the input vector</returns>
-		public static Vector2 CcwNormalTo(this Vector2 v)
+		public static Vector2 CcwNormalTo(this in Vector2 v)
 		{
 			return new Vector2(-v.Y, v.X);
 		}
@@ -235,7 +235,7 @@ namespace Zenseless.Geometry
 		/// <param name="b">Second point</param>
 		/// <param name="weight">Interpolation weight</param>
 		/// <returns>Linearly interpolated point</returns>
-		public static Vector3 Lerp(Vector3 a, Vector3 b, float weight)
+		public static Vector3 Lerp(in Vector3 a, in Vector3 b, float weight)
 		{
 			return a * (1 - weight) + b * weight;
 		}
@@ -262,7 +262,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="v">Input vector</param>
 		/// <returns>For each component returns the largest integer less than or equal to the specified floating-point number.</returns>
-		public static Vector3 Floor(this Vector3 v) => new Vector3(FloorF(v.X), FloorF(v.Y), FloorF(v.Z));
+		public static Vector3 Floor(this in Vector3 v) => new Vector3(FloorF(v.X), FloorF(v.Y), FloorF(v.Z));
 
 		/// <summary>
 		/// Returns the value of x modulo y. This is computed as x - y * floor(x/y). 
@@ -270,7 +270,7 @@ namespace Zenseless.Geometry
 		/// <param name="x">Dividend</param>
 		/// <param name="y">Divisor</param>
 		/// <returns>Returns the value of x modulo y.</returns>
-		public static Vector3 Mod(this Vector3 x, float y)
+		public static Vector3 Mod(this in Vector3 x, float y)
 		{
 			var div = x / y;
 			return x - y * Floor(div);
@@ -282,7 +282,7 @@ namespace Zenseless.Geometry
 		/// <param name="v">Input normalized floating-point vector. Will be clamped</param>
 		/// <returns>The first component of the vector will be written to the least significant bits of the output; 
 		/// the last component will be written to the most significant bits.</returns>
-		public static uint PackUnorm4x8(this Vector4 v)
+		public static uint PackUnorm4x8(this in Vector4 v)
 		{
 			var r = Round(Clamp(v, 0.0f, 1.0f) * 255.0f);
 			var x = (uint)r.X;
@@ -322,14 +322,14 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="v">A floating-point vector to be rounded component-wise.</param>
 		/// <returns>Component-wise rounded vector</returns>
-		public static Vector3 Round(this Vector3 v) => new Vector3(Round(v.X), Round(v.Y), Round(v.Z));
+		public static Vector3 Round(this in Vector3 v) => new Vector3(Round(v.X), Round(v.Y), Round(v.Z));
 
 		/// <summary>
 		/// Rounds each component of a floating-point vector (using MathHelper.Round) to the nearest integral value.
 		/// </summary>
 		/// <param name="v">A floating-point vector to be rounded component-wise.</param>
 		/// <returns>Component-wise rounded vector</returns>
-		public static Vector4 Round(this Vector4 v) => new Vector4(Round(v.X), Round(v.Y), Round(v.Z), Round(v.W));
+		public static Vector4 Round(this in Vector4 v) => new Vector4(Round(v.X), Round(v.Y), Round(v.Z), Round(v.W));
 
 		/// <summary>
 		/// Converts given Cartesian coordinates into a polar angle.
@@ -337,7 +337,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="cartesian">Cartesian input coordinates</param>
 		/// <returns>An angle [-PI, PI].</returns>
-		public static float PolarAngle(this Vector2 cartesian)
+		public static float PolarAngle(this in Vector2 cartesian)
 		{
 			return (float)Math.Atan2(cartesian.Y, cartesian.X);
 		}
@@ -347,7 +347,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="polar">The polar coordinates. A vector with first component angle [-PI, PI] and second component radius.</param>
 		/// <returns>A Cartesian coordinate vector.</returns>
-		public static Vector2 ToCartesian(this Vector2 polar)
+		public static Vector2 ToCartesian(this in Vector2 polar)
 		{
 			float x = polar.Y * (float)Math.Cos(polar.X);
 			float y = polar.Y * (float)Math.Sin(polar.X);
@@ -360,11 +360,25 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="cartesian">Cartesian input coordinates</param>
 		/// <returns>A vector with first component angle [-PI, PI] and second component radius.</returns>
-		public static Vector2 ToPolar(this Vector2 cartesian)
+		public static Vector2 ToPolar(this in Vector2 cartesian)
 		{
 			float angle = cartesian.PolarAngle();
 			float radius = cartesian.Length();
 			return new Vector2(angle, radius);
 		}
+
+		/// <summary>
+		/// Returns the <seealso cref="Vector2"/> that results when dropping the z component from <seealso cref="Vector3"/>.
+		/// </summary>
+		/// <param name="vector">The <seealso cref="Vector3"/></param>
+		/// <returns><seealso cref="Vector2"/></returns>
+		public static Vector2 XY(this in Vector3 vector) => new Vector2(vector.X, vector.Y);
+
+		/// <summary>
+		/// Returns the <seealso cref="Vector3"/> that results when dropping the w component from <seealso cref="Vector4"/>.
+		/// </summary>
+		/// <param name="vector">The <seealso cref="Vector4"/>.</param>
+		/// <returns><seealso cref="Vector3"/></returns>
+		public static Vector3 XYZ(this in Vector4 vector) => new Vector3(vector.X, vector.Y, vector.Z);
 	}
 }

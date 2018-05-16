@@ -30,20 +30,22 @@ namespace Zenseless.OpenGL
 			renderState.Register((s) => Update(s.Enabled, EnableCap.LineSmooth), new LineSmoothing(false));
 			renderState.Register((s) => GL.LineWidth(s.Value), new LineWidth(1f));
 			renderState.Register((s) => Update(s.ShaderProgram), new ActiveShader(null));
-			renderState.Register((s) => Update(s.RenderSurface), new ActiveRenderSurface(null));
+			renderState.Register((s) => Update(renderState, s.RenderSurface), new ActiveRenderSurface(null));
 			return renderState;
 		}
 
-		private static void Update(IRenderSurface renderSurface)
+		private static void Update(IRenderState renderState, IRenderSurface renderSurface)
 		{
-			if(renderSurface is null)
+			var oldSurface = renderState.Get<ActiveRenderSurface>();
+			oldSurface.
+			if (renderSurface is null)
 			{
 				//TODO: view port
 				GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 			}
 			else
 			{
-				
+				renderSurface.Activate();
 			}
 		}
 

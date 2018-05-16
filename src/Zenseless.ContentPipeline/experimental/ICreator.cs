@@ -4,8 +4,7 @@
 	/// 
 	/// </summary>
 	/// <typeparam name="TYPE">The type of the ype.</typeparam>
-	/// <seealso cref="IState" />
-	public interface ICreator<TYPE> : IState
+	public interface ICreator<TYPE>
 	{
 		/// <summary>
 		/// Creates this instance.

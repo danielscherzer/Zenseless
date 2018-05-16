@@ -2,7 +2,7 @@ In this exercise you will implement a scrolling shoot 'em up arcade game, like X
 Implement the following items and answer questions about your implementation and the used theory from the lecture (color, blending, textures, transformations, particle systems) for up to 35 points:
 1. Implement a scrolling background
 1. Implement flying and shooting enemies that come in waves.
-1. Use your own sprites for enemies that use alpha and blending.
+1. Use your own sprites that use alpha and blending.
 1. Implement enemies that are fixed relative to the scrolling background.
 1. Render your content with correct aspect ratio when the window changes size (react on `Window.Resize` and scale your coordinate system with the aspect ratio of the window).
 1. Implement hierarchical movement (using combined transformations) for some enemy groups.

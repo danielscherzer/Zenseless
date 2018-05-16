@@ -5,7 +5,7 @@ namespace Zenseless.Geometry
 	/// <summary>
 	/// Represents a read-only interface to an 2D axis aligned bounding box. 
 	/// </summary>
-	public interface IReadOnlyBox2D : IEquatable<IReadOnlyBox2D>
+	public interface IReadOnlyBox2D : IEquatable<IReadOnlyBox2D> //TODO: rename to Rectangle for next semester
 	{
 		/// <summary>
 		/// Center of the rectangle in x-direction.

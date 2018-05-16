@@ -49,7 +49,7 @@
 
 		public void Select(Vector2 selectionStart, Vector2 selectionEnd)
 		{
-			var selectionBox = Box2DExtensions.CreateFromPoints(selectionStart, selectionEnd);
+			var selectionBox = Box2DExtensions.CreateFromPoints(new Vector2[] { selectionStart, selectionEnd });
 			foreach(var unit in units)
 			{
 				var box = Box2DExtensions.CreateFromCenterSize(unit.Bounds.CenterX, unit.Bounds.CenterY

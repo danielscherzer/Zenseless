@@ -1,11 +1,11 @@
-﻿using OpenTK.Graphics.OpenGL;
-using System.Drawing;
-using Zenseless.Geometry;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Graphics.OpenGL;
+	using System.Drawing;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
+
 	public class GameVisual
 	{
 		public GameVisual(IRenderState renderState, IContentLoader contentLoader)
@@ -34,8 +34,7 @@ namespace Example
 
 		public void Update(float updatePeriod)
 		{
-			var t = new Transformation2D();
-			t.RotateLocal(-200f * updatePeriod);
+			var t = Transformation.Rotation(-200f * updatePeriod);
 			bird.TransformCenter(t);
 		}
 

@@ -7,6 +7,23 @@ namespace Zenseless.Geometry
 	/// </summary>
 	public static class IReadOnlyBox2Dextensions
 	{
+
+		/// <summary>
+		/// Calculates the corner points of an axis aligned box.
+		/// </summary>
+		/// <param name="rectangle">The input rectangle.</param>
+		/// <returns>4 corner points</returns>
+		public static Vector2[] CalcCornerPoints(this IReadOnlyBox2D rectangle)
+		{
+			return new Vector2[]
+			{
+						new Vector2(rectangle.MinX, rectangle.MinY),
+						new Vector2(rectangle.MaxX, rectangle.MinY),
+						new Vector2(rectangle.MaxX, rectangle.MaxY),
+						new Vector2(rectangle.MinX, rectangle.MaxY),
+			};
+		}
+
 		/// <summary>
 		/// Checks if a point is inside a rectangle (including borders)
 		/// </summary>
