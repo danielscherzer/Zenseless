@@ -6,14 +6,6 @@
 	public interface IRenderContext
 	{
 		/// <summary>
-		/// Gets the state manager.
-		/// </summary>
-		/// <value>
-		/// The state manager.
-		/// </value>
-		IStateManager StateManager { get; }
-
-		/// <summary>
 		/// Gets the state of the render.
 		/// </summary>
 		/// <value>

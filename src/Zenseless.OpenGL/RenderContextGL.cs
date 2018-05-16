@@ -15,18 +15,7 @@ namespace Zenseless.OpenGL
 		public RenderContextGL()
 		{
 			RenderState = RenderStateGL.Create();
-
-			StateManager = new StateManager();
-			StateManager.Register<StateActiveFboGL, StateActiveFboGL>(new StateActiveFboGL());
 		}
-
-		/// <summary>
-		/// Gets the state manager.
-		/// </summary>
-		/// <value>
-		/// The state manager.
-		/// </value>
-		public IStateManager StateManager { get; private set; }
 
 		/// <summary>
 		/// Gets the state of the render.

@@ -20,7 +20,7 @@ namespace ExampleBrowser.View
 			return renderState.Get<TYPE>();
 		}
 
-		public void Set<TYPE>(TYPE value) where TYPE : struct
+		public void Set<TYPE>(in TYPE value) where TYPE : struct
 		{
 			renderState.Set(value);
 		}

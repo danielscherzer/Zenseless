@@ -16,6 +16,6 @@
 		/// </summary>
 		/// <typeparam name="TYPE">The type of the ype.</typeparam>
 		/// <param name="value">The value.</param>
-		void Set<TYPE>(TYPE value) where TYPE : struct;
+		void Set<TYPE>(in TYPE value) where TYPE : struct;
 	}
 }

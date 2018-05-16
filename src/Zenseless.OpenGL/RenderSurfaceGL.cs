@@ -70,7 +70,7 @@ namespace Zenseless.OpenGL
 		/// </summary>
 		public void Clear()
 		{
-			context.StateManager.Get<StateActiveFboGL, StateActiveFboGL>().Fbo = fbo;
+			context.RenderState.Set(new ActiveRenderSurface(fbo));
 			actionClear();
 		}
 
@@ -80,7 +80,7 @@ namespace Zenseless.OpenGL
 		/// <param name="config">The configuration.</param>
 		public void Draw(IDrawConfiguration config)
 		{
-			context.StateManager.Get<StateActiveFboGL, StateActiveFboGL>().Fbo = fbo;
+			context.RenderState.Set(new ActiveRenderSurface(fbo));
 			config.Draw(context);
 		}
 
@@ -99,7 +99,7 @@ namespace Zenseless.OpenGL
 		/// <summary>
 		/// The action clear
 		/// </summary>
-		private Action actionClear = null;
+		private readonly Action actionClear = null;
 		/// <summary>
 		/// The context
 		/// </summary>

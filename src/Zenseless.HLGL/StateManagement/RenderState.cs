@@ -14,7 +14,7 @@ namespace Zenseless.HLGL
 		/// <typeparam name="T"></typeparam>
 		/// <param name="oldState">The old state.</param>
 		/// <param name="newState">The new state.</param>
-		public delegate void UpdateHandler<T>(in T oldState, in T newState);
+		public delegate void UpdateHandler<in T>(T oldState, T newState);
 
 		/// <summary>
 		/// Gets this instance.
@@ -38,7 +38,7 @@ namespace Zenseless.HLGL
 		/// <typeparam name="TYPE">The type of the ype.</typeparam>
 		/// <param name="update">The update.</param>
 		/// <param name="defaultValue"></param>
-		public void Register<TYPE>(Action<TYPE> update, TYPE defaultValue) where TYPE : struct
+		public void Register<TYPE>(UpdateHandler<TYPE> update, in TYPE defaultValue) where TYPE : struct
 		{
 			//TODO: decide what to do if the type is already registered? currently the old registration is overwritten
 			states.Add(typeof(TYPE), new Data(update, defaultValue));
@@ -50,7 +50,7 @@ namespace Zenseless.HLGL
 		/// <typeparam name="TYPE">The type of the value</typeparam>
 		/// <param name="value">The value.</param>
 		/// <exception cref="ArgumentException"></exception>
-		public void Set<TYPE>(TYPE value) where TYPE : struct
+		public void Set<TYPE>(in TYPE value) where TYPE : struct
 		{
 			var type = typeof(TYPE);
 			if (states.TryGetValue(type, out Data data))
@@ -71,11 +71,11 @@ namespace Zenseless.HLGL
 				Value = value;
 			}
 
-			public void Update<TYPE>(TYPE value)
+			public void Update<TYPE>(in TYPE newValue)
 			{
-				Value = value;
-				var update = updateHandler as Action<TYPE>;
-				update?.Invoke(value);
+				var update = updateHandler as UpdateHandler<TYPE>;
+				update?.Invoke((TYPE)Value, newValue);
+				Value = newValue;
 			}
 
 			private readonly object updateHandler;

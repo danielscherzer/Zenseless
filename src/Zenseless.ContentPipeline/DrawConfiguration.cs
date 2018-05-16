@@ -62,7 +62,6 @@ namespace Zenseless.ExampleFramework
 		/// <param name="context">The context.</param>
 		public void Draw(IRenderContext context)
 		{
-			var stateManager = context.StateManager;
 			context.RenderState.Set(new ShaderPointSize(ShaderPointSize));
 			context.RenderState.Set(new DepthTest(ZBufferTest));
 			context.RenderState.Set(new BackFaceCulling(BackfaceCulling));

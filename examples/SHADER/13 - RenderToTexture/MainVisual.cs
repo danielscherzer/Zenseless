@@ -13,7 +13,10 @@
 			shaderProgram = contentLoader.Load<IShaderProgram>("lambert.*");
 			shaderPostProcess = contentLoader.LoadPixelShader("ChromaticAberration");
 			shaderPostProcess = contentLoader.LoadPixelShader("swirl");
+			shaderPostProcess = contentLoader.LoadPixelShader("sepia");
+			shaderPostProcess = contentLoader.LoadPixelShader("vignet");
 			shaderPostProcess = contentLoader.LoadPixelShader("Ripple");
+
 			var mesh = Meshes.CreateCornellBox(); //TODO: ATI seams to do VAO vertex attribute ordering different for each shader would need to create own VAO
 			geometry = VAOLoader.FromMesh(mesh, shaderProgram);
 		}
@@ -49,7 +52,7 @@
 		public void Resize(int width, int height)
 		{
 			renderToTexture = new FBOwithDepth(Texture2dGL.Create(width, height));
-			renderToTexture.Texture.WrapFunction = TextureWrapFunction.ClampToEdge;
+			renderToTexture.Texture.WrapFunction = TextureWrapFunction.MirroredRepeat;
 		}
 
 		private IRenderSurface renderToTexture;

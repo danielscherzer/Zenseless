@@ -70,7 +70,6 @@
     <Compile Include="ShaderProgramGL.cs" />
     <Compile Include="ShaderLoader.cs" />
     <Compile Include="SpriteSheetRenderer.cs" />
-    <Compile Include="StateActiveFboGL.cs" />
     <Compile Include="Texture2dGL.cs" />
     <Compile Include="TextureArray2dGL.cs" />
     <Compile Include="TextureFont.cs" />

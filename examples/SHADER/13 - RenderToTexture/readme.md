@@ -1,4 +1,5 @@
 1. Look at example post-processing shaders.
+1. Create a comic shader: Laplacian edge detection + 3 color intensity levels
 1. Create a bad TV shader.
 1. Create some other screen-space effect, like the dot matrix shader.
 1. Bloom/Blur

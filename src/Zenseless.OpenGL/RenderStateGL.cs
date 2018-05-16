@@ -19,34 +19,26 @@ namespace Zenseless.OpenGL
 
 			int[] vp = new int[4];
 			GL.GetInteger(GetPName.Viewport, vp);
-			renderState.Register((s) => GL.Viewport(s.X, s.Y, s.Width, s.Height), new Viewport(vp[0], vp[1], vp[2], vp[3]));
+			renderState.Register((o, s) => GL.Viewport(s.X, s.Y, s.Width, s.Height), new Viewport(vp[0], vp[1], vp[2], vp[3]));
 
 			renderState.Register(Update, BlendStates.Opaque);
-			renderState.Register((c) => GL.ClearColor(c.Red, c.Green, c.Blue, c.Alpha), new ClearColorState(0f, 0f, 0f, 1f));
-			renderState.Register((s) => Update(s.Enabled, EnableCap.DepthTest), new DepthTest(false));
-			renderState.Register((s) => Update(s.Enabled, EnableCap.CullFace), new BackFaceCulling(false));
-			renderState.Register((s) => Update(s.Enabled, EnableCap.ProgramPointSize), new ShaderPointSize(false));
-			renderState.Register((s) => Update(s.Enabled, EnableCap.PointSprite), new PointSprite(false));
-			renderState.Register((s) => Update(s.Enabled, EnableCap.LineSmooth), new LineSmoothing(false));
-			renderState.Register((s) => GL.LineWidth(s.Value), new LineWidth(1f));
-			renderState.Register((s) => Update(s.ShaderProgram), new ActiveShader(null));
-			renderState.Register((s) => Update(renderState, s.RenderSurface), new ActiveRenderSurface(null));
+			renderState.Register((o, s) => GL.ClearColor(s.Red, s.Green, s.Blue, s.Alpha), new ClearColorState(0f, 0f, 0f, 1f));
+			renderState.Register((o, s) => Update(s.Enabled, EnableCap.DepthTest), new DepthTest(false));
+			renderState.Register((o, s) => Update(s.Enabled, EnableCap.CullFace), new BackFaceCulling(false));
+			renderState.Register((o, s) => Update(s.Enabled, EnableCap.ProgramPointSize), new ShaderPointSize(false));
+			renderState.Register((o, s) => Update(s.Enabled, EnableCap.PointSprite), new PointSprite(false));
+			renderState.Register((o, s) => Update(s.Enabled, EnableCap.LineSmooth), new LineSmoothing(false));
+			renderState.Register((o, s) => GL.LineWidth(s.Value), new LineWidth(1f));
+			renderState.Register((o, s) => Update(s.ShaderProgram), new ActiveShader(null));
+			renderState.Register((o, s) => Update(o.RenderSurface, s.RenderSurface), new ActiveRenderSurface(null));
 			return renderState;
 		}
 
-		private static void Update(IRenderState renderState, IRenderSurface renderSurface)
+		private static void Update(IRenderSurface oldRenderSurface, IRenderSurface renderSurface)
 		{
-			var oldSurface = renderState.Get<ActiveRenderSurface>();
-			oldSurface.
-			if (renderSurface is null)
-			{
-				//TODO: view port
-				GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-			}
-			else
-			{
-				renderSurface.Activate();
-			}
+			oldRenderSurface?.Deactivate();
+			//TODO: maybe view port and 0 buffer, but should be done by deactivate
+			renderSurface?.Activate();
 		}
 
 		private static void Update(IShaderProgram shaderProgram)
@@ -73,7 +65,7 @@ namespace Zenseless.OpenGL
 			}
 		}
 
-		private static void Update(BlendState blendState)
+		private static void Update(BlendState oldBlendState, BlendState blendState)
 		{
 			SetOperator(blendState.BlendOperator);
 			SetFunction(blendState.BlendParameterSource, blendState.BlendParameterDestination);
