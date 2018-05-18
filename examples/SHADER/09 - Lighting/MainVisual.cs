@@ -37,12 +37,10 @@
 			geometryToon = VAOLoader.FromMesh(suzanne.Transform(Transformation.Translation(2, 0, 0)), shaderProgramToon);
 		}
 
-		public void Render(ITransformation cameraXform, in Vector3 cameraPosition)
+		public void Render(ITransformation camera, in Vector3 cameraPosition)
 		{
 			if (shaderProgramPhong is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-			var camera = cameraXform.Matrix;
 
 			shaderProgramPhong.Activate();
 			shaderProgramPhong.Uniform("light1Direction", Vector3.Normalize(new Vector3(-1, -1, 1)));
@@ -55,7 +53,7 @@
 			shaderProgramPhong.Uniform("light3Color", new Vector4(0, 0, 1f, 1f));
 			shaderProgramPhong.Uniform(nameof(ambientLightColor), ambientLightColor);
 			shaderProgramPhong.Uniform(nameof(materialColor), materialColor);
-			shaderProgramPhong.Uniform(nameof(camera), camera, true);
+			shaderProgramPhong.Uniform(nameof(camera), camera);
 			shaderProgramPhong.Uniform(nameof(cameraPosition), cameraPosition);
 			geometryPhong.Draw();
 			shaderProgramPhong.Deactivate();
@@ -65,7 +63,7 @@
 			shaderProgramToon.Uniform(nameof(light2Position), light2Position);
 			shaderProgramToon.Uniform(nameof(ambientLightColor), ambientLightColor);
 			shaderProgramToon.Uniform(nameof(materialColor), materialColor);
-			shaderProgramToon.Uniform(nameof(camera), camera, true);
+			shaderProgramToon.Uniform(nameof(camera), camera);
 			shaderProgramToon.Uniform(nameof(cameraPosition), cameraPosition);
 
 			geometryToon.Draw();

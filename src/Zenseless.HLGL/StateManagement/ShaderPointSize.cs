@@ -3,7 +3,7 @@
 	/// <summary>
 	/// State structure for setting the point size in the shader via gl_PointSize.
 	/// </summary>
-	public struct ShaderPointSize
+	public struct ShaderPointSize : IState
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ShaderPointSize"/> structure.

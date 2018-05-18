@@ -87,7 +87,7 @@
     <Compile Include="SpriteSheet.cs" />
     <Compile Include="deprecated\TypedHandle.cs" />
     <Compile Include="deprecated\IResource.cs" />
-    <Compile Include="deprecated\IState.cs" />
+    <Compile Include="StateManagement\IState.cs" />
     <Compile Include="deprecated\StateManager.cs" />
     <Compile Include="StateManagement\ShaderPointSize.cs" />
     <Compile Include="StateManagement\Viewport.cs" />

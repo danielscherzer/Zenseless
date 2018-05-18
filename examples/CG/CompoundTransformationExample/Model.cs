@@ -1,47 +1,44 @@
 ﻿namespace Example
 {
 	using System.Collections.Generic;
-	using System.Numerics;
 	using Zenseless.Geometry;
 
 	public class Model
 	{
 		public Model()
 		{
-			rootRot = new Rotation(0f);
-			var rootNode = new TransformationHierarchyNode(null);
-			UpdateNodeTransformation(rootNode, rootRot);
+			//rootRot = CreateChildNode(out TransformationHierarchyNode rootNode, );
+			//var rootNode = new TransformationHierarchyNode(null);
+			//UpdateNodeTransformation(rootNode, rootRot);
 
-			var delta = 1.1f * Earth.SizeX;
-			for (int i = 0; i < 4; ++i)
-			{
-				var t = Transformation.Translation(delta, 0f, 0f);
-				var r = Transformation.Rotation(90f * i);
-				var s = Transformation.Scale(0.12f);
-				var xform = Transformation.Combine(s, Transformation.Combine(r, t));
-				nodes.Add(new Node(Earth, new TransformationHierarchyNode(s, rootNode)));
-			}
+			//for (int i = 0; i < 4; ++i)
+			//{
+			//	var t = Transformation.Translation(0.7f, 0f, 0f);
+			//	var r = Transformation.Rotation(90f * i);
+			//	var xform = Transformation.Combine(t, r);
+			//	var box = Box2DExtensions.CreateFromCircle(new Circle(0f, 0f, 0.2f));
+			//	nodes.Add(new Node(box, new TransformationHierarchyNode(xform, rootNode)));
+			//}
 
-			var size = 0.125f;
-			var miniBox = Box2DExtensions.CreateFromCenterSize(0f, 0f, size, size);
+			//var size = 0.5f;
+			//size *= 0.5f;
+			//var miniTrans = CreateChildNode(out rotMini, size, nodes[0].TransformNode);
 
-			rotMini = new Rotation(0f);
-			var mini = new TransformationHierarchyNode(nodes[0].TransformNode);
-			UpdateNodeTransformation(mini, rotMini);
-			var miniTrans = new TransformationHierarchyNode(Transformation.Translation(2f * size , 0f, 0f), mini);
-			//nodes.Add(new Node(miniBox, miniTrans));
-
-			size *= 0.5f;
-			var mmBox = Box2DExtensions.CreateFromCenterSize(0f, 0f, size, size);
-			rotmm = new Rotation(0f);
-			var mm = new TransformationHierarchyNode(miniTrans);
-			UpdateNodeTransformation(mm, rotmm);
-			//nodes.Add(new Node(mmBox, new TransformationHierarchyNode(Transformation.Translation(size * 1.4f, 0f, 0f), mm)));
+			//size *= 0.25f;
+			//CreateChildNode(out rotmm, size, miniTrans);
 		}
 
-		private void UpdateNodeTransformation(TransformationHierarchyNode node, Rotation rotation)
+		private Rotation CreateChildNode(out TransformationHierarchyNode newChildNode, float size, TransformationHierarchyNode parent)
 		{
-			rotation.PropertyChanged += (s, a) => node.LocalTransformation = new Transformation(rotation.Matrix);
+			var rotation = new Rotation(0f);
+			var node = new TransformationHierarchyNode(parent);
+			rotation.PropertyChanged += (s, a) => node.LocalTransformation = new Transformation(rotation);
+
+			newChildNode = new TransformationHierarchyNode(Transformation.Translation(size * 2f, 0f, 0f), node);
+
+			var box = Box2DExtensions.CreateFromCircle(new Circle(0f, 0f, size));
+			nodes.Add(new Node(box, newChildNode));
+			return rotation;
 		}
 
 		public IEnumerable<IReadOnlyBox2D> GetPlanets()
@@ -57,7 +54,7 @@
 			return planets;
 		}
 
-		public Box2D Earth { get; } = Box2DExtensions.CreateFromCircle(new Circle(0f, 0f, 0.5f));
+		public Box2D Earth { get; } = Box2DExtensions.CreateFromCircle(new Circle(0f, 0f, 0.1f));
 
 		public void Update(float updatePeriod)
 		{

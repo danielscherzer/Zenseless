@@ -3,7 +3,7 @@
 	/// <summary>
 	/// State structure for point sprite generation.
 	/// </summary>
-	public struct PointSprite
+	public struct PointSprite : IState
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PointSprite"/> structure.

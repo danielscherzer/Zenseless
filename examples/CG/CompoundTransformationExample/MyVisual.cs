@@ -24,10 +24,10 @@
 		public void Render(in IReadOnlyBox2D earth, IEnumerable<IReadOnlyBox2D> birds)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
-			DrawTexturedRect(earth, texGreen);
+			DrawTexturedRect(earth, texEarth);
 			foreach (var bird in birds)
 			{
-				DrawTexturedRect(bird, texEarth);
+				DrawTexturedRect(bird, texGreen);
 			}
 		}
 

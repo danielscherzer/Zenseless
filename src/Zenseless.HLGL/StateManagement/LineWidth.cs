@@ -3,7 +3,7 @@
 	/// <summary>
 	/// 
 	/// </summary>
-	public struct LineWidth
+	public struct LineWidth : IState
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LineWidth"/> struct.

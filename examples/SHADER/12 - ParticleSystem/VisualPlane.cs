@@ -15,13 +15,13 @@ namespace Example
 			this.renderState = renderState;
 		}
 
-		public void Draw(in Matrix4x4 camera)
+		public void Draw(in ITransformation camera)
 		{
 			if (shdPlane is null) return;
 
 			renderState.Set(new BackFaceCulling(false));
 			shdPlane.Activate();
-			shdPlane.Uniform(nameof(camera), camera, true);
+			shdPlane.Uniform(nameof(camera), camera);
 
 			plane.Draw();
 			shdPlane.Deactivate();

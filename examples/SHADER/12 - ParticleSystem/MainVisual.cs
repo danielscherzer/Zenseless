@@ -22,14 +22,13 @@
 			visualWaterfall.Update(time);
 		}
 
-		public void Render(ITransformation camera)
+		public void Render(in ITransformation camera)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			var cam = camera.Matrix;
-			plane.Draw(cam);
-			visualSmoke.Render(cam);
-			visualWaterfall.Render(cam);
+			plane.Draw(camera);
+			visualSmoke.Render(camera);
+			visualWaterfall.Render(camera);
 		}
 
 		internal void Resize(int width, int height)

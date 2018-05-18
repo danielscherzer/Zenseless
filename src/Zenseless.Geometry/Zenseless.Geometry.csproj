@@ -66,6 +66,7 @@
     <Compile Include="IReadOnlyBox2Dextensions.cs" />
     <Compile Include="ShapeBuilder.cs" />
     <Compile Include="Transforms\Axis.cs" />
+    <Compile Include="Transforms\INotifyingTransform.cs" />
     <Compile Include="Transforms\ITransformation.cs" />
     <Compile Include="Transforms\Orbit.cs" />
     <Compile Include="Transforms\Perspective.cs" />

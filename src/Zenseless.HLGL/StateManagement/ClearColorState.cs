@@ -3,7 +3,7 @@
 	/// <summary>
 	/// The color used by the graphic system for clearing the screen.
 	/// </summary>
-	public struct ClearColorState
+	public struct ClearColorState : IState
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ClearColorState"/> struct.

@@ -12,17 +12,19 @@
 	class AlphaTestExample : IExample
 	{
 		[ImportingConstructor]
-		private AlphaTestExample([Import] IRenderState renderState)
+		public AlphaTestExample([Import] IRenderState renderState)
 		{
 			//background clear color
 			renderState.Set(new ClearColorState(1, 1, 1, 1));
-			GL.AlphaFunc(AlphaFunction.Less, 0.25f);
 			GL.Enable(EnableCap.AlphaTest);
 		}
+
+		public float Threshold { get; set; } = 0.25f;
 
 		public void Render()
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
+			GL.AlphaFunc(AlphaFunction.Less, 0.1f * Threshold);
 
 			var rect = new Box2D(-.75f, -.75f, 1.5f, 1.5f);
 			var colorA = new Color4(1f, 1f, 0f, 1f);

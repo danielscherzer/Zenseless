@@ -1,8 +1,8 @@
-﻿using System;
-using System.Numerics;
-
-namespace Zenseless.Geometry
+﻿namespace Zenseless.Geometry
 {
+	using System;
+	using System.Numerics;
+
 	/// <summary>
 	/// 
 	/// </summary>
@@ -80,7 +80,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="a">a.</param>
 		/// <param name="b">The b.</param>
-		public static void UndoOverlap(this Circle a, Circle b)
+		public static void UndoOverlap(this Circle a, IReadOnlyCircle b)
 		{
 			Vector2 cB = new Vector2(b.CenterX, b.CenterY);
 			Vector2 diff = new Vector2(a.CenterX, a.CenterY);

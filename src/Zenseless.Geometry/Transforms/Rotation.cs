@@ -6,7 +6,7 @@
 	/// A single axis rotation class that allows incremental changes
 	/// </summary>
 	/// <seealso cref="ITransformation" />
-	public class Rotation : NotifyPropertyChanged, ITransformation
+	public class Rotation : NotifyPropertyChanged, INotifyingTransform
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Rotation"/> class.

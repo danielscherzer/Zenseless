@@ -3,7 +3,7 @@
 	/// <summary>
 	/// State structure for anti-aliasing of lines (requires blending to work).
 	/// </summary>
-	public struct LineSmoothing
+	public struct LineSmoothing : IState
 	{
 		/// <summary>
 		/// Anti-aliasing of lines (requires blending to work)

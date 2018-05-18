@@ -7,7 +7,7 @@
 	/// Implements a Perspective transformation that allows incremental changes
 	/// </summary>
 	/// <seealso cref="ITransformation" />
-	public class Perspective : NotifyPropertyChanged, ITransformation
+	public class Perspective : NotifyPropertyChanged, INotifyingTransform
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Perspective"/> class.

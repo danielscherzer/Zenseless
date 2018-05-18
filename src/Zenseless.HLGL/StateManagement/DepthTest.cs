@@ -3,7 +3,7 @@
 	/// <summary>
 	/// State structure for depth test.
 	/// </summary>
-	public struct DepthTest
+	public struct DepthTest : IState
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DepthTest"/> structure.

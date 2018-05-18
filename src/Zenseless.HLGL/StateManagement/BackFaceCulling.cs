@@ -3,7 +3,7 @@
 	/// <summary>
 	/// State structure for back face culling.
 	/// </summary>
-	public struct BackFaceCulling
+	public struct BackFaceCulling : IState
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BackFaceCulling"/> structure.

@@ -1,9 +1,19 @@
 ﻿<Window x:Class="ExampleBrowser.View.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:l="clr-namespace:ExampleBrowser.View"
+		xmlns:exTool="http://schemas.xceed.com/wpf/xaml/toolkit"
 		Height="450" Width="800">
-    <Grid>
-		<TabControl x:Name="Items" Grid.Row="1">
+	<Control.Resources>
+		<l:VisibleToWidthConverter x:Key="WidthToVisibleConverter"/>
+	</Control.Resources>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="5" />
+			<ColumnDefinition Width="{Binding ActiveItem.HasProperties, Converter={StaticResource WidthToVisibleConverter}}" />
+		</Grid.ColumnDefinitions>
+		<TabControl x:Name="Items" Grid.Column="0">
 			<TabControl.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">
@@ -12,5 +22,7 @@
 				</DataTemplate>
 			</TabControl.ItemTemplate>
 		</TabControl>
+		<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+		<exTool:PropertyGrid Grid.Column="2" SelectedObject="{Binding ActiveItem.Example}" ShowSearchBox="False" ShowSortOptions="False" NameColumnWidth="100" ShowDescriptionByTooltip="True"/>
 	</Grid>
 </Window>

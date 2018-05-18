@@ -3,7 +3,7 @@
 	/// <summary>
 	/// State of the view port rectangle.
 	/// </summary>
-	public struct Viewport
+	public struct Viewport : IState
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Viewport"/> structure.

@@ -15,12 +15,8 @@
 	[Export(typeof(IExample))]
 	class TextureMagFilterExample : IExample
 	{
-		private ITexture texBackground;
-		private Box2D texCoord = new Box2D(0, 0, 1, 1);
-		private float scaleFactor = 1f;
-
 		[ImportingConstructor]
-		private TextureMagFilterExample([Import] IContentLoader contentLoader)
+		public TextureMagFilterExample([Import] IContentLoader contentLoader)
 		{
 			texBackground = contentLoader.Load<ITexture2D>("mountains");
 			texBackground.WrapFunction = TextureWrapFunction.ClampToBorder;
@@ -39,21 +35,26 @@
 			DrawTexturedRect(new Box2D(0, -1, 1, 2), texBackground, texCoord);
 		}
 
+		public void Update(ITime time)
+		{
+			//if (texCoord.SizeX > 0.99f) { zoomOut = false; }
+			//if (texCoord.SizeX < 0.05f) { zoom = false; }
+			float factor = 1 + (zoom ? -1f : 1f) * time.DeltaTime;
+			texCoord.SizeX *= factor;
+			texCoord.SizeY *= factor;
+			texCoord.CenterX = 0.5f;
+			texCoord.CenterY = 0.5f;
+		}
+
+		private ITexture texBackground;
+		private Box2D texCoord = new Box2D(0, 0, 1, 1);
+		private bool zoom = true;
+
 		private static void DrawTexturedRect(IReadOnlyBox2D rect, ITexture tex, IReadOnlyBox2D texCoords)
 		{
 			tex.Activate();
 			rect.DrawTexturedRect(texCoords);
 			tex.Deactivate();
-		}
-
-		public void Update(ITime time)
-		{
-			if (texCoord.SizeX > 0.99f || texCoord.SizeX < 0.05f) scaleFactor = -scaleFactor;
-			float factor = 1 + scaleFactor * time.DeltaTime;
-			texCoord.SizeX *= factor;
-			texCoord.SizeY *= factor;
-			texCoord.CenterX = 0.5f;
-			texCoord.CenterY = 0.5f;
 		}
 	}
 }

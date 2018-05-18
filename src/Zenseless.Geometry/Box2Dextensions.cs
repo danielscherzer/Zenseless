@@ -30,7 +30,7 @@ namespace Zenseless.Geometry
 		/// <param name="min">Minimal point</param>
 		/// <param name="max">Maximal point</param>
 		/// <returns>A new Box2D instance</returns>
-		public static Box2D CreateFromMinMax(Vector2 min, Vector2 max)
+		public static Box2D CreateFromMinMax(in Vector2 min, in Vector2 max)
 		{
 			var rectangle = new Box2D(min.X, min.Y, max.X - min.X, max.Y - min.Y);
 			return rectangle;
@@ -40,7 +40,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="points">Input points</param>
 		/// <returns>A box containing the points.</returns>
-		public static Box2D CreateFromPoints(this IEnumerable<Vector2> points)
+		public static Box2D CreateFromPoints(in IEnumerable<Vector2> points)
 		{
 			var min = points.First();
 			var max = min;
@@ -75,7 +75,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="circle">The circle.</param>
 		/// <returns>A new Box2D instance</returns>
-		public static Box2D CreateFromCircle(IReadOnlyCircle circle)
+		public static Box2D CreateFromCircle(in IReadOnlyCircle circle)
 		{
 			var rectangle = new Box2D(0, 0, 2f * circle.Radius, 2f * circle.Radius)
 			{
@@ -177,7 +177,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="rectangle">to transform</param>
 		/// <param name="M">transformation matrix to apply</param>
-		public static void TransformCenter(this Box2D rectangle, Matrix3x2 M)
+		public static void TransformCenter(this Box2D rectangle, in Matrix3x2 M)
 		{
 			var newCenter = Vector2.Transform(rectangle.GetCenter(), M);
 			rectangle.CenterX = newCenter.X;
@@ -189,7 +189,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="rectangle">The rectangle to transform.</param>
 		/// <param name="transformation">Transformation to apply.</param>
-		public static void TransformCenter(this Box2D rectangle, Transformation transformation)
+		public static void TransformCenter(this Box2D rectangle, in Transformation transformation)
 		{
 			var newCenter = transformation.Transform(rectangle.GetCenter());
 			rectangle.CenterX = newCenter.X;

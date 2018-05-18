@@ -6,7 +6,7 @@ namespace Zenseless.Geometry
 	/// Implements a scale transformation that allows incremental changes
 	/// </summary>
 	/// <seealso cref="ITransformation" />
-	public class Scale : NotifyPropertyChanged, ITransformation
+	public class Scale : NotifyPropertyChanged, INotifyingTransform
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Scale"/> class.

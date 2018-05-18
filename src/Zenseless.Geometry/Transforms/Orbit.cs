@@ -9,7 +9,7 @@
 	/// Implements a orbiting transformation
 	/// </summary>
 	/// <seealso cref="ITransformation" />
-	public class Orbit : NotifyPropertyChanged, ITransformation
+	public class Orbit : NotifyPropertyChanged, INotifyingTransform
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Orbit"/> class.

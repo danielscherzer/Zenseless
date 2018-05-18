@@ -1,10 +1,9 @@
-﻿using Caliburn.Micro;
-using System;
-using System.ComponentModel.Composition;
-using Zenseless.Base;
-
-namespace ExampleBrowser.View
+﻿namespace ExampleBrowser.View
 {
+	using Caliburn.Micro;
+	using System;
+	using System.ComponentModel.Composition;
+
 	[Export]
 	class ShellViewModel : Conductor<IScreen>.Collection.OneActive
 	{
@@ -15,14 +14,12 @@ namespace ExampleBrowser.View
 			
 			foreach (var example in examples)
 			{
-				var exampleVM = new ExamplePageViewModel(example, time)
+				var exampleVM = new ExamplePageViewModel(example)
 				{
 					DisplayName = example.Metadata.Name
 				};
 				Items.Add(exampleVM);
 			}
 		}
-
-		private ITime time = new GameTime();
 	}
 }

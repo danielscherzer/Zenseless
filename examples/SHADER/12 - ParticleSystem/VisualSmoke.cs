@@ -1,6 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Numerics;
+using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
 
@@ -69,7 +70,7 @@ namespace Example
 			particles.SetAttribute(shaderSmoke.GetResourceLocation(ShaderResourceType.Attribute, "fade"), fade, VertexAttribPointerType.Float, 1);
 		}
 
-		public void Render(in Matrix4x4 camera)
+		public void Render(in ITransformation camera)
 		{
 			if (shaderSmoke is null) return;
 			renderState.Set(BlendStates.Additive);
@@ -78,7 +79,7 @@ namespace Example
 			renderState.Set(new ShaderPointSize(true));
 
 			shaderSmoke.Activate();
-			shaderSmoke.Uniform(nameof(camera), camera, true);
+			shaderSmoke.Uniform(nameof(camera), camera);
 			shaderSmoke.Uniform("pointSize", smallerWindowSideResolution * 0.002f);
 			//shader.Uniform("texParticle", 0);
 			texSmoke.Activate();

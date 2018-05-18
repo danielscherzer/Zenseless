@@ -3,7 +3,7 @@
 	/// <summary>
 	/// State structure for the active shader program.
 	/// </summary>
-	public struct ActiveShader
+	public struct ActiveShader : IState
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ActiveShader"/> structure.

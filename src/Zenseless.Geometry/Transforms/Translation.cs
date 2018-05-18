@@ -6,7 +6,7 @@ namespace Zenseless.Geometry
 	/// Implements a translation transformation that allows incremental changes
 	/// </summary>
 	/// <seealso cref="ITransformation" />
-	public class Translation : NotifyPropertyChanged, ITransformation
+	public class Translation : NotifyPropertyChanged, INotifyingTransform
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Translation"/> class.

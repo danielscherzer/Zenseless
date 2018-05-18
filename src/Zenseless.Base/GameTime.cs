@@ -5,7 +5,7 @@ namespace Zenseless.Base
 	/// <summary>
 	/// Intended as a source for time.
 	/// Can do frames-per-second counting.
-	/// Uses a <see cref="System.Diagnostics.Stopwatch" />
+	/// Uses a <see cref="Stopwatch" />
 	/// </summary>
 	public class GameTime : ITime
 	{
@@ -58,7 +58,6 @@ namespace Zenseless.Base
 			var time = AbsoluteTime;
 			DeltaTime = time - lastRenderTime;
 			lastRenderTime = time;
-
 			++frames;
 			long newTime = stopwatch.ElapsedMilliseconds;
 			long diff = newTime - lastFpsUpdateTime;

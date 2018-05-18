@@ -15,12 +15,8 @@
 	[Export(typeof(IExample))]
 	class TextureMinFilterExample : IExample
 	{
-		private ITexture texBackground;
-		private Box2D texCoord = new Box2D(0, 0, 1, 1);
-		private float scaleFactor = 1f;
-
 		[ImportingConstructor]
-		private TextureMinFilterExample([Import] IContentLoader contentLoader)
+		public TextureMinFilterExample([Import] IContentLoader contentLoader)
 		{
 			texBackground = contentLoader.Load<ITexture2D>("mountains");
 			texBackground.WrapFunction = TextureWrapFunction.Repeat;
@@ -39,13 +35,6 @@
 			DrawTexturedRect(new Box2D(0, -1, 1, 2), texBackground, texCoord);
 		}
 
-		private static void DrawTexturedRect(IReadOnlyBox2D rect, ITexture tex, IReadOnlyBox2D texCoords)
-		{
-			tex.Activate();
-			rect.DrawTexturedRect(texCoords);
-			tex.Deactivate();
-		}
-
 		public void Update(ITime time)
 		{
 			if (texCoord.SizeX > 100f || texCoord.SizeX < 1f) scaleFactor = -scaleFactor;
@@ -53,6 +42,17 @@
 			texCoord.SizeX *= 1 + factor;
 			texCoord.SizeY *= 1 + factor;
 			//texCoord.CenterX += factor * 0.1f;
+		}
+
+		private ITexture texBackground;
+		private Box2D texCoord = new Box2D(0, 0, 1, 1);
+		private float scaleFactor = 1f;
+
+		private static void DrawTexturedRect(IReadOnlyBox2D rect, ITexture tex, IReadOnlyBox2D texCoords)
+		{
+			tex.Activate();
+			rect.DrawTexturedRect(texCoords);
+			tex.Deactivate();
 		}
 	}
 }

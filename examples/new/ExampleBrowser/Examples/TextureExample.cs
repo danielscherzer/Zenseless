@@ -20,7 +20,7 @@
 		private ITexture texShip;
 
 		[ImportingConstructor]
-		private TextureExample([Import] IRenderState renderState, [Import] IContentLoader contentLoader)
+		public TextureExample([Import] IRenderState renderState, [Import] IContentLoader contentLoader)
 		{
 			renderState.Set(BlendStates.AlphaBlend); // for transparency in textures we use blending
 

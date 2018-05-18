@@ -5,7 +5,7 @@
 	/// <summary>
 	/// Encapsulates the blend state inside an immutable structure
 	/// </summary>
-	public struct BlendState
+	public struct BlendState : IState
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BlendState"/> structure.

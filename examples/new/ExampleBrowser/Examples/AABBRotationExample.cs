@@ -1,8 +1,9 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Drawing;
+using System.Numerics;
 using Zenseless.Base;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
@@ -13,14 +14,10 @@ namespace ExampleBrowser
 
 	[ExampleDisplayName]
 	[Export(typeof(IExample))]
-	class AABBRotationExample : IExample
+	class AABBRotationExample : NotifyPropertyChanged, IExample
 	{
-		private const float size = 0.7f;
-		private Line stick = new Line(new Vector2(-size, -size), new Vector2(size, size));
-		private float angle = 0f;
-
 		[ImportingConstructor]
-		private AABBRotationExample([Import] IRenderState renderState)
+		public AABBRotationExample([Import] IRenderState renderState)
 		{
 			renderState.Set(BlendStates.AlphaBlend);
 			renderState.Set(new LineSmoothing(true));
@@ -28,23 +25,55 @@ namespace ExampleBrowser
 			renderState.Set(new LineWidth(5f));
 		}
 
-		private static Line RotateLine(Line stick, float rotationAngle)
+		public void Render()
 		{
-			var mtxRotation = Matrix2.CreateRotation(rotationAngle);
-			Vector2 a;
-			a.X = Vector2.Dot(mtxRotation.Column0, stick.Item1);
-			a.Y = Vector2.Dot(mtxRotation.Column1, stick.Item1);
-			Vector2 b;
-			b.X = Vector2.Dot(mtxRotation.Column0, stick.Item2);
-			b.Y = Vector2.Dot(mtxRotation.Column1, stick.Item2);
+			var newStick = RotateLine(stick, Angle);
+			var stickAABB = Box2DExtensions.CreateFromPoints(new Vector2[] { newStick.Item1, newStick.Item2 });
+
+			GL.Clear(ClearBufferMask.ColorBufferBit);
+
+			GL.Color3(Color.CornflowerBlue);
+			DrawLine(newStick);
+
+			GL.Color3(Color.YellowGreen);
+			DrawAABB(stickAABB);
+
+			GL.Color3(Color.Black);
+			DrawAABB(Box2DExtensions.CreateFromCenterSize(0, 0, 0.02f, 0.02f));
+		}
+
+		[Description("The angle of rotation in degrees")]
+		public float Angle
+		{
+			get => _angle;
+			set
+			{
+				_angle = value;
+				RaisePropertyChanged();
+			}
+		}
+		public void Update(ITime time)
+		{
+			Angle = 30f * time.AbsoluteTime;
+		}
+
+		private const float size = 0.7f;
+		private readonly Line stick = new Line(new Vector2(-size, -size), new Vector2(size, size));
+		private float _angle = 0f;
+
+		private static Line RotateLine(Line stick, float rotationAngleDegrees)
+		{
+			var mtxRotation = Matrix3x2.CreateRotation(MathHelper.DegreesToRadians(rotationAngleDegrees));
+			var a = Vector2.Transform(stick.Item1, mtxRotation);
+			var b = Vector2.Transform(stick.Item2, mtxRotation);
 			return new Line(a, b);
 		}
 
-		private static void DrawLine(Line stick)
+		private static void DrawLine(in Line stick)
 		{
 			GL.Begin(PrimitiveType.Lines);
-			GL.Vertex2(stick.Item1);
-			GL.Vertex2(stick.Item2);
+			GL.Vertex2(stick.Item1.X, stick.Item1.Y);
+			GL.Vertex2(stick.Item2.X, stick.Item2.Y);
 			GL.End();
 		}
 
@@ -56,32 +85,6 @@ namespace ExampleBrowser
 			GL.Vertex2(rect.MaxX, rect.MaxY);
 			GL.Vertex2(rect.MinX, rect.MaxY);
 			GL.End();
-		}
-
-		public void Render()
-		{
-			stick = RotateLine(stick, angle);
-			var minX = Math.Min(stick.Item1.X, stick.Item2.X);
-			var maxX = Math.Max(stick.Item1.X, stick.Item2.X);
-			var minY = Math.Min(stick.Item1.Y, stick.Item2.Y);
-			var maxY = Math.Max(stick.Item1.Y, stick.Item2.Y);
-			var stickAABB = Box2DExtensions.CreateFromMinMax(minX, minY, maxX, maxY);
-
-			GL.Clear(ClearBufferMask.ColorBufferBit);
-
-			GL.Color3(Color.CornflowerBlue);
-			DrawLine(stick);
-
-			GL.Color3(Color.YellowGreen);
-			DrawAABB(stickAABB);
-
-			GL.Color3(Color.Black);
-			DrawAABB(Box2DExtensions.CreateFromCenterSize(0, 0, 0.02f, 0.02f));
-		}
-
-		public void Update(ITime time)
-		{
-			angle = -time.DeltaTime * 0.6f;
 		}
 	}
 }

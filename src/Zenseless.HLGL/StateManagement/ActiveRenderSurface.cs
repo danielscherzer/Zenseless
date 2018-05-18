@@ -3,7 +3,7 @@
 	/// <summary>
 	/// State structure for the active render surface.
 	/// </summary>
-	public struct ActiveRenderSurface
+	public struct ActiveRenderSurface : IState
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ActiveRenderSurface" /> structure.

@@ -12,7 +12,7 @@
 	class BlendingExample : IExample
 	{
 		[ImportingConstructor]
-		private BlendingExample([Import] IRenderState renderState)
+		public BlendingExample([Import] IRenderState renderState)
 		{
 			//background clear color
 			renderState.Set(new ClearColorState(1, 1, 1, 1));
