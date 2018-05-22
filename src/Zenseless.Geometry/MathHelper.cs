@@ -337,7 +337,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="cartesian">Cartesian input coordinates</param>
 		/// <returns>An angle [-PI, PI].</returns>
-		public static float PolarAngle(in Vector2 cartesian)
+		public static float PolarAngle(this in Vector2 cartesian)
 		{
 			return (float)Math.Atan2(cartesian.Y, cartesian.X);
 		}
@@ -347,7 +347,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="polar">The polar coordinates. A vector with first component angle [-PI, PI] and second component radius.</param>
 		/// <returns>A Cartesian coordinate vector.</returns>
-		public static Vector2 ToCartesian(in Vector2 polar)
+		public static Vector2 ToCartesian(this in Vector2 polar)
 		{
 			float x = polar.Y * (float)Math.Cos(polar.X);
 			float y = polar.Y * (float)Math.Sin(polar.X);
@@ -360,9 +360,9 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="cartesian">Cartesian input coordinates</param>
 		/// <returns>A vector with first component angle [-PI, PI] and second component radius.</returns>
-		public static Vector2 ToPolar(in Vector2 cartesian)
+		public static Vector2 ToPolar(this in Vector2 cartesian)
 		{
-			float angle = PolarAngle(cartesian);
+			float angle = cartesian.PolarAngle();
 			float radius = cartesian.Length();
 			return new Vector2(angle, radius);
 		}
