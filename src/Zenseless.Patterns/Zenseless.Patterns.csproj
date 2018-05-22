@@ -7,8 +7,8 @@
     <ProjectGuid>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zenseless.Base</RootNamespace>
-    <AssemblyName>Zenseless.Base</AssemblyName>
+    <RootNamespace>Zenseless.Patterns</RootNamespace>
+    <AssemblyName>Zenseless.Patterns</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -56,7 +56,7 @@
     <Compile Include="SolutionAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Zenseless.Base.nuspec">
+    <None Include="Zenseless.Patterns.nuspec">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

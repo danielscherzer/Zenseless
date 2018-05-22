@@ -1,15 +1,15 @@
-﻿using System.Resources;
+using System.Resources;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Zenseless.Base")]
+[assembly: AssemblyTitle("Zenseless.Patterns")]
 [assembly: AssemblyDescription("PathTools FileWatcher Disposable Serialization TimeTools")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Daniel Scherzer")]
-[assembly: AssemblyProduct("Zenseless.Base")]
+[assembly: AssemblyProduct("Zenseless.Patterns")]
 [assembly: AssemblyCopyright("Copyright © 2015 Daniel Scherzer")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

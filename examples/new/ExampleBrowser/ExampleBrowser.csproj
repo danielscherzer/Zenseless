@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -102,9 +102,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Zenseless.Base\Zenseless.Base.csproj">
+    <ProjectReference Include="..\..\..\src\Zenseless.Patterns\Zenseless.Patterns.csproj">
       <Project>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</Project>
-      <Name>Zenseless.Base</Name>
+      <Name>Zenseless.Patterns</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\Zenseless.ContentPipeline\Zenseless.ContentPipeline.csproj">
       <Project>{6810de78-7764-4c8c-ada7-e7d31ae6c259}</Project>
