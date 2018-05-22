@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Zenseless.Patterns;
-
-namespace Zenseless.Geometry
+﻿namespace Zenseless.Geometry
 {
+	using System.Collections.Generic;
+	using Zenseless.Patterns;
+
 	/// <summary>
 	/// A scene-graph node that supports hierarchical transformations via parent relationships.
 	/// </summary>
@@ -47,7 +47,6 @@ namespace Zenseless.Geometry
 			globalTransform.Invalidate();
 			foreach (var child in children) child.Invalidate();
 		}
-
 
 		/// <summary>
 		/// Gets or sets the transformation.
