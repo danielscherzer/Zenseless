@@ -2,13 +2,12 @@
 {
 	using Caliburn.Micro;
 	using System;
-	using Zenseless.Base;
 
 	class ExamplePageViewModel : Screen
 	{
 		private readonly Lazy<IExample> example;
-		private readonly GameTime time = new GameTime();
 		private bool _hasProperties = false;
+		private bool _isRenderLoopActivated = true;
 
 		public ExamplePageViewModel(Lazy<IExample, IExampleMetaData> example)
 		{
@@ -16,6 +15,15 @@
 		}
 
 		public object Example => example.IsValueCreated ? example.Value : null;
+
+		public bool IsRenderLoopActivated
+		{
+			get => _isRenderLoopActivated; set
+			{
+				_isRenderLoopActivated = value;
+				NotifyOfPropertyChange();
+			}
+		}
 
 		public bool HasProperties
 		{
@@ -40,8 +48,7 @@
 		public void GlRender()
 		{
 			var instance = example.Value;
-			time.NewFrame();
-			instance.Update(time); //TODO: relative time is "paused" when switching, but absolute time could cause problems
+			instance.Update();
 			instance.Render();
 		}
 

@@ -3,7 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 

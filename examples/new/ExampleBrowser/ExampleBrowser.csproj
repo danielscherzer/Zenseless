@@ -80,10 +80,12 @@
     <Compile Include="Examples\TextureExample.cs" />
     <Compile Include="Examples\TextureMagFilterExample.cs" />
     <Compile Include="Examples\TextureMinFilterExample.cs" />
-    <Compile Include="IExample.cs" />
     <Compile Include="ExampleDisplayNameAttribute.cs" />
     <Compile Include="IExampleMetaData.cs" />
+    <Compile Include="IExample.cs" />
     <Compile Include="Services\ContentLoader.cs" />
+    <Compile Include="Services\Time.cs" />
+    <Compile Include="View\DebugConverter.cs" />
     <Compile Include="View\ExamplePageViewModel.cs" />
     <Compile Include="Services\RenderState.cs" />
     <Compile Include="View\ShellViewModel.cs" />

@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using Zenseless.Geometry;
 using Zenseless.OpenGL;
 

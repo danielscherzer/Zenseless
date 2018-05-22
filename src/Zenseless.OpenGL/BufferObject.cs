@@ -1,6 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System.Runtime.InteropServices;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using Zenseless.HLGL;
 
 namespace Zenseless.OpenGL

@@ -2,6 +2,7 @@
 {
 	using System.ComponentModel;
 	using System.Numerics;
+	using Zenseless.Patterns;
 
 	/// <summary>
 	/// A generic camera class
@@ -19,19 +20,19 @@
 		{
 			View = view;
 			Projection = projection;
-			var parent = new TransformationHierarchyNode(new Transformation(projection), null);
-			Projection.PropertyChanged += (s, a) => parent.LocalTransformation = new Transformation(projection);
-			node = new TransformationHierarchyNode(new Transformation(view), parent);
-			view.PropertyChanged += (s, a) => node.LocalTransformation = new Transformation(view);
+			cachedMatrix = new CachedCalculatedValue<Matrix4x4>(CalcCombinedTransform);
+
+			View.PropertyChanged += (s, a) => cachedMatrix.Invalidate();
+			Projection.PropertyChanged += (s, a) => cachedMatrix.Invalidate();
 		}
 
 		/// <summary>
-		/// Gets the transformation matrix in row-major style.
+		/// Gets the model-view-projection matrix in row-major style.
 		/// </summary>
 		/// <value>
 		/// The matrix.
 		/// </value>
-		public Matrix4x4 Matrix => node.GlobalTransformation.Matrix;
+		public Matrix4x4 Matrix => cachedMatrix.Value;
 
 		/// <summary>
 		/// Gets the projection transformation.
@@ -49,6 +50,11 @@
 		/// </value>
 		public VIEW View { get; }
 
-		private readonly TransformationHierarchyNode node;
+		private CachedCalculatedValue<Matrix4x4> cachedMatrix;
+
+		private Matrix4x4 CalcCombinedTransform()
+		{
+			return View.Matrix * Projection.Matrix;
+		}
 	}
 }

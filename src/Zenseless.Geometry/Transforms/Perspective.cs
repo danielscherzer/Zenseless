@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Numerics;
+	using Zenseless.Patterns;
 
 	/// <summary>
 	/// Implements a Perspective transformation that allows incremental changes

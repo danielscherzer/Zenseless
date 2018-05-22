@@ -1,7 +1,7 @@
 ﻿namespace Example
 {
 	using System;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.ExampleFramework;
 
 	public class Controller

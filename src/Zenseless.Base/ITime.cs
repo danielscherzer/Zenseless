@@ -1,4 +1,4 @@
-﻿namespace Zenseless.Base
+﻿namespace Zenseless.Patterns
 {
 	/// <summary>
 	/// Interface for querying absolute and last frame time

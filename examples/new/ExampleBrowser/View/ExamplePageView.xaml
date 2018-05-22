@@ -4,6 +4,8 @@
 		xmlns:cal="http://www.caliburnproject.org"
 			 xmlns:WpfOpenGL="clr-namespace:WpfOpenGlControl;assembly=WpfOpenGlControl">
 	<Grid>
-		<WpfOpenGL:WpfOpenGLControl HasSharedContext="false" cal:Message.Attach="[Event GlRender] = [Action GlRender]" IsRenderLoopActivated="True"/>
+		<WpfOpenGL:WpfOpenGLControl HasSharedContext="false" 
+			cal:Message.Attach="[Event GlRender] = [Action GlRender]" 
+			IsRenderLoopActivated="{Binding IsRenderLoopActivated}"/>
 	</Grid>
 </UserControl>

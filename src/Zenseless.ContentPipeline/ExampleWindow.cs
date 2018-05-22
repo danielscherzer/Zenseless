@@ -9,7 +9,7 @@
 	using System.ComponentModel.Composition.Hosting;
 	using System.Drawing;
 	using System.Linq;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
 

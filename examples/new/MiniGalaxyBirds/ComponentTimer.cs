@@ -1,4 +1,4 @@
-﻿using Zenseless.Base;
+﻿using Zenseless.Patterns;
 
 namespace MiniGalaxyBirds
 {

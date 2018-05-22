@@ -1,69 +1,99 @@
 ﻿namespace Example
 {
+	using System;
 	using System.Collections.Generic;
+	using System.Numerics;
 	using Zenseless.Geometry;
 
 	public class Model
 	{
 		public Model()
 		{
-			//rootRot = CreateChildNode(out TransformationHierarchyNode rootNode, );
-			//var rootNode = new TransformationHierarchyNode(null);
-			//UpdateNodeTransformation(rootNode, rootRot);
+			root = new Node(Transformation.Scale(0.6f), null);
+			root.AddComponent(new CreateGeometryTag());
 
-			//for (int i = 0; i < 4; ++i)
-			//{
-			//	var t = Transformation.Translation(0.7f, 0f, 0f);
-			//	var r = Transformation.Rotation(90f * i);
-			//	var xform = Transformation.Combine(t, r);
-			//	var box = Box2DExtensions.CreateFromCircle(new Circle(0f, 0f, 0.2f));
-			//	nodes.Add(new Node(box, new TransformationHierarchyNode(xform, rootNode)));
-			//}
+			var rootRotation = new Node(root);
+			EstablishNotification(rootRotation, rotation1);
 
-			//var size = 0.5f;
-			//size *= 0.5f;
-			//var miniTrans = CreateChildNode(out rotMini, size, nodes[0].TransformNode);
-
-			//size *= 0.25f;
-			//CreateChildNode(out rotmm, size, miniTrans);
+			AddGen1(rootRotation);
 		}
 
-		private Rotation CreateChildNode(out TransformationHierarchyNode newChildNode, float size, TransformationHierarchyNode parent)
+		private void AddGen1(Node parent)
 		{
-			var rotation = new Rotation(0f);
-			var node = new TransformationHierarchyNode(parent);
-			rotation.PropertyChanged += (s, a) => node.LocalTransformation = new Transformation(rotation);
+			var st = Transformation.Combine(Transformation.Scale(0.6f), Transformation.Translation(1f, 0f, 0f));
+			for (int i = 0; i < 4; ++i)
+			{
+				var xform = Transformation.Combine(st, Transformation.Rotation(90f * i));
 
-			newChildNode = new TransformationHierarchyNode(Transformation.Translation(size * 2f, 0f, 0f), node);
+				var node = new Node(xform, parent);
+				node.AddComponent(new CreateGeometryTag());
 
-			var box = Box2DExtensions.CreateFromCircle(new Circle(0f, 0f, size));
-			nodes.Add(new Node(box, newChildNode));
-			return rotation;
+				var nodeRotation = new Node(node);
+				EstablishNotification(nodeRotation, rotation2);
+
+				AddGen2(nodeRotation);
+			}
+		}
+
+		private void AddGen2(Node parent)
+		{
+			var child = new Node(Transformation.Combine(Transformation.Scale(0.4f), Transformation.Translation(0.7f, 0f, 0f)), parent);
+			child.AddComponent(new CreateGeometryTag());
+
+			var childRotation = new Node(child);
+			EstablishNotification(childRotation, rotation3);
+
+			AddGen3(childRotation);
+		}
+
+		private static void AddGen3(Node parent)
+		{
+			var st = Transformation.Combine(Transformation.Scale(0.2f), Transformation.Translation(0.55f, 0f, 0f));
+			for (int i = 0; i < 8; ++i)
+			{
+				var xform = Transformation.Combine(st, Transformation.Rotation(45f * i));
+
+				var grandChild = new Node(xform, parent);
+				grandChild.AddComponent(new CreateGeometryTag());
+			}
+		}
+
+		private void EstablishNotification(Node node, INotifyingTransform transform)
+		{
+			transform.PropertyChanged += (s, a) => node.LocalTransformation = new Transformation(transform);
 		}
 
 		public IEnumerable<IReadOnlyBox2D> GetPlanets()
 		{
 			var planets = new List<Box2D>();
-			foreach (var node in nodes)
+			Foreach(root, (node) => 
 			{
-				var transform = node.TransformNode.GlobalTransformation;
-				var newBox = new Box2D(node.Boundaries);
-				newBox.TransformCenter(transform);
-				planets.Add(newBox);
-			}
+				if (node.GetComponent<CreateGeometryTag>() is null) return;
+				var xForm = node.GlobalTransformation;
+				var newCenter = xForm.Transform(Vector2.Zero);
+				var size = xForm.Transform(new Vector4(1f, 0f, 0f, 0f)).XY().Length();
+				var bounds = Box2DExtensions.CreateFromCenterSize(newCenter.X, newCenter.Y, size, size);
+				planets.Add(bounds);
+			});
 			return planets;
 		}
 
-		public Box2D Earth { get; } = Box2DExtensions.CreateFromCircle(new Circle(0f, 0f, 0.1f));
-
 		public void Update(float updatePeriod)
 		{
-			rootRot.Degrees += updatePeriod * 100f;
-			rotMini.Degrees -= updatePeriod * 300f;
-			rotmm.Degrees += updatePeriod * 500f;
+			rotation1.Degrees += updatePeriod * 100f;
+			rotation2.Degrees -= updatePeriod * 300f;
+			rotation3.Degrees += updatePeriod * 500f;
 		}
 
-		private List<Node> nodes = new List<Node>();
-		private Rotation rootRot, rotMini, rotmm;
+		private class CreateGeometryTag { };
+
+		private Rotation rotation1 = new Rotation(0f), rotation2 = new Rotation(0f), rotation3 = new Rotation(0f);
+		private readonly Node root;
+
+		private void Foreach(Node node, Action<Node> action)
+		{
+			action(node);
+			foreach (var child in node.Children) Foreach(child, action);
+		}
 	}
 }

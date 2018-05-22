@@ -1,4 +1,4 @@
-﻿using Zenseless.Base;
+﻿using Zenseless.Patterns;
 using Zenseless.Geometry;
 using System;
 using System.Collections.Generic;

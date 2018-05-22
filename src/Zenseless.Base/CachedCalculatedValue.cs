@@ -1,4 +1,4 @@
-﻿namespace Zenseless.Geometry
+﻿namespace Zenseless.Patterns
 {
 	using System;
 

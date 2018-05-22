@@ -1,4 +1,4 @@
-﻿namespace Zenseless.Base
+﻿namespace Zenseless.Patterns
 {
 	/// <summary>
 	/// Interface for updates at a specified absolute time.

@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using Zenseless.ExampleFramework;
 using Zenseless.HLGL;
 

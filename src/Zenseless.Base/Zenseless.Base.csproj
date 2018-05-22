@@ -40,21 +40,25 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="CachedCalculatedValue.cs" />
     <Compile Include="DebugTools.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="FileWatcher.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="ITime.cs" />
     <Compile Include="ITimedUpdate.cs" />
+    <Compile Include="NotifyPropertyChanged.cs" />
     <Compile Include="PathTools.cs" />
     <Compile Include="PeriodicUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization.cs" />
-    <Compile Include="ServiceLocator.cs" />
+    <Compile Include="TypeRegistry.cs" />
     <Compile Include="SolutionAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Zenseless.Base.nuspec" />
+    <None Include="Zenseless.Base.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

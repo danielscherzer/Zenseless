@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.IO;
 
-namespace Zenseless.Base
+namespace Zenseless.Patterns
 {
 	/// <summary>
 	/// Watches the file system for changes to a given file

@@ -1,6 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
 

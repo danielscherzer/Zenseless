@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Zenseless.Base
+namespace Zenseless.Patterns
 {
 	/// <summary>
 	/// Contains class instance serialization/deserialization methods. 

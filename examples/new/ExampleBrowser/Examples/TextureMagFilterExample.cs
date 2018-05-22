@@ -3,7 +3,7 @@
 	using OpenTK.Graphics.OpenGL;
 	using System.ComponentModel.Composition;
 	using System.Drawing;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
@@ -16,11 +16,12 @@
 	class TextureMagFilterExample : IExample
 	{
 		[ImportingConstructor]
-		public TextureMagFilterExample([Import] IContentLoader contentLoader)
+		public TextureMagFilterExample([Import] IContentLoader contentLoader, [Import] ITime time)
 		{
 			texBackground = contentLoader.Load<ITexture2D>("mountains");
 			texBackground.WrapFunction = TextureWrapFunction.ClampToBorder;
 			GL.Enable(EnableCap.Texture2D); //TODO: only for non shader pipeline relevant -> remove at some point
+			this.time = time;
 		}
 
 		public void Render()
@@ -35,10 +36,10 @@
 			DrawTexturedRect(new Box2D(0, -1, 1, 2), texBackground, texCoord);
 		}
 
-		public void Update(ITime time)
+		public void Update()
 		{
-			//if (texCoord.SizeX > 0.99f) { zoomOut = false; }
-			//if (texCoord.SizeX < 0.05f) { zoom = false; }
+			if (texCoord.SizeX > 0.99f) { zoom = true; }
+			if (texCoord.SizeX < 0.05f) { zoom = false; }
 			float factor = 1 + (zoom ? -1f : 1f) * time.DeltaTime;
 			texCoord.SizeX *= factor;
 			texCoord.SizeY *= factor;
@@ -49,6 +50,7 @@
 		private ITexture texBackground;
 		private Box2D texCoord = new Box2D(0, 0, 1, 1);
 		private bool zoom = true;
+		private readonly ITime time;
 
 		private static void DrawTexturedRect(IReadOnlyBox2D rect, ITexture tex, IReadOnlyBox2D texCoords)
 		{

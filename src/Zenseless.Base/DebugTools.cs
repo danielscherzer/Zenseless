@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Zenseless.Base
+namespace Zenseless.Patterns
 {
 	/// <summary>
 	/// 

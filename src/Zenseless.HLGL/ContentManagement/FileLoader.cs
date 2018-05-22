@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Zenseless.Base;
+using Zenseless.Patterns;
 
 namespace Zenseless.HLGL
 {

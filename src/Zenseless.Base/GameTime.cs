@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Zenseless.Base
+namespace Zenseless.Patterns
 {
 	/// <summary>
 	/// Intended as a source for time.
@@ -16,6 +16,7 @@ namespace Zenseless.Base
 		/// The delta time in seconds.
 		/// </value>
 		public float DeltaTime { get; private set; }
+
 		/// <summary>
 		/// Gets the current frames-per-second.
 		/// </summary>
@@ -31,6 +32,7 @@ namespace Zenseless.Base
 		/// The absolute time in seconds.
 		/// </value>
 		public float AbsoluteTime => (float)stopwatch.Elapsed.TotalSeconds;
+		
 		/// <summary>
 		/// Gets the elapsed time in milliseconds.
 		/// </summary>
@@ -50,6 +52,27 @@ namespace Zenseless.Base
 			stopwatch.Start();
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this instance is running.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if this instance is running; otherwise, <c>false</c>.
+		/// </value>
+		public bool IsRunning
+		{
+			get => stopwatch.IsRunning;
+			set
+			{
+				if (value)
+				{
+					stopwatch.Start();
+				}
+				else
+				{
+					stopwatch.Stop();
+				}
+			}
+		}
 		/// <summary>
 		/// Start a new frame. You have to call this method exactly once per frame for correct FPS counting and delta time.
 		/// </summary>

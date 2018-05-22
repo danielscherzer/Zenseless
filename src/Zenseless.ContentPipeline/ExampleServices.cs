@@ -1,5 +1,5 @@
 ﻿using System;
-using Zenseless.Base;
+using Zenseless.Patterns;
 
 namespace Zenseless.ExampleFramework
 {
@@ -10,6 +10,6 @@ namespace Zenseless.ExampleFramework
 			//serviceLocator.RegisterService();
 		}
 
-		private ServiceLocator serviceLocator = new ServiceLocator();
+		private TypeRegistry serviceLocator = new TypeRegistry();
 	}
 }

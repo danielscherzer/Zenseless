@@ -2,7 +2,7 @@
 {
 	using System;
 	using System.IO;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 
 	/// <summary>
 	/// 

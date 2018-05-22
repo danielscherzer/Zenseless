@@ -4,7 +4,7 @@
 	using System;
 	using System.ComponentModel.Composition;
 	using System.Drawing;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 
@@ -16,8 +16,8 @@
 	[ExampleDisplayName]
 	class TextureExample : IExample
 	{
-		private ITexture texBackground;
-		private ITexture texShip;
+		private readonly ITexture texBackground;
+		private readonly ITexture texShip;
 
 		[ImportingConstructor]
 		public TextureExample([Import] IRenderState renderState, [Import] IContentLoader contentLoader)
@@ -56,7 +56,7 @@
 			texture.Deactivate();
 		}
 
-		public void Update(ITime time)
+		public void Update()
 		{
 		}
 	}

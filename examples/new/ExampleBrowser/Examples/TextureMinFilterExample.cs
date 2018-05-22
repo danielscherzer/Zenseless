@@ -3,7 +3,7 @@
 	using OpenTK.Graphics.OpenGL;
 	using System.ComponentModel.Composition;
 	using System.Drawing;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
@@ -16,11 +16,12 @@
 	class TextureMinFilterExample : IExample
 	{
 		[ImportingConstructor]
-		public TextureMinFilterExample([Import] IContentLoader contentLoader)
+		public TextureMinFilterExample([Import] IContentLoader contentLoader, [Import] ITime time)
 		{
 			texBackground = contentLoader.Load<ITexture2D>("mountains");
 			texBackground.WrapFunction = TextureWrapFunction.Repeat;
 			GL.Enable(EnableCap.Texture2D); //todo: only for non shader pipeline relevant -> remove at some point
+			this.time = time;
 		}
 
 		public void Render()
@@ -35,7 +36,7 @@
 			DrawTexturedRect(new Box2D(0, -1, 1, 2), texBackground, texCoord);
 		}
 
-		public void Update(ITime time)
+		public void Update()
 		{
 			if (texCoord.SizeX > 100f || texCoord.SizeX < 1f) scaleFactor = -scaleFactor;
 			float factor = scaleFactor * time.DeltaTime;
@@ -47,6 +48,7 @@
 		private ITexture texBackground;
 		private Box2D texCoord = new Box2D(0, 0, 1, 1);
 		private float scaleFactor = 1f;
+		private readonly ITime time;
 
 		private static void DrawTexturedRect(IReadOnlyBox2D rect, ITexture tex, IReadOnlyBox2D texCoords)
 		{

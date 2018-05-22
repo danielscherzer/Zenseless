@@ -7,7 +7,7 @@ namespace Zenseless.HLGL
 	/// Implementation of a content manager
 	/// </summary>
 	/// <seealso cref="IContentManager" />
-	public class ContentManager : IContentManager //TODO: check if we can decompose this class loader, importer
+	public class ContentManager : IContentManager //TODO: check if we can decompose this class loader, importer... answer if the content manager should be split up into services (import, update services) or be a single service 
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ContentManager"/> class.

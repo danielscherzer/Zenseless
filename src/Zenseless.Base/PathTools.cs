@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Zenseless.Base
+namespace Zenseless.Patterns
 {
 	/// <summary>
 	/// Contains helper functions for file paths

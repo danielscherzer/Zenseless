@@ -3,7 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Reflection;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
 

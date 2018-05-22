@@ -4,7 +4,7 @@
 	using System;
 	using System.ComponentModel.Composition;
 	using System.Numerics;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.Geometry;
 	using Zenseless.OpenGL;
 
@@ -12,7 +12,14 @@
 	[Export(typeof(IExample))]
 	public class ColorExample : IExample
 	{
+		private readonly ITime time;
 		private float hue = 0f;
+
+		[ImportingConstructor]
+		public ColorExample([Import] ITime time)
+		{
+			this.time = time;
+		}
 
 		public void Render()
 		{
@@ -33,7 +40,7 @@
 			}
 		}
 
-		public void Update(ITime time)
+		public void Update()
 		{
 			hue = (float)(Math.Sin(time.AbsoluteTime) * 0.5 + 0.5);
 		}

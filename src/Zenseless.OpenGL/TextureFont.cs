@@ -1,5 +1,5 @@
 ﻿using Zenseless.Geometry;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using OpenTK.Graphics.OpenGL;
 using Zenseless.HLGL;
 
@@ -8,7 +8,7 @@ namespace Zenseless.OpenGL
 	/// <summary>
 	/// allows to print text were the individual characters come all from a single texture
 	/// </summary>
-	/// <seealso cref="Zenseless.Base.Disposable" />
+	/// <seealso cref="Zenseless.Patterns.Disposable" />
 	public class TextureFont : Disposable
 	{
 		/// <summary>

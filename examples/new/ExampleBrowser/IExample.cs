@@ -1,10 +1,8 @@
-﻿using Zenseless.Base;
-
-namespace ExampleBrowser
+﻿namespace ExampleBrowser
 {
-	public interface IExample
+	interface IExample
 	{
-		void Update(ITime time);
+		void Update();
 		void Render();
 	}
 }

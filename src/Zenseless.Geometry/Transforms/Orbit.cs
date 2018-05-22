@@ -4,6 +4,7 @@
 	using System.ComponentModel;
 	using System.Numerics;
 	using System.Runtime.CompilerServices;
+	using Zenseless.Patterns;
 
 	/// <summary>
 	/// Implements a orbiting transformation

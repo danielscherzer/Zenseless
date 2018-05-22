@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Zenseless.Patterns;
 
 namespace Zenseless.Geometry
 {

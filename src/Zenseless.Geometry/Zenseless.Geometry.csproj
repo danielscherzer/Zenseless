@@ -39,8 +39,6 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CachedCalculatedValue.cs" />
-    <Compile Include="NotifyPropertyChanged.cs" />
     <Compile Include="Transforms\Camera.cs" />
     <Compile Include="Transforms\CameraFirstPersonMovementState.cs" />
     <Compile Include="Box3D.cs" />
@@ -73,11 +71,17 @@
     <Compile Include="Transforms\Rotation.cs" />
     <Compile Include="Transforms\Scale.cs" />
     <Compile Include="Transforms\Transformation.cs" />
-    <Compile Include="Transforms\TransformationHierarchyNode.cs" />
+    <Compile Include="SceneGraph\Node.cs" />
     <Compile Include="Transforms\Translation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Zenseless.Geometry.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zenseless.Base\Zenseless.Base.csproj">
+      <Project>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</Project>
+      <Name>Zenseless.Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,7 +4,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Numerics;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.HLGL;
 	using ShaderType = HLGL.ShaderType;
 	using TKShaderType = OpenTK.Graphics.OpenGL4.ShaderType;

@@ -41,7 +41,6 @@
     <Compile Include="CompoundTransformationExample.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="MyVisual.cs" />
-    <Compile Include="Node.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -50,7 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
-    <EmbeddedResource Include="Content\bird1.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="OpenTK">
@@ -81,9 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\greenplanet.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Content\earthShaded.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

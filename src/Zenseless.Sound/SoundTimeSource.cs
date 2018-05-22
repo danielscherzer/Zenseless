@@ -1,4 +1,4 @@
-﻿using Zenseless.Base;
+﻿using Zenseless.Patterns;
 using NAudio.Wave;
 using System;
 
@@ -8,7 +8,7 @@ namespace Zenseless.Sound
 	/// Encapsulates the playing and seeking of an audio file (unbuffered). 
 	/// Intended for use in multi-media applications.
 	/// </summary>
-	/// <seealso cref="Zenseless.Base.Disposable" />
+	/// <seealso cref="Zenseless.Patterns.Disposable" />
 	/// <seealso cref="Zenseless.Sound.ITimedMedia" />
 	public class SoundTimeSource : Disposable, ITimedMedia
 	{

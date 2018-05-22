@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using System;
 using System.Drawing;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using Zenseless.ExampleFramework;
 using Zenseless.Geometry;
 using Zenseless.HLGL;

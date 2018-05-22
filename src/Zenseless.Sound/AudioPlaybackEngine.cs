@@ -1,4 +1,4 @@
-﻿using Zenseless.Base;
+﻿using Zenseless.Patterns;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using System;

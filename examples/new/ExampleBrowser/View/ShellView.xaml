@@ -2,16 +2,27 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:l="clr-namespace:ExampleBrowser.View"
+		xmlns:cal="http://www.caliburnproject.org"
 		xmlns:exTool="http://schemas.xceed.com/wpf/xaml/toolkit"
 		Height="450" Width="800">
 	<Control.Resources>
 		<l:VisibleToWidthConverter x:Key="WidthToVisibleConverter"/>
+
+		<Style TargetType="exTool:PropertyGrid">
+			<Setter Property="ShowDescriptionByTooltip" Value="True" />
+			<Setter Property="ShowSearchBox" Value="False" />
+			<Setter Property="ShowSortOptions" Value="False" />
+			<Setter Property="ShowSummary" Value="False" />
+			<Setter Property="NameColumnWidth" Value="100"/>
+			<Setter Property="FontSize" Value="14"/>
+		</Style>
 	</Control.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="5" />
-			<ColumnDefinition Width="{Binding ActiveItem.HasProperties, Converter={StaticResource WidthToVisibleConverter}}" />
+			<ColumnDefinition Width="200" />
+			<!--<ColumnDefinition Width="{Binding ActiveItem.HasProperties, Converter={StaticResource WidthToVisibleConverter}}" />-->
 		</Grid.ColumnDefinitions>
 		<TabControl x:Name="Items" Grid.Column="0">
 			<TabControl.ItemTemplate>
@@ -23,6 +34,10 @@
 			</TabControl.ItemTemplate>
 		</TabControl>
 		<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-		<exTool:PropertyGrid Grid.Column="2" SelectedObject="{Binding ActiveItem.Example}" ShowSearchBox="False" ShowSortOptions="False" NameColumnWidth="100" ShowDescriptionByTooltip="True"/>
+		<StackPanel Grid.Column="2" Orientation="Vertical">
+			<ToggleButton IsChecked="{Binding IsRunning}">Time is running</ToggleButton>
+			<exTool:PropertyGrid SelectedObject="{Binding ActiveItem.Example}"  />
+				<!--cal:Message.Attach="[Event PropertyValueChanged] = [Action Invalidate]"--> 		
+		</StackPanel>
 	</Grid>
 </Window>

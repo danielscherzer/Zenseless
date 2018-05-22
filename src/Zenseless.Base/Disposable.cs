@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zenseless.Base
+namespace Zenseless.Patterns
 {
 	/// <summary>
 	/// Implements the default disposing behavior as recommended by Microsoft.

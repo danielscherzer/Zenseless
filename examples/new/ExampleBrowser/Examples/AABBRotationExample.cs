@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Drawing;
 using System.Numerics;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 
@@ -17,8 +17,13 @@ namespace ExampleBrowser
 	class AABBRotationExample : NotifyPropertyChanged, IExample
 	{
 		[ImportingConstructor]
-		public AABBRotationExample([Import] IRenderState renderState)
+		public AABBRotationExample([Import] IRenderState renderState, [Import] ITime time)
 		{
+			this.Time = time ?? throw new ArgumentNullException(nameof(time));
+			if (renderState == null)
+			{
+				throw new ArgumentNullException(nameof(renderState));
+			}
 			renderState.Set(BlendStates.AlphaBlend);
 			renderState.Set(new LineSmoothing(true));
 			renderState.Set(new ClearColorState(1, 1, 1, 1));
@@ -52,9 +57,12 @@ namespace ExampleBrowser
 				RaisePropertyChanged();
 			}
 		}
-		public void Update(ITime time)
+
+		private ITime Time { get; }
+
+		public void Update()
 		{
-			Angle = 30f * time.AbsoluteTime;
+			Angle = 30f * Time.AbsoluteTime;
 		}
 
 		private const float size = 0.7f;

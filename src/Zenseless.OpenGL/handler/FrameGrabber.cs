@@ -2,7 +2,7 @@
 {
 	using System.Collections.Generic;
 	using System.Drawing;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.HLGL;
 
 	/// <summary>

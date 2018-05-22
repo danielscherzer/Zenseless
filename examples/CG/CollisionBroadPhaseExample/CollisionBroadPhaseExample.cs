@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Zenseless.ExampleFramework;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using Zenseless.Geometry;
 
 namespace Example

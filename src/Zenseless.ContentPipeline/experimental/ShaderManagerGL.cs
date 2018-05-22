@@ -1,4 +1,4 @@
-﻿using Zenseless.Base;
+﻿using Zenseless.Patterns;
 using Zenseless.HLGL;
 using OpenTK.Graphics.OpenGL4;
 using System;
@@ -11,7 +11,7 @@ namespace Zenseless.OpenGL
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.Base.Disposable" />
+	/// <seealso cref="Zenseless.Patterns.Disposable" />
 	public class ShaderManagerGL : Disposable
 	{
 		/// <summary>

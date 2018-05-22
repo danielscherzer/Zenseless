@@ -87,21 +87,21 @@
 		/// <summary>
 		/// Transforms the specified vector.
 		/// </summary>
-		/// <param name="vector">The input vector.</param>
+		/// <param name="position">The input position.</param>
 		/// <returns></returns>
-		public Vector2 Transform(in Vector2 vector)
+		public Vector2 Transform(in Vector2 position)
 		{
-			return Vector2.Transform(vector, Matrix);
+			return Vector2.Transform(position, Matrix);
 		}
 
 		/// <summary>
 		/// Transforms the specified vector.
 		/// </summary>
-		/// <param name="vector">The input vector.</param>
+		/// <param name="position">The input position.</param>
 		/// <returns></returns>
-		public Vector3 Transform(in Vector3 vector)
+		public Vector3 Transform(in Vector3 position)
 		{
-			return Vector3.Transform(vector, Matrix);
+			return Vector3.Transform(position, Matrix);
 		}
 
 		/// <summary>

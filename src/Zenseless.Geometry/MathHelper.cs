@@ -375,6 +375,13 @@ namespace Zenseless.Geometry
 		public static Vector2 XY(this in Vector3 vector) => new Vector2(vector.X, vector.Y);
 
 		/// <summary>
+		/// Returns the <seealso cref="Vector2"/> that results when dropping the z and w component from <seealso cref="Vector4"/>.
+		/// </summary>
+		/// <param name="vector">The <seealso cref="Vector3"/></param>
+		/// <returns><seealso cref="Vector2"/></returns>
+		public static Vector2 XY(this in Vector4 vector) => new Vector2(vector.X, vector.Y);
+
+		/// <summary>
 		/// Returns the <seealso cref="Vector3"/> that results when dropping the w component from <seealso cref="Vector4"/>.
 		/// </summary>
 		/// <param name="vector">The <seealso cref="Vector4"/>.</param>

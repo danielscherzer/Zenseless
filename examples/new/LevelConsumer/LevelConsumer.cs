@@ -2,7 +2,7 @@
 using OpenTK.Input;
 using System;
 using Zenseless.ExampleFramework;
-using Zenseless.Base;
+using Zenseless.Patterns;
 
 namespace Example
 {

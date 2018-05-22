@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 

@@ -1,5 +1,5 @@
 ﻿using Zenseless.ExampleFramework;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using System;
 using System.IO;
 using System.Windows.Forms;

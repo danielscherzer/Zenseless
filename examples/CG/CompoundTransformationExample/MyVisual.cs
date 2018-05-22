@@ -8,7 +8,6 @@
 
 	public class MyVisual
 	{
-		private readonly ITexture texEarth;
 		private readonly ITexture texGreen;
 
 		public MyVisual(IRenderState renderState, IContentLoader contentLoader)
@@ -17,15 +16,13 @@
 			renderState.Set(BlendStates.AlphaBlend); //for transparency in textures we use blending
 			GL.Enable(EnableCap.Texture2D); //TODO: only for non shader pipeline relevant -> remove at some point
 
-			texEarth = contentLoader.Load<ITexture2D>("earth");
 			texGreen = contentLoader.Load<ITexture2D>("planet");
 		}
 
-		public void Render(in IReadOnlyBox2D earth, IEnumerable<IReadOnlyBox2D> birds)
+		public void Render(in IEnumerable<IReadOnlyBox2D> planets)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
-			DrawTexturedRect(earth, texEarth);
-			foreach (var bird in birds)
+			foreach (var bird in planets)
 			{
 				DrawTexturedRect(bird, texGreen);
 			}

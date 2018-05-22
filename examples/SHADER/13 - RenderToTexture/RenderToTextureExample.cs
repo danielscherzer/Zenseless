@@ -2,7 +2,7 @@
 {
 	using OpenTK.Input;
 	using System;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.ExampleFramework;
 	using Zenseless.OpenGL;
 

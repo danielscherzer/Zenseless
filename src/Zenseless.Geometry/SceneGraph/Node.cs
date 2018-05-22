@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
+using Zenseless.Patterns;
 
 namespace Zenseless.Geometry
 {
 	/// <summary>
-	/// Transformation class that supports hierarchical transformations via parent relationships.
+	/// A scene-graph node that supports hierarchical transformations via parent relationships.
 	/// </summary>
-	public class TransformationHierarchyNode
+	public class Node : TypeRegistry
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TransformationHierarchyNode"/> class.
+		/// Initializes a new instance of the <see cref="Node"/> class.
 		/// </summary>
-		/// <param name="parent">The parent transformation hierarchy node.</param>
-		public TransformationHierarchyNode(TransformationHierarchyNode parent)
+		/// <param name="parent">The parent node.</param>
+		public Node(Node parent)
 		{
 			globalTransform = new CachedCalculatedValue<Transformation>(CalcGlobalTransformation);
 			LocalTransformation = Transformation.Identity;
@@ -19,11 +20,11 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TransformationHierarchyNode"/> class.
+		/// Initializes a new instance of the <see cref="Node"/> class.
 		/// </summary>
 		/// <param name="localTransformation">The node transformation.</param>
-		/// <param name="parent">The parent transformation hierarchy node.</param>
-		public TransformationHierarchyNode(Transformation localTransformation, TransformationHierarchyNode parent)
+		/// <param name="parent">The parent node.</param>
+		public Node(Transformation localTransformation, Node parent)
 		{
 			globalTransform = new CachedCalculatedValue<Transformation>(CalcGlobalTransformation);
 			LocalTransformation = localTransformation;
@@ -36,7 +37,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The children.
 		/// </value>
-		public IReadOnlyList<TransformationHierarchyNode> Children => children;
+		public IReadOnlyList<Node> Children => children;
 
 		/// <summary>
 		/// Invalidates this instance and its children.
@@ -79,7 +80,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The parent transformation.
 		/// </value>
-		public TransformationHierarchyNode Parent
+		public Node Parent
 		{
 			get => parent;
 			set
@@ -97,9 +98,9 @@ namespace Zenseless.Geometry
 			}
 		}
 
-		private readonly List<TransformationHierarchyNode> children = new List<TransformationHierarchyNode>();
+		private readonly List<Node> children = new List<Node>();
 		private CachedCalculatedValue<Transformation> globalTransform;
-		private TransformationHierarchyNode parent;
+		private Node parent;
 		private Transformation localTransform;
 
 		private Transformation CalcGlobalTransformation()

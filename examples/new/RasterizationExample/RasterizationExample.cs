@@ -3,7 +3,7 @@
 	using System;
 	using System.Drawing;
 	using System.IO;
-	using Zenseless.Base;
+	using Zenseless.Patterns;
 	using Zenseless.ExampleFramework;
 	using Zenseless.OpenGL;
 

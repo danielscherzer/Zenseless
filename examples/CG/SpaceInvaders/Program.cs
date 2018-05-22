@@ -1,6 +1,6 @@
 ﻿using Zenseless.ExampleFramework;
 using Zenseless.Geometry;
-using Zenseless.Base;
+using Zenseless.Patterns;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;

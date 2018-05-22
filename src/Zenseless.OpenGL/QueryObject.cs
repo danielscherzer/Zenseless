@@ -1,4 +1,4 @@
-﻿using Zenseless.Base;
+﻿using Zenseless.Patterns;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Zenseless.OpenGL
@@ -6,7 +6,7 @@ namespace Zenseless.OpenGL
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.Base.Disposable" />
+	/// <seealso cref="Zenseless.Patterns.Disposable" />
 	public class QueryObject : Disposable
 	{
 		/// <summary>

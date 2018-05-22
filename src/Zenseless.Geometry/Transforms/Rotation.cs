@@ -1,6 +1,7 @@
 ﻿namespace Zenseless.Geometry
 {
 	using System.Numerics;
+	using Zenseless.Patterns;
 
 	/// <summary>
 	/// A single axis rotation class that allows incremental changes

@@ -3,7 +3,6 @@
 	using OpenTK.Graphics;
 	using OpenTK.Graphics.OpenGL;
 	using System.ComponentModel.Composition;
-	using Zenseless.Base;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 
@@ -33,7 +32,7 @@
 			DrawRect(rect, colorA, colorB);
 		}
 
-		public void Update(ITime time)
+		public void Update()
 		{
 		}
 
