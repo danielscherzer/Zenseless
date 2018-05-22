@@ -100,7 +100,7 @@ namespace Example
 		//private int undoCounter = 0;
 		//private bool collided = false;
 
-		private bool UpdateOrientation(Vector2 dir)
+		private bool UpdateOrientation(in Vector2 dir)
 		{
 			var currentDirection = MathHelper.ToCartesian(new Vector2(MathHelper.DegreesToRadians(Orientation), 1f));
 			var dot = Vector2.Dot(dir, currentDirection);
@@ -114,7 +114,7 @@ namespace Example
 			}
 			else
 			{
-				var destinationAngle = MathHelper.RadiansToDegrees(dir.PolarAngle());
+				var destinationAngle = MathHelper.RadiansToDegrees(MathHelper.PolarAngle(dir));
 				Orientation = destinationAngle;
 				return false;
 			}
