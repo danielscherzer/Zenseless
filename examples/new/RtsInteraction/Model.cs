@@ -20,7 +20,7 @@
 
 		public IEnumerable<IUnit> Units => units;
 
-		public void MoveTo(Vector2 destination)
+		public void MoveTo(in Vector2 destination)
 		{
 			var box = CalcSelectedUnitsBoundingBox();
 			if (box is null) return;
@@ -47,7 +47,7 @@
 			}
 		}
 
-		public void Select(Vector2 selectionStart, Vector2 selectionEnd)
+		public void Select(in Vector2 selectionStart, in Vector2 selectionEnd)
 		{
 			var selectionBox = Box2DExtensions.CreateFromPoints(new Vector2[] { selectionStart, selectionEnd });
 			foreach(var unit in units)

@@ -33,7 +33,7 @@
 			DrawTools.DrawCircle(circle.CenterX, circle.CenterY, circle.Radius, 32, false);
 		}
 
-		public void DrawRect(Vector2 cornerA, Vector2 cornerB)
+		public void DrawRect(in Vector2 cornerA, in Vector2 cornerB)
 		{
 			var a = (cornerA);
 			var b = (cornerB);
@@ -73,7 +73,7 @@
 			}
 		}
 
-		public Vector2 TransformToModel(Vector2 clip)
+		public Vector2 TransformToModel(in Vector2 clip)
 		{
 			return viewport2Model.Transform(clip);
 		}

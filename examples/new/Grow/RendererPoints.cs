@@ -15,7 +15,7 @@
 			geometry = new VAO(PrimitiveType.Points);
 		}
 
-		public void DrawPoints(Vector3[] points, float size, Color color)
+		public void DrawPoints(in Vector3[] points, float size, Color color)
 		{
 			shaderProgram.Activate();
 			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "position"), points, VertexAttribPointerType.Float, 3); //copy data to gpu mem

@@ -14,7 +14,7 @@ namespace Example
 		public Vector3 Emitter { get; set; }
 		public Vector3 Wind { get; set; }
 
-		public VisualSmoke(Vector3 emitterPos, Vector3 wind, IRenderState renderState, IContentLoader contentLoader)
+		public VisualSmoke(in Vector3 emitterPos, in Vector3 wind, IRenderState renderState, IContentLoader contentLoader)
 		{
 			this.renderState = renderState;
 

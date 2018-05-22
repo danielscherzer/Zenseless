@@ -24,7 +24,7 @@ namespace Example
 		/// </summary>
 		/// <param name="location">particle location</param>
 		/// <param name="color">particle color</param>
-		public void DrawPoint(Vector2 location, Color color)
+		public void DrawPoint(in Vector2 location, in Color color)
 		{
 			GL.Color3(color);
 			GL.Begin(PrimitiveType.Points);
@@ -32,7 +32,7 @@ namespace Example
 			GL.End();
 		}
 
-		public void DrawPoint(Vector2 location, float age)
+		public void DrawPoint(in Vector2 location, float age)
 		{
 			DrawPoint(location, ConvertAgeToColor(age));
 		}

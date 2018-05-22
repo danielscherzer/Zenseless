@@ -34,7 +34,7 @@ namespace Zenseless.Geometry
 		/// <param name="tangent1">The tangent at the second control point.</param>
 		/// <param name="t">The parametric position on the spline segment t e [0, 1].</param>
 		/// <returns></returns>
-		public static Vector2 EvaluateSegment(Vector2 point0, Vector2 point1, Vector2 tangent0, Vector2 tangent1, float t)
+		public static Vector2 EvaluateSegment(in Vector2 point0, in Vector2 point1, in Vector2 tangent0, in Vector2 tangent1, float t)
 		{
 			return H1(t) * point0 + H2(t) * point1 + H3(t) * tangent0 + H4(t) * tangent1;
 		}
@@ -48,7 +48,7 @@ namespace Zenseless.Geometry
 		/// <param name="tangent1">The tangent at the second control point.</param>
 		/// <param name="t">The parametric position on the spline segment t e [0, 1].</param>
 		/// <returns></returns>
-		public static Vector3 EvaluateSegment(Vector3 point0, Vector3 point1, Vector3 tangent0, Vector3 tangent1, float t)
+		public static Vector3 EvaluateSegment(in Vector3 point0, in Vector3 point1, in Vector3 tangent0, in Vector3 tangent1, float t)
 		{
 			return H1(t) * point0 + H2(t) * point1 + H3(t) * tangent0 + H4(t) * tangent1;
 		}
@@ -132,7 +132,7 @@ namespace Zenseless.Geometry
 			return new Tuple<int, int>(id, id2);
 		}
 
-		private static Vector2 FiniteDifference(Vector2 pointLeft, Vector2 pointRight) => 0.5f * (pointRight - pointLeft);
+		private static Vector2 FiniteDifference(in Vector2 pointLeft, in Vector2 pointRight) => 0.5f * (pointRight - pointLeft);
 		private static float H1(float t) => 2 * t * t * t - 3 * t * t + 1;
 		private static float H2(float t) => -2 * t * t * t + 3 * t * t;
 		private static float H3(float t) => t * t * t - 2 * t * t + t;

@@ -24,7 +24,7 @@ namespace Zenseless.Geometry
 		/// Initializes a new instance of the <see cref="Translation"/> class.
 		/// </summary>
 		/// <param name="translation">The translation vector.</param>
-		public Translation(Vector3 translation)
+		public Translation(in Vector3 translation)
 		{
 			matrix = Matrix4x4.CreateTranslation(translation);
 		}

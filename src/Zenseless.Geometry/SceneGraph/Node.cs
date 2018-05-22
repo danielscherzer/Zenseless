@@ -24,7 +24,7 @@
 		/// </summary>
 		/// <param name="localTransformation">The node transformation.</param>
 		/// <param name="parent">The parent node.</param>
-		public Node(Transformation localTransformation, Node parent)
+		public Node(in Transformation localTransformation, Node parent)
 		{
 			globalTransform = new CachedCalculatedValue<Transformation>(CalcGlobalTransformation);
 			LocalTransformation = localTransformation;

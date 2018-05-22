@@ -9,7 +9,7 @@ namespace Example
 {
 	public class VisualWaterfall
 	{
-		public VisualWaterfall(Vector3 emitterPos, IRenderState renderState, IContentLoader contentLoader)
+		public VisualWaterfall(in Vector3 emitterPos, IRenderState renderState, IContentLoader contentLoader)
 		{
 			this.renderState = renderState;
 			this.emitterPos = emitterPos;

@@ -18,7 +18,7 @@
 		public IReadOnlyList<Vector2> Tangents { get => tangents; }
 		public IReadOnlyList<Vector2> TangentHandles { get => tangentHandles; }
 
-		internal void BeginEdit(Vector2 coord)
+		internal void BeginEdit(in Vector2 coord)
 		{
 			if (-1 != SelectedTangent)
 			{
@@ -35,7 +35,7 @@
 			state = State.MoveTangent;
 		}
 
-		private void Add(Vector2 coord)
+		private void Add(in Vector2 coord)
 		{
 			points.Add(coord);
 			var tangentHandle = coord + Vector2.One * 0.1f;
@@ -43,7 +43,7 @@
 			tangents.Add(tangentHandle - coord);
 		}
 
-		internal void Delete(Vector2 coord)
+		internal void Delete(in Vector2 coord)
 		{
 			if (-1 != SelectedPoint)
 			{
@@ -70,7 +70,7 @@
 		private List<Vector2> tangentHandles = new List<Vector2>();
 		private List<Vector2> tangents = new List<Vector2>();
 
-		internal void Move(Vector2 coord)
+		internal void Move(in Vector2 coord)
 		{
 			switch(state)
 			{

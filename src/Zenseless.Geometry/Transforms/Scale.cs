@@ -33,7 +33,7 @@ namespace Zenseless.Geometry
 		/// Initializes a new instance of the <see cref="Scale"/> class.
 		/// </summary>
 		/// <param name="scaleVector">The scale vector.</param>
-		public Scale(Vector3 scaleVector)
+		public Scale(in Vector3 scaleVector)
 		{
 			matrix = Matrix4x4.CreateScale(scaleVector);
 		}

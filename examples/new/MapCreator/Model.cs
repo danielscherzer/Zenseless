@@ -62,7 +62,7 @@
 			return length;
 		}
 
-		public List<Vector2> CreatePath(Vector2 a, Vector2 b)
+		public List<Vector2> CreatePath(in Vector2 a, in Vector2 b)
 		{
 			var result = new List<Vector2> { a, b };
 			for (var i = 0; i < 7; ++i) result = Split(result);

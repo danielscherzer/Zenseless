@@ -14,14 +14,14 @@ namespace Example
 		public Vector2 Location { get; set; } = Vector2.Zero;
 		public Vector2 Velocity { get; set; } = Vector2.Zero;
 
-		public void ApplyForce(Vector2 force)
+		public void ApplyForce(in Vector2 force)
 		{
 			//Newtons 2nd Law: Force = Mass * Acceleration; 
 			//acceleration equals the sum of all forces / Mass
 			Acceleration += force / Mass;
 		}
 
-		public void Seed(Vector2 location, Vector2 velocity)
+		public void Seed(in Vector2 location, in Vector2 velocity)
 		{
 			Age = 0f;
 			Location = location;

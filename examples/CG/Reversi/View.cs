@@ -27,7 +27,7 @@ namespace Reversi
 			toClipSpace = Matrix4.CreateOrthographicOffCenter(fitBox.MinX, fitBox.MaxX, fitBox.MinY, fitBox.MaxY, 0f, 1f);
 		}
 
-		public Point CalcGridPos(Vector2 coord)
+		public Point CalcGridPos(in Vector2 coord)
 		{
 			//calculate the grid coordinates
 			var pos = new Vector4(coord.X, coord.Y, 0.0f, 1.0f);
@@ -58,9 +58,9 @@ namespace Reversi
 
 		private Matrix4 toClipSpace = new Matrix4();
 		private TextureFont font;
-		private ITexture texWhite;
-		private ITexture texBlack;
-		private ITexture texTable;
+		private readonly ITexture texWhite;
+		private readonly ITexture texBlack;
+		private readonly ITexture texTable;
 
 		private void DrawField(IGameState gameState)
 		{

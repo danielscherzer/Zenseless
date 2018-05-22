@@ -17,7 +17,7 @@
 			Velocity = Vector3.Zero;
 		}
 
-		public Body(Vector3 location, float mass)
+		public Body(in Vector3 location, float mass)
 		{
 			Acceleration = Vector3.Zero;
 			Location = location;
@@ -32,7 +32,7 @@
 		public float Mass { get; set; }
 		public Vector3 Velocity { get; set; }
 
-		public void ApplyForce(Vector3 force)
+		public void ApplyForce(in Vector3 force)
 		{
 			//Newtons 2nd Law: Force = Mass * Acceleration; 
 			//but also consider force accumulation:

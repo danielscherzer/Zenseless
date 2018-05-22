@@ -113,7 +113,7 @@ namespace Zenseless.Geometry
 		/// Applies the rotated movement.
 		/// </summary>
 		/// <param name="movement">The movement.</param>
-		public void ApplyRotatedMovement(Vector3 movement)
+		public void ApplyRotatedMovement(in Vector3 movement)
 		{
 			var rotation = CalcRotationMatrix();
 			Position += Vector3.Transform(movement, rotation);

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Numerics;
-
-namespace Zenseless.Geometry
+﻿namespace Zenseless.Geometry
 {
+	using System;
+	using System.Numerics;
+
 	/// <summary>
 	/// 
 	/// </summary>
@@ -13,7 +13,7 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="mesh">The mesh.</param>
 		/// <param name="uv">The uv.</param>
-		public static void SetConstantUV(this DefaultMesh mesh, Vector2 uv)
+		public static void SetConstantUV(this DefaultMesh mesh, in Vector2 uv)
 		{
 			var uvs = mesh.TexCoord;
 			var pos = mesh.Position;

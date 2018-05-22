@@ -54,7 +54,7 @@
 			}
 		}
 
-		private void DrawPoint(Vector2 point)
+		private void DrawPoint(in Vector2 point)
 		{
 			GL.Begin(PrimitiveType.Points);
 			GL.Vertex2(point.X, point.Y);

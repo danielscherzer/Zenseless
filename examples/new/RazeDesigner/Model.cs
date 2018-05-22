@@ -16,7 +16,7 @@
 		public int SelectedPoint { get; private set; } = -1;
 		public IReadOnlyList<Vector2> Points { get => points; }
 
-		internal void BeginEdit(Vector2 coord)
+		internal void BeginEdit(in Vector2 coord)
 		{
 			if (-1 != SelectedPoint)
 			{
@@ -26,12 +26,12 @@
 			Add(coord);
 		}
 
-		private void Add(Vector2 coord)
+		private void Add(in Vector2 coord)
 		{
 			points.Add(coord);
 		}
 
-		internal void Delete(Vector2 coord)
+		internal void Delete(in Vector2 coord)
 		{
 			if (-1 != SelectedPoint)
 			{
@@ -53,7 +53,7 @@
 		private State state = State.Default;
 		private List<Vector2> points = new List<Vector2>();
 
-		internal void Move(Vector2 coord)
+		internal void Move(in Vector2 coord)
 		{
 			switch(state)
 			{

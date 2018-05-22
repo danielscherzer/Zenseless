@@ -57,7 +57,7 @@
 			//DrawPoint(pos);
 		}
 
-		internal Vector2 ConvertWindowCoords(Vector2 coordWindow)
+		internal Vector2 ConvertWindowCoords(in Vector2 coordWindow)
 		{
 			var v = coordWindow;
 			v.X *= windowAspect;
@@ -75,7 +75,7 @@
 		private readonly IShaderProgram shaderTruck;
 		private float windowAspect;
 
-		private void DrawPoint(Vector2 point)
+		private void DrawPoint(in Vector2 point)
 		{
 			GL.Begin(PrimitiveType.Points);
 			GL.Vertex2(point.X, point.Y);
