@@ -91,10 +91,11 @@
 			{
 				ShaderErrorHandling(e);
 			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e.ToString());
-			}
+			//throw all other exceptions
+			//catch (Exception e)
+			//{
+			//	Console.WriteLine(e.ToString());
+			//}
 			return null;
 		}
 	}

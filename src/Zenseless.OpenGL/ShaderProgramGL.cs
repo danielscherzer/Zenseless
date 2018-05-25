@@ -142,27 +142,27 @@
 		/// <exception cref="NotImplementedException"></exception>
 		public void Uniform(string name, int value)
 		{
-			GL.Uniform1(GetResourceLocation(ShaderResourceType.Uniform, name), value);
+			GL.ProgramUniform1(ProgramID, GetResourceLocation(ShaderResourceType.Uniform, name), value);
 		}
 
 		/// <summary>
-		/// Set float Uniform on active shader. The correct shader has to be activated first!
+		/// Set float Uniform on shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="value">The value to set.</param>
 		public void Uniform(string name, float value)
 		{
-			GL.Uniform1(GetResourceLocation(ShaderResourceType.Uniform, name), value);
+			GL.ProgramUniform1(ProgramID, GetResourceLocation(ShaderResourceType.Uniform, name), value);
 		}
 
 		/// <summary>
-		/// Set Vector2 Uniform on active shader. The correct shader has to be activated first!
+		/// Set Vector2 Uniform on shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="vector">The vector.</param>
 		public void Uniform(string name, in Vector2 vector)
 		{
-			GL.Uniform2(GetResourceLocation(ShaderResourceType.Uniform, name), vector.X, vector.Y);
+			GL.ProgramUniform2(ProgramID, GetResourceLocation(ShaderResourceType.Uniform, name), vector.X, vector.Y);
 		}
 
 		/// <summary>
@@ -170,13 +170,13 @@
 		/// </summary>
 		/// <param name="location">The shader variable location.</param>
 		/// <param name="vector">The vector.</param>
-		public static void Uniform(int location, in Vector3 vector)
+		public void Uniform(int location, in Vector3 vector)
 		{
-			GL.Uniform3(location, vector.X, vector.Y, vector.Z);
+			GL.ProgramUniform3(ProgramID, location, vector.X, vector.Y, vector.Z);
 		}
 
 		/// <summary>
-		/// Set Vector3 Uniform on active shader. The correct shader has to be activated first!
+		/// Set Vector3 Uniform on shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="vector">The vector.</param>
@@ -186,13 +186,13 @@
 		}
 
 		/// <summary>
-		/// Set Vector4 Uniform on active shader. The correct shader has to be activated first!
+		/// Set Vector4 Uniform on shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="vector">The vector.</param>
 		public void Uniform(string name, in Vector4 vector)
 		{
-			GL.Uniform4(GetResourceLocation(ShaderResourceType.Uniform, name), vector.X, vector.Y, vector.Z, vector.W);
+			GL.ProgramUniform4(ProgramID, GetResourceLocation(ShaderResourceType.Uniform, name), vector.X, vector.Y, vector.Z, vector.W);
 		}
 
 		/// <summary>
@@ -201,14 +201,14 @@
 		/// <param name="location">The shader variable location.</param>
 		/// <param name="matrix">The input matrix.</param>
 		/// <param name="transpose">if set to <c>true</c> the matrix is transposed.</param>
-		public static void Uniform(int location, in Matrix4x4 matrix, bool transpose = false)
+		public void Uniform(int location, in Matrix4x4 matrix, bool transpose = false)
 		{
 			// Matrix4x4 has internally a transposed memory layout
 			//unsafe //TODO: check unsafe appveyor problems
 			//{
 			//	fixed (float* matrix_ptr = &matrix.M11)
 			//	{
-			//		GL.UniformMatrix4(location, 1, !transpose, matrix_ptr);
+			//		GL.ProgramUniformMatrix4(ProgramID, location, 1, !transpose, matrix_ptr);
 			//	}
 			//}
 			var m = new OpenTK.Matrix4(matrix.M11, matrix.M12, matrix.M13, matrix.M14,
@@ -216,11 +216,11 @@
 					matrix.M31, matrix.M32, matrix.M33, matrix.M34,
 					matrix.M41, matrix.M42, matrix.M43, matrix.M44);
 
-			GL.UniformMatrix4(location, !transpose, ref m);
+			GL.ProgramUniformMatrix4(ProgramID, location, !transpose, ref m);
 		}
 
 		/// <summary>
-		/// Set matrix uniforms on active shader. The correct shader has to be activated first!
+		/// Set matrix uniforms on shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="matrix">The input matrix.</param>

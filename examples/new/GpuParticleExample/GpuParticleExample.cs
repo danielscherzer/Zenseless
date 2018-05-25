@@ -16,7 +16,14 @@
 			camera.View.Azimuth = 60;
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			var time = new GameTime();
-			window.Render += () => window.GameWindow.Title = $"{visual.Render(time.DeltaTime, camera):F2}msec";
+			var timeSeries = new ExponentialSmoothing(0.01);
+			window.Render += () =>
+			{
+				time.NewFrame();
+				var deltaTime = visual.Render(time.DeltaTime, camera);
+				timeSeries.NewSample(deltaTime);
+				window.GameWindow.Title = $"{timeSeries.SmoothedValue:F2}msec";
+			};
 			window.Resize += visual.Resize;
 			window.Run();
 

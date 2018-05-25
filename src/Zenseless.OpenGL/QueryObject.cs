@@ -45,8 +45,7 @@ namespace Zenseless.OpenGL
 		{
 			get
 			{
-				int isFinished;
-				GL.GetQueryObject(id, GetQueryObjectParam.QueryResultAvailable, out isFinished);
+				GL.GetQueryObject(id, GetQueryObjectParam.QueryResultAvailable, out int isFinished);
 				return 1 == isFinished;
 			}
 		}
@@ -61,8 +60,7 @@ namespace Zenseless.OpenGL
 		{
 			get
 			{
-				int result;
-				GL.GetQueryObject(id, GetQueryObjectParam.QueryResult, out result);
+				GL.GetQueryObject(id, GetQueryObjectParam.QueryResult, out int result);
 				return result;
 			}
 		}
@@ -77,8 +75,7 @@ namespace Zenseless.OpenGL
 		{
 			get
 			{
-				long result;
-				GL.GetQueryObject(id, GetQueryObjectParam.QueryResult, out result);
+				GL.GetQueryObject(id, GetQueryObjectParam.QueryResult, out long result);
 				return result;
 			}
 		}

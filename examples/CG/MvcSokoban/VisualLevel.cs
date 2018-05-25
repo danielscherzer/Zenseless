@@ -22,7 +22,7 @@ namespace MvcSokoban
 			int slice = 0;
 			Add(ElementType.Floor, "GroundGravel_Grass", slice++);
 			Add(ElementType.Man, "character4", slice++);
-			Add(ElementType.Box, "Crate_Brown", slice++);
+			Add(ElementType.Box, ".Crate_Brown", slice++);
 			Add(ElementType.Goal, "EndPoint_Red", slice++);
 			Add(ElementType.ManOnGoal, "EndPointCharacter", slice++);
 			Add(ElementType.BoxOnGoal, "EndPointCrate_Brown", slice++);
@@ -36,10 +36,6 @@ namespace MvcSokoban
 			var quadPos = new Vector2[4] { Vector2.Zero, Vector2.UnitX, Vector2.One, Vector2.UnitY };
 			var locPosition = shdTexColor.GetResourceLocation(ShaderResourceType.Attribute, "position");
 			levelGeometry.SetAttribute(locPosition, quadPos, VertexAttribPointerType.Float, 2);
-
-			locTexId = shdTexColor.GetResourceLocation(ShaderResourceType.Attribute, "texId");
-			locCamera = shdTexColor.GetResourceLocation(ShaderResourceType.Uniform, "camera");
-			locTint = shdTexColor.GetResourceLocation(ShaderResourceType.Uniform, "tint");
 		}
 
 		internal void ResizeWindow(int width, int height)
@@ -55,8 +51,8 @@ namespace MvcSokoban
 			var fitBox = Box2DExtensions.CreateContainingBox(levelState.Width, levelState.Height, windowAspect);
 			var camera = Matrix4x4.CreateOrthographicOffCenter(fitBox.MinX, fitBox.MaxX, fitBox.MinY, fitBox.MaxY, 0, 1);
 
-			GL.Uniform4(locTint, tint);
-			ShaderProgramGL.Uniform(locCamera, camera, true);
+			shdTexColor.Uniform(nameof(tint), tint);
+			shdTexColor.Uniform(nameof(camera), camera, true);
 
 			levelGeometry.Draw(levelState.Width * levelState.Height);
 
@@ -96,6 +92,7 @@ namespace MvcSokoban
 						texId.Add(tileTypes[type].Item2);
 					}
 				}
+				var locTexId = shdTexColor.GetResourceLocation(ShaderResourceType.Attribute, "texId");
 				levelGeometry.SetAttribute(locTexId, texId.ToArray(), VertexAttribPointerType.Float, 1, true);
 			}
 		}
@@ -106,9 +103,6 @@ namespace MvcSokoban
 		private IShaderProgram shdTexColor;
 		private ITexture texArray;
 		private Dictionary<ElementType, Tuple<string, int>> tileTypes = new Dictionary<ElementType, Tuple<string, int>>();
-		private int locCamera;
-		private int locTint;
-		private int locTexId;
 		private float windowAspect;
 	}
 }

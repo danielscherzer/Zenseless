@@ -43,6 +43,7 @@
     <Compile Include="CachedCalculatedValue.cs" />
     <Compile Include="DebugTools.cs" />
     <Compile Include="Disposable.cs" />
+    <Compile Include="ExponentialSmoothing.cs" />
     <Compile Include="FileWatcher.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="ITime.cs" />

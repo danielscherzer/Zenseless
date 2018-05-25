@@ -23,7 +23,6 @@ namespace Example
 		{
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			shaderProgram.Activate();
 			shaderProgram.Uniform("camera", camera);
 			shaderProgram.Uniform("ambient", new Vector3(0.1f));
 			shaderProgram.Uniform("lightPosition", new Vector3(0, 0.9f, -0.5f));
@@ -31,9 +30,10 @@ namespace Example
 			shaderProgram.Uniform(nameof(cameraPosition), cameraPosition);
 			var bindingIndex = shaderProgram.GetResourceLocation(ShaderResourceType.UniformBuffer, "bufferMaterials");
 			bufferMaterials.ActivateBind(bindingIndex);
+			shaderProgram.Activate();
 			geometry.Draw();
-			bufferMaterials.Deactivate();
 			shaderProgram.Deactivate();
+			bufferMaterials.Deactivate();
 		}
 
 		private BufferObject bufferMaterials = new BufferObject(BufferTarget.UniformBuffer);

@@ -12,10 +12,8 @@
 			root = new Node(Transformation.Scale(0.6f), null);
 			root.AddComponent(new CreateGeometryTag());
 
-			var rootRotation = new Node(root);
-			EstablishNotification(rootRotation, rotation1);
-
-			AddGen1(rootRotation);
+			var nodeRotation = AddRotationNode(root, 100f / 60f);
+			AddGen1(nodeRotation);
 		}
 
 		private void AddGen1(Node parent)
@@ -24,13 +22,9 @@
 			for (int i = 0; i < 4; ++i)
 			{
 				var xform = Transformation.Combine(st, Transformation.Rotation(90f * i));
-
 				var node = new Node(xform, parent);
 				node.AddComponent(new CreateGeometryTag());
-
-				var nodeRotation = new Node(node);
-				EstablishNotification(nodeRotation, rotation2);
-
+				var nodeRotation = AddRotationNode(node, -300f / 60f);
 				AddGen2(nodeRotation);
 			}
 		}
@@ -39,11 +33,17 @@
 		{
 			var child = new Node(Transformation.Combine(Transformation.Scale(0.4f), Transformation.Translation(0.7f, 0f, 0f)), parent);
 			child.AddComponent(new CreateGeometryTag());
+			var nodeRotation = AddRotationNode(child, 500f / 60f);
+			AddGen3(nodeRotation);
+		}
 
-			var childRotation = new Node(child);
-			EstablishNotification(childRotation, rotation3);
-
-			AddGen3(childRotation);
+		private Node AddRotationNode(Node parent, float degreeIncrement)
+		{
+			var node = new Node(parent);
+			var rotation = new Rotation(0f);
+			eachFrameCallbacks.Add(() => rotation.Degrees += degreeIncrement);
+			rotation.PropertyChanged += (s, a) => node.LocalTransformation = new Transformation(rotation);
+			return node;
 		}
 
 		private static void AddGen3(Node parent)
@@ -58,15 +58,10 @@
 			}
 		}
 
-		private void EstablishNotification(Node node, INotifyingTransform transform)
-		{
-			transform.PropertyChanged += (s, a) => node.LocalTransformation = new Transformation(transform);
-		}
-
 		public IEnumerable<IReadOnlyBox2D> GetPlanets()
 		{
 			var planets = new List<Box2D>();
-			Foreach(root, (node) => 
+			Foreach(root, (node) =>
 			{
 				if (node.GetComponent<CreateGeometryTag>() is null) return;
 				var xForm = node.GlobalTransformation;
@@ -80,15 +75,16 @@
 
 		public void Update(float updatePeriod)
 		{
-			rotation1.Degrees += updatePeriod * 100f;
-			rotation2.Degrees -= updatePeriod * 300f;
-			rotation3.Degrees += updatePeriod * 500f;
+			foreach (var action in eachFrameCallbacks)
+			{
+				action();
+			}
 		}
 
 		private class CreateGeometryTag { };
 
-		private Rotation rotation1 = new Rotation(0f), rotation2 = new Rotation(0f), rotation3 = new Rotation(0f);
 		private readonly Node root;
+		private List<Action> eachFrameCallbacks = new List<Action>();
 
 		private void Foreach(Node node, Action<Node> action)
 		{

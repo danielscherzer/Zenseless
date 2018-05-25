@@ -73,20 +73,25 @@
 				for (int x = 0; x < CellCountX; ++x)
 				{
 					var cell = cells[x, y];
-					for(int i = 0; i < cell.Count; ++i)
-					{
-						//check each collider against every other collider
-						for (int j = i + 1; j < cell.Count; ++j)
-						{
-							Handler(cell[i], cell[j]);
-						}
-					}
+					CheckCell(Handler, cell);
+				}
+			}
+		}
+
+		private static void CheckCell(CollisionHandler Handler, List<IBox2DCollider> cell)
+		{
+			for (int i = 0; i < cell.Count; ++i)
+			{
+				//check each collider against every other collider
+				for (int j = i + 1; j < cell.Count; ++j)
+				{
+					Handler(cell[i], cell[j]);
 				}
 			}
 		}
 
 		public IEnumerable<IBox2DCollider> this[int x, int y] { get { return cells[x, y]; } }
 
-		private List<IBox2DCollider>[,] cells;
+		private readonly List<IBox2DCollider>[,] cells;
 	}
 }

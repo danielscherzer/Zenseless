@@ -25,13 +25,16 @@ namespace Zenseless.HLGL
 			if (shortName == null) throw new ArgumentNullException(nameof(shortName));
 
 			var shortInvariant = shortName.ToLowerInvariant();
-			var matches = from name in fullNames
-						  let id = name.ToLowerInvariant().LastIndexOf(shortInvariant)
-						  where -1 != id
-						  orderby id descending
-						  select name;
+			var matches = fullNames.Where((name) => name.ToLowerInvariant().Contains(shortInvariant));
+
+			//var matches = from name in fullNames
+			//			  let id = name.ToLowerInvariant().LastIndexOf(shortInvariant)
+			//			  where -1 != id
+			//			  orderby id descending
+			//			  select name;
+			if(matches.Count() > 1) throw new ArgumentException($"Content Name '{shortName}' resulted in multiple matches.");
 			var result = matches.FirstOrDefault();
-			if (result is default(string)) throw new ArgumentException($"Content Name '{shortName}' not found");
+			if (string.IsNullOrEmpty(result)) throw new ArgumentException($"Content Name '{shortName}' not found");
 			return result;
 		}
 

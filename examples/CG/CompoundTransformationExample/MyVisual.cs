@@ -12,7 +12,7 @@
 
 		public MyVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
-			renderState.Set(new ClearColorState(1, 1, 1, 1)); //background clear color
+			renderState.Set(new ClearColorState(0, 0, 0, 1)); //background clear color
 			renderState.Set(BlendStates.AlphaBlend); //for transparency in textures we use blending
 			GL.Enable(EnableCap.Texture2D); //TODO: only for non shader pipeline relevant -> remove at some point
 

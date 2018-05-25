@@ -52,10 +52,34 @@
 			//register callback for keyboard
 			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
 			gameWindow.KeyDown += GameWindow_KeyDown;
+			//register a callback for updating the game logic
+			gameWindow.UpdateFrame += GameWindow_UpdateFrame;
+			//registers a callback for drawing a frame
+			gameWindow.RenderFrame += RenderFrame;
+
+			gameWindow.FocusedChanged += GameWindow_FocusedChanged;
 
 			var contentLoader = new ContentLoader();
 			beforeRenderingCallbacks.Add(contentLoader);
 			ContentLoader = contentLoader;
+		}
+
+		private void GameWindow_UpdateFrame(object sender, FrameEventArgs e)
+		{
+			Update?.Invoke((float)gameWindow.TargetUpdatePeriod);
+		}
+
+		private void GameWindow_FocusedChanged(object sender, EventArgs e)
+		{
+			gameWindow.UpdateFrame -= GameWindow_UpdateFrame;
+			gameWindow.RenderFrame -= RenderFrame;
+			if (gameWindow.Focused)
+			{
+				//register a callback for updating the game logic
+				gameWindow.UpdateFrame += GameWindow_UpdateFrame;
+				//registers a callback for drawing a frame
+				gameWindow.RenderFrame += RenderFrame;
+			}
 		}
 
 		/// <summary>
@@ -133,12 +157,6 @@
 		/// </summary>
 		public void Run()
 		{
-			//register a callback for updating the game logic
-			gameWindow.UpdateFrame += (sender, e) => Update?.Invoke((float)gameWindow.TargetUpdatePeriod);
-
-			//registers a callback for drawing a frame
-			gameWindow.RenderFrame += RenderFrame;
-
 			//run the update loop, which calls our registered callbacks
 			gameWindow.Run();
 		}

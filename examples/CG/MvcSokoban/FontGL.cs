@@ -19,7 +19,7 @@ namespace MvcSokoban
 		public void Print(string message, float size, TextAlignment alignment = TextAlignment.Left)
 		{
 			//var camera = Matrix4x4.CreateOrthographicOffCenter(0, windowAspect, 0, 1, 0, 1).ToOpenTK();
-			//GL.UniformMatrix4(locCamera, false, ref camera);
+			//GL.ProgramUniformMatrix4(ProgramID, locCamera, false, ref camera);
 
 			GL.LoadIdentity();
 			GL.Ortho(0, windowAspect, 0, 1, 0, 1);

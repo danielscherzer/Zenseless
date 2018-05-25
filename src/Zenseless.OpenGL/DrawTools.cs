@@ -70,7 +70,7 @@
 		/// <param name="color">The color.</param>
 		public static void Uniform(this IShaderProgram shaderProgram, string name, Color color)
 		{
-			GL.Uniform4(shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, name), color);
+			GL.ProgramUniform4(shaderProgram.ProgramID, shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, name), color);
 
 		}
 	}

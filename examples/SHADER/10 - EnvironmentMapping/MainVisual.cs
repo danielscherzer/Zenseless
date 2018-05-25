@@ -18,16 +18,24 @@
 			var envMap = contentLoader.Load<ITexture2D>("beach");
 			envMap.WrapFunction = TextureWrapFunction.MirroredRepeat;
 			envMap.Filter = TextureFilterMode.Linear;
-			var textBinding = new TextureBinding[] { new TextureBinding(nameof(envMap), envMap) };
-
-			var shaderProgram = contentLoader.Load<IShaderProgram>("envMapping.*");
+			var textureBinding = new TextureBinding[] { new TextureBinding(nameof(envMap), envMap) };
 
 			var sphere = Meshes.CreateSphere(1f, 4);
+
+			var skySphere = sphere.Transform(Transformation.Scale(200f)).SwitchTriangleMeshWinding();
+			var shaderBackground = contentLoader.Load<IShaderProgram>("background.*");
+			visuals.Add(new MeshVisual(skySphere, shaderBackground, textureBinding));
+
 #if SOLUTION
-			visuals.Add(new MeshVisual(sphere, shaderProgram, textBinding));
+			var shaderEnvMap = contentLoader.Load<IShaderProgram>("envMapping.*");
+			var visSphere = new MeshVisual(sphere, shaderEnvMap, textureBinding);
+			visSphere.SetUniform("reflective", 1f);
+			visuals.Add(visSphere);
+			var suzanne = contentLoader.Load<DefaultMesh>("suzanne");
+			var visSuzanne = new MeshVisual(suzanne.Transform(Transformation.Translation(0, -1.5f, 0)), shaderEnvMap, textureBinding);
+			visSuzanne.SetUniform("reflective", 0.5f);
+			visuals.Add(visSuzanne);
 #endif
-			var envSphere = sphere.Transform(Transformation.Scale(200f)).SwitchTriangleMeshWinding();
-			visuals.Add(new MeshVisual(envSphere, shaderProgram, textBinding));
 		}
 
 		public void Render(ITransformation camera, Vector3 cameraPosition)

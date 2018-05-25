@@ -39,10 +39,10 @@ namespace Example
 
 			//use this texture to draw
 			renderToTexture.Texture.Activate();
-			shaderProgram.Activate();
 			//SetShaderParameter("effectScale", 0.1f);
 			shaderProgram.Uniform("effectScale", 0.5f + 0.5f * (float)Math.Sin(time.AbsoluteTime - 0.5f));
 			shaderProgram.Uniform("iGlobalTime", time.AbsoluteTime);
+			shaderProgram.Activate();
 			DrawWindowFillingQuad();
 			shaderProgram.Deactivate();
 			renderToTexture.Texture.Deactivate();
