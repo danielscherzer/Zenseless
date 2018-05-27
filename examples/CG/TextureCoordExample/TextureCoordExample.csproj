@@ -63,9 +63,9 @@
       <Project>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</Project>
       <Name>Zenseless.Patterns</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\src\Zenseless.ContentPipeline\Zenseless.ContentPipeline.csproj">
+    <ProjectReference Include="..\..\..\src\Zenseless.ExampleFramework\Zenseless.ExampleFramework.csproj">
       <Project>{6810DE78-7764-4C8C-ADA7-E7D31AE6C259}</Project>
-      <Name>Zenseless.ContentPipeline</Name>
+      <Name>Zenseless.ExampleFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\Zenseless.Geometry\Zenseless.Geometry.csproj">
       <Project>{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}</Project>

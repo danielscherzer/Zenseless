@@ -1,11 +1,11 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL4;
-using System;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-
-namespace Example
+﻿namespace Example
 {
+	using OpenTK.Graphics.OpenGL4;
+	using System;
+	using System.Numerics;
+	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
+
 	class MainVisual
 	{
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
@@ -53,7 +53,7 @@ namespace Example
 				positions[i] = new Vector2(RndCoord(), RndCoord());
 			}
 			//copy positions to GPU
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "in_position"), positions, VertexAttribPointerType.Float, 2);
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "in_position"), positions);
 			//generate velocity array on CPU
 			float RndSpeed() => (Rnd01() - 0.5f) * 0.1f;
 			var velocities = new Vector2[pointCount];
@@ -62,7 +62,7 @@ namespace Example
 				velocities[i] = new Vector2(RndSpeed(), RndSpeed());
 			}
 			//copy velocities to GPU
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "in_velocity"), velocities, VertexAttribPointerType.Float, 2);
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "in_velocity"), velocities);
 		}
 	}
 }

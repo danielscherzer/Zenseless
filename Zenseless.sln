@@ -32,7 +32,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.OpenGL.Tests", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.HLGL.Tests", "Test\Zenseless.HLGL.Tests\Zenseless.HLGL.Tests.csproj", "{2F1AE477-5B19-4E8D-A70E-B1B74F57560C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.ContentPipeline", "src\Zenseless.ContentPipeline\Zenseless.ContentPipeline.csproj", "{6810DE78-7764-4C8C-ADA7-E7D31AE6C259}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.ExampleFramework", "src\Zenseless.ExampleFramework\Zenseless.ExampleFramework.csproj", "{6810DE78-7764-4C8C-ADA7-E7D31AE6C259}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalIlluminationExample", "examples\new\GlobalIlluminationExample\GlobalIlluminationExample.csproj", "{1A07B025-F381-4503-823C-F1885E202D0B}"
 EndProject

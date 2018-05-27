@@ -1,6 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
@@ -118,7 +119,7 @@ namespace Zenseless.ExampleFramework
 		/// <param name="data">The data.</param>
 		public void UpdateInstanceAttribute(string name, int[] data)
 		{
-			Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, VertexAttribPointerType.Int, 1, true);
+			Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, true);
 		}
 
 		/// <summary>
@@ -128,7 +129,7 @@ namespace Zenseless.ExampleFramework
 		/// <param name="data">The data.</param>
 		public void UpdateInstanceAttribute(string name, float[] data)
 		{
-			Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, VertexAttribPointerType.Float, 1, true);
+			Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, true);
 		}
 
 		/// <summary>
@@ -136,9 +137,9 @@ namespace Zenseless.ExampleFramework
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="data">The data.</param>
-		public void UpdateInstanceAttribute(string name, System.Numerics.Vector2[] data)
+		public void UpdateInstanceAttribute(string name, Vector2[] data)
 		{
-			Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, VertexAttribPointerType.Float, 2, true);
+			Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, true);
 		}
 
 		/// <summary>
@@ -146,9 +147,9 @@ namespace Zenseless.ExampleFramework
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="data">The data.</param>
-		public void UpdateInstanceAttribute(string name, System.Numerics.Vector3[] data)
+		public void UpdateInstanceAttribute(string name, Vector3[] data)
 		{
-			Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, VertexAttribPointerType.Float, 3, true);
+			Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, true);
 		}
 
 		/// <summary>
@@ -156,15 +157,10 @@ namespace Zenseless.ExampleFramework
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <param name="data">The data.</param>
-		public void UpdateInstanceAttribute(string name, System.Numerics.Vector4[] data)
+		public void UpdateInstanceAttribute(string name, Vector4[] data)
 		{
-			Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, VertexAttribPointerType.Float, 4, true);
+			Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, true);
 		}
-
-		//public void UpdateInstanceAttribute<DATA_ELEMENT_TYPE>(string name, DATA_ELEMENT_TYPE[] data) where DATA_ELEMENT_TYPE : struct
-		//{
-		//	Vao.SetAttribute(GetAttributeShaderLocationAndCheckVao(name), data, VertexAttribPointerType.Float, 3, true);
-		//}
 
 		/// <summary>
 		/// Updates the mesh shader.
@@ -179,7 +175,7 @@ namespace Zenseless.ExampleFramework
 		/// A shaderName is required
 		/// </exception>
 		/// <exception cref="ArgumentException">Shader '" + shaderName + "' does not exist</exception>
-		public void UpdateMeshShader(DefaultMesh mesh, IShaderProgram shaderProgram)
+		public void UpdateMeshShader(Mesh mesh, IShaderProgram shaderProgram)
 		{
 			ShaderProgram = shaderProgram ?? throw new ArgumentNullException(nameof(shaderProgram));
 			Vao = mesh is null ? null : VAOLoader.FromMesh(mesh, ShaderProgram);

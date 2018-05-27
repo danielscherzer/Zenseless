@@ -31,15 +31,15 @@
 				}
 
 				var t1 = time.ElapsedTicks; //get time before collision detection
-				//if (bruteForce)
+				if (bruteForce)
 				{
-					model.GridCollisionCenter(); //TODO: some errors
-												 //model.BruteForceCollision();
+					//model.GridCollisionCenter(); //TODO: some collisions are not detected
+					model.BruteForceCollision();
 				}
-				//else
-				//{
-				//model.GridCollision();
-				//}
+				else
+				{
+					model.GridCollision();
+				}
 				var t2 = time.ElapsedTicks; //get time after collision detection
 				var deltaTime = (t2 - t1) / (double)Stopwatch.Frequency;
 				sampleSeries.NewSample(deltaTime);

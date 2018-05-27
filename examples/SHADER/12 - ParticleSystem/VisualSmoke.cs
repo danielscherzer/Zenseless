@@ -66,8 +66,8 @@ namespace Example
 				++i;
 			}
 
-			particles.SetAttribute(shaderSmoke.GetResourceLocation(ShaderResourceType.Attribute, "position"), positions, VertexAttribPointerType.Float, 3);
-			particles.SetAttribute(shaderSmoke.GetResourceLocation(ShaderResourceType.Attribute, "fade"), fade, VertexAttribPointerType.Float, 1);
+			particles.SetAttribute(shaderSmoke.GetResourceLocation(ShaderResourceType.Attribute, "position"), positions);
+			particles.SetAttribute(shaderSmoke.GetResourceLocation(ShaderResourceType.Attribute, "fade"), fade);
 		}
 
 		public void Render(in ITransformation camera)

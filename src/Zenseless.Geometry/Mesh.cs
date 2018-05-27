@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Zenseless.Geometry
+﻿namespace Zenseless.Geometry
 {
+	using System;
+	using System.Collections.Generic;
+
 	/// <summary>
 	/// A Mesh is a collection of attributes, like positions, normals and texture coordinates
 	/// </summary>
@@ -29,16 +29,15 @@ namespace Zenseless.Geometry
 		/// <summary>
 		/// Adds the attribute.
 		/// </summary>
-		/// <typeparam name="ELEMENT_TYPE">The type of the element.</typeparam>
 		/// <param name="name">The attribute name.</param>
+		/// <param name="attribute"></param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
-		public List<ELEMENT_TYPE> AddAttribute<ELEMENT_TYPE>(string name)
+		internal void AddAttribute(string name, MeshAttribute attribute)
 		{
 			if (Contains(name)) throw new ArgumentException($"Attribute '{name}' already exists");
-			var attribute = new List<ELEMENT_TYPE>();
-			attributes.Add(name, new List<ELEMENT_TYPE>());
-			return attribute;
+			if (attribute is null) throw new ArgumentNullException(nameof(attribute));
+			attributes.Add(name, attribute);
 		}
 
 		/// <summary>
@@ -53,27 +52,20 @@ namespace Zenseless.Geometry
 		/// <summary>
 		/// Gets the attribute with the specified name.
 		/// </summary>
-		/// <typeparam name="ELEMENT_TYPE">The type of the element.</typeparam>
-		/// <param name="name">The name.</param>
+		/// <param name="name">The attribute name.</param>
 		/// <returns></returns>
-		/// <exception cref="InvalidCastException"></exception>
 		/// <exception cref="ArgumentException"></exception>
-		public List<ELEMENT_TYPE> Get<ELEMENT_TYPE>(string name)
+		public MeshAttribute GetAttribute(string name)
 		{
-			if (attributes.TryGetValue(name, out object data))
+			if (attributes.TryGetValue(name, out MeshAttribute attribute))
 			{
-				var typedData = data as List<ELEMENT_TYPE>;
-				if(typedData is null)
-				{
-					throw new InvalidCastException($"Attribute '{name}' has type {data.GetType().FullName}.");
-				}
-				return typedData;
+				return attribute;
 			}
 			throw new ArgumentException($"No attribute with name '{name}' stored.");
 		}
 
-		IEnumerable<ELEMENT_TYPE> IReadOnlyMesh.Get<ELEMENT_TYPE>(string name) => Get<ELEMENT_TYPE>(name);
-
-		private Dictionary<string, object> attributes = new Dictionary<string, object>();
+		IEnumerable<ELEMENT_TYPE> IReadOnlyMesh.Get<ELEMENT_TYPE>(string name) => GetAttribute(name).GetList<ELEMENT_TYPE>();
+		
+		private Dictionary<string, MeshAttribute> attributes = new Dictionary<string, MeshAttribute>();
 	}
 }

@@ -49,7 +49,7 @@ namespace Example
 			{
 				instancePositions[i] = new Vector3(RndCoord(), RndCoord(), RndCoord());
 			}
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instancePosition"), instancePositions, VertexAttribPointerType.Float, 3, true);
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instancePosition"), instancePositions, true);
 
 			float RndSpeed() => (Rnd01() - 0.5f);
 			var instanceSpeeds = new Vector3[particleCount];
@@ -57,7 +57,7 @@ namespace Example
 			{
 				instanceSpeeds[i] = new Vector3(RndSpeed(), RndSpeed(), RndSpeed());
 			}
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instanceSpeed"), instanceSpeeds, VertexAttribPointerType.Float, 3, true);
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instanceSpeed"), instanceSpeeds, true);
 		}
 	}
 }

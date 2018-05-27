@@ -1,6 +1,7 @@
 ﻿namespace Zenseless.Geometry
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Numerics;
 
 	/// <summary>
@@ -80,6 +81,11 @@
 				newMesh.Normal.Add(newN);
 			}
 			return newMesh;
+		}
+
+		internal static void AddRange<ELEMENT_TYPE>(this IList<ELEMENT_TYPE> list, IEnumerable<ELEMENT_TYPE> list2)
+		{
+			foreach (var element in list2) list.Add(element);
 		}
 
 		/// <summary>

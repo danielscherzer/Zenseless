@@ -37,8 +37,8 @@
 				}
 				instanceRotation[i] += 0.1f;
 			}
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instancePosition"), instancePositions, VertexAttribPointerType.Float, 3, true);
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instanceRotation"), instanceRotation, VertexAttribPointerType.Float, 1, true);
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instancePosition"), instancePositions, true);
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instanceRotation"), instanceRotation, true);
 #endif
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -70,7 +70,7 @@
 			{
 				instancePositions[i] = new Vector3(RndCoord(), RndCoord(), RndCoord());
 			}
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instancePosition"), instancePositions, VertexAttribPointerType.Float, 3, true);
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instancePosition"), instancePositions, true);
 
 #if SOLUTION
 			float RndVelocity() => (Rnd01() - 0.5f) * 0.01f;
@@ -81,7 +81,7 @@
 				instanceColor[i] = new Vector3(0.5f) + instancePositions[i] * 0.5f;
 				instanceRotation[i] = Rnd01() * MathHelper.TWO_PI;
 			}
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instanceColor"), instanceColor, VertexAttribPointerType.Float, 3, true);
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "instanceColor"), instanceColor, true);
 #endif
 		}
 	}

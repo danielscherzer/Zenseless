@@ -28,8 +28,8 @@
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			renderState.Set(new DepthTest(true));
 			renderState.Set(new BackFaceCulling(true));
-			shaderProgram.Activate();
 			shaderProgram.Uniform("camera", camera);
+			shaderProgram.Activate();
 			geometry.Draw();
 			shaderProgram.Deactivate();
 			renderState.Set(new BackFaceCulling(false));

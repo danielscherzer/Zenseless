@@ -1,15 +1,15 @@
-﻿using System.Resources;
+using System.Resources;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Zenseless.ContentPipeline")]
+[assembly: AssemblyTitle("Zenseless.ExampleFramework")]
 [assembly: AssemblyDescription("A Framework for real-time computer graphics using OpenGL. This framework is created for a university course in computer graphics.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Daniel Scherzer")]
-[assembly: AssemblyProduct("Zenseless.ContentPipeline")]
+[assembly: AssemblyProduct("Zenseless.ExampleFramework")]
 [assembly: AssemblyCopyright("Copyright © 2015 Daniel Scherzer")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

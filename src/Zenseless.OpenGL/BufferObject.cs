@@ -1,12 +1,13 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System.Runtime.InteropServices;
-using Zenseless.Patterns;
-using Zenseless.HLGL;
-
-namespace Zenseless.OpenGL
+﻿namespace Zenseless.OpenGL
 {
+	using OpenTK.Graphics.OpenGL4;
+	using System.Runtime.InteropServices;
+	using Zenseless.Patterns;
+	using Zenseless.HLGL;
+	using System;
+
 	/// <summary>
-	/// 
+	/// A class that encapsulates an OpenGL buffer object.
 	/// </summary>
 	/// <seealso cref="Disposable" />
 	public class BufferObject : Disposable
@@ -86,6 +87,20 @@ namespace Zenseless.OpenGL
 			Deactivate();
 		}
 
+		/// <summary>
+		/// Sets the specified data.
+		/// </summary>
+		/// <param name="data">The data.</param>
+		/// <param name="bufferByteSize">Size of the buffer byte.</param>
+		/// <param name="usageHint">The usage hint.</param>
+		public void Set(IntPtr data, int bufferByteSize, BufferUsageHint usageHint)
+		{
+			Activate();
+			// set buffer data
+			GL.BufferData(BufferTarget, bufferByteSize, data, usageHint);
+			//cleanup state
+			Deactivate();
+		}
 		/// <summary>
 		/// Sets the specified data.
 		/// </summary>

@@ -1,9 +1,9 @@
-﻿using Zenseless.Geometry;
-using Zenseless.HLGL;
-using OpenTK.Graphics.OpenGL4;
-
-namespace Zenseless.OpenGL
+﻿namespace Zenseless.OpenGL
 {
+	using OpenTK.Graphics.OpenGL4;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+
 	/// <summary>
 	/// Provides static methods for VertexArrayObject data loading
 	/// </summary>
@@ -15,23 +15,15 @@ namespace Zenseless.OpenGL
 		/// <param name="mesh">From which to load positions, indices, normals, texture coordinates</param>
 		/// <param name="shaderProgram">Used for the attribute location bindings</param>
 		/// <returns>A vertex array object</returns>
-		public static VAO FromMesh(DefaultMesh mesh, IShaderProgram shaderProgram)
+		public static VAO FromMesh(Mesh mesh, IShaderProgram shaderProgram)
 		{
 			var vao = new VAO(PrimitiveType.Triangles);
-			if (mesh.Position.Count > 0)
+			foreach (var attributeName in mesh.AttributeNames)
 			{
-				var loc = shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, DefaultMesh.PositionName);
-				vao.SetAttribute(loc, mesh.Position.ToArray(), VertexAttribPointerType.Float, 3);
-			}
-			if (mesh.Normal.Count > 0)
-			{
-				var loc = shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, DefaultMesh.NormalName);
-				vao.SetAttribute(loc, mesh.Normal.ToArray(), VertexAttribPointerType.Float, 3);
-			}
-			if (mesh.TexCoord.Count > 0)
-			{
-				var loc = shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, DefaultMesh.TexCoordName);
-				vao.SetAttribute(loc, mesh.TexCoord.ToArray(), VertexAttribPointerType.Float, 2);
+				var loc = shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, attributeName);
+				var attribute = mesh.GetAttribute(attributeName);
+				var array = attribute.ToArray(); // copy
+				vao.SetAttribute(loc, array, attribute.BaseType, attribute.BaseTypeCount);
 			}
 			vao.SetIndex(mesh.IDs.ToArray());
 			return vao;

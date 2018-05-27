@@ -18,7 +18,7 @@
 		public void DrawPoints(in Vector3[] points, float size, Color color)
 		{
 			shaderProgram.Activate();
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "position"), points, VertexAttribPointerType.Float, 3); //copy data to gpu mem
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "position"), points); //copy data to gpu mem
 			shaderProgram.Uniform("pointSize", resolutionMin * size);
 			shaderProgram.Uniform(nameof(color), color);
 			geometry.Draw();

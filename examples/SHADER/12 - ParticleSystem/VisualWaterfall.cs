@@ -70,8 +70,8 @@ namespace Example
 				++i;
 			}
 
-			particles.SetAttribute(shaderWaterfall.GetResourceLocation(ShaderResourceType.Attribute, "position"), positions, VertexAttribPointerType.Float, 3);
-			particles.SetAttribute(shaderWaterfall.GetResourceLocation(ShaderResourceType.Attribute, "fade"), fade, VertexAttribPointerType.Float, 1);
+			particles.SetAttribute(shaderWaterfall.GetResourceLocation(ShaderResourceType.Attribute, "position"), positions);
+			particles.SetAttribute(shaderWaterfall.GetResourceLocation(ShaderResourceType.Attribute, "fade"), fade);
 		}
 
 		public void Render(in ITransformation camera)

@@ -35,7 +35,7 @@ namespace MvcSokoban
 			levelGeometry = new VAO(PrimitiveType.Quads);
 			var quadPos = new Vector2[4] { Vector2.Zero, Vector2.UnitX, Vector2.One, Vector2.UnitY };
 			var locPosition = shdTexColor.GetResourceLocation(ShaderResourceType.Attribute, "position");
-			levelGeometry.SetAttribute(locPosition, quadPos, VertexAttribPointerType.Float, 2);
+			levelGeometry.SetAttribute(locPosition, quadPos);
 		}
 
 		internal void ResizeWindow(int width, int height)
@@ -79,7 +79,7 @@ namespace MvcSokoban
 						}
 					}
 					var locInstanceTranslate = shdTexColor.GetResourceLocation(ShaderResourceType.Attribute, "instanceTranslate");
-					levelGeometry.SetAttribute(locInstanceTranslate, instanceTranslate.ToArray(), VertexAttribPointerType.Float, 2, true);
+					levelGeometry.SetAttribute(locInstanceTranslate, instanceTranslate.ToArray(), true);
 					lastLevelSize = size;
 				}
 				//update all tile types
@@ -93,7 +93,7 @@ namespace MvcSokoban
 					}
 				}
 				var locTexId = shdTexColor.GetResourceLocation(ShaderResourceType.Attribute, "texId");
-				levelGeometry.SetAttribute(locTexId, texId.ToArray(), VertexAttribPointerType.Float, 1, true);
+				levelGeometry.SetAttribute(locTexId, texId.ToArray(), true);
 			}
 		}
 

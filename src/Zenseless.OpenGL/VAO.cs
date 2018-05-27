@@ -1,8 +1,11 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using Zenseless.Geometry;
 using Zenseless.Patterns;
 
 namespace Zenseless.OpenGL
@@ -83,28 +86,37 @@ namespace Zenseless.OpenGL
 		}
 
 		/// <summary>
-		/// Sets a vertex attribute array for the given <paramref name="bindingID"/>.
+		/// Sets the attribute from an array.
 		/// </summary>
-		/// <typeparam name="DataElement">The data element type.</typeparam>
-		/// <param name="bindingID">The binding ID.</param>
+		/// <param name="bindingID">The binding identifier.</param>
 		/// <param name="data">The attribute array data.</param>
-		/// <param name="type">The array elements base type.</param>
-		/// <param name="elementSize">Element count for each array element.</param>
+		/// <param name="baseType">Each array element consists of a type that is made up of multiple base types like for Vector3 the base type is float.</param>
+		/// <param name="baseTypeCount">Each array element consists of a type that is made up of multiple base types like for Vector3 the base type is float and the base type count is 3.</param>
 		/// <param name="perInstance">
 		/// if set to <c>true</c> attribute array contains one entry for each instance
 		/// if set to <c>false</c> all attribute array elements are for one instance
 		/// </param>
-		public void SetAttribute<DataElement>(int bindingID, DataElement[] data, VertexAttribPointerType type, int elementSize, bool perInstance = false) where DataElement : struct
+		public void SetAttribute(int bindingID, Array data, Type baseType, int baseTypeCount, bool perInstance = false)
 		{
 			if (-1 == bindingID) return; //if attribute not used in shader or wrong name
 			Activate();
+			int elementBytes = Marshal.SizeOf(baseType) * baseTypeCount;
 			var buffer = RequestBuffer(bindingID, BufferTarget.ArrayBuffer);
-			buffer.Set(data, BufferUsageHint.StaticDraw);
+			GCHandle pinnedArray = GCHandle.Alloc(data, GCHandleType.Pinned);
+			try
+			{
+				IntPtr pointer = pinnedArray.AddrOfPinnedObject();
+				int byteSize = elementBytes * data.Length;
+				buffer.Set(pointer, byteSize, BufferUsageHint.StaticDraw);
+			}
+			finally
+			{
+				pinnedArray.Free();
+			}
 			//activate for state
 			buffer.Activate();
 			//set data format
-			int elementBytes = Marshal.SizeOf(typeof(DataElement));
-			GL.VertexAttribPointer(bindingID, elementSize, type, false, elementBytes, 0);
+			GL.VertexAttribPointer(bindingID, baseTypeCount, FindVertexPointerType(baseType), false, elementBytes, 0);
 			GL.EnableVertexAttribArray(bindingID);
 			if (perInstance)
 			{
@@ -118,6 +130,26 @@ namespace Zenseless.OpenGL
 			Deactivate();
 			buffer.Deactivate();
 			GL.DisableVertexAttribArray(bindingID);
+		}
+
+		/// <summary>
+		/// Sets a vertex attribute array for the given <paramref name="bindingID"/>.
+		/// </summary>
+		/// <param name="bindingID">The binding ID.</param>
+		/// <param name="data">The attribute array data.</param>
+		/// <param name="perInstance">
+		/// if set to <c>true</c> attribute array contains one entry for each instance
+		/// if set to <c>false</c> all attribute array elements are for one instance
+		/// </param>
+		public void SetAttribute<ELEMENT_TYPE>(int bindingID, ELEMENT_TYPE[] data, bool perInstance = false) where ELEMENT_TYPE : struct
+		{
+			var type = typeof(ELEMENT_TYPE);
+			var baseTypeCount = MeshAttribute.GetBaseTypeCount(type);
+			if(baseTypeCount > 1)
+			{
+				type = typeof(float);
+			}
+			SetAttribute(bindingID, data, type, baseTypeCount, perInstance);
 		}
 
 		/// <summary>
@@ -204,6 +236,35 @@ namespace Zenseless.OpenGL
 		private Dictionary<int, BufferObject> boundBuffers = new Dictionary<int, BufferObject>();
 		private int lastAttributeLength = 0;
 
+		private static readonly ReadOnlyDictionary<Type, VertexAttribPointerType> mappingTypeToPointerType =
+			new ReadOnlyDictionary<Type, VertexAttribPointerType>(new Dictionary<Type, VertexAttribPointerType>()
+			{
+				[typeof(sbyte)] = VertexAttribPointerType.Byte,
+				[typeof(byte)] = VertexAttribPointerType.UnsignedByte,
+				[typeof(ushort)] = VertexAttribPointerType.UnsignedShort,
+				[typeof(short)] = VertexAttribPointerType.Short,
+				[typeof(uint)] = VertexAttribPointerType.UnsignedInt,
+				[typeof(int)] = VertexAttribPointerType.Int,
+				[typeof(float)] = VertexAttribPointerType.Float,
+			});
+
+		private static readonly ReadOnlyDictionary<Type, DrawElementsType> mappingTypeToDrawElementsType =
+			new ReadOnlyDictionary<Type, DrawElementsType>(new Dictionary<Type, DrawElementsType>()
+			{
+				[typeof(byte)] = DrawElementsType.UnsignedByte,
+				[typeof(ushort)] = DrawElementsType.UnsignedShort,
+				[typeof(uint)] = DrawElementsType.UnsignedInt,
+			});
+
+		private static VertexAttribPointerType FindVertexPointerType(Type type)
+		{
+			if (mappingTypeToPointerType.TryGetValue(type, out VertexAttribPointerType value))
+			{
+				return value;
+			}
+			throw new ArgumentException($"Unrecognized type {type.FullName}.");
+		}
+
 		private void Activate()
 		{
 			GL.BindVertexArray(idVAO);
@@ -216,9 +277,10 @@ namespace Zenseless.OpenGL
 
 		private static DrawElementsType GetDrawElementsType(Type type)
 		{
-			if (type == typeof(byte)) return DrawElementsType.UnsignedByte;
-			if (type == typeof(ushort)) return DrawElementsType.UnsignedShort;
-			if (type == typeof(uint)) return DrawElementsType.UnsignedInt;
+			if(mappingTypeToDrawElementsType.TryGetValue(type, out DrawElementsType drawElement))
+			{
+				return drawElement;
+			}
 			throw new ArgumentException($"Invalid index type '{type.FullName}'");
 		}
 

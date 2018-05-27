@@ -3,6 +3,7 @@
 	using OpenTK.Graphics.OpenGL4;
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Drawing;
 	using System.IO;
 	using System.Linq;
@@ -56,7 +57,8 @@
 			throw new ArgumentException($"File extension {extension} is not valid for a shader.");
 		}
 
-		private static Dictionary<string, HLGL.ShaderType> mapExtensionToShaderType = new Dictionary<string, HLGL.ShaderType>
+		private static ReadOnlyDictionary<string, HLGL.ShaderType> mapExtensionToShaderType = 
+			new ReadOnlyDictionary<string, HLGL.ShaderType>(new Dictionary<string, HLGL.ShaderType>
 		{
 			{ ".comp" , HLGL.ShaderType.ComputeShader },
 			{ ".frag" , HLGL.ShaderType.FragmentShader },
@@ -65,7 +67,7 @@
 			{ ".tesc" , HLGL.ShaderType.TessControlShader },
 			{ ".tese" , HLGL.ShaderType.TessEvaluationShader },
 			{ ".vert" , HLGL.ShaderType.VertexShader },
-		};
+		});
 
 		private static void Update(Texture2dGL texture, IEnumerable<NamedStream> resources)
 		{

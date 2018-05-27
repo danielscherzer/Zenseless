@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
-
-namespace Zenseless.Geometry
+﻿namespace Zenseless.Geometry
 {
+	using System.Collections.Generic;
+	using System.Numerics;
+
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.Geometry.Mesh" />
+	/// <seealso cref="Mesh" />
 	public class DefaultMesh : Mesh
 	{
 		/// <summary>
@@ -28,43 +28,36 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The position.
 		/// </value>
-		public List<Vector3> Position => position;
+		public List<Vector3> Position { get; }
+
+		//public List<Vector3> Position => Get<Vector3>(PositionName);
 		/// <summary>
 		/// Gets the normal.
 		/// </summary>
 		/// <value>
 		/// The normal.
 		/// </value>
-		public List<Vector3> Normal => normal;
+		public List<Vector3> Normal { get; }
+
 		/// <summary>
 		/// Gets the tex coord.
 		/// </summary>
 		/// <value>
 		/// The tex coord.
 		/// </value>
-		public List<Vector2> TexCoord => texCoord;
+		public List<Vector2> TexCoord { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DefaultMesh"/> class.
 		/// </summary>
 		public DefaultMesh()
 		{
-			position = AddAttribute<Vector3>(PositionName);
-			normal = AddAttribute<Vector3>(NormalName);
-			texCoord = AddAttribute<Vector2>(TexCoordName);
+			AddAttribute(PositionName, MeshAttribute.Create<Vector3>());
+			Position = GetAttribute(PositionName).GetList<Vector3>();
+			AddAttribute(NormalName, MeshAttribute.Create<Vector3>());
+			Normal = GetAttribute(NormalName).GetList<Vector3>();
+			AddAttribute(TexCoordName, MeshAttribute.Create<Vector2>());
+			TexCoord = GetAttribute(TexCoordName).GetList<Vector2>();
 		}
-
-		/// <summary>
-		/// The position
-		/// </summary>
-		private List<Vector3> position;
-		/// <summary>
-		/// The normal
-		/// </summary>
-		private List<Vector3> normal;
-		/// <summary>
-		/// The tex coord
-		/// </summary>
-		private List<Vector2> texCoord;
 	}
 }
