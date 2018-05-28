@@ -36,14 +36,15 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="View.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Zenseless.ContentPipeline">
-      <Version>0.5.64</Version>
+    <PackageReference Include="Zenseless.ExampleFramework">
+      <Version>0.5.66</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

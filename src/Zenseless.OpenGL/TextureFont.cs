@@ -8,7 +8,7 @@ namespace Zenseless.OpenGL
 	/// <summary>
 	/// allows to print text were the individual characters come all from a single texture
 	/// </summary>
-	/// <seealso cref="Zenseless.Patterns.Disposable" />
+	/// <seealso cref="Disposable" />
 	public class TextureFont : Disposable
 	{
 		/// <summary>

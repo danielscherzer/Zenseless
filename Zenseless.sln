@@ -155,6 +155,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleBrowser", "examples\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformation", "examples\CG\Transformation\Transformation.csproj", "{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tiled", "examples\CG\Tiled\Tiled.csproj", "{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -417,6 +419,10 @@ Global
 		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -489,6 +495,7 @@ Global
 		{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{8376421E-113D-4D47-AE84-0367DD329D45} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
+		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CA293D8-FC78-4BF1-BA73-543451A6B7AB}
