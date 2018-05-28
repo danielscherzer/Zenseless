@@ -7,7 +7,7 @@
     <ProjectGuid>{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Example</RootNamespace>
-    <AssemblyName>Tiled</AssemblyName>
+    <AssemblyName>ExerciseTiled</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -79,6 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\beach_tileset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
