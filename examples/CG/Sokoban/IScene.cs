@@ -1,4 +1,4 @@
-﻿namespace MvcSokoban
+﻿namespace Example
 {
 	public enum GameKey { Up, Down, Left, Right, Accept, Back, Reset, Menu, Invalid };
 

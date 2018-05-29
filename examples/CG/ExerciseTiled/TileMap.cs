@@ -10,7 +10,7 @@
 	{
 		public TileMap()
 		{
-			var map = new TmxMap(@"D:\Daten\downloads\unbenannt.tmx");
+			var map = new TmxMap(@"D:\Daten\tiled\grass\unbenannt.tmx");
 			var tileSize = new Vector2(1f / (map.Width - 1), 1f / (map.Height - 1));
 			var tileSet = map.Tilesets[0];
 			SpriteSheetName = tileSet.Name;
@@ -29,7 +29,7 @@
 
 		private List<Tile> tiles = new List<Tile>();
 
-		public IEnumerable<Tile> Tiles { get => tiles; }
+		public IEnumerable<Tile> Tiles => tiles;
 		public string SpriteSheetName { get; }
 	}
 }

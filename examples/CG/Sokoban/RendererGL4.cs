@@ -2,7 +2,7 @@
 using System.Drawing;
 using Zenseless.HLGL;
 
-namespace MvcSokoban
+namespace Example
 {
 	public class RendererGL4 : IRenderer
 	{
@@ -20,7 +20,7 @@ namespace MvcSokoban
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 		}
 
-		public void DrawLevelState(ILevel levelState, Color tint)
+		public void DrawLevelState(ILevelGrid levelState, Color tint)
 		{
 			levelVisual.DrawLevelState(levelState, tint);
 		}

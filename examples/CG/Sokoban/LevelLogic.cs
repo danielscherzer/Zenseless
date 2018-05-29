@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace MvcSokoban
+namespace Example
 {
 	[Serializable]
 	public class LevelLogic
 	{
 		private Point playerPos;
-		private List<Level> levelStates = new List<Level>();
+		private List<LevelGrid> levelStates = new List<LevelGrid>();
 
-		public LevelLogic(Level level)
+		public LevelLogic(LevelGrid level)
 		{
 			levelStates.Add(level);
 			SetPlayerPos();
 		}
 
-		public ILevel GetLevelState() { return levelStates.Last(); }
+		public ILevelGrid GetLevelState() { return levelStates.Last(); }
 		public int Moves { get { return levelStates.Count - 1; } }
 
 		public void Undo()

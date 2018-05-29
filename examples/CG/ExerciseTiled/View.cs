@@ -14,15 +14,16 @@
 			renderState.Set(BlendStates.AlphaBlend);
 			GL.Enable(EnableCap.Texture2D);
 			texTileSet = contentLoader.Load<ITexture2D>(spriteSheetName);
-			texTileSet.Filter = TextureFilterMode.Nearest;
+			texTileSet.Filter = TextureFilterMode.Linear;
+			texTileSet.WrapFunction = TextureWrapFunction.ClampToEdge;
 		}
 
 		internal void Draw(IEnumerable<ITile> tiles)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			GL.LoadIdentity();
-			GL.Translate(-1f, -1f, 0f);
 			GL.Scale(2f, 2f, 1f);
+			GL.Translate(-.5f, -.5f, 0f);
 
 			texTileSet.Activate();
 			foreach (var tile in tiles)

@@ -1,8 +1,8 @@
-﻿namespace MvcSokoban
+﻿namespace Example
 {
 	public enum ElementType { Floor = 0b0, Wall = 0b10, Man = 0b100, Box = 0b1000, Goal = 0b10000, BoxOnGoal = 0b11000, ManOnGoal = 0b10100 };
 
-	public interface ILevel
+	public interface ILevelGrid
 	{
 		int Height { get; }
 		int Width { get; }

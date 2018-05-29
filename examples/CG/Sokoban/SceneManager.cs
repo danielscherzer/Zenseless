@@ -1,4 +1,4 @@
-﻿namespace MvcSokoban
+﻿namespace Example
 {
 	class SceneManager : IScene
 	{

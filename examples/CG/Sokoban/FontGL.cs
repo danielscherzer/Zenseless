@@ -2,7 +2,7 @@
 using OpenTK.Graphics.OpenGL;
 using Zenseless.HLGL;
 
-namespace MvcSokoban
+namespace Example
 {
 	internal class FontGL
 	{

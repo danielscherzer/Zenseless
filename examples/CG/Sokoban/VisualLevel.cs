@@ -8,7 +8,7 @@ using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
 
-namespace MvcSokoban
+namespace Example
 {
 	internal class VisualLevel
 	{
@@ -43,7 +43,7 @@ namespace MvcSokoban
 			windowAspect = width / (float)height;
 		}
 
-		internal void DrawLevelState(ILevel levelState, Color tint)
+		internal void DrawLevelState(ILevelGrid levelState, Color tint)
 		{
 			UpdateLevelGeometry(levelState);
 			shdTexColor.Activate();
@@ -60,7 +60,7 @@ namespace MvcSokoban
 			shdTexColor.Deactivate();
 		}
 
-		private void UpdateLevelGeometry(ILevel levelState)
+		private void UpdateLevelGeometry(ILevelGrid levelState)
 		{
 			if (!ReferenceEquals(levelState, lastLevelState))
 			{
@@ -97,7 +97,7 @@ namespace MvcSokoban
 			}
 		}
 
-		private ILevel lastLevelState;
+		private ILevelGrid lastLevelState;
 		private Size lastLevelSize;
 		private VAO levelGeometry;
 		private IShaderProgram shdTexColor;

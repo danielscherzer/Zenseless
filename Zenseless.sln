@@ -34,43 +34,43 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.HLGL.Tests", "Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.ExampleFramework", "src\Zenseless.ExampleFramework\Zenseless.ExampleFramework.csproj", "{6810DE78-7764-4C8C-ADA7-E7D31AE6C259}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalIlluminationExample", "examples\new\GlobalIlluminationExample\GlobalIlluminationExample.csproj", "{1A07B025-F381-4503-823C-F1885E202D0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalIlluminationExample", "examples\experimental\GlobalIlluminationExample\GlobalIlluminationExample.csproj", "{1A07B025-F381-4503-823C-F1885E202D0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpuParticleExample", "examples\new\GpuParticleExample\GpuParticleExample.csproj", "{88E2E445-0859-4364-BF3D-53CB78DB02C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpuParticleExample", "examples\experimental\GpuParticleExample\GpuParticleExample.csproj", "{88E2E445-0859-4364-BF3D-53CB78DB02C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpuParticlePhysics2DExample", "examples\new\GpuParticlePhysics2DExample\GpuParticlePhysics2DExample.csproj", "{112DAB1A-27FC-4677-94EE-BFA6B6689D49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpuParticlePhysics2DExample", "examples\experimental\GpuParticlePhysics2DExample\GpuParticlePhysics2DExample.csproj", "{112DAB1A-27FC-4677-94EE-BFA6B6689D49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpuParticleSystemExample", "examples\new\GpuParticleSystemExample\GpuParticleSystemExample.csproj", "{DAF8FFC9-D90C-4F1D-B361-85A4D1AA726D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpuParticleSystemExample", "examples\experimental\GpuParticleSystemExample\GpuParticleSystemExample.csproj", "{DAF8FFC9-D90C-4F1D-B361-85A4D1AA726D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grow", "examples\new\Grow\Grow.csproj", "{897591CD-CEC3-42B6-9207-0A23E92C0E5A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grow", "examples\experimental\Grow\Grow.csproj", "{897591CD-CEC3-42B6-9207-0A23E92C0E5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HLGLExample", "examples\new\HLGLExample\HLGLExample.csproj", "{8AAF26AD-B969-437F-8EA5-D45D2EB07C2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HLGLExample", "examples\experimental\HLGLExample\HLGLExample.csproj", "{8AAF26AD-B969-437F-8EA5-D45D2EB07C2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterpolationExample", "examples\new\InterpolationExample\InterpolationExample.csproj", "{47D435BB-0619-4CDE-93A2-7ACE1FDF47FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterpolationExample", "examples\experimental\InterpolationExample\InterpolationExample.csproj", "{47D435BB-0619-4CDE-93A2-7ACE1FDF47FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelConsumer", "examples\new\LevelConsumer\LevelConsumer.csproj", "{90FAED92-075D-48A0-BD9D-601F57637F45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelConsumer", "examples\experimental\LevelConsumer\LevelConsumer.csproj", "{90FAED92-075D-48A0-BD9D-601F57637F45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelData", "examples\new\LevelData\LevelData.csproj", "{94C18A12-1467-45DC-9F68-8F8C1C9FFCE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelData", "examples\experimental\LevelData\LevelData.csproj", "{94C18A12-1467-45DC-9F68-8F8C1C9FFCE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditor", "examples\new\LevelEditor\LevelEditor.csproj", "{942A82B6-C939-4C63-903C-4E55C73DFA63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditor", "examples\experimental\LevelEditor\LevelEditor.csproj", "{942A82B6-C939-4C63-903C-4E55C73DFA63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapCreator", "examples\new\MapCreator\MapCreator.csproj", "{F54A9D39-6597-4816-A150-C93C5D5E8530}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapCreator", "examples\experimental\MapCreator\MapCreator.csproj", "{F54A9D39-6597-4816-A150-C93C5D5E8530}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniGalaxyBirds", "examples\new\MiniGalaxyBirds\MiniGalaxyBirds.csproj", "{C5D22AE1-27EB-40C0-B483-D583EF036CD6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniGalaxyBirds", "examples\experimental\MiniGalaxyBirds\MiniGalaxyBirds.csproj", "{C5D22AE1-27EB-40C0-B483-D583EF036CD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcclusionQueryExample", "examples\new\OcclusionQueryExample\OcclusionQueryExample.csproj", "{FC0DCE57-DE47-494B-9CA8-FE2756C300D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcclusionQueryExample", "examples\experimental\OcclusionQueryExample\OcclusionQueryExample.csproj", "{FC0DCE57-DE47-494B-9CA8-FE2756C300D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RasterizationExample", "examples\new\RasterizationExample\RasterizationExample.csproj", "{FF1AA9A2-D928-4F56-B49F-11FD1D632D22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RasterizationExample", "examples\experimental\RasterizationExample\RasterizationExample.csproj", "{FF1AA9A2-D928-4F56-B49F-11FD1D632D22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazeDesigner", "examples\new\RazeDesigner\RazeDesigner.csproj", "{3D13BF57-9E23-4102-A0E1-49579900BA67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazeDesigner", "examples\experimental\RazeDesigner\RazeDesigner.csproj", "{3D13BF57-9E23-4102-A0E1-49579900BA67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsInteraction", "examples\new\RtsInteraction\RtsInteraction.csproj", "{3E97D5D7-FF09-42E8-8029-5446AC442A23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsInteraction", "examples\experimental\RtsInteraction\RtsInteraction.csproj", "{3E97D5D7-FF09-42E8-8029-5446AC442A23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplineExample", "examples\new\SplineExample\SplineExample.csproj", "{1F63C4EB-40DC-4837-AB6D-11A5D777D054}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplineExample", "examples\experimental\SplineExample\SplineExample.csproj", "{1F63C4EB-40DC-4837-AB6D-11A5D777D054}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{4AD70E1B-FC00-4433-BDC0-D366B1E0FCCC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "new", "new", "{CB237D59-2840-48EB-888F-965EDB20E868}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "experimental", "experimental", "{CB237D59-2840-48EB-888F-965EDB20E868}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CG", "CG", "{CDE252E6-67F8-44B3-A54E-9A4685482412}"
 EndProject
@@ -84,7 +84,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLoopExample", "examples
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalExample", "examples\CG\MinimalExample\MinimalExample.csproj", "{D2E19210-80D1-4F07-8E9D-5205F18B0B26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcSokoban", "examples\CG\MvcSokoban\MvcSokoban.csproj", "{CEF63B7C-D944-4EAA-8FCA-45C8160F3711}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sokoban", "examples\CG\Sokoban\Sokoban.csproj", "{CEF63B7C-D944-4EAA-8FCA-45C8160F3711}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistenceExample", "examples\CG\PersistenceExample\PersistenceExample.csproj", "{A5A5F2D5-E05C-43CF-9F9D-4B5B9FFDCF13}"
 EndProject
@@ -143,17 +143,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SHADER", "SHADER", "{DC8992
 		examples\SHADER\readme.md = examples\SHADER\readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heightfield", "examples\new\Heightfield\Heightfield.csproj", "{90EA30D9-1EE9-48EE-9375-A91206E9EA9D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heightfield", "examples\experimental\Heightfield\Heightfield.csproj", "{90EA30D9-1EE9-48EE-9375-A91206E9EA9D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenselessAppEmpty", "examples\ZenselessAppEmpty\ZenselessAppEmpty.csproj", "{7200D8E8-FE98-44BD-A2AF-1CC5C2DFD078}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenselessSourceAppEmpty", "examples\ZenselessSourceAppEmpty\ZenselessSourceAppEmpty.csproj", "{DCE6FA93-2963-470C-8EE2-077FF5F96FEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breakout", "examples\new\Breakout\Breakout.csproj", "{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breakout", "examples\experimental\Breakout\Breakout.csproj", "{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleBrowser", "examples\new\ExampleBrowser\ExampleBrowser.csproj", "{8376421E-113D-4D47-AE84-0367DD329D45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleBrowser", "examples\experimental\ExampleBrowser\ExampleBrowser.csproj", "{8376421E-113D-4D47-AE84-0367DD329D45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transformation", "examples\CG\Transformation\Transformation.csproj", "{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiledLevel", "examples\experimental\TiledLevel\TiledLevel.csproj", "{F794CFB1-66C6-4BA1-BAA7-79D7E84A78BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseTiled", "examples\CG\ExerciseTiled\ExerciseTiled.csproj", "{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}"
 EndProject
@@ -419,6 +421,10 @@ Global
 		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F794CFB1-66C6-4BA1-BAA7-79D7E84A78BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F794CFB1-66C6-4BA1-BAA7-79D7E84A78BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F794CFB1-66C6-4BA1-BAA7-79D7E84A78BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F794CFB1-66C6-4BA1-BAA7-79D7E84A78BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -495,6 +501,7 @@ Global
 		{A3D84F32-D7B8-4BEB-8909-3CA64BA03D5D} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{8376421E-113D-4D47-AE84-0367DD329D45} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
+		{F794CFB1-66C6-4BA1-BAA7-79D7E84A78BC} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

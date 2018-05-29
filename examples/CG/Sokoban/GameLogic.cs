@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MvcSokoban
+namespace Example
 {
 	[Serializable]
 	public class GameLogic
@@ -27,7 +27,7 @@ namespace MvcSokoban
 			LoadLevel();
 		}
 
-		public ILevel GetLevelState()
+		public ILevelGrid GetLevelState()
 		{
 			return levelLogic.GetLevelState();
 		}

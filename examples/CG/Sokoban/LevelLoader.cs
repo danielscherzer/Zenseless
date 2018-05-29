@@ -2,17 +2,17 @@
 using System.IO;
 using System.Linq;
 
-namespace MvcSokoban
+namespace Example
 {
 	public class LevelLoader
 	{
-		public static Level FromString(string levelString)
+		public static LevelGrid FromString(string levelString)
 		{
 			if (string.IsNullOrWhiteSpace(levelString)) return null;
 			var lines = levelString.Split(new string[] { Environment.NewLine, "\n" }, StringSplitOptions.RemoveEmptyEntries);
 			int longestLength = lines.Max(s => s.Length);
 			//use the longest line and line count as level dimensions
-			Level level = new Level(longestLength, lines.Length);
+			LevelGrid level = new LevelGrid(longestLength, lines.Length);
 			int y = level.Height - 1;
 			foreach (string sLine in lines)
 			{
@@ -39,7 +39,7 @@ namespace MvcSokoban
 			return level;
 		}
 
-		public static Level FromFile(string fileName)
+		public static LevelGrid FromFile(string fileName)
 		{
 			if (!File.Exists(fileName))
 			{

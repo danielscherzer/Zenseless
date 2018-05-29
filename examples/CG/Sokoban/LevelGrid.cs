@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace MvcSokoban
+namespace Example
 {
 	[Serializable]
-	public class Level : ILevel
+	public class LevelGrid : ILevelGrid
 	{
-		public Level(int width, int height)
+		public LevelGrid(int width, int height)
 		{
 			this.Width = width;
 			this.Height = height;
@@ -26,6 +26,6 @@ namespace MvcSokoban
 
 		public int Width { get; private set; }
 
-		private ElementType[,] arrTile;
+		private readonly ElementType[,] arrTile;
 	}
 }

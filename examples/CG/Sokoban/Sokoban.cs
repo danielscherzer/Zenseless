@@ -6,7 +6,7 @@ using Zenseless.Patterns;
 using Zenseless.ExampleFramework;
 using Zenseless.HLGL;
 
-namespace MvcSokoban
+namespace Example
 {
 	class Controller
 	{

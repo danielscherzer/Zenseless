@@ -2,14 +2,14 @@
 [![NuGet](https://img.shields.io/nuget/v/Zenseless.ContentPipeline.svg)](https://www.nuget.org/packages/Zenseless.ContentPipeline/)
 
 # Zenseless
-A Framework for real-time computer graphics using OpenGL. This framework is created for a university course in computer graphics. Documentation inside the package is incomplete! See the [change log](CHANGELOG.md) for changes, features and road map. It uses OpenTK(Nuget package at [OpenTk@Nuget](https://www.nuget.org/packages/OpenTK/3.0.0-pre) in its newest pre-release version. The [OpenTK Manual](https://github.com/mono/opentk/blob/master/Documentation/Manual.pdf).
+A Framework for real-time computer graphics using OpenGL. This framework is created for a university course in computer graphics. Documentation inside the package is incomplete! See the [change log](CHANGELOG.md) for changes, features and road map. It uses OpenTK(Nuget package at [OpenTk@Nuget](https://www.nuget.org/packages/OpenTK/3.0.0) in its newest version. The [OpenTK Manual](https://github.com/mono/opentk/blob/master/Documentation/Manual.pdf).
 
 
 ### Setup of an empty stand-alone project
 Use the templates or
-1. Create a Console App (.Net Framework) in Visual Studio.
+1. Create a Console Application (.Net Framework) in Visual Studio.
 1. Install the Nuget package
-	+ [Zenseless.ContentPipeline](https://www.nuget.org/packages/Zenseless.ContentPipeline/) is a .Net Framework 4.6 assembly package.
+	+ [Zenseless.ExampleFramework](https://www.nuget.org/packages/Zenseless.ExampleFramework/) is a .Net Framework 4.6 assembly package.
 
 ### Setup of full framework
 1. download framework

@@ -1,5 +1,6 @@
 ﻿namespace Example
 {
+	using OpenTK.Input;
 	using Zenseless.ExampleFramework;
 
 	class Program

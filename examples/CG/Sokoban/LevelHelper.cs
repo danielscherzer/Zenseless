@@ -1,12 +1,12 @@
 ﻿using System.Drawing;
 
-namespace MvcSokoban
+namespace Example
 {
 	public static class LevelHelper
 	{
-		public static Level Copy(this ILevel level)
+		public static LevelGrid Copy(this ILevelGrid level)
 		{
-			var copy = new Level(level.Width, level.Height);
+			var copy = new LevelGrid(level.Width, level.Height);
 			for(int x = 0; x < level.Width; ++x)
 			{
 				for (int y = 0; y < level.Height; ++y)
@@ -29,7 +29,7 @@ namespace MvcSokoban
 			}
 		}
 
-		public static ElementType GetElement(this ILevel level, Point position)
+		public static ElementType GetElement(this ILevelGrid level, Point position)
 		{
 			return level.GetElement(position.X, position.Y);
 		}
@@ -49,12 +49,12 @@ namespace MvcSokoban
 			return 0 != (type & ElementType.Man);
 		}
 
-		public static void SetElement(this Level level, Point position, ElementType type)
+		public static void SetElement(this LevelGrid level, Point position, ElementType type)
 		{
 			level.SetElement(position.X, position.Y, type);
 		}
 
-		public static void MoveBox(this Level level, Point oldPos, Point newPos)
+		public static void MoveBox(this LevelGrid level, Point oldPos, Point newPos)
 		{
 			var type = level.GetElement(oldPos);
 			switch (type)
@@ -72,7 +72,7 @@ namespace MvcSokoban
 			}
 		}
 
-		public static void MovePlayer(this Level level, Point oldPos, Point newPos)
+		public static void MovePlayer(this LevelGrid level, Point oldPos, Point newPos)
 		{
 			ElementType type = level.GetElement(oldPos);
 			switch (type)
@@ -90,7 +90,7 @@ namespace MvcSokoban
 			}
 		}
 
-		public static bool IsEmpty(this ILevel level)
+		public static bool IsEmpty(this ILevelGrid level)
 		{
 			for (int x = 0; x < level.Width; ++x)
 			{
@@ -102,7 +102,7 @@ namespace MvcSokoban
 			return true;
 		}
 
-		public static Point? FindPlayerPos(this ILevel level)
+		public static Point? FindPlayerPos(this ILevelGrid level)
 		{
 			for (int x = 0; x < level.Width; ++x)
 			{
@@ -118,7 +118,7 @@ namespace MvcSokoban
 			return null;
 		}
 
-		public static bool IsWon(this ILevel level)
+		public static bool IsWon(this ILevelGrid level)
 		{
 			for (int x = 0; x < level.Width; ++x)
 			{

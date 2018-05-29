@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace MvcSokoban
+namespace Example
 {
 	public class SceneGame : IScene
 	{
