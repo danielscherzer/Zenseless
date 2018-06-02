@@ -28,7 +28,7 @@ namespace Example
 			renderState.Set(new BackFaceCulling(true));
 		}
 
-		private VAO plane;
+		private IDrawable plane;
 		private IShaderProgram shdPlane;
 		private readonly IRenderState renderState;
 	}

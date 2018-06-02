@@ -29,7 +29,7 @@ namespace Example
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
 			shaderProgram.Uniform("camera", Matrix4x4.CreateScale(1, 1, -1)); // OpenGL projection switches from right-handed to left-handed
-			geometry.Draw(instanceTransforms.Length);
+			geometry.Draw();
 			shaderProgram.Deactivate();
 		}
 

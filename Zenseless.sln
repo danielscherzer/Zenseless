@@ -134,7 +134,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "13 - RenderToTexture", "exa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02 - ShaderDebugDialogExample", "examples\SHADER\02 - ShaderDebugDialogExample\02 - ShaderDebugDialogExample.csproj", "{AB2FC8A2-9741-42B7-9170-D713B5125D78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowMappingExample", "examples\SHADER\ShadowMappingExample\ShadowMappingExample.csproj", "{613DB9B5-0255-4B4E-9482-EA6A127F7894}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14 - ShadowMappingExample", "examples\SHADER\14 - ShadowMappingExample\14 - ShadowMappingExample.csproj", "{613DB9B5-0255-4B4E-9482-EA6A127F7894}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSBOExample", "examples\SHADER\SSBOExample\SSBOExample.csproj", "{B477FA61-3ABE-43EC-B785-2306975C65B1}"
 EndProject
@@ -158,6 +158,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiledLevel", "examples\experimental\TiledLevel\TiledLevel.csproj", "{F794CFB1-66C6-4BA1-BAA7-79D7E84A78BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseTiled", "examples\CG\ExerciseTiled\ExerciseTiled.csproj", "{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeferredShading", "examples\experimental\DeferredShading\DeferredShading.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -429,6 +431,10 @@ Global
 		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9037E855-7592-4DAC-89C7-62257D8F2343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9037E855-7592-4DAC-89C7-62257D8F2343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9037E855-7592-4DAC-89C7-62257D8F2343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9037E855-7592-4DAC-89C7-62257D8F2343}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -503,6 +509,7 @@ Global
 		{0E8A0B1A-CB10-4F76-B88B-5078782C64E6} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 		{F794CFB1-66C6-4BA1-BAA7-79D7E84A78BC} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
+		{9037E855-7592-4DAC-89C7-62257D8F2343} = {CB237D59-2840-48EB-888F-965EDB20E868}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CA293D8-FC78-4BF1-BA73-543451A6B7AB}

@@ -30,7 +30,7 @@ namespace Example
 		}
 
 		private IShaderProgram shaderProgram;
-		private VAO geometry;
+		private IDrawable geometry;
 		//private ITexture texDiffuse;
 	}
 }

@@ -36,8 +36,8 @@
 			mgr.RegisterUpdater<Texture2dGL>(Update);
 			mgr.RegisterImporter(TextureArrayImporter);
 			mgr.RegisterUpdater<TextureArray2dGL>(Update);
-			mgr.RegisterImporter((namedStreams) => ShaderProgramImporter(namedStreams, solutionMode));
-			mgr.RegisterUpdater<ShaderProgramGL>((prog, namedStreams) => Update(prog, namedStreams, solutionMode));
+			mgr.RegisterImporter((namedStreams) => ShaderProgramImporter(namedStreams, solutionMode, mgr));
+			mgr.RegisterUpdater<ShaderProgramGL>((prog, namedStreams) => Update(prog, namedStreams, solutionMode, mgr));
 
 			return mgr;
 		}
@@ -89,14 +89,14 @@
 			return texture;
 		}
 
-		private static IShaderProgram ShaderProgramImporter(IEnumerable<NamedStream> resources, bool solutionMode)
+		private static IShaderProgram ShaderProgramImporter(IEnumerable<NamedStream> resources, bool solutionMode, IContentLoader contentLoader)
 		{
 			ShaderProgramGL shaderProgram = new ShaderProgramGL();
-			Update(shaderProgram, resources, solutionMode);
+			Update(shaderProgram, resources, solutionMode, contentLoader);
 			return shaderProgram;
 		}
 
-		private static void Update(ShaderProgramGL shaderProgram, IEnumerable<NamedStream> namedStreams, bool solutionMode)
+		private static void Update(ShaderProgramGL shaderProgram, IEnumerable<NamedStream> namedStreams, bool solutionMode, IContentLoader contentLoader)
 		{
 			string ShaderCode(Stream stream)
 			{
@@ -114,6 +114,15 @@
 			{
 				var shaderType = GetShaderTypeFromExtension(Path.GetExtension(res.Name));
 				var shaderCode = ShaderCode(res.Stream);
+				string GetIncludeCode(string includeName)
+				{
+					var resourceName = includeName.Replace(Path.DirectorySeparatorChar, '.');
+					resourceName = resourceName.Replace(Path.AltDirectorySeparatorChar, '.');
+					var includeCode = contentLoader.Load<string>(resourceName);
+					ShaderLoader.TestCompile(includeName, includeCode);
+					return includeCode;
+				}
+				shaderCode = ShaderLoader.ResolveIncludes(shaderCode, GetIncludeCode);
 				shaderProgram.Compile(shaderCode, shaderType);
 			}
 			shaderProgram.Link();

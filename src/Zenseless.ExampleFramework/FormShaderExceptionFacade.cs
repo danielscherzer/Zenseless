@@ -39,7 +39,7 @@ namespace Zenseless.ExampleFramework
 				form.Errors.Add(logLine);
 
 			}
-			var shaderFileName = e.ExtractFileName();
+			var shaderFileName = e.GetFileName();
 			if (string.IsNullOrEmpty(shaderFileName))
 			{
 				foreach (var logLine in log.Lines)

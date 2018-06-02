@@ -18,11 +18,29 @@
 		/// <param name="mesh">The mesh.</param>
 		/// <param name="shader">The shader.</param>
 		/// <param name="textureBindings">The texture bindings.</param>
-		public MeshVisual(DefaultMesh mesh, IShaderProgram shader, TextureBinding[] textureBindings)
+		public MeshVisual(DefaultMesh mesh, IShaderProgram shader, IEnumerable<TextureBinding> textureBindings = null)
+		:this(VAOLoader.FromMesh(mesh, shader), shader, textureBindings)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MeshVisual"/> class.
+		/// </summary>
+		/// <param name="drawable"></param>
+		/// <param name="shader">The shader.</param>
+		/// <param name="textureBindings">The texture bindings.</param>
+		public MeshVisual(IDrawable drawable, IShaderProgram shader, IEnumerable<TextureBinding> textureBindings = null)
 		{
 			shaderProgram = shader;
-			geometry = VAOLoader.FromMesh(mesh, shader);
-			this.textureBindings = textureBindings;
+			this.drawable = drawable;
+			if (textureBindings is null)
+			{
+				this.textureBindings = new List<TextureBinding>();
+			}
+			else
+			{
+				this.textureBindings = textureBindings;
+			}
 		}
 
 		/// <summary>
@@ -65,16 +83,17 @@
 		}
 
 		/// <summary>
-		/// Draws this instance.
+		/// Draws the specified uniform setter.
 		/// </summary>
+		/// <param name="uniformSetter">The uniform setter.</param>
 		public void Draw(Action<IShaderProgram> uniformSetter = null)
 		{
 			shaderProgram.Activate();
-			BindTextures();
+			DrawTools.BindTextures(shaderProgram, textureBindings);
 			NewMethod();
 			uniformSetter?.Invoke(shaderProgram);
-			geometry.Draw();
-			UnbindTextures();
+			drawable.Draw();
+			DrawTools.UnbindTextures(textureBindings);
 			shaderProgram.Deactivate();
 		}
 
@@ -99,35 +118,11 @@
 		}
 
 		private readonly IShaderProgram shaderProgram;
-		private readonly VAO geometry;
-		private readonly TextureBinding[] textureBindings;
+		private readonly IDrawable drawable;
+		private readonly IEnumerable<TextureBinding> textureBindings;
 		private readonly Dictionary<string, float> uniformsFloat = new Dictionary<string, float>();
 		private readonly Dictionary<string, Vector2> uniformsVec2 = new Dictionary<string, Vector2>();
 		private readonly Dictionary<string, Vector3> uniformsVec3 = new Dictionary<string, Vector3>();
 		private readonly Dictionary<string, Vector4> uniformsVec4 = new Dictionary<string, Vector4>();
-
-		private void BindTextures()
-		{
-			int id = 0;
-			foreach (var binding in textureBindings)
-			{
-				GL.ActiveTexture(TextureUnit.Texture0 + id);
-				binding.Texture.Activate();
-				shaderProgram.Uniform(binding.Name, id);
-				++id;
-			}
-		}
-
-		private void UnbindTextures()
-		{
-			int id = 0;
-			foreach (var binding in textureBindings)
-			{
-				GL.ActiveTexture(TextureUnit.Texture0 + id);
-				binding.Texture.Deactivate();
-				++id;
-			}
-			GL.ActiveTexture(TextureUnit.Texture0);
-		}
 	}
 }

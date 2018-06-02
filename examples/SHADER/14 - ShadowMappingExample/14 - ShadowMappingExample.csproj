@@ -1,14 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{40B874B8-2E8D-42AE-A567-06AE167B0E8B}</ProjectGuid>
+    <ProjectGuid>{613DB9B5-0255-4B4E-9482-EA6A127F7894}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Example</RootNamespace>
-    <AssemblyName>10 - EnvironmentMapping</AssemblyName>
+    <AssemblyName>14 - ShadowMappingExample</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -34,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\\Debug\</OutputPath>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;SOLUTION</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -43,7 +42,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\\Release\</OutputPath>
+    <OutputPath>..\..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -52,9 +51,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AssemblyConfig.cs" />
     <Compile Include="MainVisual.cs" />
-    <Compile Include="EnvMappingExample.cs" />
+    <Compile Include="ShadowMappingExample.cs" />
+    <Compile Include="AssemblyConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -79,16 +78,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\background.vert" />
-    <EmbeddedResource Include="Content\background.frag" />
-    <EmbeddedResource Include="Content\suzanne.obj" />
-    <EmbeddedResource Include="Content\projection.glsl" />
     <None Include="readme.md" />
-    <EmbeddedResource Include="Content\envMapping.frag" />
-    <EmbeddedResource Include="Content\envMapping.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Content\beach.jpg" />
+    <EmbeddedResource Include="Content\depth.frag" />
+    <EmbeddedResource Include="Content\depth.vert" />
+    <EmbeddedResource Include="Content\shadowMap.frag" />
+    <EmbeddedResource Include="Content\shadowMap.vert" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="OpenTK">
@@ -116,6 +110,9 @@
       <Project>{C660F6AF-C100-4169-A9FB-61E1EBE87F34}</Project>
       <Name>Zenseless.OpenGL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

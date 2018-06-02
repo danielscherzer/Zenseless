@@ -1,15 +1,15 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Numerics;
-using System.Runtime.InteropServices;
-using Zenseless.Geometry;
-using Zenseless.Patterns;
-
-namespace Zenseless.OpenGL
+﻿namespace Zenseless.OpenGL
 {
+	using OpenTK.Graphics.OpenGL4;
+	using System;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Numerics;
+	using System.Runtime.InteropServices;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+	using Zenseless.Patterns;
+
 	/// <summary>
 	/// Exception class for Vertex Array O
 	/// </summary>
@@ -28,7 +28,7 @@ namespace Zenseless.OpenGL
 	/// OpenGL Vertex Array Object
 	/// </summary>
 	/// <seealso cref="Disposable" />
-	public class VAO : Disposable
+	public class VAO : Disposable, IDrawable
 	{
 		/// <summary>
 		/// Initializes a new OpenGL Vertex Array Object (<see cref="VAO"/>) instance.
@@ -60,6 +60,22 @@ namespace Zenseless.OpenGL
 		/// The type of the draw elements.
 		/// </value>
 		public DrawElementsType DrawElementsType { get; private set; } = DrawElementsType.UnsignedShort;
+
+		/// <summary>
+		/// Activates this instance.
+		/// </summary>
+		public void Activate()
+		{
+			GL.BindVertexArray(idVAO);
+		}
+
+		/// <summary>
+		/// Deactivates this instance.
+		/// </summary>
+		public void Deactivate()
+		{
+			GL.BindVertexArray(0);
+		}
 
 		/// <summary>
 		/// Sets the index array.
@@ -99,6 +115,8 @@ namespace Zenseless.OpenGL
 		public void SetAttribute(int bindingID, Array data, Type baseType, int baseTypeCount, bool perInstance = false)
 		{
 			if (-1 == bindingID) return; //if attribute not used in shader or wrong name
+			LengthSanityCheck(data.Length, perInstance);
+
 			Activate();
 			int elementBytes = Marshal.SizeOf(baseType) * baseTypeCount;
 			var buffer = RequestBuffer(bindingID, BufferTarget.ArrayBuffer);
@@ -122,14 +140,24 @@ namespace Zenseless.OpenGL
 			{
 				GL.VertexAttribDivisor(bindingID, 1);
 			}
-			else
-			{
-				lastAttributeLength = data.Length;
-			}
 			//cleanup state
 			Deactivate();
 			buffer.Deactivate();
 			GL.DisableVertexAttribArray(bindingID);
+		}
+
+		private void LengthSanityCheck(int dataLength, bool perInstance)
+		{
+			if (perInstance)
+			{
+				if (1 != instanceCount && instanceCount != dataLength) throw new ArgumentException("Per instance data has different length then previous per instance attribute array.");
+				instanceCount = dataLength;
+			}
+			else
+			{
+				if (0 != attributeLength && attributeLength != dataLength) throw new ArgumentException("Attribute data array has different length then previous attribute arrays.");
+				attributeLength = dataLength;
+			}
 		}
 
 		/// <summary>
@@ -162,6 +190,7 @@ namespace Zenseless.OpenGL
 		public void SetAttribute(int bindingID, Matrix4x4[] data, bool perInstance = false)
 		{
 			if (-1 == bindingID) return; //if matrix not used in shader or wrong name
+			LengthSanityCheck(data.Length, perInstance);
 			Activate();
 			var buffer = RequestBuffer(bindingID, BufferTarget.ArrayBuffer);
 			// set buffer data
@@ -193,12 +222,29 @@ namespace Zenseless.OpenGL
 		/// Draws the VAO data (instanced if specified).
 		/// </summary>
 		/// <param name="instanceCount">The instance count (how often should the VAO data be drawn).</param>
-		public void Draw(int instanceCount = 1)
+		public void Draw(int instanceCount)
 		{
 			Activate();
 			if (0 == IDLength)
 			{
-				GL.DrawArraysInstanced(PrimitiveType, 0, lastAttributeLength, instanceCount);
+				GL.DrawArraysInstanced(PrimitiveType, 0, attributeLength, instanceCount);
+			}
+			else
+			{
+				GL.DrawElementsInstanced(PrimitiveType, IDLength, DrawElementsType, (IntPtr)0, instanceCount);
+			}
+			Deactivate();
+		}
+
+		/// <summary>
+		/// Draws the VAO data (instanced if any instance data is given).
+		/// </summary>
+		public void Draw()
+		{
+			Activate();
+			if (0 == IDLength)
+			{
+				GL.DrawArraysInstanced(PrimitiveType, 0, attributeLength, instanceCount);
 			}
 			else
 			{
@@ -234,8 +280,8 @@ namespace Zenseless.OpenGL
 		/// The bound buffers
 		/// </summary>
 		private Dictionary<int, BufferObject> boundBuffers = new Dictionary<int, BufferObject>();
-		private int lastAttributeLength = 0;
-
+		private int attributeLength = 0;
+		private int instanceCount = 1;
 		private static readonly ReadOnlyDictionary<Type, VertexAttribPointerType> mappingTypeToPointerType =
 			new ReadOnlyDictionary<Type, VertexAttribPointerType>(new Dictionary<Type, VertexAttribPointerType>()
 			{
@@ -263,16 +309,6 @@ namespace Zenseless.OpenGL
 				return value;
 			}
 			throw new ArgumentException($"Unrecognized type {type.FullName}.");
-		}
-
-		private void Activate()
-		{
-			GL.BindVertexArray(idVAO);
-		}
-
-		private void Deactivate()
-		{
-			GL.BindVertexArray(0);
 		}
 
 		private static DrawElementsType GetDrawElementsType(Type type)

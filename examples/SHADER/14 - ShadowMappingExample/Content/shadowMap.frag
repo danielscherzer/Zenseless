@@ -1,4 +1,5 @@
 #version 430 core
+
 #ifdef SOLUTION
 uniform sampler2D texShadowMap;
 #endif

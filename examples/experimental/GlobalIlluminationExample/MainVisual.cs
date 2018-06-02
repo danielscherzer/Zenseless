@@ -38,6 +38,6 @@ namespace Example
 
 		private BufferObject bufferMaterials = new BufferObject(BufferTarget.UniformBuffer);
 		private IShaderProgram shaderProgram;
-		private VAO geometry;
+		private IDrawable geometry;
 	}
 }

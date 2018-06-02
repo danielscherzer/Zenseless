@@ -70,6 +70,12 @@
 			{
 				throw new FBOException(status);
 			}
+			var drawBuffers = new List<DrawBuffersEnum>();
+			for (int i = 0; i < attachments.Count; ++i)
+			{
+				drawBuffers.Add(DrawBuffersEnum.ColorAttachment0 + i);
+			}
+			this.drawBuffers = drawBuffers.ToArray();
 		}
 
 		/// <summary>
@@ -97,6 +103,7 @@
 			GL.BindFramebuffer(FramebufferTarget.Framebuffer, m_FBOHandle);
 			GL.Viewport(0, 0, Texture.Width, Texture.Height);
 			currentFrameBufferHandle = m_FBOHandle;
+			GL.DrawBuffers(drawBuffers.Length, drawBuffers);
 		}
 
 		/// <summary>
@@ -104,8 +111,9 @@
 		/// </summary>
 		public void Deactivate()
 		{
+			GL.DrawBuffers(1, drawBuffers); //TODO: not a complete reverse
 			GL.BindFramebuffer(FramebufferTarget.Framebuffer, lastFBO);
-			GL.PopAttrib();
+			GL.PopAttrib(); //TODO: deprecated
 			currentFrameBufferHandle = lastFBO;
 		}
 
@@ -113,6 +121,8 @@
 		private uint lastFBO = 0;
 		private static uint currentFrameBufferHandle = 0;
 		private List<ITexture2D> attachments = new List<ITexture2D>();
+		private DrawBuffersEnum[] drawBuffers = new DrawBuffersEnum[] { DrawBuffersEnum.ColorAttachment0 };
+
 
 		private string GetStatusMessage()
 		{

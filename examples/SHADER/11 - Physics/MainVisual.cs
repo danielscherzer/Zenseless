@@ -36,7 +36,7 @@
 			shaderProgram.Activate();
 			shaderProgram.Uniform(nameof(time), time);
 			shaderProgram.Uniform("camera", camera);
-			geometryBody.Draw(instancePositions.Count);
+			geometryBody.Draw();
 			shaderProgram.Deactivate();
 		}
 

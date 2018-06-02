@@ -1,4 +1,5 @@
 #version 430 core
+#include "projection.glsl"
 
 uniform sampler2D envMap;
 
@@ -8,13 +9,6 @@ in vec3 pos;
 in vec3 n;
 
 out vec4 color;
-const float PI = 3.14159265359;
-
-vec2 projectLongLat(vec3 direction) {
-  float theta = atan(direction.x, -direction.z) + PI;
-  float phi = acos(-direction.y);
-  return vec2(theta / (2*PI), phi / PI);
-}
 
 void main() 
 {

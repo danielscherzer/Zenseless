@@ -53,12 +53,13 @@
 			geometry.Draw();
 			fboShadowMap.Texture.Deactivate();
 			shaderProgram.Deactivate();
+
 		}
 
 		private readonly Camera<Orbit, Perspective> light = new Camera<Orbit, Perspective>(new Orbit(8, -100, 44), new Perspective(farClip:50));
 		private IShaderProgram shaderProgram;
 		private IShaderProgram shaderProgramDepth;
 		private IRenderSurface fboShadowMap = new FBOwithDepth(Texture2dGL.Create(512, 512, 1, true));
-		private VAO geometry;
+		private IDrawable geometry;
 	}
 }

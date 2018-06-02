@@ -1,11 +1,11 @@
-﻿using System;
-
-namespace Zenseless.HLGL
+﻿namespace Zenseless.HLGL
 {
+	using System;
+
 	/// <summary>
-	/// 
+	/// The base exception class for shaders.
 	/// </summary>
-	/// <seealso cref="System.Exception" />
+	/// <seealso cref="Exception" />
 	public class ShaderException : Exception
 	{
 		/// <summary>
@@ -19,9 +19,9 @@ namespace Zenseless.HLGL
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ShaderException" /> class.
 		/// </summary>
-		/// <param name="msg">The error msg</param>
+		/// <param name="message">The error message</param>
 		/// <param name="log">The shader log</param>
-		public ShaderException(string msg, string log) : base(msg)
+		public ShaderException(string message, string log) : base(message)
 		{
 			ShaderLog = log;
 		}

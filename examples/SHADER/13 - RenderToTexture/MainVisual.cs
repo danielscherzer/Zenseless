@@ -58,6 +58,6 @@
 		private IRenderSurface renderToTexture;
 		private IShaderProgram shaderPostProcess;
 		private IShaderProgram shaderProgram;
-		private VAO geometry;
+		private IDrawable geometry;
 	}
 }

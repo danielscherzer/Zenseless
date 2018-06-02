@@ -32,10 +32,10 @@ namespace Example
 			texArray = contentLoader.Load<ITexture2dArray>(names);
 			shdTexColor = contentLoader.Load<IShaderProgram>("texColor.*");
 
-			levelGeometry = new VAO(PrimitiveType.Quads);
+			vaoLevelGeometry = new VAO(PrimitiveType.Quads);
 			var quadPos = new Vector2[4] { Vector2.Zero, Vector2.UnitX, Vector2.One, Vector2.UnitY };
 			var locPosition = shdTexColor.GetResourceLocation(ShaderResourceType.Attribute, "position");
-			levelGeometry.SetAttribute(locPosition, quadPos);
+			vaoLevelGeometry.SetAttribute(locPosition, quadPos);
 		}
 
 		internal void ResizeWindow(int width, int height)
@@ -54,7 +54,7 @@ namespace Example
 			shdTexColor.Uniform(nameof(tint), tint);
 			shdTexColor.Uniform(nameof(camera), camera, true);
 
-			levelGeometry.Draw(levelState.Width * levelState.Height);
+			vaoLevelGeometry.Draw(levelState.Width * levelState.Height);
 
 			texArray.Deactivate();
 			shdTexColor.Deactivate();
@@ -79,7 +79,7 @@ namespace Example
 						}
 					}
 					var locInstanceTranslate = shdTexColor.GetResourceLocation(ShaderResourceType.Attribute, "instanceTranslate");
-					levelGeometry.SetAttribute(locInstanceTranslate, instanceTranslate.ToArray(), true);
+					vaoLevelGeometry.SetAttribute(locInstanceTranslate, instanceTranslate.ToArray(), true);
 					lastLevelSize = size;
 				}
 				//update all tile types
@@ -93,13 +93,15 @@ namespace Example
 					}
 				}
 				var locTexId = shdTexColor.GetResourceLocation(ShaderResourceType.Attribute, "texId");
-				levelGeometry.SetAttribute(locTexId, texId.ToArray(), true);
+				vaoLevelGeometry.SetAttribute(locTexId, texId.ToArray(), true);
+				drawLevel = DrawableGL.CreateDrawCallGL(PrimitiveType.Quads, 4, levelState.Width * levelState.Height, vaoLevelGeometry);
 			}
 		}
 
 		private ILevelGrid lastLevelState;
 		private Size lastLevelSize;
-		private VAO levelGeometry;
+		private VAO vaoLevelGeometry;
+		private Action drawLevel;
 		private IShaderProgram shdTexColor;
 		private ITexture texArray;
 		private Dictionary<ElementType, Tuple<string, int>> tileTypes = new Dictionary<ElementType, Tuple<string, int>>();

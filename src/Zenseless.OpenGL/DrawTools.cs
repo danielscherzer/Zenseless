@@ -6,6 +6,7 @@
 	using Zenseless.Patterns;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
+	using System.Collections.Generic;
 
 	/// <summary>
 	/// 
@@ -72,6 +73,39 @@
 		{
 			GL.ProgramUniform4(shaderProgram.ProgramID, shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, name), color);
 
+		}
+
+		/// <summary>
+		/// Binds the textures to texture units and to a given shader program.
+		/// </summary>
+		/// <param name="shaderProgram">The shader program.</param>
+		/// <param name="textureBindings">The texture bindings.</param>
+		public static void BindTextures(IShaderProgram shaderProgram, IEnumerable<TextureBinding> textureBindings)
+		{
+			int id = 0;
+			foreach (var binding in textureBindings)
+			{
+				GL.ActiveTexture(TextureUnit.Texture0 + id);
+				binding.Texture.Activate();
+				shaderProgram.Uniform(binding.Name, id);
+				++id;
+			}
+		}
+
+		/// <summary>
+		/// Unbinds the textures from all texture units.
+		/// </summary>
+		/// <param name="textureBindings">The texture bindings.</param>
+		public static void UnbindTextures(IEnumerable<TextureBinding> textureBindings)
+		{
+			int id = 0;
+			foreach (var binding in textureBindings)
+			{
+				GL.ActiveTexture(TextureUnit.Texture0 + id);
+				binding.Texture.Deactivate();
+				++id;
+			}
+			GL.ActiveTexture(TextureUnit.Texture0);
 		}
 	}
 }

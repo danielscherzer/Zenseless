@@ -41,7 +41,7 @@ namespace Example
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
 			shaderProgram.Uniform(nameof(camera), camera, true);
-			geometry.Draw(particleCount);
+			geometry.Draw();
 			shaderProgram.Deactivate();
 		}
 

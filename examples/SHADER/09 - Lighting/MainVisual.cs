@@ -73,8 +73,8 @@
 
 		private readonly IShaderProgram shaderProgramPhong;
 		private readonly IShaderProgram shaderProgramToon;
-		private readonly VAO geometryPhong;
-		private readonly VAO geometryToon;
+		private readonly IDrawable geometryPhong;
+		private readonly IDrawable geometryToon;
 		private readonly Vector4 ambientLightColor = new Vector4(.3f, .3f, .1f, 1f);
 		private readonly Vector4 materialColor = new Vector4(.7f, .7f, .7f, 1f);
 		private readonly Vector3 light2Position = new Vector3(1, 1, 4);

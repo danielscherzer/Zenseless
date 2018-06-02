@@ -29,7 +29,7 @@ namespace Example
 			shaderProgram.Activate();
 			shaderProgram.Uniform(nameof(time), time);
 			shaderProgram.Uniform("camera", camera);
-			geometry.Draw(particleCount);
+			geometry.Draw();
 			shaderProgram.Deactivate();
 		}
 

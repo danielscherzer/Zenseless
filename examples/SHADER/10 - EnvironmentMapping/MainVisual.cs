@@ -33,19 +33,20 @@
 			visuals.Add(visSphere);
 			var suzanne = contentLoader.Load<DefaultMesh>("suzanne");
 			var visSuzanne = new MeshVisual(suzanne.Transform(Transformation.Translation(0, -1.5f, 0)), shaderEnvMap, textureBinding);
-			visSuzanne.SetUniform("reflective", 0.5f);
+			visSuzanne.SetUniform("reflective", 0.4f);
 			visuals.Add(visSuzanne);
 #endif
 		}
 
 		public void Render(ITransformation camera, Vector3 cameraPosition)
 		{
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
 			void SetUniforms(IShaderProgram shaderProgram)
 			{
 				shaderProgram.Uniform("camera", camera);
 				shaderProgram.Uniform(nameof(cameraPosition), cameraPosition);
 			}
-			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			foreach(var visual in visuals)
 			{
 				visual.Draw(SetUniforms);

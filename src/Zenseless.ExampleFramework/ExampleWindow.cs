@@ -12,6 +12,8 @@
 	using Zenseless.Patterns;
 	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
+	using System.Threading;
+	using System.Reflection;
 
 	/// <summary>
 	/// Intended for use for small example programs in the <see cref="Zenseless"/> framework
@@ -47,39 +49,22 @@
 			gameWindow.TargetUpdateFrequency = updateRenderRate;
 			gameWindow.TargetRenderFrequency = updateRenderRate;
 			gameWindow.VSync = VSyncMode.On;
-			//register callback for resizing of window
-			gameWindow.Resize += GameWindow_Resize;
+			gameWindow.Title = Assembly.GetEntryAssembly().ManifestModule.Name;
 			//register callback for keyboard
 			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
 			gameWindow.KeyDown += GameWindow_KeyDown;
 			//register a callback for updating the game logic
 			gameWindow.UpdateFrame += GameWindow_UpdateFrame;
 			//registers a callback for drawing a frame
-			gameWindow.RenderFrame += RenderFrame;
+			gameWindow.RenderFrame += GameWindow_RenderFrame;
+			//register callback for resizing of window
+			gameWindow.Resize += GameWindow_Resize;
 
-			gameWindow.FocusedChanged += GameWindow_FocusedChanged;
+			gameWindow.WindowStateChanged += GameWindow_WindowStateChanged;
 
 			var contentLoader = new ContentLoader();
 			beforeRenderingCallbacks.Add(contentLoader);
 			ContentLoader = contentLoader;
-		}
-
-		private void GameWindow_UpdateFrame(object sender, FrameEventArgs e)
-		{
-			Update?.Invoke((float)gameWindow.TargetUpdatePeriod);
-		}
-
-		private void GameWindow_FocusedChanged(object sender, EventArgs e)
-		{
-			gameWindow.UpdateFrame -= GameWindow_UpdateFrame;
-			gameWindow.RenderFrame -= RenderFrame;
-			if (gameWindow.Focused)
-			{
-				//register a callback for updating the game logic
-				gameWindow.UpdateFrame += GameWindow_UpdateFrame;
-				//registers a callback for drawing a frame
-				gameWindow.RenderFrame += RenderFrame;
-			}
 		}
 
 		/// <summary>
@@ -133,16 +118,6 @@
 		/// </value>
 		public IContentLoader ContentLoader { get; }
 
-		private void GameWindow_KeyDown(object sender, KeyboardKeyEventArgs e)
-		{
-			switch (e.Key)
-			{
-				case Key.ScrollLock:
-					FrameBuffer.ToBitmap().SaveToClipboard();
-					break;
-			}
-		}
-
 		/// <summary>
 		/// Removes the default key handler.
 		/// </summary>
@@ -159,16 +134,6 @@
 		{
 			//run the update loop, which calls our registered callbacks
 			gameWindow.Run();
-		}
-
-		private void RenderFrame(object sender, FrameEventArgs e)
-		{
-			beforeRenderingCallbacks.ForEach((i) => i.BeforeRendering());
-			Render?.Invoke();
-			afterRenderingCallbacks.ForEach((i) => i.AfterRendering());
-			DrawTools.WriteErrors();
-			//buffer swap (and sync) of double buffering (http://gameprogrammingpatterns.com/double-buffer.html)
-			gameWindow.SwapBuffers();
 		}
 
 		private CompositionContainer _container;
@@ -191,6 +156,26 @@
 			}
 		}
 
+		private void GameWindow_KeyDown(object sender, KeyboardKeyEventArgs e)
+		{
+			switch (e.Key)
+			{
+				case Key.ScrollLock:
+					FrameBuffer.ToBitmap().SaveToClipboard();
+					break;
+			}
+		}
+
+		private void GameWindow_RenderFrame(object sender, FrameEventArgs e)
+		{
+			beforeRenderingCallbacks.ForEach((i) => i.BeforeRendering());
+			Render?.Invoke();
+			afterRenderingCallbacks.ForEach((i) => i.AfterRendering());
+			DrawTools.WriteErrors();
+			//buffer swap (and sync) of double buffering (http://gameprogrammingpatterns.com/double-buffer.html)
+			gameWindow.SwapBuffers();
+		}
+
 		/// <summary>
 		/// Handles the Resize event of the GameWindow control.
 		/// </summary>
@@ -200,6 +185,34 @@
 		{
 			RenderContext.RenderState.Set(new Viewport(0, 0, gameWindow.Width, gameWindow.Height));
 			Resize?.Invoke(gameWindow.Width, gameWindow.Height);
+		}
+
+		private void GameWindow_UpdateFrame(object sender, FrameEventArgs e)
+		{
+			Update?.Invoke((float)gameWindow.TargetUpdatePeriod);
+		}
+
+		private void GameWindow_WindowStateChanged(object sender, EventArgs e)
+		{
+			if (WindowState.Minimized == gameWindow.WindowState)
+			{
+				gameWindow.RenderFrame -= GameWindow_RenderFrame;
+				gameWindow.UpdateFrame -= GameWindow_UpdateFrame;
+				gameWindow.UpdateFrame += Chilling;
+			}
+			else
+			{
+				gameWindow.UpdateFrame -= Chilling;
+				//register a callback for updating the game logic
+				gameWindow.UpdateFrame += GameWindow_UpdateFrame;
+				//registers a callback for drawing a frame
+				gameWindow.RenderFrame += GameWindow_RenderFrame;
+			}
+		}
+
+		private void Chilling(object sender, FrameEventArgs e)
+		{
+			Thread.Sleep(100);
 		}
 
 		private void ProcessCommandLineArguments(ref double updateRenderRate)

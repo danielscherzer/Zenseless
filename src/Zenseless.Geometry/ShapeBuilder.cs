@@ -141,7 +141,6 @@ namespace Zenseless.Geometry
 			, Action createNormal = null, Action<float, float> createUV = null)
 		{
 			if (createPosition is null) throw new ArgumentNullException(nameof(createPosition) + " must not be null");
-			if (createID is null) throw new ArgumentNullException(nameof(createID) + " must not be null");
 			float deltaU = (1.0f / segmentsX);
 			float deltaV = (1.0f / segmentsX);
 			float deltaX = deltaU * sizeX;
@@ -158,6 +157,7 @@ namespace Zenseless.Geometry
 					createUV?.Invoke(u * deltaU, v * deltaV);
 				}
 			}
+			if (createID is null) return;
 			uint verticesZ = segmentsY + 1;
 			//create ids
 			for (uint u = 0; u < segmentsX; ++u)

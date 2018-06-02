@@ -1,11 +1,11 @@
-﻿using Zenseless.ExampleFramework;
-using Zenseless.HLGL;
-using Zenseless.OpenGL;
-using OpenTK.Graphics.OpenGL4;
-using System;
-
-namespace Example
+﻿namespace Example
 {
+	using Zenseless.ExampleFramework;
+	using Zenseless.HLGL;
+	using Zenseless.OpenGL;
+	using OpenTK.Graphics.OpenGL4;
+	using System;
+
 	class MyVisual
 	{
 		private MyVisual()
@@ -39,7 +39,10 @@ namespace Example
 			//	}
 			//}
 			//catch { };
-			shaderProgram = ShaderLoader.FromStrings(sVertexShader, sFragmentShd);
+			shaderProgram = new ShaderProgramGL();
+			shaderProgram.Compile(sVertexShader, Zenseless.HLGL.ShaderType.VertexShader);
+			shaderProgram.Compile(sFragmentShd, Zenseless.HLGL.ShaderType.FragmentShader);
+			shaderProgram.Link();
 		}
 
 		private IShaderProgram shaderProgram;

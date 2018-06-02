@@ -46,7 +46,7 @@
 #if SOLUTION
 			shaderProgram.Uniform("camera", camera);
 #endif
-			geometry.Draw(instanceCount);
+			geometry.Draw();
 			shaderProgram.Deactivate();
 		}
 
