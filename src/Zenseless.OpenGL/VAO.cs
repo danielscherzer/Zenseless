@@ -115,7 +115,7 @@
 		public void SetAttribute(int bindingID, Array data, Type baseType, int baseTypeCount, bool perInstance = false)
 		{
 			if (-1 == bindingID) return; //if attribute not used in shader or wrong name
-			LengthSanityCheck(data.Length, perInstance);
+			UpdateLength(data.Length, perInstance);
 
 			Activate();
 			int elementBytes = Marshal.SizeOf(baseType) * baseTypeCount;
@@ -146,16 +146,14 @@
 			GL.DisableVertexAttribArray(bindingID);
 		}
 
-		private void LengthSanityCheck(int dataLength, bool perInstance)
+		private void UpdateLength(int dataLength, bool perInstance)
 		{
 			if (perInstance)
 			{
-				if (1 != instanceCount && instanceCount != dataLength) throw new ArgumentException("Per instance data has different length then previous per instance attribute array.");
 				instanceCount = dataLength;
 			}
 			else
 			{
-				if (0 != attributeLength && attributeLength != dataLength) throw new ArgumentException("Attribute data array has different length then previous attribute arrays.");
 				attributeLength = dataLength;
 			}
 		}
@@ -190,7 +188,7 @@
 		public void SetAttribute(int bindingID, Matrix4x4[] data, bool perInstance = false)
 		{
 			if (-1 == bindingID) return; //if matrix not used in shader or wrong name
-			LengthSanityCheck(data.Length, perInstance);
+			UpdateLength(data.Length, perInstance);
 			Activate();
 			var buffer = RequestBuffer(bindingID, BufferTarget.ArrayBuffer);
 			// set buffer data

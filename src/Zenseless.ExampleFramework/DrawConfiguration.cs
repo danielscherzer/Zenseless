@@ -65,7 +65,7 @@ namespace Zenseless.ExampleFramework
 		{
 			context.RenderState.Set(new ShaderPointSize(ShaderPointSize));
 			context.RenderState.Set(new DepthTest(ZBufferTest));
-			context.RenderState.Set(new BackFaceCulling(BackfaceCulling));
+			context.RenderState.Set(new FaceCullingModeState(BackfaceCulling ? FaceCullingMode.BACK_SIDE : FaceCullingMode.NONE));
 			context.RenderState.Set(new ActiveShader(ShaderProgram));
 
 			BindTextures();

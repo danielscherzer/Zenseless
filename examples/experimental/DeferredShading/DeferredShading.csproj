@@ -48,6 +48,7 @@
     <EmbeddedResource Include="Content\lighting.frag" />
     <EmbeddedResource Include="Content\suzanne.obj" />
     <EmbeddedResource Include="Content\lighting.vert" />
+    <EmbeddedResource Include="Content\helper.glsl" />
     <None Include="readme.md" />
     <EmbeddedResource Include="Content\material.frag" />
     <EmbeddedResource Include="Content\material.vert" />

@@ -13,7 +13,7 @@
 		{
 			renderState.Set(new ClearColorState(1, 1, 1, 1));
 			renderState.Set(new DepthTest(true));
-			renderState.Set(new BackFaceCulling(true));
+			renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
 
 			var envMap = contentLoader.Load<ITexture2D>("beach");
 			envMap.WrapFunction = TextureWrapFunction.MirroredRepeat;

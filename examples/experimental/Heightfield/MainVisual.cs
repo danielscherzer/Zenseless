@@ -10,7 +10,7 @@
 		public MainVisual(IRenderContext renderContext, IContentLoader contentLoader)
 		{
 			renderContext.RenderState.Set(new DepthTest(true));
-			renderContext.RenderState.Set(new BackFaceCulling(true));
+			renderContext.RenderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
 
 			var mesh = Meshes.CreatePlane(2, 2, 1024, 1024);
 

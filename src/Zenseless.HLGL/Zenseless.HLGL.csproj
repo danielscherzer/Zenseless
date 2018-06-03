@@ -58,7 +58,8 @@
     <Compile Include="ShaderExtensions.cs" />
     <Compile Include="StateManagement\ActiveRenderSurface.cs" />
     <Compile Include="StateManagement\ActiveShader.cs" />
-    <Compile Include="StateManagement\BackFaceCulling.cs" />
+    <Compile Include="StateManagement\FaceCullingMode.cs" />
+    <Compile Include="StateManagement\FaceCullingModeState.cs" />
     <Compile Include="StateManagement\BlendOperator.cs" />
     <Compile Include="StateManagement\BlendParameter.cs" />
     <Compile Include="StateManagement\BlendState.cs" />

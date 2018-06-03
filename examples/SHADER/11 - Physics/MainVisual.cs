@@ -13,7 +13,7 @@
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
 			renderState.Set(new DepthTest(true));
-			renderState.Set(new BackFaceCulling(true));
+			renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
 			shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
 			var mesh = contentLoader.Load<DefaultMesh>("suzanne");
 			geometryBody = VAOLoader.FromMesh(mesh, shaderProgram);

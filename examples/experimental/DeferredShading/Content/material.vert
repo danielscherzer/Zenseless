@@ -11,7 +11,7 @@ out Data
 {
 	vec3 position;
 	vec3 normal;
-	float material;
+	flat float material; //important for NVIDIA - INTEL does not care
 } outData;
 
 void main() 

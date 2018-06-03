@@ -59,7 +59,7 @@
 			gameWindow.RenderFrame += GameWindow_RenderFrame;
 			//register callback for resizing of window
 			gameWindow.Resize += GameWindow_Resize;
-
+			gameWindow.FocusedChanged += GameWindow_FocusedChanged;
 			gameWindow.WindowStateChanged += GameWindow_WindowStateChanged;
 
 			var contentLoader = new ContentLoader();
@@ -183,6 +183,7 @@
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		private void GameWindow_Resize(object sender, EventArgs e)
 		{
+			if (0 == gameWindow.Width || 0 == gameWindow.Height) return;
 			RenderContext.RenderState.Set(new Viewport(0, 0, gameWindow.Width, gameWindow.Height));
 			Resize?.Invoke(gameWindow.Width, gameWindow.Height);
 		}
@@ -190,6 +191,18 @@
 		private void GameWindow_UpdateFrame(object sender, FrameEventArgs e)
 		{
 			Update?.Invoke((float)gameWindow.TargetUpdatePeriod);
+		}
+		
+		private void GameWindow_FocusedChanged(object sender, EventArgs e)
+		{
+			if (gameWindow.Focused)
+			{
+				gameWindow.UpdateFrame -= Chilling;
+			}
+			else
+			{
+				gameWindow.UpdateFrame += Chilling;
+			}
 		}
 
 		private void GameWindow_WindowStateChanged(object sender, EventArgs e)

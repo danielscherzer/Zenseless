@@ -11,7 +11,7 @@
 		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
 		{
 			renderState.Set(new DepthTest(true));
-			renderState.Set(new BackFaceCulling(true));
+			renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
 
 			shaderProgramPhong = contentLoader.Load<IShaderProgram>("phong.*");
 			var mesh = new DefaultMesh();

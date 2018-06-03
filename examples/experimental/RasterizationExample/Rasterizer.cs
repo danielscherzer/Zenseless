@@ -24,7 +24,7 @@ namespace Example
 
 		private IRenderSurface fbo;
 		private PostProcessing copyToFrameBuffer;
-		private DrawHandler drawHandler;
+		private readonly DrawHandler drawHandler;
 
 		public void Render()
 		{

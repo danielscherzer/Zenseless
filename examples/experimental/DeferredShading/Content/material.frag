@@ -4,7 +4,7 @@ in Data
 {
 	vec3 position;
 	vec3 normal;
-	float material;
+	flat float material;
 } inData;
 
 out vec4 normalMaterial;

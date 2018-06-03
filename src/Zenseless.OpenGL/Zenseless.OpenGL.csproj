@@ -73,6 +73,7 @@
     <Compile Include="SpriteSheetRenderer.cs" />
     <Compile Include="Texture2dGL.cs" />
     <Compile Include="TextureArray2dGL.cs" />
+    <Compile Include="TextureDebugger.cs" />
     <Compile Include="TextureFont.cs" />
     <Compile Include="Texture.cs" />
     <Compile Include="TextureLoader.cs" />

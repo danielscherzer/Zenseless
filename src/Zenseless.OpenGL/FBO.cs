@@ -113,7 +113,7 @@
 		{
 			GL.DrawBuffers(1, drawBuffers); //TODO: not a complete reverse
 			GL.BindFramebuffer(FramebufferTarget.Framebuffer, lastFBO);
-			GL.PopAttrib(); //TODO: deprecated
+			GL.PopAttrib(); //TODO: deprecated, but needed by viewport
 			currentFrameBufferHandle = lastFBO;
 		}
 

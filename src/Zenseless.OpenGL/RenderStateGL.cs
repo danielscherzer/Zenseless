@@ -22,15 +22,15 @@ namespace Zenseless.OpenGL
 			renderState.Register((o, s) => GL.Viewport(s.X, s.Y, s.Width, s.Height), new Viewport(vp[0], vp[1], vp[2], vp[3]));
 
 			renderState.Register(Update, BlendStates.Opaque);
-			renderState.Register((o, s) => GL.ClearColor(s.Red, s.Green, s.Blue, s.Alpha), new ClearColorState(0f, 0f, 0f, 1f));
-			renderState.Register((o, s) => Update(s.Enabled, EnableCap.DepthTest), new DepthTest(false));
-			renderState.Register((o, s) => Update(s.Enabled, EnableCap.CullFace), new BackFaceCulling(false));
-			renderState.Register((o, s) => Update(s.Enabled, EnableCap.ProgramPointSize), new ShaderPointSize(false));
-			renderState.Register((o, s) => Update(s.Enabled, EnableCap.PointSprite), new PointSprite(false));
-			renderState.Register((o, s) => Update(s.Enabled, EnableCap.LineSmooth), new LineSmoothing(false));
-			renderState.Register((o, s) => GL.LineWidth(s.Value), new LineWidth(1f));
-			renderState.Register((o, s) => Update(s.ShaderProgram), new ActiveShader(null));
-			renderState.Register((o, s) => Update(o.RenderSurface, s.RenderSurface), new ActiveRenderSurface(null));
+			renderState.Register((old, s) => GL.ClearColor(s.Red, s.Green, s.Blue, s.Alpha), new ClearColorState(0f, 0f, 0f, 1f));
+			renderState.Register((old, s) => Update(s.Enabled, EnableCap.DepthTest), new DepthTest(false));
+			renderState.Register((old, s) => Update(s.Mode), new FaceCullingModeState(FaceCullingMode.NONE));
+			renderState.Register((old, s) => Update(s.Enabled, EnableCap.ProgramPointSize), new ShaderPointSize(false));
+			renderState.Register((old, s) => Update(s.Enabled, EnableCap.PointSprite), new PointSprite(false));
+			renderState.Register((old, s) => Update(s.Enabled, EnableCap.LineSmooth), new LineSmoothing(false));
+			renderState.Register((old, s) => GL.LineWidth(s.Value), new LineWidth(1f));
+			renderState.Register((old, s) => Update(s.ShaderProgram), new ActiveShader(null));
+			renderState.Register((old, s) => Update(old.RenderSurface, s.RenderSurface), new ActiveRenderSurface(null));
 			return renderState;
 		}
 
@@ -63,6 +63,25 @@ namespace Zenseless.OpenGL
 			{
 				GL.Disable(cap);
 			}
+		}
+
+		private static void Update(FaceCullingMode mode)
+		{
+			switch (mode)
+			{
+				case FaceCullingMode.FRONT_SIDE:
+					Update(true, EnableCap.CullFace);
+					GL.CullFace(CullFaceMode.Front);
+					break;
+				case FaceCullingMode.BACK_SIDE:
+					Update(true, EnableCap.CullFace);
+					GL.CullFace(CullFaceMode.Back);
+					break;
+				default:
+					Update(false, EnableCap.CullFace);
+					break;
+
+			};
 		}
 
 		private static void Update(BlendState oldBlendState, BlendState blendState)

@@ -1,8 +1,6 @@
 ﻿namespace Example
 {
-	using OpenTK.Input;
 	using System;
-	using Zenseless.Patterns;
 	using Zenseless.ExampleFramework;
 	using Zenseless.OpenGL;
 
@@ -13,7 +11,7 @@
 		{
 			var window = new ExampleWindow();
 
-			var camera = window.GameWindow.CreateOrbitingCameraController(1.8f, 70, 0.1f, 50f);
+			var camera = window.GameWindow.CreateOrbitingCameraController(0.3f, 70, 0.01f, 30f);
 			camera.View.Elevation = 15;
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 

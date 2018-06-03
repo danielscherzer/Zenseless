@@ -19,13 +19,13 @@ namespace Example
 		{
 			if (shdPlane is null) return;
 
-			renderState.Set(new BackFaceCulling(false));
+			renderState.Set(new FaceCullingModeState(FaceCullingMode.NONE));
 			shdPlane.Activate();
 			shdPlane.Uniform(nameof(camera), camera);
 
 			plane.Draw();
 			shdPlane.Deactivate();
-			renderState.Set(new BackFaceCulling(true));
+			renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
 		}
 
 		private IDrawable plane;

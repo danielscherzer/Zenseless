@@ -41,7 +41,7 @@
 			string sCurrentPath = Path.GetDirectoryName(shaderFile) + Path.DirectorySeparatorChar; // get path to current shader
 			string sName = Path.GetFileName(shaderFile);
 			//split into lines
-			var lines = sShader.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+			var lines = sShader.Split(new[] { '\n' }, StringSplitOptions.None);
 			var pattern = @"^\s*#include\s+""([^""]+)"""; //match everything inside " except " so we get shortest ".+" match 
 			int lineNr = 1;
 			foreach (var line in lines)
@@ -112,7 +112,7 @@
 		{
 			if (GetIncludeCode == null) throw new ArgumentNullException(nameof(GetIncludeCode));
 
-			var lines = shaderCode.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+			var lines = shaderCode.Split(new[] { '\n' }, StringSplitOptions.None); //if UNIX style line endings still working so do not use Envirnoment.NewLine
 			var pattern = @"^\s*#include\s+""([^""]+)"""; //match everything inside " except " so we get shortest ".+" match 
 			int lineNr = 1;
 			foreach (var line in lines)
