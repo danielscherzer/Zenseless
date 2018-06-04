@@ -8,6 +8,7 @@
 	using System.IO;
 	using System.Linq;
 	using System.Reflection;
+	using System.Text;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 
@@ -29,7 +30,9 @@
 			streamLoader.AddMappings(Assembly.GetExecutingAssembly()); //Zenseless.OpenGL resources
 
 			var mgr = new FileContentManager(streamLoader);
-			mgr.RegisterImporter(ContentImporters.String);
+			mgr.RegisterImporter((res) => ContentImporters.StringBuilder(res).ToString());
+			mgr.RegisterImporter(ContentImporters.StringBuilder);
+			mgr.RegisterUpdater<StringBuilder>(ContentImporters.Update);
 			mgr.RegisterImporter(ContentImporters.ByteBuffer);
 			mgr.RegisterImporter(ContentImporters.DefaultMesh);
 			mgr.RegisterImporter(BitmapImporter);
@@ -38,9 +41,9 @@
 			mgr.RegisterUpdater<TextureArray2dGL>(Update);
 			mgr.RegisterImporter((namedStreams) => ShaderProgramImporter(namedStreams, solutionMode, mgr));
 			mgr.RegisterUpdater<ShaderProgramGL>((prog, namedStreams) => Update(prog, namedStreams, solutionMode, mgr));
-
 			return mgr;
 		}
+
 
 		/// <summary>
 		/// Gets the shader type from file extension.
@@ -118,14 +121,36 @@
 				{
 					var resourceName = includeName.Replace(Path.DirectorySeparatorChar, '.');
 					resourceName = resourceName.Replace(Path.AltDirectorySeparatorChar, '.');
-					var includeCode = contentLoader.Load<string>(resourceName);
-					ShaderLoader.TestCompile(includeName, includeCode);
+					var includeCode = contentLoader.Load<StringBuilder>(resourceName).ToString();
+					using (var includeShader = new ShaderGL(shaderType))
+					{
+						if (!includeShader.Compile(includeCode))
+						{
+							var e = includeShader.CreateException(includeCode);
+							throw new NamedShaderException(includeName, e);
+						}
+					}
 					return includeCode;
 				}
-				shaderCode = ShaderLoader.ResolveIncludes(shaderCode, GetIncludeCode);
-				shaderProgram.Compile(shaderCode, shaderType);
+				var expandedShaderCode = ShaderLoader.ResolveIncludes(shaderCode, GetIncludeCode);
+				var shader = new ShaderGL(shaderType);
+				if (shader.Compile(expandedShaderCode))
+				{
+					shaderProgram.Attach(shader);
+				}
+				else
+				{
+					shaderProgram.RemoveShaders(); //clean out whole shader program to avoid double attachments next time
+					var e = shader.CreateException(shaderCode);
+					shader.Dispose();
+					throw new NamedShaderException(res.Name, e);
+				}
 			}
-			shaderProgram.Link();
+			if(!shaderProgram.Link())
+			{
+				var e = new ShaderLinkException(shaderProgram.Log);
+				throw new NamedShaderException(namedStreams.ToString(), e);
+			}
 		}
 
 		private static ITexture2dArray TextureArrayImporter(IEnumerable<NamedStream> resources)

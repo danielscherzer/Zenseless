@@ -39,7 +39,7 @@ namespace Zenseless.HLGL
 		///   <c>true</c> if the specified name is known; otherwise, <c>false</c>.
 		/// </returns>
 		public bool Contains(string name) => mappings.ContainsKey(name);
-		
+
 		/// <summary>
 		/// Gets the stream with the given name.
 		/// </summary>
@@ -56,6 +56,20 @@ namespace Zenseless.HLGL
 				return new NamedStream(name, stream);
 			}
 			throw new ArgumentException($"The name mapping '{name}' was not found.");
+		}
+
+		/// <summary>
+		/// Gets the file path.
+		/// </summary>
+		/// <param name="fullName">The full name.</param>
+		/// <returns><seealso cref="string.Empty"/> if no file path was found.</returns>
+		public string GetFilePath(string fullName)
+		{
+			if (mappings.TryGetValue(fullName, out var filePath))
+			{
+				return filePath;
+			}
+			return string.Empty;
 		}
 
 		/// <summary>

@@ -14,32 +14,32 @@ namespace Zenseless.ExampleFramework
 		/// <summary>
 		/// Shows the modal.
 		/// </summary>
-		/// <param name="e">The e.</param>
+		/// <param name="exception">The exception.</param>
+		/// <param name="shaderFileName">Name of the shader file.</param>
 		/// <returns></returns>
-		public string ShowModal(ShaderException e)
+		public void ShowModal(ShaderException exception, string shaderFileName)
 		{
 			form = new FormShaderException
 			{
-				Text = e.Message
+				Text = $"'{shaderFileName}': {exception.GetType()}"
 			};
-			var compileException = e as ShaderCompileException;
+			var compileException = exception as ShaderCompileException;
 			if (compileException is null)
 			{
 				form.ShaderSourceCode = string.Empty;
 			}
 			else
 			{
-				form.ShaderSourceCode = compileException.ShaderCode;
+				form.ShaderSourceCode = compileException.ShaderSourceCode;
 			}
 			//load error list after source code is loaded for highlighting of error to work
 			form.Errors.Clear();
-			var log = new ShaderLog(e.ShaderLog);
+			var log = new ShaderLog(exception.Message);
 			foreach (var logLine in log.Lines)
 			{
 				form.Errors.Add(logLine);
 
 			}
-			var shaderFileName = e.GetFileName();
 			if (string.IsNullOrEmpty(shaderFileName))
 			{
 				foreach (var logLine in log.Lines)
@@ -56,13 +56,12 @@ namespace Zenseless.ExampleFramework
 			var newShaderSourceCode = DialogResult.OK == result ? form.ShaderSourceCode : oldSource;
 			form = null;
 
-			if (compileException is null) return newShaderSourceCode;
-			if (newShaderSourceCode != compileException.ShaderCode && !string.IsNullOrEmpty(shaderFileName))
+			if (compileException is null) return;
+			if (newShaderSourceCode != compileException.ShaderSourceCode && !string.IsNullOrEmpty(shaderFileName))
 			{
 				//save changed code to shader file
 				File.WriteAllText(shaderFileName, newShaderSourceCode);
 			}
-			return newShaderSourceCode;
 		}
 
 		/// <summary>

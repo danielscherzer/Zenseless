@@ -39,10 +39,7 @@
 			//	}
 			//}
 			//catch { };
-			shaderProgram = new ShaderProgramGL();
-			shaderProgram.Compile(sVertexShader, Zenseless.HLGL.ShaderType.VertexShader);
-			shaderProgram.Compile(sFragmentShd, Zenseless.HLGL.ShaderType.FragmentShader);
-			shaderProgram.Link();
+			shaderProgram = ShaderLoader.CreateFromStrings(sVertexShader, sFragmentShd);
 		}
 
 		private IShaderProgram shaderProgram;

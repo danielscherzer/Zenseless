@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Zenseless.Geometry;
-
-namespace Zenseless.HLGL
+﻿namespace Zenseless.HLGL
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Text;
+	using Zenseless.Geometry;
+
 	/// <summary>
 	/// Some often used content importers
 	/// </summary>
@@ -16,17 +16,29 @@ namespace Zenseless.HLGL
 		/// </summary>
 		/// <param name="resources">The import resources.</param>
 		/// <returns>A string.</returns>
-		public static string String(IEnumerable<NamedStream> resources)
+		public static StringBuilder StringBuilder(IEnumerable<NamedStream> resources)
 		{
-			var sb = new StringBuilder();
+			StringBuilder output = new StringBuilder();
+			Update(output, resources);
+			return output;
+		}
+
+
+		/// <summary>
+		/// Updates the specified output.
+		/// </summary>
+		/// <param name="output">The output.</param>
+		/// <param name="resources">The resources.</param>
+		public static void Update(StringBuilder output, IEnumerable<NamedStream> resources)
+		{
+			output.Clear();
 			foreach (var res in resources)
 			{
 				using (var reader = new StreamReader(res.Stream, true))
 				{
-					sb.Append(reader.ReadToEnd());
+					output.Append(reader.ReadToEnd());
 				}
 			}
-			return sb.ToString();
 		}
 
 		/// <summary>

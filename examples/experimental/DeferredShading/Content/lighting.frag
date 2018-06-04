@@ -22,7 +22,7 @@ void main()
 	float dist = length(toLight);
 	float attenuation = clamp(1.0 - dist / lightRange, 0.0, 1.0);
 	attenuation *= attenuation * 4.0 * 3.1415;
-
+	
 	toLight = normalize(toLight);
 	vec4 inNormalMaterial = texelFetch(texNormalMaterial, uv, 0);
 	vec3 normal = inNormalMaterial.xyz;

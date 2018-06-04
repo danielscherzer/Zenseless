@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentManagement\CachedContentManagerDecorator.cs" />
+    <Compile Include="ContentManagement\NamedShaderException.cs" />
     <Compile Include="ContentManagement\ContentImporters.cs" />
     <Compile Include="ContentManagement\ContentLoaderExtensions.cs" />
     <Compile Include="ContentManagement\FileContentManager.cs" />

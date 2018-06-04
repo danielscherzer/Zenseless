@@ -25,7 +25,7 @@ namespace Example
 			}
 			catch (ShaderException e)
 			{
-				Console.WriteLine(e.ShaderLog);
+				Console.WriteLine(e.Message);
 				Console.ReadLine();
 			}
 		}

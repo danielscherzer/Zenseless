@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-
-namespace Zenseless.HLGL
+﻿namespace Zenseless.HLGL
 {
+	using System;
+	using System.Linq;
+	using System.Collections.Concurrent;
+	using System.Collections.Generic;
+
 	/// <summary>
 	/// A content manager for file and resource based content management. 
 	/// If a file is available for a resource, the file will be loaded and if changed during run-time the content is recreated
@@ -23,20 +24,20 @@ namespace Zenseless.HLGL
 		}
 
 		/// <summary>
+		/// Updater delegate
+		/// </summary>
+		/// <typeparam name="TYPE">The type of the instance.</typeparam>
+		/// <param name="instance">The instance.</param>
+		/// <param name="resources">The resources to load into the instance.</param>
+		public delegate void Updater<TYPE>(TYPE instance, IEnumerable<NamedStream> resources);
+
+		/// <summary>
 		/// Gets a list of registered importer types.
 		/// </summary>
 		/// <value>
 		/// The importer types.
 		/// </value>
 		public IEnumerable<Type> ImporterTypes => cachedContentManager.ImporterTypes;
-
-		/// <summary>
-		/// Gets the last changed file path.
-		/// </summary>
-		/// <value>
-		/// The last changed file path.
-		/// </value>
-		public string LastChangedFilePath { get; private set; }
 
 		/// <summary>
 		/// Enumerates all content resource names.
@@ -55,7 +56,6 @@ namespace Zenseless.HLGL
 			{
 				var instance = fileChangeData.Instance;
 				var type = instance.GetType();
-				LastChangedFilePath = fileChangeData.FilePath;
 				if (updaters.TryGetValue(type, out var updater))
 				{
 					var namedStreams = OpenStreams(fileChangeData.Names);
@@ -75,6 +75,16 @@ namespace Zenseless.HLGL
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Gets the file path.
+		/// </summary>
+		/// <param name="fullName">The full name.</param>
+		/// <returns><seealso cref="string.Empty"/> if no file path was found.</returns>
+		public string GetFilePath(string fullName)
+		{
+			return fileLoader.GetFilePath(fullName);
 		}
 
 		/// <summary>
@@ -106,10 +116,13 @@ namespace Zenseless.HLGL
 		/// <typeparam name="TYPE">The type of the ype.</typeparam>
 		/// <param name="updater">The updater.</param>
 		/// <exception cref="ArgumentNullException"></exception>
-		public void RegisterUpdater<TYPE>(Action<TYPE, IEnumerable<NamedStream>> updater) where TYPE : class
+		public void RegisterUpdater<TYPE>(Updater<TYPE> updater) where TYPE : class
 		{
 			if (updater is null) throw new ArgumentNullException($"The updater must not be null.");
-			updaters.Add(typeof(TYPE), (i, res) => updater(i as TYPE, res));
+			var type = typeof(TYPE);
+			bool AssignableFrom(Type storedType) => storedType.IsAssignableFrom(type);
+			if(!cachedContentManager.ImporterTypes.Any(AssignableFrom)) throw new ArgumentException($"No importer with a type assignable from '{type.Name}' was found.");
+			updaters.Add(type, (i, res) => updater(i as TYPE, res));
 		}
 
 		/// <summary>
@@ -132,14 +145,12 @@ namespace Zenseless.HLGL
 
 		private struct FileChangeData
 		{
-			public FileChangeData(string filePath, object instance, IEnumerable<string> names)
+			public FileChangeData(object instance, IEnumerable<string> names)
 			{
-				FilePath = filePath;
 				Instance = instance;
 				Names = names;
 			}
 
-			public string FilePath { get; }
 			public object Instance { get; }
 			public IEnumerable<string> Names { get; }
 		}
@@ -156,7 +167,7 @@ namespace Zenseless.HLGL
 			//create a file watcher for each resource
 			foreach (var fullName in e.Names)
 			{
-				void OnChange(string filePath) => changedFiles.Enqueue(new FileChangeData(filePath, e.Instance, e.Names));
+				void OnChange(string filePath) => changedFiles.Enqueue(new FileChangeData(e.Instance, e.Names));
 				fileLoader.InstallWatcher(fullName, OnChange);
 			}
 		}

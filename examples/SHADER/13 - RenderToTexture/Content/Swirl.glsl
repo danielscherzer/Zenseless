@@ -13,7 +13,7 @@ float func(float x)
 }
 
 void main () {
-	// range [-1..1]²
+	// range [-1..1]
     vec2 range11 = 2 * uv - 1;
 
 	//cartesian to polar coordinates

@@ -11,94 +11,48 @@
 	public static class ShaderLoader
 	{
 		/// <summary>
-		/// The exception data key string name that contains the file name
+		/// Creates from strings.
 		/// </summary>
-		public const string ExceptionDataFileName = "fileName";
-
-		/// <summary>
-		/// Reads the contents of a file into a string
-		/// </summary>
-		/// <param name="shaderFile">path to the shader file</param>
-		/// <param name="testCompileInclude">should includes be compiled (for error checking) before being pasted into the including shader</param>
-		/// <returns>
-		/// string with contents of shaderFile
-		/// </returns>
-		/// <exception cref="FileNotFoundException">
-		/// Could not find shader file '" + shaderFile + "'
-		/// or
-		/// Could not find include-file '" + sIncludeFileName + "' for shader '" + shaderFile + "'.
-		/// </exception>
-		internal static string ShaderStringFromFileWithIncludes(string shaderFile, bool testCompileInclude)
-		{
-			string sShader = null;
-			if (!File.Exists(shaderFile))
-			{
-				throw new FileNotFoundException("Could not find shader file '" + shaderFile + "'");
-			}
-			sShader = File.ReadAllText(shaderFile);
-
-			//handle includes
-			string sCurrentPath = Path.GetDirectoryName(shaderFile) + Path.DirectorySeparatorChar; // get path to current shader
-			string sName = Path.GetFileName(shaderFile);
-			//split into lines
-			var lines = sShader.Split(new[] { '\n' }, StringSplitOptions.None);
-			var pattern = @"^\s*#include\s+""([^""]+)"""; //match everything inside " except " so we get shortest ".+" match 
-			int lineNr = 1;
-			foreach (var line in lines)
-			{
-				// Search for include pattern (e.g. #include raycast.glsl) (nested not supported)
-				foreach (Match match in Regex.Matches(line, pattern, RegexOptions.Singleline))
-				{
-					string sFullMatch = match.Value;
-					string sIncludeFileName = match.Groups[1].ToString(); // get the filename to include
-					string sIncludePath = sCurrentPath + sIncludeFileName; // build path to file
-
-					if (!File.Exists(sIncludePath))
-					{
-						throw new FileNotFoundException("Could not find include-file '" + sIncludeFileName + "' for shader '" + shaderFile + "'.");
-					}
-					string sIncludeShd = File.ReadAllText(sIncludePath); // read include as string
-					if (testCompileInclude)
-					{
-						TestCompile(sIncludePath, sIncludeShd);
-					}
-					sIncludeShd += Environment.NewLine + "#line " + lineNr.ToString() + Environment.NewLine;
-					sShader = sShader.Replace(sFullMatch, sIncludeShd); // replace #include with actual include
-				}
-				++lineNr;
-			}
-			return sShader;
-		}
-
-		internal static void TestCompile(string shaderName, string shaderCode)
-		{
-			using (var shader = new ShaderProgramGL())
-			{
-				try
-				{
-					shader.Compile(shaderCode, ShaderType.FragmentShader); //test compile include shader
-				}
-				catch (ShaderCompileException e)
-				{
-					var ce = new ShaderCompileException(e.ShaderType, $"include compile '{shaderName}'", e.ShaderLog, shaderCode);
-					ce.Data.Add(ExceptionDataFileName, shaderName);
-					throw ce;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Extracts the name of the shader file.
-		/// </summary>
-		/// <param name="e">The <seealso cref="ShaderException"/></param>
+		/// <param name="vertexShaderCode">The vertex shader code.</param>
+		/// <param name="fragmentShaderCode">The fragment shader code.</param>
 		/// <returns></returns>
-		public static string GetFileName(this ShaderException e)
+		public static ShaderProgramGL CreateFromStrings(string vertexShaderCode, string fragmentShaderCode)
 		{
-			if (e.Data.Contains(ExceptionDataFileName))
+			var vertexShader = CreateShader(ShaderType.VertexShader, vertexShaderCode);
+			var fragmentShader = CreateShader(ShaderType.FragmentShader, fragmentShaderCode);
+			var shaderProgram = new ShaderProgramGL();
+			shaderProgram.Attach(vertexShader);
+			shaderProgram.Attach(fragmentShader);
+			if (!shaderProgram.Link())
 			{
-				return e.Data[ExceptionDataFileName] as string;
+				var e = new ShaderLinkException(shaderProgram.Log);
+				shaderProgram.Dispose();
+				throw e;
 			}
-			return string.Empty;
+			return shaderProgram;
+		}
+
+		private static ShaderGL CreateShader(ShaderType shaderType, string shaderCode)
+		{
+			var shader = new ShaderGL(shaderType);
+			if (!shader.Compile(shaderCode))
+			{
+				var e = shader.CreateException(shaderCode);
+				shader.Dispose();
+				throw e;
+			}
+			return shader;
+		}
+
+		/// <summary>
+		/// Creates a <seealso cref="ShaderCompileException"/>.
+		/// </summary>
+		/// <param name="shader">The shader.</param>
+		/// <param name="shaderCode">The shader code.</param>
+		/// <returns></returns>
+		public static ShaderCompileException CreateException(this ShaderGL shader, string shaderCode)
+		{
+			return new ShaderCompileException(shader.ShaderType, shader.Log, shaderCode);
 		}
 
 		/// <summary>

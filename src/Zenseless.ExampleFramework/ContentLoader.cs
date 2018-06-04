@@ -57,9 +57,9 @@
 			{
 				contentManager.CheckForResourceChange();
 			}
-			catch (ShaderException e)
+			catch (NamedShaderException e)
 			{
-				ShaderErrorHandling(e);
+				ShowExceptionForm(e.InnerException, e.Name);
 			}
 			catch (Exception e)
 			{
@@ -67,10 +67,10 @@
 			}
 		}
 
-		private void ShaderErrorHandling(ShaderException e)
+		private void ShowExceptionForm(ShaderException e, string resourceName)
 		{
-			e.Data[ShaderLoader.ExceptionDataFileName] = contentManager.LastChangedFilePath; //TODO: make cleaner after removal of old stuff
-			new FormShaderExceptionFacade().ShowModal(e);
+			var fullName = contentManager.Names.GetFullName(resourceName);
+			new FormShaderExceptionFacade().ShowModal(e, contentManager.GetFilePath(fullName));
 		}
 
 		/// <summary>
@@ -87,9 +87,9 @@
 			{
 				return contentManager.Load<TYPE>(names);
 			}
-			catch (ShaderException e)
+			catch (NamedShaderException e)
 			{
-				ShaderErrorHandling(e);
+				ShowExceptionForm(e.InnerException, e.Name);
 			}
 			//throw all other exceptions
 			//catch (Exception e)

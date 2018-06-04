@@ -14,25 +14,8 @@
 	/// </summary>
 	/// <seealso cref="Disposable" />
 	/// <seealso cref="IShaderProgram" />
-	/// TODO: create Shader classes to compile individual (fragment, vertex, ...) shaders
 	public class ShaderProgramGL : Disposable, IShaderProgram
 	{
-		/// <summary>
-		/// Gets a value indicating whether this instance is linked.
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if this instance is linked; otherwise, <c>false</c>.
-		/// </value>
-		public bool IsLinked { get; private set; } = false;
-
-		/// <summary>
-		/// Gets the last log.
-		/// </summary>
-		/// <value>
-		/// The last log.
-		/// </value>
-		public string LastLog { get; private set; }
-
 		/// <summary>
 		/// Gets the program identifier.
 		/// </summary>
@@ -40,6 +23,13 @@
 		/// The program identifier.
 		/// </value>
 		public int ProgramID { get; private set; } = 0;
+		/// <summary>
+		/// Gets the shader log.
+		/// </summary>
+		/// <value>
+		/// The log.
+		/// </value>
+		public string Log { get; private set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ShaderProgramGL" /> class.
@@ -47,35 +37,35 @@
 		public ShaderProgramGL()
 		{
 			ProgramID = GL.CreateProgram();
+			if (0 == ProgramID) throw new ShaderException($"Could not create {nameof(ShaderProgramGL)} instance");
 		}
 
 		/// <summary>
-		/// Compiles the specified s shader.
+		/// Attaches the specified shader.
 		/// </summary>
-		/// <param name="sShader">The s shader.</param>
-		/// <param name="type">The type.</param>
-		/// <exception cref="ShaderCompileException">
-		/// Could not create " + type.ToString() + " object
-		/// or
-		/// Error compiling  " + type.ToString()
-		/// </exception>
-		public void Compile(string sShader, ShaderType type)
+		/// <param name="shader">The shader.</param>
+		public void Attach(ShaderGL shader)
 		{
-			IsLinked = false;
-			int shaderObject = GL.CreateShader(ConvertType(type));
-			if (0 == shaderObject) throw new ShaderCompileException(type, "Could not create " + type.ToString() + " object", string.Empty, sShader);
-			// Compile vertex shader
-			GL.ShaderSource(shaderObject, sShader);
-			GL.CompileShader(shaderObject);
-			GL.GetShader(shaderObject, ShaderParameter.CompileStatus, out int status_code);
-			LastLog = GL.GetShaderInfoLog(shaderObject);
-			if (1 != status_code)
+			GL.AttachShader(ProgramID, shader.ShaderID);
+			shaders.Add(shader);
+		}
+
+		/// <summary>
+		/// Compiles the specified shader source code.
+		/// </summary>
+		/// <param name="shaderSourceCode">The shader source code.</param>
+		/// <param name="type">The type.</param>
+		/// <exception cref="ShaderCompileException"></exception>
+		public void Compile(string shaderSourceCode, ShaderType type)
+		{
+			var shader = new ShaderGL(type);
+			if (!shader.Compile(shaderSourceCode))
 			{
-				GL.DeleteShader(shaderObject);
-				throw new ShaderCompileException(type, "Error compiling  " + type.ToString(), LastLog, sShader);
+				var e = new ShaderCompileException(type, shader.Log, shaderSourceCode);
+				shader.Dispose();
+				throw e;
 			}
-			GL.AttachShader(ProgramID, shaderObject);
-			shaderIDs.Add(shaderObject);
+			Attach(shader);
 		}
 
 		/// <summary>
@@ -116,22 +106,15 @@
 		/// <summary>
 		/// Links all compiled shaders to a shader program and deletes them.
 		/// </summary>
-		/// <exception cref="ShaderException">
-		/// Unknown Link error!
-		/// or
-		/// Error linking shader
-		/// This will also delete all compiled shaders
-		/// </exception>
-		public void Link()
+		/// <returns></returns>
+		/// <exception cref="ShaderLinkException"></exception>
+		public bool Link()
 		{
 			GL.LinkProgram(ProgramID);
 			GL.GetProgram(ProgramID, GetProgramParameterName.LinkStatus, out int status_code);
 			RemoveShaders();
-			if (1 != status_code)
-			{
-				throw new ShaderException("Error linking shader", GL.GetProgramInfoLog(ProgramID));
-			}
-			IsLinked = true;
+			Log = GL.GetProgramInfoLog(ProgramID);
+			return 1 == status_code;
 		}
 
 		/// <summary>
@@ -244,27 +227,7 @@
 		/// <summary>
 		/// The shader ids used for linking
 		/// </summary>
-		private List<int> shaderIDs = new List<int>();
-
-		/// <summary>
-		/// Converts the shader type.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <returns></returns>
-		/// <exception cref="ArgumentOutOfRangeException">Unknown Shader type</exception>
-		private TKShaderType ConvertType(ShaderType type)
-		{
-			switch(type)
-			{
-				case ShaderType.ComputeShader: return TKShaderType.ComputeShader;
-				case ShaderType.FragmentShader: return TKShaderType.FragmentShader;
-				case ShaderType.GeometryShader: return TKShaderType.GeometryShader;
-				case ShaderType.TessControlShader: return TKShaderType.TessControlShader;
-				case ShaderType.TessEvaluationShader: return TKShaderType.TessEvaluationShader;
-				case ShaderType.VertexShader: return TKShaderType.VertexShader;
-				default: throw new ArgumentOutOfRangeException("Unknown Shader type");
-			}
-		}
+		private List<ShaderGL> shaders = new List<ShaderGL>();
 
 		/// <summary>
 		/// Gets the index of the resource.
@@ -278,16 +241,16 @@
 		}
 
 		/// <summary>
-		/// Removes the shaders.
+		/// Removes all attached shaders.
 		/// </summary>
-		private void RemoveShaders()
+		public void RemoveShaders()
 		{
-			foreach (int id in shaderIDs)
+			foreach (var shader in shaders)
 			{
-				GL.DetachShader(ProgramID, id);
-				GL.DeleteShader(id);
+				GL.DetachShader(ProgramID, shader.ShaderID);
+				shader.Dispose();
 			}
-			shaderIDs.Clear();
+			shaders.Clear();
 		}
 	}
 }

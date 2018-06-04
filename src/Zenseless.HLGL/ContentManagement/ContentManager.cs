@@ -69,7 +69,7 @@ namespace Zenseless.HLGL
 					namedStreams.Add(loader.CreateStream(fullName));
 				}
 				if (0 == namedStreams.Count) throw new ArgumentException("No input resources given!");
-				var result = importer.Invoke(namedStreams) as TYPE;
+				var result = importer(namedStreams) as TYPE;
 				namedStreams.Dispose();
 				return result;
 			}
