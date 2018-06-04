@@ -7,6 +7,6 @@ Implement the following items and answer questions about your implementation and
 1. Implement enemies that are fixed relative to the scrolling background.
 1. Render your content with correct aspect ratio when the window changes size (react on `Window.Resize` and scale your coordinate system with the aspect ratio of the window).
 1. Implement hierarchical movement (using combined transformations) for some enemy groups (look at [Transformation](../Transformation)).
-1. Use a Bitmap font to show points (look at [SimpleParticleSystem2D](../SimpleParticleSystem2D)).
+1. Use a Bitmap font to show points (look at [TextureFont](../TextureFont)).
 1. Use a particle system with textured particles for some effects (thruster of player/enemy space ships, fire on the ground, ...) (look at [SimpleParticleSystem2D](../SimpleParticleSystem2D)
 1. Add other game elements, like different weapons, shield, parallax background, more animations, ... your own ideas. (up to 7 points)
