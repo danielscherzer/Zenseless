@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A01502AC-3DF4-40A9-971C-53F694378CB8}</ProjectGuid>
+    <ProjectGuid>{EFF9EC28-4D8D-424B-A244-56BB351D9EF0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Example</RootNamespace>
-    <AssemblyName>TextureFontExample</AssemblyName>
+    <AssemblyName>TextureCoord</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,12 +31,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="TextureFontExample.cs" />
+    <Compile Include="TextureCoordExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,7 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
-    <EmbeddedResource Include="Content\Blood Bath 2.png" />
+    <EmbeddedResource Include="Content\landscape.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\forest.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\bird1.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="OpenTK">

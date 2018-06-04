@@ -76,8 +76,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CG", "CG", "{CDE252E6-67F8-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollisionBroadPhaseExample", "examples\CG\CollisionBroadPhaseExample\CollisionBroadPhaseExample.csproj", "{F059451F-42CF-44E2-88D8-1DBE869D8256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompoundTransformationExample", "examples\CG\CompoundTransformationExample\CompoundTransformationExample.csproj", "{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseCollision", "examples\CG\ExerciseCollision\ExerciseCollision.csproj", "{79E142ED-CDA0-4AB7-AE97-000775E82ED5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLoopExample", "examples\CG\GameLoopExample\GameLoopExample.csproj", "{3E179B42-E1EF-41A4-804C-6EDBB06EC86C}"
@@ -100,13 +98,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceInvaders", "examples\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseShooter", "examples\CG\ExerciseShooter\ExerciseShooter.csproj", "{C5389961-2C98-4528-AFF3-99D287C62D4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureAnimExample", "examples\CG\TextureAnimExample\TextureAnimExample.csproj", "{2415A5B0-6C43-4519-B2CA-A8B4A35394C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureAnim", "examples\CG\TextureAnim\TextureAnim.csproj", "{2415A5B0-6C43-4519-B2CA-A8B4A35394C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureCoordExample", "examples\CG\TextureCoordExample\TextureCoordExample.csproj", "{EFF9EC28-4D8D-424B-A244-56BB351D9EF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureCoord", "examples\CG\TextureCoord\TextureCoord.csproj", "{EFF9EC28-4D8D-424B-A244-56BB351D9EF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureFontExample", "examples\CG\TextureFontExample\TextureFontExample.csproj", "{A01502AC-3DF4-40A9-971C-53F694378CB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureFont", "examples\CG\TextureFont\TextureFont.csproj", "{A01502AC-3DF4-40A9-971C-53F694378CB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureWrapExample", "examples\CG\TextureWrapExample\TextureWrapExample.csproj", "{EA0EE733-BCA5-4AA1-BD9B-186D9D18228F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureWrap", "examples\CG\TextureWrap\TextureWrap.csproj", "{EA0EE733-BCA5-4AA1-BD9B-186D9D18228F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 - BasicTransformations3D", "examples\SHADER\06 - BasicTransformations3D\06 - BasicTransformations3D.csproj", "{5CE8B95A-A23E-49D0-BF5D-879472F6E7FC}"
 EndProject
@@ -160,6 +158,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseTiled", "examples\CG\ExerciseTiled\ExerciseTiled.csproj", "{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeferredShading", "examples\experimental\DeferredShading\DeferredShading.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompoundTransformationExample", "examples\experimental\CompoundTransformationExample\CompoundTransformationExample.csproj", "{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -275,10 +275,6 @@ Global
 		{F059451F-42CF-44E2-88D8-1DBE869D8256}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F059451F-42CF-44E2-88D8-1DBE869D8256}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F059451F-42CF-44E2-88D8-1DBE869D8256}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79E142ED-CDA0-4AB7-AE97-000775E82ED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79E142ED-CDA0-4AB7-AE97-000775E82ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79E142ED-CDA0-4AB7-AE97-000775E82ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -435,6 +431,10 @@ Global
 		{9037E855-7592-4DAC-89C7-62257D8F2343}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9037E855-7592-4DAC-89C7-62257D8F2343}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9037E855-7592-4DAC-89C7-62257D8F2343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -469,7 +469,6 @@ Global
 		{CB237D59-2840-48EB-888F-965EDB20E868} = {4AD70E1B-FC00-4433-BDC0-D366B1E0FCCC}
 		{CDE252E6-67F8-44B3-A54E-9A4685482412} = {4AD70E1B-FC00-4433-BDC0-D366B1E0FCCC}
 		{F059451F-42CF-44E2-88D8-1DBE869D8256} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
-		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 		{79E142ED-CDA0-4AB7-AE97-000775E82ED5} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 		{3E179B42-E1EF-41A4-804C-6EDBB06EC86C} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 		{D2E19210-80D1-4F07-8E9D-5205F18B0B26} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
@@ -510,6 +509,7 @@ Global
 		{F794CFB1-66C6-4BA1-BAA7-79D7E84A78BC} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 		{9037E855-7592-4DAC-89C7-62257D8F2343} = {CB237D59-2840-48EB-888F-965EDB20E868}
+		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133} = {CB237D59-2840-48EB-888F-965EDB20E868}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CA293D8-FC78-4BF1-BA73-543451A6B7AB}

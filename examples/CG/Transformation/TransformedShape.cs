@@ -8,10 +8,10 @@
 	/// </summary>
 	public class TransformedShape
 	{
-		public TransformedShape(Matrix3x2 transformation, Box2D bounds)
+		public TransformedShape(Matrix3x2 transformation, IReadOnlyBox2D bounds)
 		{
 			this.bounds = bounds;
-			TransformedBounds = new Box2D(bounds);
+			transformedBounds = new Box2D(bounds);
 			Transformation = transformation;
 		}
 
@@ -28,13 +28,14 @@
 			{
 				transformation = value;
 				var newCenter = Vector2.Transform(bounds.GetCenter(), Transformation);
-				TransformedBounds.CenterX = newCenter.X;
-				TransformedBounds.CenterY = newCenter.Y;
+				transformedBounds.CenterX = newCenter.X;
+				transformedBounds.CenterY = newCenter.Y;
 			}
 		}
-		public Box2D TransformedBounds { get; private set; }
+		public IReadOnlyBox2D TransformedBounds => transformedBounds;
 
-		private readonly Box2D bounds;
+		private readonly IReadOnlyBox2D bounds;
+		private Box2D transformedBounds;
 		private Matrix3x2 transformation;
 	}
 }

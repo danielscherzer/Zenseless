@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EA0EE733-BCA5-4AA1-BD9B-186D9D18228F}</ProjectGuid>
+    <ProjectGuid>{2415A5B0-6C43-4519-B2CA-A8B4A35394C2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Example</RootNamespace>
-    <AssemblyName>TextureWrapExample</AssemblyName>
+    <AssemblyName>TextureAnim</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -36,7 +36,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="TextureWrapExample.cs" />
+    <Compile Include="TextureAnimExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,7 +44,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
-    <EmbeddedResource Include="Content\mountains.jpg" />
+    <EmbeddedResource Include="Content\explosion.png" />
+    <EmbeddedResource Include="Content\alien10001.png" />
+    <EmbeddedResource Include="Content\alien10002.png" />
+    <EmbeddedResource Include="Content\alien10003.png" />
+    <EmbeddedResource Include="Content\alien10004.png" />
+    <EmbeddedResource Include="Content\alien10005.png" />
+    <EmbeddedResource Include="Content\alien10006.png" />
+    <EmbeddedResource Include="Content\alien10007.png" />
+    <EmbeddedResource Include="Content\alien10008.png" />
+    <EmbeddedResource Include="Content\alien10009.png" />
+    <EmbeddedResource Include="Content\alien10010.png" />
+    <EmbeddedResource Include="Content\alien10011.png" />
+    <EmbeddedResource Include="Content\alien10012.png" />
+    <EmbeddedResource Include="Content\alien10013.png" />
+    <EmbeddedResource Include="Content\alien10014.png" />
+    <EmbeddedResource Include="Content\alien10015.png" />
+    <EmbeddedResource Include="Content\girl-2.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="OpenTK">
