@@ -1,7 +1,6 @@
 ﻿namespace Example
 {
 	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
 	using System.Linq;
 	using System.Numerics;
 	using TiledSharp;
@@ -38,12 +37,16 @@
 				var tex = SpriteSheet.CalcSpriteTexCoords((uint)tile.Id, columns, rows);
 				TileTypes[(uint)tile.Id] = tex;
 			}
+
+			var start = map.ObjectGroups[0].Objects[0];
+			Start = new Vector2((float)(start.X / ((map.Width) * map.TileWidth)), 1f - (float)(start.Y / (map.Width * map.TileHeight)));
 		}
 
 		private List<Tile> tiles = new List<Tile>();
 
 		public IEnumerable<Tile> Tiles => tiles;
 		public string SpriteSheetName { get; }
+		public Vector2 Start { get; }
 
 		public IReadOnlyBox2D[] TileTypes { get; }
 

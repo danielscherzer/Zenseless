@@ -3,10 +3,10 @@ Implement the following items and answer questions about your implementation and
 1. Implement reading and drawing from multiple tile layers.
 1. Add an animated player sprite that should move smoothly over the tiles.
    1. The animation should reflect the movement direction.
-1. Add a collision layer (a layer that contains no visible tiles, but collision information) in [Tiled](https://www.mapeditor.org/) and load this collision information (for instance for each tile a boolean stores if the tile is walkable) to restrict the players movements.
-1. Add a tile for the start position and goal of your player.
+1. Add the start position and goal of your player in [Tiled](https://www.mapeditor.org/) and use it in your code.
+1. Add collision information in [Tiled](https://www.mapeditor.org/) and load this collision information in your code (for instance for each tile a boolean stores if the tile is walkable) to restrict the players movements.
 1. Add a key-like pick-up to open doors/allow movement to certain parts of the level.
-   1. The pick-up should be removed from the map after pick-up.
+   1. The pick-up should be removed from the map after picking it up.
 1. The camera shows only part of the level and moves with your player.
 1. Only draw visible tiles
 1. Make your collision test *efficient* (do not test tiles were the player cannot be at the moment).

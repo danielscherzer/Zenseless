@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Zenseless.Geometry;
 
 namespace Example
@@ -10,10 +11,12 @@ namespace Example
 		private readonly IEnumerable<ITile> tiles;
 		private Box2D player = new Box2D(.5f, .5f, 0.01f, 0.1f);
 
-		public Model(IEnumerable<ITile> tiles)
+		public Model(IEnumerable<Tile> tiles, Vector2 start)
 		{
 			this.tiles = tiles;
 			var first = tiles.First();
+			player.CenterX = start.X;
+			player.CenterY = start.Y;
 			player.SizeX = first.Bounds.SizeX;
 			player.SizeY = first.Bounds.SizeY;
 		}

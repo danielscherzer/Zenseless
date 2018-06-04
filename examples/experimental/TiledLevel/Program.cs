@@ -9,7 +9,7 @@
 		{
 			var window = new ExampleWindow();
 			var tileMap = new TileMap();
-			var model = new Model(tileMap.Tiles);
+			var model = new Model(tileMap.Tiles, tileMap.Start);
 			var view = new View(window.ContentLoader, window.RenderContext.RenderState, tileMap.TileTypes, tileMap.SpriteSheetName);
 			window.Update += (dt) =>
 			{
