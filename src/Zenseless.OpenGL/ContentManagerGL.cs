@@ -127,7 +127,7 @@
 						if (!includeShader.Compile(includeCode))
 						{
 							var e = includeShader.CreateException(includeCode);
-							throw new NamedShaderException(includeName, e);
+							throw new NamedShaderException(contentLoader.Names.GetFullName(includeName), e);
 						}
 					}
 					return includeCode;
@@ -149,7 +149,13 @@
 			if(!shaderProgram.Link())
 			{
 				var e = new ShaderLinkException(shaderProgram.Log);
-				throw new NamedShaderException(namedStreams.ToString(), e);
+				var s = new StringBuilder();
+				foreach (var ns in namedStreams)
+				{
+					s.Append(ns.Name);
+					s.Append(';');
+				}
+				throw new NamedShaderException(s.ToString(), e);
 			}
 		}
 

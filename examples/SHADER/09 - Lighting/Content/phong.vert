@@ -12,6 +12,6 @@ void main()
 {
 	pos = position;
 	n = normal;
-
+	
 	gl_Position = camera * vec4(position, 1.0);
 }

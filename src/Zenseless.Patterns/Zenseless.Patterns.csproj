@@ -34,6 +34,12 @@
     <DocumentationFile>..\..\bin\Release\Zenseless.Base.xml</DocumentationFile>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Zenseless.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -60,6 +66,7 @@
     <None Include="Zenseless.Patterns.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Zenseless.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

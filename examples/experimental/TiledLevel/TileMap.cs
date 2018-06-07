@@ -15,7 +15,7 @@
 			var tileSize = new Vector2(1f / (map.Width - 1), 1f / (map.Height - 1));
 			var tileSet = map.Tilesets[0];
 
-			var walkable = ToHashSet(from tile in tileSet.Tiles where bool.Parse(tile.Properties["Walkable"]) select tile.Id);
+		   var walkable = ToHashSet(from tile in tileSet.Tiles where bool.Parse(tile.Properties["Walkable"]) select tile.Id);
 			foreach (var layer in map.Layers)
 			{
 				foreach (var tile in layer.Tiles)

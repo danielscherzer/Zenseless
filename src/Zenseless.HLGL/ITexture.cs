@@ -3,7 +3,7 @@
 namespace Zenseless.HLGL
 {
 	/// <summary>
-	/// 
+	/// Enumeration of texture filtering modes
 	/// </summary>
 	public enum TextureFilterMode
 	{
@@ -21,7 +21,7 @@ namespace Zenseless.HLGL
 		Mipmap
 	};
 	/// <summary>
-	/// 
+	/// Enumeration of texture wrap function
 	/// </summary>
 	public enum TextureWrapFunction
 	{
@@ -44,9 +44,9 @@ namespace Zenseless.HLGL
 	};
 
 	/// <summary>
-	/// 
+	/// Base texture interface
 	/// </summary>
-	/// <seealso cref="System.IDisposable" />
+	/// <seealso cref="IDisposable" />
 	public interface ITexture : IDisposable
 	{
 		/// <summary>
@@ -56,6 +56,7 @@ namespace Zenseless.HLGL
 		/// The filter.
 		/// </value>
 		TextureFilterMode Filter { get; set; }
+		
 		/// <summary>
 		/// Gets the identifier.
 		/// </summary>
@@ -63,6 +64,7 @@ namespace Zenseless.HLGL
 		/// The identifier.
 		/// </value>
 		uint ID { get; }
+		
 		/// <summary>
 		/// Gets or sets the wrap function.
 		/// </summary>
@@ -75,6 +77,7 @@ namespace Zenseless.HLGL
 		/// Activates this instance.
 		/// </summary>
 		void Activate();
+		
 		/// <summary>
 		/// Deactivates this instance.
 		/// </summary>

@@ -42,14 +42,11 @@
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			void SetUniforms(IShaderProgram shaderProgram)
-			{
-				shaderProgram.Uniform("camera", camera);
-				shaderProgram.Uniform(nameof(cameraPosition), cameraPosition);
-			}
 			foreach(var visual in visuals)
 			{
-				visual.Draw(SetUniforms);
+				visual.SetUniform("camera", camera);
+				visual.SetUniform(nameof(cameraPosition), cameraPosition);
+				visual.Draw();
 			}
 		}
 

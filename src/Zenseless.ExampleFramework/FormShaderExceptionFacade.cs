@@ -15,13 +15,12 @@ namespace Zenseless.ExampleFramework
 		/// Shows the modal.
 		/// </summary>
 		/// <param name="exception">The exception.</param>
-		/// <param name="shaderFileName">Name of the shader file.</param>
-		/// <returns></returns>
-		public void ShowModal(ShaderException exception, string shaderFileName)
+		/// <param name="name">Name or file name of the shader</param>
+		public void ShowModal(ShaderException exception, string name)
 		{
 			form = new FormShaderException
 			{
-				Text = $"'{shaderFileName}': {exception.GetType()}"
+				Text = $"'{name}': {exception.GetType()}"
 			};
 			var compileException = exception as ShaderCompileException;
 			if (compileException is null)
@@ -40,12 +39,9 @@ namespace Zenseless.ExampleFramework
 				form.Errors.Add(logLine);
 
 			}
-			if (string.IsNullOrEmpty(shaderFileName))
+			foreach (var logLine in log.Lines)
 			{
-				foreach (var logLine in log.Lines)
-				{
-					Debug.Print(shaderFileName + "(" + logLine.LineNumber + "): " + logLine.Message);
-				}
+				Debug.Print(name + "(" + logLine.LineNumber + "): " + logLine.Message);
 			}
 			form.Select(0);
 			form.TopMost = true;
@@ -57,10 +53,10 @@ namespace Zenseless.ExampleFramework
 			form = null;
 
 			if (compileException is null) return;
-			if (newShaderSourceCode != compileException.ShaderSourceCode && !string.IsNullOrEmpty(shaderFileName))
+			if (newShaderSourceCode != compileException.ShaderSourceCode && File.Exists(name))
 			{
 				//save changed code to shader file
-				File.WriteAllText(shaderFileName, newShaderSourceCode);
+				File.WriteAllText(name, newShaderSourceCode);
 			}
 		}
 

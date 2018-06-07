@@ -87,7 +87,7 @@ namespace Zenseless.OpenGL
 		/// <param name="floatingPoint">if set to <c>true</c> [floating point].</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentOutOfRangeException">Invalid Format only 1-4 components allowed</exception>
-		public static PixelInternalFormat Convert(byte components = 4, bool floatingPoint = false)
+		protected static PixelInternalFormat Convert(byte components = 4, bool floatingPoint = false)
 		{
 			switch (components)
 			{
@@ -105,7 +105,7 @@ namespace Zenseless.OpenGL
 		/// <param name="components">The components.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentOutOfRangeException">Invalid Format only 1-4 components allowed</exception>
-		public static PixelFormat Convert(byte components = 4)
+		protected static PixelFormat Convert(byte components = 4)
 		{
 			switch (components)
 			{
@@ -129,10 +129,12 @@ namespace Zenseless.OpenGL
 		/// The m u texture identifier
 		/// </summary>
 		private readonly uint m_uTextureID = 0;
+		
 		/// <summary>
 		/// The filter mode
 		/// </summary>
 		private TextureFilterMode filterMode;
+		
 		/// <summary>
 		/// The wrap function
 		/// </summary>

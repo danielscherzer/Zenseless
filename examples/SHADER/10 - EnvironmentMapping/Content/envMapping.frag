@@ -1,4 +1,5 @@
 #version 430 core
+#include "projection.glsl"
 
 uniform sampler2D envMap;
 
@@ -14,14 +15,6 @@ out vec4 color;
 
 #ifdef SOLUTION
 uniform float reflective = 0f;
-
-vec2 projectLongLat(vec3 direction)
-{
-	const float PI = 3.14159265359;
-	float theta = atan(direction.x, -direction.z) + PI;
-	float phi = acos(-direction.y);
-	return vec2(theta / (2*PI), phi / PI);
-}
 #endif
 
 void main() 

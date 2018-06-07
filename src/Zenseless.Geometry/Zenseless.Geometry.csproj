@@ -34,6 +34,12 @@
     <DocumentationFile>..\..\bin\Release\Zenseless.Geometry.xml</DocumentationFile>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Zenseless.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Numerics" />
@@ -77,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Zenseless.Geometry.nuspec" />
+    <None Include="Zenseless.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zenseless.Patterns\Zenseless.Patterns.csproj">

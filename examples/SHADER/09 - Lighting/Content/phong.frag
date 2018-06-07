@@ -21,7 +21,7 @@ in vec3 n;
 
 out vec4 color;
 
-#ifdef SOLUTION
+#if SOLUTION
 	float lambert(vec3 n, vec3 l)
 	{
 		return max(0, dot(n, l));
@@ -43,7 +43,7 @@ void main()
 
 	color =  vec4(abs(normal), 1);
 
-#ifdef SOLUTION
+#if SOLUTION
 	vec3 v = normalize(cameraPosition - pos);
 	//ambient lighting
 	vec4 ambient = ambientLightColor * materialColor;

@@ -10,10 +10,10 @@
 		private static void Main()
 		{
 			var window = new ExampleWindow();
-			var camera = window.GameWindow.CreateOrbitingCameraController(8, 90, 0.1f, 50f);
-			camera.View.Elevation = 30;
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
-			window.Render += () => visual.Render(camera);
+			window.GameWindow.AddWindowAspectHandling(visual.Camera.Projection);
+			window.GameWindow.AddMayaCameraEvents(visual.Camera.Projection, visual.Camera.View);
+			window.Render += visual.Render;
 			window.Run();
 
 		}

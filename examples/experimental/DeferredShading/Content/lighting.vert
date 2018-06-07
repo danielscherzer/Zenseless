@@ -17,8 +17,7 @@ void main()
 {
 	vec3 lightPosition = lightData.xyz;
 	vec4 pos = camera * vec4(position * lightRange + lightPosition, 1.0);
-//	pos /= pos.w;
-//	pos.z = 0;
+
 	dataOut.lightPosition = lightPosition;
 	dataOut.lightColor = getMaterial(lightData.w);
 	gl_Position = pos;

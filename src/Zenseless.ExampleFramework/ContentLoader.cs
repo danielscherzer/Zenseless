@@ -69,8 +69,9 @@
 
 		private void ShowExceptionForm(ShaderException e, string resourceName)
 		{
-			var fullName = contentManager.Names.GetFullName(resourceName);
-			new FormShaderExceptionFacade().ShowModal(e, contentManager.GetFilePath(fullName));
+			var name = contentManager.GetFilePath(resourceName);
+			name = string.IsNullOrEmpty(name) ? resourceName : name;
+			new FormShaderExceptionFacade().ShowModal(e, name);
 		}
 
 		/// <summary>

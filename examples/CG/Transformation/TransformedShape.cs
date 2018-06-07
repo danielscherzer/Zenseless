@@ -6,31 +6,38 @@
 	/// <summary>
 	/// Contains transformed and internally untransformed version of Box2D
 	/// </summary>
-	public class TransformedShape
+	public class Enemy
 	{
-		public TransformedShape(Matrix3x2 transformation, IReadOnlyBox2D bounds)
+		public Enemy(float x, float y, float size)
 		{
-			this.bounds = bounds;
+			this.bounds = Box2DExtensions.CreateFromCircle(new Circle(x, y, size / 2));
 			transformedBounds = new Box2D(bounds);
-			Transformation = transformation;
+			SetTransformation(Matrix3x2.Identity);
 		}
 
 		/// <summary>
 		/// Gets or sets the transformation that will be applied to bounds to create TransformedBounds.
 		/// </summary>
-		/// <value>
+		/// <returns>
 		/// The transformation.
-		/// </value>
-		public Matrix3x2 Transformation
+		/// </returns>
+		public Matrix3x2 GetTransformation()
 		{
-			get => transformation;
-			set
-			{
-				transformation = value;
-				var newCenter = Vector2.Transform(bounds.GetCenter(), Transformation);
-				transformedBounds.CenterX = newCenter.X;
-				transformedBounds.CenterY = newCenter.Y;
-			}
+			return transformation;
+		}
+
+		/// <summary>
+		/// Gets or sets the transformation that will be applied to bounds to create TransformedBounds.
+		/// </summary>
+		/// <param name="value">
+		/// The transformation.
+		/// </param>
+		public void SetTransformation(Matrix3x2 value)
+		{
+			transformation = value;
+			var newCenter = Vector2.Transform(bounds.GetCenter(), GetTransformation());
+			transformedBounds.CenterX = newCenter.X;
+			transformedBounds.CenterY = newCenter.Y;
 		}
 		public IReadOnlyBox2D TransformedBounds => transformedBounds;
 

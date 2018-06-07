@@ -21,11 +21,8 @@ namespace ExampleBrowser
 
 		protected override void Configure()
 		{
-			var catalog = new AggregateCatalog(
-					AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>()
-					);
+			var catalog = new AggregateCatalog(AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>());
 			container = new CompositionContainer(catalog);
-
 			var batch = new CompositionBatch();
 
 			batch.AddExportedValue<IWindowManager>(new WindowManager());

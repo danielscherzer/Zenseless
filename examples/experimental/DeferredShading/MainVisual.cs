@@ -3,6 +3,7 @@
 	using OpenTK.Graphics.OpenGL4;
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Numerics;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
@@ -17,32 +18,20 @@
 
 			var plane = Meshes.CreatePlane(4, 4, 1, 1);
 			meshVisuals.Add(new MeshVisual(plane, shaderMaterial));
-			var instanceMesh = contentLoader.Load<DefaultMesh>("suzanne").Transform(Transformation.Scale(0.01f));
-			var lightData = CreateLightData(20, 20);
+			var instanceMesh = contentLoader.Load<DefaultMesh>("suzanne").Transform(Transformation.Scale(0.03f));
+			var instanceData = CreateInstancePositionMaterial(20, 20);
 			var suzanneInstances = VAOLoader.FromMesh(instanceMesh, shaderMaterial);
-			suzanneInstances.SetAttribute(shaderMaterial.GetResourceLocation(ShaderResourceType.Attribute, nameof(lightData)), lightData, true);
+			suzanneInstances.SetAttribute(shaderMaterial.GetResourceLocation(ShaderResourceType.Attribute, nameof(instanceData)), instanceData, true);
 			meshVisuals.Add(new MeshVisual(suzanneInstances, shaderMaterial));
-
-			shaderLighting = contentLoader.Load<IShaderProgram>("lighting.*");
+			var shaderLighting = contentLoader.Load<IShaderProgram>("lighting.*");
 			var lightMesh = Meshes.CreateSphere(1f, 2); // either make it bigger or you need good subdivision to avoid border artifacts
-			lightGeometry = VAOLoader.FromMesh(lightMesh, shaderLighting);
-			lightGeometry.SetAttribute(shaderLighting.GetResourceLocation(ShaderResourceType.Attribute, nameof(lightData)), lightData, true);
+			var lightGeometry = VAOLoader.FromMesh(lightMesh, shaderLighting);
+			lightGeometry.SetAttribute(shaderLighting.GetResourceLocation(ShaderResourceType.Attribute, "lightData"), instanceData, true);
+			lightsVisual = new MeshVisual(lightGeometry, shaderLighting);
 		}
 
-		private static Vector4[] CreateLightData(uint xCount, uint zCount)
-		{
-			var rnd = new Random(12);
-			float Rnd01() => (float)rnd.NextDouble();
-			float Color() => Rnd01();
-
-			var positions = new List<Vector4>();
-
-			void CreateVertex(float x, float z) => positions.Add(new Vector4(x, 0.01f * Rnd01(), z, Color()));
-			ShapeBuilder.Grid(-1, 2, -1, 2, xCount - 1, zCount - 1, CreateVertex, null, null, null);
-			return positions.ToArray();
-		}
-
-		private readonly IRenderState renderState;
+		public float LightIntensity { get; set; } = 0.2f;
+		public float LightRange { get; set; } = 0.2f;
 
 		public void Draw(ITransformation camera)
 		{
@@ -51,7 +40,11 @@
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
 			renderState.Set(new DepthTest(true));
-			foreach(var vis in meshVisuals) vis.Draw((s) => s.Uniform("camera", camera));
+			foreach (var vis in meshVisuals)
+			{
+				vis.SetUniform(nameof(camera), camera);
+				vis.Draw();
+			}
 			renderState.Set(new DepthTest(false));
 
 			mrtSurface.Deactivate(); //stop drawing into texture
@@ -60,14 +53,10 @@
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			renderState.Set(BlendStates.Additive);
 			renderState.Set(new FaceCullingModeState(FaceCullingMode.FRONT_SIDE)); // important to cull for light volume rendering, otherwise we would have lighting partly twice applied and to cull front face, otherwise near clipping artifacts
-			DrawTools.BindTextures(shaderLighting, bindings);
-			shaderLighting.Activate();
-			shaderLighting.Uniform(nameof(camera), camera);
-			shaderLighting.Uniform("lightIntensity", 0.2f);
-			shaderLighting.Uniform("lightRange", 0.2f);
-			lightGeometry.Draw();
-			shaderLighting.Deactivate();
-			DrawTools.UnbindTextures(bindings);
+			lightsVisual.SetUniform(nameof(camera), camera);
+			lightsVisual.SetUniform("lightIntensity", LightIntensity);
+			lightsVisual.SetUniform("lightRange", LightRange);
+			lightsVisual.Draw();
 			renderState.Set(BlendStates.Opaque);
 		}
 
@@ -78,17 +67,30 @@
 
 			mrtSurface = new FBOwithDepth(texNormalMaterial);
 			mrtSurface.Attach(texPosition);
-			bindings = new List<TextureBinding>()
+			var bindings = new List<TextureBinding>()
 			{
 				new TextureBinding(nameof(texNormalMaterial), texNormalMaterial),
 				new TextureBinding(nameof(texPosition), texPosition),
 			};
+			lightsVisual = new MeshVisual(lightsVisual.Drawable, lightsVisual.ShaderProgram, bindings);
 		}
 
+		private readonly IRenderState renderState;
 		private IRenderSurface mrtSurface;
-		private IShaderProgram shaderLighting;
-		private IEnumerable<TextureBinding> bindings;
 		private readonly List<MeshVisual> meshVisuals = new List<MeshVisual>();
-		private readonly VAO lightGeometry;
+		private MeshVisual lightsVisual;
+
+		private static Vector4[] CreateInstancePositionMaterial(uint xCount, uint zCount)
+		{
+			var rnd = new Random(12);
+			float Rnd01() => (float)rnd.NextDouble();
+			float Color() => Rnd01();
+
+			var positions = new List<Vector4>();
+
+			void CreateVertex(float x, float z) => positions.Add(new Vector4(x, 0.01f, z, Color()));
+			ShapeBuilder.Grid(-1, 2, -1, 2, xCount - 1, zCount - 1, CreateVertex, null, null, null);
+			return positions.ToArray();
+		}
 	}
 }

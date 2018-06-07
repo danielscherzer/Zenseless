@@ -23,17 +23,17 @@
 				new TextureBinding("texColor", contentLoader.Load<ITexture2D>("mountain_color")),
 				new TextureBinding("texStone", contentLoader.Load<ITexture2D>("stone")),
 			};
-			shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
+			var shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
 			mountain = new MeshVisual(mesh, shaderProgram, bindings);
 		}
 
 		internal void Render(ITransformation camera)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			mountain.Draw((shader) => shader.Uniform("camera", camera));
+			mountain.SetUniform(nameof(camera), camera);
+			mountain.Draw();
 		}
 
 		private readonly MeshVisual mountain;
-		private readonly IShaderProgram shaderProgram;
 	}
 }

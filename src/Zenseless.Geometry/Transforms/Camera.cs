@@ -9,7 +9,7 @@
 	/// </summary>
 	/// <typeparam name="VIEW">The type of the view.</typeparam>
 	/// <typeparam name="PROJECTION">The type of the projection.</typeparam>
-	public class Camera<VIEW, PROJECTION> : ITransformation where VIEW : INotifyPropertyChanged, ITransformation where PROJECTION : INotifyPropertyChanged, ITransformation
+	public class Camera<VIEW, PROJECTION> : NotifyPropertyChanged, INotifyingTransform where VIEW : INotifyPropertyChanged, ITransformation where PROJECTION : INotifyPropertyChanged, ITransformation
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Camera{VIEW, PROJECTION}"/> class.
@@ -22,8 +22,14 @@
 			Projection = projection;
 			cachedMatrix = new CachedCalculatedValue<Matrix4x4>(CalcCombinedTransform);
 
-			View.PropertyChanged += (s, a) => cachedMatrix.Invalidate();
-			Projection.PropertyChanged += (s, a) => cachedMatrix.Invalidate();
+			View.PropertyChanged += (s, e) => OnPropertyChanged(this, nameof(View));
+			Projection.PropertyChanged += (s, e) => OnPropertyChanged(this, nameof(Projection));
+		}
+
+		private void OnPropertyChanged(object sender, string propertyName)
+		{
+			cachedMatrix.Invalidate();
+			RaisePropertyChanged(propertyName);
 		}
 
 		/// <summary>

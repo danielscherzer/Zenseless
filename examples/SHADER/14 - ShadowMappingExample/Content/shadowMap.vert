@@ -7,23 +7,22 @@ uniform mat4 light;
 
 in vec4 position;
 in vec3 normal;
-in vec2 uv;
 
 out blockData
 {
 #ifdef SOLUTION
 	vec4 position_LS;
+	vec3 position;
 #endif
 	vec3 normal;
-	vec2 uv;
 } o;
 
 void main() 
 {
 #ifdef SOLUTION
+	o.position = position.xyz;
 	o.position_LS = light * position;
 #endif
 	o.normal = normal;
-	o.uv = uv;
 	gl_Position = camera * position;
 }
