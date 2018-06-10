@@ -38,9 +38,7 @@
 
 		public void DrawWithPostProcessing(float time, ITransformation camera)
 		{
-			renderToTexture.Activate(); //start drawing into texture
-			Draw(camera);
-			renderToTexture.Deactivate(); //stop drawing into texture
+			renderToTexture.Draw(() => Draw(camera));
 			renderToTexture.Texture.Activate(); //use this new texture
 			shaderPostProcess.Activate(); //activate post processing shader
 			shaderPostProcess.Uniform("iGlobalTime", time);

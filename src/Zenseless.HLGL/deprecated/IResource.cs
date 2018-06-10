@@ -5,7 +5,7 @@ namespace Zenseless.HLGL
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <typeparam name="RESOURCE_TYPE">The type of the esource type.</typeparam>
+	/// <typeparam name="RESOURCE_TYPE">The type of the resource type.</typeparam>
 	public interface IResource<RESOURCE_TYPE> where RESOURCE_TYPE : IDisposable
 	{
 		/// <summary>

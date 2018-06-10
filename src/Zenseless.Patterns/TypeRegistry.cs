@@ -13,10 +13,10 @@ namespace Zenseless.Patterns
 		/// </summary>
 		/// <typeparam name="TYPE">An unique type</typeparam>
 		/// <param name="instance">An instance</param>
-		public void AddComponent<TYPE>(TYPE instance) where TYPE : class
+		public void RegisterTypeInstance<TYPE>(TYPE instance) where TYPE : class
 		{
 			if (instance is null) throw new ArgumentNullException(nameof(instance));
-			components.Add(typeof(TYPE), instance);
+			types.Add(typeof(TYPE), instance);
 		}
 
 		/// <summary>
@@ -24,16 +24,16 @@ namespace Zenseless.Patterns
 		/// </summary>
 		/// <typeparam name="TYPE">An unique type</typeparam>
 		/// <returns>An instance of the given type</returns>
-		public TYPE GetComponent<TYPE>() where TYPE : class
+		public TYPE GetInstance<TYPE>() where TYPE : class
 		{
 			var type = typeof(TYPE);
-			if (components.TryGetValue(type, out var instance))
+			if (types.TryGetValue(type, out var instance))
 			{
 				return (TYPE)instance;
 			}
 			return null;
 		}
 
-		private Dictionary<Type, object> components = new Dictionary<Type, object>();
+		private Dictionary<Type, object> types = new Dictionary<Type, object>();
 	}
 }

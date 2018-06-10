@@ -1,5 +1,4 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using Zenseless.HLGL;
+﻿using Zenseless.HLGL;
 
 namespace Zenseless.OpenGL
 {
@@ -24,15 +23,6 @@ namespace Zenseless.OpenGL
 		/// The state of the render.
 		/// </value>
 		public IRenderState RenderState { get; private set; }
-
-		/// <summary>
-		/// Draws the points.
-		/// </summary>
-		/// <param name="count">The count.</param>
-		public void DrawPoints(int count)
-		{
-			GL.DrawArrays(PrimitiveType.Points, 0, count);
-		}
 
 		/// <summary>
 		/// Gets the frame buffer.

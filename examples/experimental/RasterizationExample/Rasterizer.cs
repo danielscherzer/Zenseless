@@ -6,9 +6,7 @@ namespace Example
 {
 	public class Rasterizer
 	{
-		public delegate void DrawHandler();
-
-		public Rasterizer(IContentLoader contentLoader, int resolutionX, int resolutionY, DrawHandler drawHandler)
+		public Rasterizer(IContentLoader contentLoader, int resolutionX, int resolutionY, Action drawHandler)
 		{
 			if (drawHandler is null)
 			{
@@ -24,13 +22,11 @@ namespace Example
 
 		private IRenderSurface fbo;
 		private PostProcessing copyToFrameBuffer;
-		private readonly DrawHandler drawHandler;
+		private readonly Action drawHandler;
 
 		public void Render()
 		{
-			fbo.Activate();
-			drawHandler();
-			fbo.Deactivate();
+			fbo.Draw(drawHandler);
 			copyToFrameBuffer.Draw(fbo.Texture);
 		}
 	}

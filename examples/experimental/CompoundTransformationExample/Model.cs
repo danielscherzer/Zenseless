@@ -10,7 +10,7 @@
 		public Model()
 		{
 			root = new Node(Transformation.Scale(0.6f), null);
-			root.AddComponent(new CreateGeometryTag());
+			root.RegisterTypeInstance(new CreateGeometryTag());
 
 			var nodeRotation = AddRotationNode(root, 100f / 60f);
 			AddGen1(nodeRotation);
@@ -23,7 +23,7 @@
 			{
 				var xform = Transformation.Combine(st, Transformation.Rotation(90f * i));
 				var node = new Node(xform, parent);
-				node.AddComponent(new CreateGeometryTag());
+				node.RegisterTypeInstance(new CreateGeometryTag());
 				var nodeRotation = AddRotationNode(node, -300f / 60f);
 				AddGen2(nodeRotation);
 			}
@@ -32,7 +32,7 @@
 		private void AddGen2(Node parent)
 		{
 			var child = new Node(Transformation.Combine(Transformation.Scale(0.4f), Transformation.Translation(0.7f, 0f, 0f)), parent);
-			child.AddComponent(new CreateGeometryTag());
+			child.RegisterTypeInstance(new CreateGeometryTag());
 			var nodeRotation = AddRotationNode(child, 500f / 60f);
 			AddGen3(nodeRotation);
 		}
@@ -54,7 +54,7 @@
 				var xform = Transformation.Combine(st, Transformation.Rotation(45f * i));
 
 				var grandChild = new Node(xform, parent);
-				grandChild.AddComponent(new CreateGeometryTag());
+				grandChild.RegisterTypeInstance(new CreateGeometryTag());
 			}
 		}
 
@@ -63,7 +63,7 @@
 			var planets = new List<Box2D>();
 			Foreach(root, (node) =>
 			{
-				if (node.GetComponent<CreateGeometryTag>() is null) return;
+				if (node.GetInstance<CreateGeometryTag>() is null) return;
 				var xForm = node.GlobalTransformation;
 				var newCenter = xForm.Transform(Vector2.Zero);
 				var size = xForm.Transform(new Vector4(1f, 0f, 0f, 0f)).XY().Length();

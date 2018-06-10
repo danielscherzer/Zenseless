@@ -35,10 +35,11 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Zenseless.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentManagement\CachedContentManagerDecorator.cs" />
+    <Compile Include="ContentManagement\NamedFileStreamLoader.cs" />
+    <Compile Include="ContentManagement\NamedResourceStreamLoader.cs" />
     <Compile Include="ContentManagement\NamedShaderException.cs" />
     <Compile Include="ContentManagement\ContentImporters.cs" />
     <Compile Include="ContentManagement\ContentLoaderExtensions.cs" />
@@ -54,10 +57,9 @@
     <Compile Include="ContentManagement\IContentLoader.cs" />
     <Compile Include="ContentManagement\INamedStreamLoader.cs" />
     <Compile Include="ContentManagement\NamedStreamExtensions.cs" />
+    <Compile Include="ContentManagement\NamedStreamLoaderCollection.cs" />
     <Compile Include="ContentManagement\NewCacheEntryEventArgs.cs" />
-    <Compile Include="ContentManagement\ResourceLoading.cs" />
     <Compile Include="ContentManagement\ContentSearchDirectoryAttribute.cs" />
-    <Compile Include="ContentManagement\StreamLoader.cs" />
     <Compile Include="handler\IAfterRendering.cs" />
     <Compile Include="handler\IBeforeRendering.cs" />
     <Compile Include="IDrawable.cs" />
@@ -81,7 +83,6 @@
     <Compile Include="StateManagement\IRenderState.cs" />
     <Compile Include="deprecated\IOldRenderSurface.cs" />
     <Compile Include="IShaderProgram.cs" />
-    <Compile Include="deprecated\IStateManager.cs" />
     <Compile Include="ITexture.cs" />
     <Compile Include="ITexture2D.cs" />
     <Compile Include="ITexture2dArray.cs" />
@@ -94,17 +95,14 @@
     <Compile Include="ShaderException.cs" />
     <Compile Include="ShaderLog.cs" />
     <Compile Include="SpriteSheet.cs" />
-    <Compile Include="deprecated\TypedHandle.cs" />
     <Compile Include="deprecated\IResource.cs" />
     <Compile Include="StateManagement\IState.cs" />
-    <Compile Include="deprecated\StateManager.cs" />
     <Compile Include="StateManagement\ShaderPointSize.cs" />
     <Compile Include="StateManagement\Viewport.cs" />
     <Compile Include="TextureBinding.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Zenseless.HLGL.nuspec" />
-    <None Include="Zenseless.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zenseless.Patterns\Zenseless.Patterns.csproj">

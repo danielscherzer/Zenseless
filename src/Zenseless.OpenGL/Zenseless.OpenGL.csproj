@@ -37,10 +37,11 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Zenseless.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -114,7 +115,6 @@
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Zenseless.OpenGL.nuspec" />
-    <None Include="Zenseless.pfx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\PointCircle.frag" />

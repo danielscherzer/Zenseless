@@ -1,32 +1,32 @@
-﻿using System.Collections.Generic;
-
-namespace Zenseless.HLGL
+﻿namespace Zenseless.HLGL
 {
+	using System.Collections.Generic;
+
 	/// <summary>
-	/// Interface for a loader of named streams.
+	/// Interface for a creator of named streams
 	/// </summary>
 	public interface INamedStreamLoader
 	{
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		bool Contains(string name);
-
-		/// <summary>
-		/// Enumerates all stream names.
+		/// If a finite set of stream names are known these are enumerated (like for a resource assembly), otherwise (like for a file system) an empty set is returned.
 		/// </summary>
 		/// <value>
-		/// All stream names.
+		/// List of names or null;
 		/// </value>		
 		IEnumerable<string> Names { get; }
 
 		/// <summary>
-		/// Creates a stream with the given name.
+		/// Opens a stream with the given name.
 		/// </summary>
 		/// <param name="name">The name of the stream.</param>
 		/// <returns>A <seealso cref="NamedStream"/>.</returns>
-		NamedStream CreateStream(string name);
+		NamedStream Open(string name);
+
+		/// <summary>
+		/// Check if the specified name exists.
+		/// </summary>
+		/// <param name="name">The name.</param>
+		/// <returns></returns>
+		bool Exists(string name);
 	}
 }

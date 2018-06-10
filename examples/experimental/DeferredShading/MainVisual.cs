@@ -35,19 +35,18 @@
 
 		public void Draw(ITransformation camera)
 		{
-			mrtSurface.Activate(); //start drawing into texture
-
-			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
-			renderState.Set(new DepthTest(true));
-			foreach (var vis in meshVisuals)
+			mrtSurface.Draw(() =>
 			{
-				vis.SetUniform(nameof(camera), camera);
-				vis.Draw();
-			}
-			renderState.Set(new DepthTest(false));
-
-			mrtSurface.Deactivate(); //stop drawing into texture
+				GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+				renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
+				renderState.Set(new DepthTest(true));
+				foreach (var vis in meshVisuals)
+				{
+					vis.SetUniform(nameof(camera), camera);
+					vis.Draw();
+				}
+				renderState.Set(new DepthTest(false));
+			});
 			//TextureDebugger.Draw(mrtSurface.Textures.ElementAt(1)); return;
 
 			GL.Clear(ClearBufferMask.ColorBufferBit);

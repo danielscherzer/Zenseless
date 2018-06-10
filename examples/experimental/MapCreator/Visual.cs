@@ -27,21 +27,22 @@
 		internal void Render(IEnumerable<IEnumerable<Vector2>> paths, IEnumerable<Vector2> points)
 		{
 			var random = new Random(12);
-			fbo.Activate();
-			GL.Clear(ClearBufferMask.ColorBufferBit);
-			foreach (var path in paths)
+			fbo.Draw(() =>
 			{
-				byte[] color = new byte[2];
-				random.NextBytes(color);
-				GL.Color3(color[0], color[1], (byte)255);
-				DrawLine(path);
-			}
+				GL.Clear(ClearBufferMask.ColorBufferBit);
+				foreach (var path in paths)
+				{
+					byte[] color = new byte[2];
+					random.NextBytes(color);
+					GL.Color3(color[0], color[1], (byte)255);
+					DrawLine(path);
+				}
 
-			GL.Color3(1f, 0f, 0f);
-			GL.PointSize(30f);
-			DrawPoints(points);
+				GL.Color3(1f, 0f, 0f);
+				GL.PointSize(30f);
+				DrawPoints(points);
 
-			fbo.Deactivate();
+			});
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			copyToFrameBuffer.Draw(fbo.Texture);
 		}

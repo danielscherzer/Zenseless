@@ -35,12 +35,13 @@
 			//first pass: create shadow map
 #if SOLUTION
 			shaderProgramDepth.Activate();
-			fboShadowMap.Activate();
-			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			shaderProgramDepth.Uniform("camera", light);
-			geometry.Draw();
-			shaderProgramDepth.Deactivate();
-			fboShadowMap.Deactivate();
+			fboShadowMap.Draw(() =>
+			{
+				GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+				shaderProgramDepth.Uniform("camera", light);
+				geometry.Draw();
+				shaderProgramDepth.Deactivate();
+			});
 			//TextureDebugger.Draw(fboShadowMap.Texture); return;
 #endif
 			//second pass: render with shadow map

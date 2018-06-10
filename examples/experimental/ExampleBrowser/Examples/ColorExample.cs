@@ -10,10 +10,10 @@
 
 	[ExampleDisplayName]
 	[Export(typeof(IExample))]
-	public class ColorExample : IExample
+	public class ColorExample : Example
 	{
 		private readonly ITime time;
-		private float hue = 0f;
+		public float Hue { get; private set; } = 0f;
 
 		[ImportingConstructor]
 		public ColorExample([Import] ITime time)
@@ -21,7 +21,7 @@
 			this.time = time;
 		}
 
-		public void Render()
+		public override void Render()
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			const int count = 16;
@@ -34,15 +34,16 @@
 				{
 					float y = yI * 2f / count - 1f;
 					float saturation = yI / (float)count;
-					var color = ColorSystems.Hsb2rgb(hue, saturation, brightness);
+					var color = ColorSystems.Hsb2rgb(Hue, saturation, brightness);
 					DrawRect(new Box2D(x, y, boxSize, boxSize), color);
 				}
 			}
 		}
 
-		public void Update()
+		public override void Update()
 		{
-			hue = (float)(Math.Sin(time.AbsoluteTime) * 0.5 + 0.5);
+			Hue = (float)(Math.Sin(time.AbsoluteTime) * 0.5 + 0.5);
+			RaisePropertyChanged(nameof(Hue));
 		}
 
 		private void DrawRect(IReadOnlyBox2D rectangle, Vector3 color)

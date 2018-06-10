@@ -15,10 +15,11 @@
 		/// <param name="texture">The texture.</param>
 		public FBOwithDepth(ITexture2D texture) : base(texture)
 		{
-			Activate();
-			depth = new RenderBuffer(RenderbufferStorage.DepthComponent32, texture.Width, texture.Height);
-			depth.Attach(FramebufferAttachment.DepthAttachment);
-			Deactivate();
+			Draw(() =>
+			{
+				depth = new RenderBuffer(RenderbufferStorage.DepthComponent32, texture.Width, texture.Height);
+				depth.Attach(FramebufferAttachment.DepthAttachment);
+			});
 		}
 
 		/// <summary>

@@ -32,7 +32,7 @@ namespace Zenseless.OpenGL
 		/// <exception cref="ArgumentNullException">Empty shader Handle</exception>
 		public void RemoveProgram(Handle handle)
 		{
-			if (handle.IsNull) throw new ArgumentNullException("Empty shader Handle");
+			if (handle.IsNullHandle) throw new ArgumentNullException("Empty shader Handle");
 			GL.DeleteProgram(handle.ID);
 		}
 

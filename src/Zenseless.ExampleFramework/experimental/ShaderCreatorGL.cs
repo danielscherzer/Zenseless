@@ -1,6 +1,7 @@
 ﻿using Zenseless.HLGL;
 using System;
 using System.Collections.Generic;
+using Zenseless.Patterns;
 
 namespace Zenseless.OpenGL
 {

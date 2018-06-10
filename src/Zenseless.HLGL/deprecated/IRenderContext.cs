@@ -25,12 +25,6 @@
 		IOldRenderSurface CreateRenderSurface(int width, int height, bool hasDepthBuffer = false, byte components = 4, bool floatingPoint = false);
 
 		/// <summary>
-		/// Draws the points.
-		/// </summary>
-		/// <param name="count">The count.</param>
-		void DrawPoints(int count);
-
-		/// <summary>
 		/// Gets the frame buffer.
 		/// </summary>
 		/// <returns></returns>

@@ -143,9 +143,9 @@
 			};
 		}
 
-		private struct FileChangeData
+		private struct ChangedData
 		{
-			public FileChangeData(object instance, IEnumerable<string> names)
+			public ChangedData(object instance, IEnumerable<string> names)
 			{
 				Instance = instance;
 				Names = names;
@@ -155,7 +155,7 @@
 			public IEnumerable<string> Names { get; }
 		}
 
-		private ConcurrentQueue<FileChangeData> changedFiles = new ConcurrentQueue<FileChangeData>();
+		private ConcurrentQueue<ChangedData> changedFiles = new ConcurrentQueue<ChangedData>();
 		private FileLoader fileLoader;
 		private Dictionary<Type, Action<object, IEnumerable<NamedStream>>> updaters = new Dictionary<Type, Action<object, IEnumerable<NamedStream>>>();
 		private readonly INamedStreamLoader namedStreamLoader;
@@ -167,7 +167,7 @@
 			//create a file watcher for each resource
 			foreach (var fullName in e.Names)
 			{
-				void OnChange(string filePath) => changedFiles.Enqueue(new FileChangeData(e.Instance, e.Names));
+				void OnChange(string filePath) => changedFiles.Enqueue(new ChangedData(e.Instance, e.Names));
 				fileLoader.InstallWatcher(fullName, OnChange);
 			}
 		}
@@ -179,13 +179,13 @@
 			{
 				try
 				{
-					if (fileLoader.Contains(name))
+					if (fileLoader.Exists(name))
 					{
-						namedStreams.Add(fileLoader.CreateStream(name));
+						namedStreams.Add(fileLoader.Open(name));
 					}
 					else
 					{
-						namedStreams.Add(namedStreamLoader.CreateStream(name));
+						namedStreams.Add(namedStreamLoader.Open(name));
 					}
 				}
 				catch

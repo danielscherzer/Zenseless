@@ -38,7 +38,7 @@ namespace Zenseless.HLGL
 		/// <returns>
 		///   <c>true</c> if the specified name is known; otherwise, <c>false</c>.
 		/// </returns>
-		public bool Contains(string name) => mappings.ContainsKey(name);
+		public bool Exists(string name) => mappings.ContainsKey(name);
 
 		/// <summary>
 		/// Gets the stream with the given name.
@@ -48,7 +48,7 @@ namespace Zenseless.HLGL
 		/// A <seealso cref="NamedStream" />.
 		/// </returns>
 		/// <exception cref="ArgumentException"></exception>
-		public NamedStream CreateStream(string name)
+		public NamedStream Open(string name)
 		{
 			if (mappings.TryGetValue(name, out var filePath))
 			{

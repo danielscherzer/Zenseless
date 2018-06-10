@@ -77,6 +77,7 @@
     <Compile Include="Examples\AlphaTestExample.cs" />
     <Compile Include="Examples\BlendingExample.cs" />
     <Compile Include="Examples\ColorExample.cs" />
+    <Compile Include="Examples\Example.cs" />
     <Compile Include="Examples\TextureExample.cs" />
     <Compile Include="Examples\TextureMagFilterExample.cs" />
     <Compile Include="Examples\TextureMinFilterExample.cs" />

@@ -25,11 +25,12 @@
 		/// <returns>A content manager instance</returns>
 		public static FileContentManager Create(Assembly resourceAssembly, bool solutionMode)
 		{
-			var streamLoader = new StreamLoader();
-			streamLoader.AddMappings(resourceAssembly);
-			streamLoader.AddMappings(Assembly.GetExecutingAssembly()); //Zenseless.OpenGL resources
+			var streamLoaderCollection = new NamedStreamLoaderCollection();
+			//streamLoaderCollection.Add(new NamedFileStreamLoader()); //load arbitrary files TODO: file name resolution
+			streamLoaderCollection.Add(new NamedResourceStreamLoader(resourceAssembly));
+			streamLoaderCollection.Add(new NamedResourceStreamLoader(Assembly.GetExecutingAssembly())); //Zenseless.OpenGL resources
 
-			var mgr = new FileContentManager(streamLoader);
+			var mgr = new FileContentManager(streamLoaderCollection);
 			mgr.RegisterImporter((res) => ContentImporters.StringBuilder(res).ToString());
 			mgr.RegisterImporter(ContentImporters.StringBuilder);
 			mgr.RegisterUpdater<StringBuilder>(ContentImporters.Update);

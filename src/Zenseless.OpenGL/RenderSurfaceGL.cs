@@ -95,7 +95,7 @@ namespace Zenseless.OpenGL
 		/// <summary>
 		/// The fbo
 		/// </summary>
-		private FBO fbo = null;
+		private IRenderSurface fbo = null;
 		/// <summary>
 		/// The action clear
 		/// </summary>

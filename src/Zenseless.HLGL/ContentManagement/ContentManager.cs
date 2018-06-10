@@ -66,7 +66,7 @@ namespace Zenseless.HLGL
 				foreach (var name in names)
 				{
 					var fullName = Names.GetFullName(name); //TODO: ?put name resolution only in extension methods
-					namedStreams.Add(loader.CreateStream(fullName));
+					namedStreams.Add(loader.Open(fullName));
 				}
 				if (0 == namedStreams.Count) throw new ArgumentException("No input resources given!");
 				var result = importer(namedStreams) as TYPE;

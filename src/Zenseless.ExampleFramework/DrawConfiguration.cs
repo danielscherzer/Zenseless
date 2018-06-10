@@ -80,7 +80,7 @@ namespace Zenseless.ExampleFramework
 				}
 				else
 				{
-					context.DrawPoints(InstanceCount);
+					GL.DrawArrays(PrimitiveType.Points, 0, InstanceCount);
 				}
 			}
 			else

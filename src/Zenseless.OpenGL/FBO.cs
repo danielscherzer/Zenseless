@@ -16,8 +16,8 @@
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FBOException" /> class.
 		/// </summary>
-		/// <param name="msg">The error msg.</param>
-		public FBOException(string msg) : base(msg) { }
+		/// <param name="message">The error message.</param>
+		public FBOException(string message) : base(message) { }
 	}
 
 	/// <summary>
@@ -50,7 +50,7 @@
 		/// </exception>
 		public void Attach(ITexture2D texture)
 		{
-			if (texture is null) throw new FBOException("Given texture is null");
+			if (texture is null) throw new ArgumentNullException(nameof(texture));
 			if (Texture is null)
 			{
 				Texture = texture;
@@ -58,18 +58,19 @@
 			else
 			{
 				if (Texture.Width != texture.Width || Texture.Height != texture.Height)
-					throw new FBOException($"Given Texture dimension ({texture.Width},{texture.Height}) " +
+					throw new ArgumentException($"Given Texture dimension ({texture.Width},{texture.Height}) " +
 						$"do not match primary texture ({Texture.Width},{Texture.Height})");
 			}
 			attachments.Add(texture);
-			Activate();
-			GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, AttachmentFromID(attachments.Count - 1), TextureTarget.Texture2D, texture.ID, 0);
-			string status = GetStatusMessage();
-			Deactivate();
-			if (!string.IsNullOrEmpty(status))
+			Draw(() =>
 			{
-				throw new FBOException(status);
-			}
+				GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, AttachmentFromID(attachments.Count - 1), TextureTarget.Texture2D, texture.ID, 0);
+				string status = GetStatusMessage();
+				if (!(status is null))
+				{
+					throw new FBOException(status);
+				}
+			});
 			var drawBuffers = new List<DrawBuffersEnum>();
 			for (int i = 0; i < attachments.Count; ++i)
 			{
@@ -113,8 +114,19 @@
 		{
 			GL.DrawBuffers(1, drawBuffers); //TODO: not a complete reverse
 			GL.BindFramebuffer(FramebufferTarget.Framebuffer, lastFBO);
-			GL.PopAttrib(); //TODO: deprecated, but needed by viewport
+			GL.PopAttrib(); //TODO: deprecated, but needed by view port
 			currentFrameBufferHandle = lastFBO;
+		}
+
+		/// <summary>
+		/// Draws the specified draw code onto the render surface.
+		/// </summary>
+		/// <param name="drawCode">The draw code.</param>
+		public void Draw(Action drawCode)
+		{
+			Activate();
+			drawCode();
+			Deactivate();
 		}
 
 		private uint m_FBOHandle = 0;
@@ -123,28 +135,6 @@
 		private List<ITexture2D> attachments = new List<ITexture2D>();
 		private DrawBuffersEnum[] drawBuffers = new DrawBuffersEnum[] { DrawBuffersEnum.ColorAttachment0 };
 
-
-		private string GetStatusMessage()
-		{
-			switch (GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer))
-			{
-				case FramebufferErrorCode.FramebufferComplete: return string.Empty;
-				case FramebufferErrorCode.FramebufferIncompleteAttachment: return "One or more attachment points are not framebuffer attachment complete. This could mean there’s no texture attached or the format isn’t renderable. For color textures this means the base format must be RGB or RGBA and for depth textures it must be a DEPTH_COMPONENT format. Other causes of this error are that the width or height is zero or the z-offset is out of range in case of render to volume.";
-				case FramebufferErrorCode.FramebufferIncompleteMissingAttachment: return "There are no attachments.";
-				case FramebufferErrorCode.FramebufferIncompleteDimensionsExt: return "Attachments are of different size. All attachments must have the same width and height.";
-				case FramebufferErrorCode.FramebufferIncompleteFormatsExt: return "The color attachments have different format. All color attachments must have the same format.";
-				case FramebufferErrorCode.FramebufferIncompleteDrawBuffer: return "An attachment point referenced by GL.DrawBuffers() doesn’t have an attachment.";
-				case FramebufferErrorCode.FramebufferIncompleteReadBuffer: return "The attachment point referenced by GL.ReadBuffers() doesn’t have an attachment.";
-				case FramebufferErrorCode.FramebufferUnsupported: return "This particular FBO configuration is not supported by the implementation.";
-				default: return "Status unknown. (yes, this is really bad.)";
-			}
-		}
-
-		private static FramebufferAttachment AttachmentFromID(int id)
-		{
-			return FramebufferAttachment.ColorAttachment0 + id;
-		}
-
 		/// <summary>
 		/// Will be called from the default Dispose method.
 		/// </summary>
@@ -152,6 +142,28 @@
 		{
 			foreach (var tex in attachments) tex.Dispose();
 			GL.DeleteFramebuffers(1, ref m_FBOHandle);
+		}
+
+		private string GetStatusMessage()
+		{
+			switch (GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer))
+			{
+				case FramebufferErrorCode.FramebufferComplete: return null;
+				case FramebufferErrorCode.FramebufferIncompleteAttachment: return "One or more attachment points are not framebuffer attachment complete. This could mean there’s no texture attached or the format isn’t renderable. For color textures this means the base format must be RGB or RGBA and for depth textures it must be a DEPTH_COMPONENT format. Other causes of this error are that the width or height is zero or the z-offset is out of range in case of render to volume.";
+				case FramebufferErrorCode.FramebufferIncompleteMissingAttachment: return "There are no attachments.";
+				case FramebufferErrorCode.FramebufferIncompleteDimensionsExt: return "Attachments are of different size. All attachments must have the same width and height.";
+				case FramebufferErrorCode.FramebufferIncompleteFormatsExt: return "The color attachments have different format. All color attachments must have the same format.";
+				case FramebufferErrorCode.FramebufferIncompleteDrawBuffer: return "An attachment point referenced by GL.DrawBuffers() doesn’t have an attachment.";
+				case FramebufferErrorCode.FramebufferIncompleteReadBuffer: return "The attachment point referenced by GL.ReadBuffers() doesn’t have an attachment.";
+				case FramebufferErrorCode.FramebufferUnsupported: return "This particular FBO configuration is not supported by the implementation.";
+				default:
+					return "Status unknown. (yes, this is really bad.)";
+			}
+		}
+
+		private static FramebufferAttachment AttachmentFromID(int id)
+		{
+			return FramebufferAttachment.ColorAttachment0 + id;
 		}
 	}
 }

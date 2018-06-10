@@ -1,4 +1,6 @@
-﻿namespace Zenseless.HLGL
+﻿using Zenseless.Patterns;
+
+namespace Zenseless.HLGL
 {
 	/// <summary>
 	/// 

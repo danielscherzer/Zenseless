@@ -20,7 +20,6 @@ namespace Zenseless.OpenGL
 			int[] vp = new int[4];
 			GL.GetInteger(GetPName.Viewport, vp);
 			renderState.Register((o, s) => GL.Viewport(s.X, s.Y, s.Width, s.Height), new Viewport(vp[0], vp[1], vp[2], vp[3]));
-
 			renderState.Register(Update, BlendStates.Opaque);
 			renderState.Register((old, s) => GL.ClearColor(s.Red, s.Green, s.Blue, s.Alpha), new ClearColorState(0f, 0f, 0f, 1f));
 			renderState.Register((old, s) => Update(s.Enabled, EnableCap.DepthTest), new DepthTest(false));
@@ -70,15 +69,15 @@ namespace Zenseless.OpenGL
 			switch (mode)
 			{
 				case FaceCullingMode.FRONT_SIDE:
-					Update(true, EnableCap.CullFace);
+					GL.Enable(EnableCap.CullFace);
 					GL.CullFace(CullFaceMode.Front);
 					break;
 				case FaceCullingMode.BACK_SIDE:
-					Update(true, EnableCap.CullFace);
+					GL.Enable(EnableCap.CullFace);
 					GL.CullFace(CullFaceMode.Back);
 					break;
 				default:
-					Update(false, EnableCap.CullFace);
+					GL.Disable(EnableCap.CullFace);
 					break;
 
 			};

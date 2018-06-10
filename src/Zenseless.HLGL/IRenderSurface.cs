@@ -1,11 +1,12 @@
 ﻿namespace Zenseless.HLGL
 {
+	using System;
 	using System.Collections.Generic;
 
 	/// <summary>
 	/// 
 	/// </summary>
-	public interface IRenderSurface
+	public interface IRenderSurface : IDisposable
 	{
 		/// <summary>
 		/// Gets the texture.
@@ -26,6 +27,12 @@
 		/// Activates this instance.
 		/// </summary>
 		void Activate();
+
+		/// <summary>
+		/// Draws onto the render surface using the specified draw code.
+		/// </summary>
+		/// <param name="drawCode">The draw code.</param>
+		void Draw(Action drawCode);
 
 		/// <summary>
 		/// Attaches the specified texture.
