@@ -6,6 +6,5 @@ namespace Example
 	{
 		IReadOnlyBox2D Bounds { get; }
 		uint Type { get; }
-		bool Walkable { get; }
 	}
 }

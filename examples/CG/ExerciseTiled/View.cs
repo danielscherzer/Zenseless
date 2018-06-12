@@ -14,7 +14,7 @@
 			renderState.Set(BlendStates.AlphaBlend);
 			GL.Enable(EnableCap.Texture2D);
 			texTileSet = contentLoader.Load<ITexture2D>(spriteSheetName);
-			texTileSet.Filter = TextureFilterMode.Linear;
+			texTileSet.Filter = TextureFilterMode.Nearest;
 			texTileSet.WrapFunction = TextureWrapFunction.ClampToEdge;
 		}
 

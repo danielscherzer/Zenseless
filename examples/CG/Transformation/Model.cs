@@ -14,9 +14,8 @@
 			time = new GameTime();
 			//I use Matrix3x2, which is a dot net matrix class that works with row-major matrices 
 			//so <new point> = <point> * <first transform> * <second transform>
-			shapes.Add(new Enemy(0, 0, 0.5f));
-			shapes.Add(new Enemy(-0.5f, 0f, 0.1f));
-			shapes.Add(new Enemy(-0.7f, 0f, 0.03f));
+			shapes.Add(new TransformedShape(0, 0, 0.5f));
+			shapes.Add(new TransformedShape(-0.5f, 0f, 0.1f));
 		}
 
 		internal void Update(float updatePeriod)
@@ -30,11 +29,9 @@
 			//rotate around the center of shape[0]
 			var transform = Matrix3x2.CreateRotation(2f * t) * shapes[0].GetTransformation();
 			shapes[1].SetTransformation(transform);
-
-			shapes[2].SetTransformation(transform);
 		}
 
-		private List<Enemy> shapes = new List<Enemy>();
+		private List<TransformedShape> shapes = new List<TransformedShape>();
 		private GameTime time;
 
 		public IEnumerable<IReadOnlyBox2D> Shapes { get => from s in shapes select s.TransformedBounds; }

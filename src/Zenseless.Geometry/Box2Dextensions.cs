@@ -86,6 +86,18 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
+		/// Create a <seealso cref="Box2D"/> from its minimal corner and size
+		/// </summary>
+		/// <param name="min">The minimal corner.</param>
+		/// <param name="size">The size.</param>
+		/// <returns>A new Box2D instance</returns>
+		public static Box2D CreateFromMinSize(Vector2 min, Vector2 size)
+		{
+			var rectangle = new Box2D(min.X, min.Y, size.X, size.Y);
+			return rectangle;
+		}
+
+		/// <summary>
 		/// Merges the specified boxes.
 		/// </summary>
 		/// <param name="boxA">The box a.</param>

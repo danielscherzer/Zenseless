@@ -9,8 +9,8 @@
 		{
 			var window = new ExampleWindow();
 			var tileMap = new TileMap();
-			var model = new Model(tileMap.Tiles, tileMap.Start);
-			var view = new View(window.ContentLoader, window.RenderContext.RenderState, tileMap.TileTypes, tileMap.SpriteSheetName);
+			var model = new Model(tileMap.ExtractStart(), tileMap.ExtractCollisionGrid());
+			var view = new View(window.ContentLoader, window.RenderContext.RenderState, tileMap.TileTypes, tileMap.SpriteSheetName, tileMap.ExtractViewGrid());
 			window.Update += (dt) =>
 			{
 				float deltaZoom = MovementAxis(dt, Key.A, Key.Q);

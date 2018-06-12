@@ -39,9 +39,9 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ILevelGrid.cs" />
+    <Compile Include="IGrid.cs" />
     <Compile Include="ITile.cs" />
-    <Compile Include="LevelGrid.cs" />
+    <Compile Include="Grid.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Tile.cs" />

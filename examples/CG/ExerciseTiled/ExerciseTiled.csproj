@@ -78,10 +78,14 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\grass.tmx" />
     <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\grass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\grass.tsx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

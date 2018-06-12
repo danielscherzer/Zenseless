@@ -21,6 +21,22 @@ namespace Zenseless.Geometry
 		public static float TWO_PI = (float)(Math.PI * 2.0);
 
 		/// <summary>
+		/// Returns for each component the smallest integer bigger than or equal to the specified floating-point number.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns></returns>
+		public static Vector2 Ceiling(in Vector2 value)
+		{
+			return new Vector2(CeilingF(value.X), CeilingF(value.Y));
+		}
+		/// <summary>
+		/// Returns the smallest integer bigger than or equal to the specified floating-point number.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns></returns>
+		public static float CeilingF(float value) => (float)Math.Ceiling(value);
+
+		/// <summary>
 		/// Clamp the input value x in between min and max. 
 		/// If x smaller min return min; 
 		/// if x bigger max return max; 
@@ -74,6 +90,18 @@ namespace Zenseless.Geometry
 		public static Vector2 Clamp(this in Vector2 v, float min, float max)
 		{
 			return new Vector2(Clamp(v.X, min, max), Clamp(v.Y, min, max));
+		}
+
+		/// <summary>
+		/// Clamp each component of the input vector v in between min and max. 
+		/// </summary>
+		/// <param name="v">input vector that will be clamped component-wise</param>
+		/// <param name="min">lower limit</param>
+		/// <param name="max">upper limit</param>
+		/// <returns>clamped version of v</returns>
+		public static Vector2 Clamp(this in Vector2 v, in Vector2 min, in Vector2 max)
+		{
+			return new Vector2(Clamp(v.X, min.X, max.X), Clamp(v.Y, min.Y, max.Y));
 		}
 
 		/// <summary>
@@ -246,9 +274,15 @@ namespace Zenseless.Geometry
 		/// </summary>
 		/// <param name="x">Input floating-point number</param>
 		/// <returns>The integer part.</returns>
-		public static int FastTruncate(this float x)
-		{	return (int)x;
-		}
+		public static int FastTruncate(this float x) => (int)x;
+
+		/// <summary>
+		/// Returns for each component the integer part of the specified floating-point number. 
+		/// Works not for constructs like <code>1f - float.epsilon</code> because this is outside of floating point precision
+		/// </summary>
+		/// <param name="value">Input floating-point vector</param>
+		/// <returns>The integer parts.</returns>
+		public static Vector2 Truncate(in Vector2 value) => new Vector2(value.X.FastTruncate(), value.Y.FastTruncate());
 
 		/// <summary>
 		/// Returns the largest integer less than or equal to the specified floating-point number.

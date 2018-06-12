@@ -6,9 +6,9 @@
 	/// <summary>
 	/// Contains transformed and internally untransformed version of Box2D
 	/// </summary>
-	public class Enemy
+	public class TransformedShape
 	{
-		public Enemy(float x, float y, float size)
+		public TransformedShape(float x, float y, float size)
 		{
 			this.bounds = Box2DExtensions.CreateFromCircle(new Circle(x, y, size / 2));
 			transformedBounds = new Box2D(bounds);

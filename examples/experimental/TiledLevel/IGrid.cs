@@ -1,10 +1,10 @@
 ﻿namespace Example
 {
-	public interface ILevelGrid
+	public interface IGrid<ELEMENT>
 	{
 		int Height { get; }
 		int Width { get; }
 
-		byte GetElement(int x, int y);
+		ELEMENT GetElement(int x, int y);
 	}
 }

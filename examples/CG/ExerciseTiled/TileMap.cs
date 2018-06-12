@@ -1,19 +1,21 @@
 ﻿namespace Example
 {
 	using System.Collections.Generic;
+	using System.IO;
 	using System.Numerics;
 	using TiledSharp;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
+	using Zenseless.Patterns;
 
 	public class TileMap
 	{
 		public TileMap()
 		{
-			var map = new TmxMap(@"D:\Daten\tiled\grass\unbenannt.tmx");
+			var map = new TmxMap($@"{Path.GetDirectoryName(PathTools.GetSourceFilePath())}\content\grass.tmx");
 			var tileSize = new Vector2(1f / (map.Width - 1), 1f / (map.Height - 1));
 			var tileSet = map.Tilesets[0];
-			SpriteSheetName = tileSet.Name;
+			SpriteSheetName = Path.GetFileName(tileSet.Image.Source);
 			var columns = (uint)tileSet.Columns.Value;
 			var rows = (uint)(tileSet.TileCount.Value / tileSet.Columns.Value);
 			foreach (var tile in map.Layers[0].Tiles)
