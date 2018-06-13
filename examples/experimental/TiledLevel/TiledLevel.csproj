@@ -40,11 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IGrid.cs" />
-    <Compile Include="ITile.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Tile.cs" />
     <Compile Include="TileMap.cs" />
     <Compile Include="View.cs" />
   </ItemGroup>

@@ -21,7 +21,7 @@
 			};
 			window.Render += () =>
 			{
-				view.Draw(tileMap.Tiles, model.Player);
+				view.Draw(model.Player);
 			};
 			window.Resize += view.Resize;
 			window.Run();

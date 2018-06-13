@@ -41,16 +41,11 @@
 
 		public float Zoom { get; set; } = 1f;
 
-		internal void Draw(IEnumerable<ITile> tiles, IReadOnlyBox2D player)
+		internal void Draw(IReadOnlyBox2D player)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 
 			DrawVisibleTiles(player);
-			//foreach (var tile in tiles)
-			//{
-			//	var texCoords = tileTypes[tile.Type];
-			//	DrawTools.DrawTexturedRect(tile.Bounds, texCoords);
-			//}
 			DrawRect(player, new Color4(1f, 1f, 1f, 0.7f));
 		}
 

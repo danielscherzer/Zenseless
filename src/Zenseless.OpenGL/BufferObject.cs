@@ -58,7 +58,7 @@
 		public void ActivateBind(int index) //todo: more than one bound buffer is not working, but have different indices; test: glUniformBlockBinding
 		{
 			Activate();
-			BufferRangeTarget target = (BufferRangeTarget)BufferTarget;
+			var target = (BufferRangeTarget)BufferTarget;
 			GL.BindBufferBase​(target, index, bufferID);
 		}
 
@@ -101,6 +101,7 @@
 			//cleanup state
 			Deactivate();
 		}
+
 		/// <summary>
 		/// Sets the specified data.
 		/// </summary>

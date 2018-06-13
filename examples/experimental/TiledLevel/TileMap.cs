@@ -15,18 +15,6 @@
 			map = new TmxMap(@"D:\Daten\tiled\grass4x\grass4x.tmx");
 			var tileSize = new Vector2(1f / (map.Width - 1), 1f / (map.Height - 1));
 
-			foreach (var layer in map.Layers)
-			{
-				foreach (var tile in layer.Tiles)
-				{
-					if (0 == tile.Gid) continue;
-					var x = tile.X / (float)map.Width;
-					var y = (map.Height - tile.Y - 1) / (float)map.Height;
-					var geom = new Box2D(x, y, tileSize.X, tileSize.Y);
-					tiles.Add(new Tile(geom, (uint) tile.Gid - 1));
-				}
-			}
-
 			var tileSet = map.Tilesets[0];
 			SpriteSheetName = Path.GetFileName(tileSet.Image.Source);
 			var columns = (uint)tileSet.Columns.Value;
@@ -39,10 +27,7 @@
 			}
 		}
 
-		private List<Tile> tiles = new List<Tile>();
 		private readonly TmxMap map;
-
-		public IEnumerable<Tile> Tiles => tiles;
 
 		public IGrid<bool> ExtractCollisionGrid()
 		{
@@ -71,6 +56,7 @@
 			{
 				foreach (var tile in layer.Tiles)
 				{
+					//TODO: add id of each layer
 					grid.SetElement(tile.X, map.Height - tile.Y - 1, tile.Gid);
 				}
 			}

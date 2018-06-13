@@ -33,6 +33,15 @@
 			var mgr = new FileContentManager(streamLoaderCollection);
 			mgr.RegisterImporter((res) => ContentImporters.StringBuilder(res).ToString());
 			mgr.RegisterImporter(ContentImporters.StringBuilder);
+			mgr.RegisterImporter<Stream>((it) => 
+				{
+					var input = it.First().Stream;
+					var s = new MemoryStream();
+					it.First().Stream.CopyTo(s);
+					s.Position = 0;
+					return s;
+				}
+			);
 			mgr.RegisterUpdater<StringBuilder>(ContentImporters.Update);
 			mgr.RegisterImporter(ContentImporters.ByteBuffer);
 			mgr.RegisterImporter(ContentImporters.DefaultMesh);
