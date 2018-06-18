@@ -6,7 +6,7 @@ namespace Example
 	{
 		static void Main(string[] args)
 		{
-			var window = new ExampleWindow();
+			var window = new ExampleWindow(debug:true);
 			var view = new View(window.ContentLoader);
 			window.Render += () => view.Draw();
 			window.Run();

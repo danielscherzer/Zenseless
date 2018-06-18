@@ -6,45 +6,44 @@
 
 	internal class Model
 	{
-		private readonly IGrid<bool> walkable;
+		private readonly Grid<bool> walkable;
 		private Box2D player;
 
-		public Model(Vector2 start, IGrid<bool> walkable)
+		public Model(Vector2 start, Grid<bool> walkable)
 		{
 			this.walkable = walkable ?? throw new ArgumentNullException(nameof(walkable));
-			player = Box2DExtensions.CreateFromCenterSize(start.X, start.Y, 1f / walkable.Width, 1f / walkable.Height);
+			player = Box2DExtensions.CreateFromCenterSize(start.X, start.Y, 1f, 1f);
 		}
 
 		public IReadOnlyBox2D Player { get => player; }
 
 		internal void Update(float deltaX, float deltaY)
 		{
-			var speed = 0.1f;
+			var speed = 4f;
 			player.MinX += deltaX * speed;
 			player.MinY += deltaY * speed;
 			if (player.MinX < 0) player.MinX = 0;
 			if (player.MinY < 0) player.MinY = 0;
-			if (player.MaxX > 1) player.MinX = 1f - player.SizeX;
-			if (player.MaxY > 1) player.MinY = 1f - player.SizeY;
+			if (player.MaxX > walkable.Width) player.MinX = walkable.Width - player.SizeX;
+			if (player.MaxY > walkable.Height) player.MinY = walkable.Height - player.SizeY;
 			LevelPlayerCollision(player);
 		}
 
 		private void LevelPlayerCollision(Box2D player)
 		{
-			var playerLowerX = MathHelper.FastTruncate(player.MinX * walkable.Width);
-			var playerLowerY = MathHelper.FastTruncate(player.MinY * walkable.Height);
-			var playerUpperX = (int)Math.Ceiling(player.MaxX * walkable.Width);
-			var playerUpperY = (int)Math.Ceiling(player.MaxY * walkable.Height);
-			var tileSize = new Vector2(1f / walkable.Width, 1f / walkable.Height);
-			var tileBounds = Box2DExtensions.CreateFromMinSize(Vector2.Zero, tileSize);
+			var playerLowerX = (int)player.MinX;
+			var playerLowerY = (int)player.MinY;
+			var playerUpperX = (int)Math.Ceiling(player.MaxX);
+			var playerUpperY = (int)Math.Ceiling(player.MaxY);
+			var tileBounds = Box2DExtensions.CreateFromMinSize(Vector2.Zero, Vector2.One);
 			for (var x = playerLowerX; x < playerUpperX; ++x)
 			{
 				for (var y = playerLowerY; y < playerUpperY; ++y)
 				{
 					if (!walkable.GetElement(x, y))
 					{
-						tileBounds.MinX = x * tileSize.X;
-						tileBounds.MinY = y * tileSize.Y;
+						tileBounds.MinX = x;
+						tileBounds.MinY = y;
 						player.UndoOverlap(tileBounds);
 					}
 				}

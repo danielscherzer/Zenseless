@@ -58,7 +58,10 @@
     <Compile Include="ColorSystems.cs" />
     <Compile Include="BufferObject.cs" />
     <Compile Include="ContentManagerGL.cs" />
+    <Compile Include="DebuggerGL.cs" />
     <Compile Include="DrawableGL.cs" />
+    <Compile Include="FBOException.cs" />
+    <Compile Include="GLException.cs" />
     <Compile Include="handler\FrameGrabber.cs" />
     <Compile Include="ImageListTools.cs" />
     <Compile Include="INativeWindowExtensions.cs" />

@@ -11,20 +11,6 @@
 	using Zenseless.Patterns;
 
 	/// <summary>
-	/// Exception class for Vertex Array O
-	/// </summary>
-	/// <seealso cref="System.Exception" />
-	[Serializable]
-	public class VAOException : Exception
-	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="VAOException" /> class.
-		/// </summary>
-		/// <param name="msg">The error msg.</param>
-		public VAOException(string msg) : base(msg) { }
-	}
-
-	/// <summary>
 	/// OpenGL Vertex Array Object
 	/// </summary>
 	/// <seealso cref="Disposable" />
@@ -118,12 +104,12 @@
 			UpdateLength(data.Length, perInstance);
 
 			Activate();
-			int elementBytes = Marshal.SizeOf(baseType) * baseTypeCount;
 			var buffer = RequestBuffer(bindingID, BufferTarget.ArrayBuffer);
 			GCHandle pinnedArray = GCHandle.Alloc(data, GCHandleType.Pinned);
 			try
 			{
 				IntPtr pointer = pinnedArray.AddrOfPinnedObject();
+				int elementBytes = Marshal.SizeOf(baseType) * baseTypeCount;
 				int byteSize = elementBytes * data.Length;
 				buffer.Set(pointer, byteSize, BufferUsageHint.StaticDraw);
 			}
@@ -134,7 +120,7 @@
 			//activate for state
 			buffer.Activate();
 			//set data format
-			GL.VertexAttribPointer(bindingID, baseTypeCount, FindVertexPointerType(baseType), false, elementBytes, 0);
+			GL.VertexAttribPointer(bindingID, baseTypeCount, FindVertexPointerType(baseType), false, 0, 0);
 			GL.EnableVertexAttribArray(bindingID);
 			if (perInstance)
 			{

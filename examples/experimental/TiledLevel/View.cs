@@ -11,13 +11,12 @@
 
 	internal class View
 	{
-		private readonly ITexture2D texTileSet;
-		private readonly IReadOnlyBox2D[] tileTypes;
-		private readonly IGrid<int> grid;
-		private readonly Vector2 tileSize;
+		private readonly Dictionary<int, ITexture2D> texTileSets = new Dictionary<int, ITexture2D>();
+		private readonly List<Grid<int>> layerGrid;
+		private readonly Vector2 gridSize;
 		private float aspect;
 
-		public View(IContentLoader contentLoader, IRenderState renderState, IReadOnlyBox2D[] tileTypes, string spriteSheetName, IGrid<int> grid)
+		public View(IContentLoader contentLoader, IRenderState renderState, Dictionary<int, string> tileSprites, List<Grid<int>> gridLayers)
 		{
 			if (contentLoader == null)
 			{
@@ -29,14 +28,22 @@
 				throw new ArgumentNullException(nameof(renderState));
 			}
 
+			if (tileSprites == null)
+			{
+				throw new ArgumentNullException(nameof(tileSprites));
+			}
+
 			renderState.Set(BlendStates.AlphaBlend);
-			GL.Enable(EnableCap.Texture2D);
-			texTileSet = contentLoader.Load<ITexture2D>(spriteSheetName);
-			texTileSet.Filter = TextureFilterMode.Nearest;
-			texTileSet.WrapFunction = TextureWrapFunction.ClampToEdge;
-			this.tileTypes = tileTypes ?? throw new ArgumentNullException(nameof(tileTypes));
-			this.grid = grid ?? throw new ArgumentNullException(nameof(grid));
-			tileSize = new Vector2(1f / grid.Width, 1f / grid.Height);
+			foreach(var sprite in tileSprites)
+			{
+				var tex = contentLoader.Load<ITexture2D>(sprite.Value);
+				tex.WrapFunction = TextureWrapFunction.ClampToEdge;
+				tex.Filter = TextureFilterMode.Nearest;
+				texTileSets[sprite.Key] = tex;
+			}
+			layerGrid = gridLayers ?? throw new ArgumentNullException(nameof(gridLayers));
+			var grid = layerGrid[0];
+			gridSize = new Vector2(grid.Width, grid.Height);
 		}
 
 		public float Zoom { get; set; } = 1f;
@@ -44,48 +51,53 @@
 		internal void Draw(IReadOnlyBox2D player)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
-
-			DrawVisibleTiles(player);
-			DrawRect(player, new Color4(1f, 1f, 1f, 0.7f));
-		}
-
-		private void DrawVisibleTiles(IReadOnlyBox2D player)
-		{
-			var zoom = Zoom * 8f;
+			var playerCenter = player.GetCenter();
+			var zoom = Zoom * .1f;
 			GL.LoadIdentity();
 			GL.Scale(aspect, 1f, 1f);
 			GL.Scale(zoom, zoom, 1f);
-			GL.Translate(-player.CenterX, -player.CenterY, 0f);
+			GL.Translate(-playerCenter.X, -playerCenter.Y, 0f);
 
-			var playerCenter = player.GetCenter();
-			var size = new Vector2(grid.Width, grid.Height);
 			var delta = new Vector2(1f / (aspect * zoom), 1f / zoom); //inverse of transformations
-			var min = (playerCenter - delta) * size;
-			var max = (playerCenter + delta) * size;
-			min = MathHelper.Clamp(MathHelper.Truncate(min), Vector2.Zero, size);
-			max = MathHelper.Clamp(MathHelper.Ceiling(max), Vector2.Zero, size);
+			var min = playerCenter - delta;
+			var max = playerCenter + delta;
 
-			texTileSet.Activate();
-			for (int x = (int)min.X; x < (int)max.X; ++x)
-			{
-				for (int y = (int)min.Y; y < (int)max.Y; ++y)
-				{
-					DrawTile(x, y);
-				}
-			}
-			texTileSet.Deactivate();
+			GL.Enable(EnableCap.Texture2D);
+			DrawVisibleTiles(min, max);
+			GL.Disable(EnableCap.Texture2D);
+			DrawRect(player, new Color4(1f, 1f, 1f, 0.7f));
 		}
 
-		private void DrawTile(int tileX, int tileY)
+		private void DrawVisibleTiles(in Vector2 min, in Vector2 max)
 		{
-			var gid = grid.GetElement(tileX, tileY);
+			var tileMin = MathHelper.Clamp(MathHelper.Truncate(min), Vector2.Zero, gridSize);
+			var tileMax = MathHelper.Clamp(MathHelper.Ceiling(max), Vector2.Zero, gridSize);
+
+			foreach (var layer in layerGrid)
+			{
+				for (int x = (int)tileMin.X; x < (int)tileMax.X; ++x)
+				{
+					for (int y = (int)tileMin.Y; y < (int)tileMax.Y; ++y)
+					{
+						DrawTile(layer, x, y);
+					}
+				}
+			}
+		}
+
+		private void DrawTile(Grid<int> layer, int tileX, int tileY)
+		{
+			var gid = layer.GetElement(tileX, tileY);
 			if (0 != gid)
 			{
-				var texCoords = tileTypes[gid - 1];
-				var x = tileX * tileSize.X;
-				var y = tileY * tileSize.Y;
-				var bounds = new Box2D(x, y, tileSize.X, tileSize.Y);
-				DrawTools.DrawTexturedRect(bounds, texCoords);
+				 var tex = texTileSets[gid];
+				var x = tileX;
+				var y = tileY;
+				var bounds = new Box2D(x, y, 1f, 1f);
+				tex.Activate();
+				var d = 0f; //1f / 8;
+				var texCoord = new Box2D(d, d, 1 - d, 1 - d);
+				DrawTools.DrawTexturedRect(bounds, texCoord);
 			}
 		}
 
@@ -94,7 +106,7 @@
 			aspect = height / (float)width;
 		}
 
-		private void DrawRect(IReadOnlyBox2D rectangle, Color4 color)
+		private static void DrawRect(IReadOnlyBox2D rectangle, Color4 color)
 		{
 			GL.Color4(color);
 			GL.Begin(PrimitiveType.Quads);

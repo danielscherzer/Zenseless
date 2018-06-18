@@ -12,65 +12,65 @@
 	{
 		public TileMap()
 		{
-			map = new TmxMap(@"D:\Daten\tiled\grass4x\grass4x.tmx");
-			var tileSize = new Vector2(1f / (map.Width - 1), 1f / (map.Height - 1));
-
-			var tileSet = map.Tilesets[0];
-			SpriteSheetName = Path.GetFileName(tileSet.Image.Source);
-			var columns = (uint)tileSet.Columns.Value;
-			var rows = (uint)(tileSet.TileCount.Value / tileSet.Columns.Value);
-			TileTypes = new IReadOnlyBox2D[tileSet.Tiles.Count];
-			foreach (var tile in tileSet.Tiles)
-			{
-				var tex = SpriteSheet.CalcSpriteTexCoords((uint)tile.Id, columns, rows);
-				TileTypes[(uint)tile.Id] = tex;
-			}
+			map = new TmxMap(@"D:\Daten\tiled\Level\level.tmx");
 		}
 
 		private readonly TmxMap map;
 
-		public IGrid<bool> ExtractCollisionGrid()
+		public Grid<bool> ExtractCollisionGrid()
 		{
 			var tileSet = map.Tilesets[0];
-			var walkableIds = new HashSet<int>(from tile in tileSet.Tiles where bool.Parse(tile.Properties["Walkable"]) select tile.Id);
-			var grid = new Grid<bool>(map.Width, map.Height);
-			grid.Clear(true);
+			var walkableIds = new HashSet<int>(from tile in tileSet.Tiles where !tile.Properties.ContainsKey("forbidden") select tile.Id);
+			var gridIsWalkable = new Grid<bool>(map.Width, map.Height);
+			gridIsWalkable.Clear(true);
 			foreach (var layer in map.Layers)
 			{
 				foreach (var tile in layer.Tiles)
 				{
 					if (0 == tile.Gid) continue;
 					var isWalkable = walkableIds.Contains(tile.Gid - 1);
-					var oldValue = grid.GetElement(tile.X, map.Height - tile.Y - 1);
-					grid.SetElement(tile.X, map.Height - tile.Y - 1, isWalkable & oldValue);
+					var oldValue = gridIsWalkable.GetElement(tile.X, map.Height - tile.Y - 1);
+					gridIsWalkable.SetElement(tile.X, map.Height - tile.Y - 1, isWalkable & oldValue);
 				}
 			}
-			return grid;
+			return gridIsWalkable;
 		}
 
-		public IGrid<int> ExtractViewGrid()
+		public List<Grid<int>> ExtractViewLayerGrids()
 		{
-			var tileSet = map.Tilesets[0];
-			var grid = new Grid<int>(map.Width, map.Height);
+			var gridLayers = new List<Grid<int>>();
 			foreach (var layer in map.Layers)
 			{
+				var grid = new Grid<int>(map.Width, map.Height);
 				foreach (var tile in layer.Tiles)
 				{
-					//TODO: add id of each layer
 					grid.SetElement(tile.X, map.Height - tile.Y - 1, tile.Gid);
 				}
+				gridLayers.Add(grid);
 			}
-			return grid;
+			return gridLayers;
 		}
 
-		public string SpriteSheetName { get; }
+		public Dictionary<int, string> ExtractTileSprites()
+		{
+			var tileTypes = new Dictionary<int, string>();
+			var dir = map.TmxDirectory + Path.DirectorySeparatorChar;
+			foreach (var tileSet in map.Tilesets)
+			{
+				foreach (var tile in tileSet.Tiles)
+				{
+					var name = tile.Image.Source.Replace(dir, string.Empty);
+					name = name.Replace(Path.AltDirectorySeparatorChar, '.');
+					tileTypes.Add(tileSet.FirstGid + tile.Id, name);
+				}
+			}
+			return tileTypes;
+		}
 
 		public Vector2 ExtractStart()
 		{
 			var start = map.ObjectGroups[0].Objects[0];
-			return new Vector2((float)(start.X / ((map.Width) * map.TileWidth)), 1f - (float)(start.Y / (map.Width * map.TileHeight)));
+			return new Vector2((float)(start.X / map.TileWidth), map.Height - (float)(start.Y / map.TileHeight));
 		}
-
-		public IReadOnlyBox2D[] TileTypes { get; }
 	}
 }

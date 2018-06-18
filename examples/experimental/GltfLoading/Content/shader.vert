@@ -1,7 +1,16 @@
 #version 430 core
-in vec3 position;
+in vec4 position;
+in vec3 normal;
+
+out Data
+{
+	vec3 normal;
+} o;
 
 void main() 
 {
-	gl_Position = vec4(position, 1.0);
+	o.normal = normal;
+	vec4 pos = position;
+	pos.xyz *= 0.001;
+	gl_Position = pos;
 }

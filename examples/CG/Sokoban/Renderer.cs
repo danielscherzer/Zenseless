@@ -15,7 +15,7 @@ namespace Example
 
 			tileSet.Add(ElementType.Floor, contentLoader.Load<ITexture2D>("GroundGravel_Grass"));
 			tileSet.Add(ElementType.Man, contentLoader.Load<ITexture2D>("Character4"));
-			tileSet.Add(ElementType.Box, contentLoader.Load<ITexture2D>("Crate_Brown"));
+			tileSet.Add(ElementType.Box, contentLoader.Load<ITexture2D>(".Crate_Brown"));
 			tileSet.Add(ElementType.Goal, contentLoader.Load<ITexture2D>("EndPoint_Red"));
 			tileSet.Add(ElementType.ManOnGoal, contentLoader.Load<ITexture2D>("EndPointCharacter"));
 			tileSet.Add(ElementType.BoxOnGoal, contentLoader.Load<ITexture2D>("EndPointCrate_Brown"));

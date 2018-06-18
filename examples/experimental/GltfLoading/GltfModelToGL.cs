@@ -5,6 +5,7 @@
 	using OpenTK.Graphics.OpenGL4;
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.IO;
 	using System.Runtime.InteropServices;
 	using System.Text.RegularExpressions;
@@ -25,61 +26,75 @@
 
 		public Action CreateDrawCommand(IShaderProgram shaderProgram)
 		{
-			Action drawCommand = null;
-			var idVAO = GL.GenVertexArray();
+			Action action = null;
 			foreach (var mesh in gltf.Meshes)
 			{
 				foreach (var primitive in mesh.Primitives)
 				{
-					var primitiveType = (PrimitiveType)primitive.Mode;
-					GL.BindVertexArray(idVAO);
-					if (primitive.Indices.HasValue)
-					{
-						var accessor = gltf.Accessors[primitive.Indices.Value];
-						if (accessor.BufferView.HasValue)
-						{
-							glBuffers[accessor.BufferView.Value].Activate();
-							drawCommand = () => GL.DrawElements(primitiveType, accessor.Count, (DrawElementsType)accessor.ComponentType, 0);
-						}
-					}
-					foreach (var attribute in primitive.Attributes)
-					{
-						var accessor = gltf.Accessors[attribute.Value];
-						if (accessor.BufferView.HasValue)
-						{
-							var uniformName = attribute.Key.ToLowerInvariant();
-							var bindingID = shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, uniformName);
-							if (-1 != bindingID)
-							{
-								glBuffers[accessor.BufferView.Value].Activate();
-								var bufferView = gltf.BufferViews[accessor.BufferView.Value];
-								var elementBytes = bufferView.ByteStride ?? 0;
-								GL.VertexAttribPointer(bindingID, accessor.Count, (VertexAttribPointerType)accessor.ComponentType, accessor.Normalized, elementBytes, accessor.ByteOffset);
-								GL.EnableVertexAttribArray(bindingID);
-							}
-						}
-					}
-					GL.BindVertexArray(0);
-					
-					return () =>
-					{
-						GL.BindVertexArray(idVAO);
-						drawCommand();
-						GL.BindVertexArray(0);
-					};
-					//{
-					//	return () =>
-					//	{
-					//		GL.BindVertexArray(idVAO);
-					//		GL.DrawArrays(primitiveType, 0, 3);
-					//		GL.BindVertexArray(0);
-					//	};
-
-					//}
+					action += CreateDrawCall(primitive, shaderProgram);
 				}
 			}
-			return null;
+			return action;
 		}
+		private Action CreateDrawCall(MeshPrimitive primitive, IShaderProgram shaderProgram)
+		{
+			Action drawCommand = null;
+			var idVAO = GL.GenVertexArray();
+			var primitiveType = (PrimitiveType)primitive.Mode;
+			GL.BindVertexArray(idVAO);
+			if (primitive.Indices.HasValue)
+			{
+				var accessor = gltf.Accessors[primitive.Indices.Value];
+				if (accessor.BufferView.HasValue)
+				{
+					glBuffers[accessor.BufferView.Value].Activate();
+					drawCommand = () => GL.DrawElements(primitiveType, accessor.Count, (DrawElementsType)accessor.ComponentType, accessor.ByteOffset);
+				}
+			}
+			foreach (var attribute in primitive.Attributes)
+			{
+				var accessor = gltf.Accessors[attribute.Value];
+				if (accessor.BufferView.HasValue)
+				{
+					var uniformName = attribute.Key.ToLowerInvariant();
+					var bindingID = shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, uniformName);
+					if (-1 != bindingID)
+					{
+						glBuffers[accessor.BufferView.Value].Activate();
+						var bufferView = gltf.BufferViews[accessor.BufferView.Value];
+						var elementBytes = bufferView.ByteStride ?? 0;
+						var baseTypeCount = mappingTypeToBaseTypeCount[accessor.Type];
+						GL.VertexAttribPointer(bindingID, baseTypeCount, (VertexAttribPointerType)accessor.ComponentType, accessor.Normalized, elementBytes, accessor.ByteOffset);
+						GL.EnableVertexAttribArray(bindingID);
+					}
+				}
+			}
+			GL.BindVertexArray(0);
+			//GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+			//GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+			if (drawCommand is null)
+			{
+				drawCommand = () => GL.DrawArrays(primitiveType, 0, 3);
+			}
+			return () =>
+			{
+				GL.BindVertexArray(idVAO);
+				drawCommand();
+				GL.BindVertexArray(0);
+			};
+		}
+
+		private static readonly ReadOnlyDictionary<Accessor.TypeEnum, int> mappingTypeToBaseTypeCount =
+			new ReadOnlyDictionary<Accessor.TypeEnum, int>(new Dictionary<Accessor.TypeEnum, int>()
+			{
+				[Accessor.TypeEnum.SCALAR] = 1,
+				[Accessor.TypeEnum.VEC2] = 2,
+				[Accessor.TypeEnum.VEC3] = 3,
+				[Accessor.TypeEnum.VEC4] = 4,
+				[Accessor.TypeEnum.MAT2] = 4,
+				[Accessor.TypeEnum.MAT3] = 9,
+				[Accessor.TypeEnum.MAT4] = 16,
+			});
 
 		private static List<BufferObject> CreateBuffers(Gltf gltf)
 		{

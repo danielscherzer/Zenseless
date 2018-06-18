@@ -28,7 +28,7 @@ namespace Example
 			window.GameWindow.Closing += (s, e) => Serialization.ToBinFile(logic, GetGameStateFilePath()); //save game state at end of program
 
 			var renderer = new RendererGL4(window.RenderContext.RenderState, window.ContentLoader);
-			//var renderer = new Renderer(window.RenderContext.RenderState, window.ContentManager);
+			//var renderer = new Renderer(window.RenderContext.RenderState, window.ContentLoader);
 			var sceneManager = new SceneManager(logic, renderer);
 			window.GameWindow.KeyDown += (s, e) => sceneManager.HandleInput(KeyBindings(e.Key));
 			window.Resize += (w, h) => renderer.ResizeWindow(w, h);

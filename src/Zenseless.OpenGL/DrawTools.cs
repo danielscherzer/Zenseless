@@ -51,19 +51,6 @@
 		}
 
 		/// <summary>
-		/// Writes OpenGL errors to the console.
-		/// </summary>
-		public static void WriteErrors()
-		{
-			//check errors
-			ErrorCode error;
-			while (ErrorCode.NoError != (error = GL.GetError()))
-			{
-				Console.WriteLine($"{DebugTools.GetSourcePositionForConsoleRef()}: OpenGL Error '{error}'");
-			}
-		}
-
-		/// <summary>
 		/// Set color Uniform on active shader. The correct shader has to be activated first!
 		/// </summary>
 		/// <param name="shaderProgram">The shader program.</param>

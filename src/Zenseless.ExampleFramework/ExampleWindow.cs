@@ -14,6 +14,8 @@
 	using Zenseless.OpenGL;
 	using System.Threading;
 	using System.Reflection;
+	using OpenTK.Graphics;
+	using OpenTK.Graphics.OpenGL4;
 
 	/// <summary>
 	/// Intended for use for small example programs in the <see cref="Zenseless"/> framework
@@ -31,15 +33,23 @@
 		/// <param name="width">The window width.</param>
 		/// <param name="height">The window height.</param>
 		/// <param name="updateRenderRate">The update and render rate.</param>
-		public ExampleWindow(int width = 1024, int height = 1024, double updateRenderRate = 60)
+		/// <param name="samples">Anit-aliasing sample count</param>
+		/// <param name="debug">Activate OpenGL debug mode (probably slower)</param>
+		public ExampleWindow(int width = 1024, int height = 1024, double updateRenderRate = 60, int samples = 1, bool debug = false)
 		{
-			gameWindow = new GameWindow()
+			var graphicsMode = new GraphicsMode(new ColorFormat(8, 8, 8, 8), 24, 0, samples, ColorFormat.Empty, 2);
+			gameWindow = new GameWindow(width,height, graphicsMode, Assembly.GetEntryAssembly().ManifestModule.Name
+				, GameWindowFlags.Default, DisplayDevice.Default, 0, 0, debug ? GraphicsContextFlags.Debug : GraphicsContextFlags.Default)
 			{
 				X = 200, //DPI scaling screws everything up, so use some hacked values
 				Y = 10,
 				ClientSize = new Size(width, height), //do not set extents in the constructor, because windows 10 with enabled scale != 100% scales our given sizes in the constructor of GameWindow
 			};
 
+			if(debug)
+			{
+				debugger = new DebuggerGL();
+			}
 			CreateIOCcontainer();
 
 			RenderContext = new RenderContextGL();
@@ -49,7 +59,6 @@
 			gameWindow.TargetUpdateFrequency = updateRenderRate;
 			gameWindow.TargetRenderFrequency = updateRenderRate;
 			gameWindow.VSync = VSyncMode.On;
-			gameWindow.Title = Assembly.GetEntryAssembly().ManifestModule.Name;
 			//register callback for keyboard
 			gameWindow.KeyDown += INativeWindowExtensions.DefaultExampleWindowKeyEvents;
 			gameWindow.KeyDown += GameWindow_KeyDown;
@@ -71,6 +80,7 @@
 		/// Occurs when in the render loop a new render of the window should be handled. Usually once per frame
 		/// </summary>
 		public event Action Render;
+
 		/// <summary>
 		/// Gets the game window.
 		/// </summary>
@@ -140,6 +150,7 @@
 		private GameWindow gameWindow;
 		private List<IAfterRendering> afterRenderingCallbacks = new List<IAfterRendering>();
 		private List<IBeforeRendering> beforeRenderingCallbacks = new List<IBeforeRendering>();
+		private readonly DebuggerGL debugger;
 
 		private void CreateIOCcontainer()
 		{
@@ -171,7 +182,6 @@
 			beforeRenderingCallbacks.ForEach((i) => i.BeforeRendering());
 			Render?.Invoke();
 			afterRenderingCallbacks.ForEach((i) => i.AfterRendering());
-			DrawTools.WriteErrors();
 			//buffer swap (and sync) of double buffering (http://gameprogrammingpatterns.com/double-buffer.html)
 			gameWindow.SwapBuffers();
 		}

@@ -7,20 +7,6 @@
 	using Zenseless.HLGL;
 
 	/// <summary>
-	/// Implements an FBO exception.
-	/// </summary>
-	/// <seealso cref="Exception" />
-	[Serializable]
-	public class FBOException : Exception
-	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="FBOException" /> class.
-		/// </summary>
-		/// <param name="message">The error message.</param>
-		public FBOException(string message) : base(message) { }
-	}
-
-	/// <summary>
 	/// Frame buffer object class that handles rendering to texture(s).
 	/// </summary>
 	/// <seealso cref="Disposable" />

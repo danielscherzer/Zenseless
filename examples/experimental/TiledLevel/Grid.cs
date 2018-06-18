@@ -1,6 +1,6 @@
 ﻿namespace Example
 {
-	public class Grid<ELEMENT> : IGrid<ELEMENT>
+	public class Grid<ELEMENT>
 	{
 		public Grid(int width, int height)
 		{
