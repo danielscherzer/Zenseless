@@ -39,8 +39,9 @@
 			for (var x = playerLowerX; x < playerUpperX; ++x)
 			{
 				for (var y = playerLowerY; y < playerUpperY; ++y)
-				{
-					if (!walkable.GetElement(x, y))
+				{ 
+					var isWalkable = walkable.GetElement(x, y);
+					if (!isWalkable)
 					{
 						tileBounds.MinX = x;
 						tileBounds.MinY = y;
