@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Zenseless.HLGL
+﻿namespace Zenseless.HLGL
 {
+	using System;
+	using System.Collections.Generic;
+	using Zenseless.Patterns;
+
 	/// <summary>
 	/// 
 	/// </summary>
@@ -73,7 +73,7 @@ namespace Zenseless.HLGL
 		/// </returns>
 		public TYPE Load<TYPE>(IEnumerable<string> names) where TYPE : class
 		{
-			var name = Combine(names);
+			var name = names.Combine();
 			if (instanceCache.TryGetValue(name, out var instance))
 			{
 				var typedInstance = instance as TYPE;
@@ -98,15 +98,5 @@ namespace Zenseless.HLGL
 		}
 
 		private Dictionary<string, object> instanceCache = new Dictionary<string, object>();
-
-		private string Combine(IEnumerable<string> names)
-		{
-			var result = new StringBuilder();
-			foreach(var name in names)
-			{
-				result.Append(name);
-			}
-			return result.ToString();
-		}
 	}
 }

@@ -48,12 +48,10 @@
   <ItemGroup>
     <Compile Include="MeshAttribute.cs" />
     <Compile Include="Transforms\Camera.cs" />
-    <Compile Include="Transforms\CameraFirstPersonMovementState.cs" />
     <Compile Include="Box3D.cs" />
     <Compile Include="Box2D.cs" />
     <Compile Include="Box2Dextensions.cs" />
     <Compile Include="Intersection.cs" />
-    <Compile Include="Transforms\CameraFirstPerson.cs" />
     <Compile Include="CubicHermiteSpline.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="CircleExtensions.cs" />
@@ -74,6 +72,7 @@
     <Compile Include="Transforms\Axis.cs" />
     <Compile Include="Transforms\INotifyingTransform.cs" />
     <Compile Include="Transforms\ITransformation.cs" />
+    <Compile Include="Transforms\FirstPerson.cs" />
     <Compile Include="Transforms\Orbit.cs" />
     <Compile Include="Transforms\Perspective.cs" />
     <Compile Include="Transforms\Rotation.cs" />

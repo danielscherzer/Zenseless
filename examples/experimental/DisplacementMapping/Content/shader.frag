@@ -1,0 +1,24 @@
+#version 420 core
+
+in Data
+{
+	flat int instanceID;
+} i;
+
+const vec3 materials[] = 
+{ 
+	vec3(1, 0, 0), vec3(1), vec3(0.3, 1, 0.3), vec3(0.3, 0.3, 1)
+	, vec3(0.3, 1, 1), vec3(1, 1, 0.3), vec3(1, 0.3, 1) };
+
+vec3 getMaterial(int id)
+{
+	return materials[id % 7];
+}
+
+out vec4 color;
+
+void main() 
+{
+	vec3 c = getMaterial(i.instanceID);
+	color =  vec4(c, 1.0);
+}

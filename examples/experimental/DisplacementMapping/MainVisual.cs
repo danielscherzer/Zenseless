@@ -1,0 +1,38 @@
+﻿namespace Example
+{
+	using OpenTK.Graphics.OpenGL4;
+	using System.Numerics;
+	using Zenseless.Geometry;
+	using Zenseless.HLGL;
+
+	public class MainVisual
+	{
+		private readonly IShaderProgram shader;
+
+		public MainVisual(IRenderState renderState, IContentLoader contentLoader)
+		{
+			renderState.Set(new DepthTest(true));
+
+			shader = contentLoader.Load<IShaderProgram>("shader.*");
+			shader.Activate();
+
+			GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+			GL.PatchParameter(PatchParameterInt.PatchVertices, 4);
+		}
+
+		public Camera<FirstPerson, Perspective> Camera { get; } = new Camera<FirstPerson, Perspective>(new FirstPerson(new Vector3(18, 0, 30)), new Perspective(70, 0.01f, 300f));
+		private readonly int instanceSqrt = 100;
+
+		public void Draw()
+		{
+			shader.Uniform("camera", Camera);
+			shader.Uniform(nameof(instanceSqrt), instanceSqrt);
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+			GL.DrawArraysInstanced(PrimitiveType.Patches, 0, 4, instanceSqrt * instanceSqrt);
+		}
+
+		public void Resize(int width, int height)
+		{
+		}
+	}
+}

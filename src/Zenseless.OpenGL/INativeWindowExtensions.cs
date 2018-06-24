@@ -44,49 +44,61 @@
 		}
 
 		/// <summary>
-		/// Adds the first person camera events.
+		/// 
 		/// </summary>
-		/// <param name="window">The window.</param>
-		/// <param name="camera">The camera.</param>
-		public static CameraFirstPersonMovementState AddFirstPersonCameraEvents(this INativeWindow window, CameraFirstPerson camera)
+		public class FirstPersonMovementState
 		{
-			window.Resize += (s, e) => camera.Aspect = (float)window.Width / window.Height;
+			/// <summary>
+			/// delta movement since
+			/// </summary>
+			public System.Numerics.Vector3 movement;
+		};
+		/// <summary>
+		/// Add first person camera controller. 
+		/// </summary>
+		/// <param name="window">window that receives input system events</param>
+		/// <param name="firstPerson">The first person transform.</param>
+		public static FirstPersonMovementState AddFirstPersonCameraEvents(this INativeWindow window, FirstPerson firstPerson)
+		{
 			window.MouseMove += (s, e) =>
 			{
 				if (ButtonState.Pressed == e.Mouse.LeftButton)
 				{
-					camera.Heading += 300 * e.XDelta / (float)window.Width;
-					camera.Tilt += 300 * e.YDelta / (float)window.Height;
+					firstPerson.Heading += 300 * e.XDelta / (float)window.Width;
+					firstPerson.Tilt += 300 * e.YDelta / (float)window.Height;
 				}
 			};
-
-			var movementState = new CameraFirstPersonMovementState();
+			var state = new FirstPersonMovementState();
 			window.KeyDown += (s, e) =>
 			{
+				var movement = state.movement;
 				var delta = 1f;
 				switch (e.Key)
 				{
-					case Key.A: movementState.X = -delta; break;
-					case Key.D: movementState.X = delta; break;
-					case Key.Q: movementState.Y = -delta; break;
-					case Key.E: movementState.Y = delta; break;
-					case Key.W: movementState.Z = -delta; break;
-					case Key.S: movementState.Z = delta; break;
+					case Key.A: movement.X = -delta; break;
+					case Key.D: movement.X = delta; break;
+					case Key.Q: movement.Y = -delta; break;
+					case Key.E: movement.Y = delta; break;
+					case Key.W: movement.Z = -delta; break;
+					case Key.S: movement.Z = delta; break;
 				}
+				state.movement = movement;
 			};
 			window.KeyUp += (s, e) =>
 			{
+				var movement = state.movement;
 				switch (e.Key)
 				{
-					case Key.A: movementState.X = 0f; break;
-					case Key.D: movementState.X = 0f; break;
-					case Key.Q: movementState.Y = 0f; break;
-					case Key.E: movementState.Y = 0f; break;
-					case Key.W: movementState.Z = 0f; break;
-					case Key.S: movementState.Z = 0f; break;
+					case Key.A: movement.X = 0f; break;
+					case Key.D: movement.X = 0f; break;
+					case Key.Q: movement.Y = 0f; break;
+					case Key.E: movement.Y = 0f; break;
+					case Key.W: movement.Z = 0f; break;
+					case Key.S: movement.Z = 0f; break;
 				}
+				state.movement = movement;
 			};
-			return movementState;
+			return state;
 		}
 
 		/// <summary>
@@ -101,11 +113,12 @@
 		public static Camera<Orbit, Perspective> CreateOrbitingCameraController(this INativeWindow window, float distance, float fieldOfViewY = 90f, float nearClip = 0.1f, float farClip = 1f)
 		{
 			var perspective = new Perspective(fieldOfViewY, nearClip, farClip);
-			window.AddWindowAspectHandling(perspective);
 			var orbit = new Orbit(distance);
+			var camera = new Camera<Orbit, Perspective>(orbit, perspective);
+
+			window.AddWindowAspectHandling(perspective);
 			window.AddMayaCameraEvents(perspective, orbit);
 
-			var camera = new Camera<Orbit, Perspective>(orbit, perspective);
 			return camera;
 		}
 

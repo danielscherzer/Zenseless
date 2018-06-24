@@ -157,11 +157,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiledLevel", "examples\expe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseTiled", "examples\CG\ExerciseTiled\ExerciseTiled.csproj", "{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeferredShading", "examples\experimental\DeferredShading\DeferredShading.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplacementMapping", "examples\experimental\DisplacementMapping\DisplacementMapping.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompoundTransformationExample", "examples\experimental\CompoundTransformationExample\CompoundTransformationExample.csproj", "{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GltfLoading", "examples\experimental\GltfLoading\GltfLoading.csproj", "{5D481F3C-0C1F-4963-9D08-66FEEA4E178B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeferredShading", "examples\experimental\DeferredShading\DeferredShading.csproj", "{253A7FA6-2984-4172-929A-DBD654538B38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -441,6 +443,10 @@ Global
 		{5D481F3C-0C1F-4963-9D08-66FEEA4E178B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D481F3C-0C1F-4963-9D08-66FEEA4E178B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D481F3C-0C1F-4963-9D08-66FEEA4E178B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{253A7FA6-2984-4172-929A-DBD654538B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{253A7FA6-2984-4172-929A-DBD654538B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{253A7FA6-2984-4172-929A-DBD654538B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{253A7FA6-2984-4172-929A-DBD654538B38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -517,6 +523,7 @@ Global
 		{9037E855-7592-4DAC-89C7-62257D8F2343} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{97D9BF95-9CB1-47FC-8F8E-E6FA05351133} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{5D481F3C-0C1F-4963-9D08-66FEEA4E178B} = {CB237D59-2840-48EB-888F-965EDB20E868}
+		{253A7FA6-2984-4172-929A-DBD654538B38} = {CB237D59-2840-48EB-888F-965EDB20E868}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CA293D8-FC78-4BF1-BA73-543451A6B7AB}

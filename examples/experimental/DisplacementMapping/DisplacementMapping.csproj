@@ -7,11 +7,11 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Example</RootNamespace>
-    <AssemblyName>DeferredShading</AssemblyName>
+    <AssemblyName>DisplacementMapping</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <ProjectGuid>{253A7FA6-2984-4172-929A-DBD654538B38}</ProjectGuid>
+    <ProjectGuid>{9037E855-7592-4DAC-89C7-62257D8F2343}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,7 +37,7 @@
   <ItemGroup>
     <Compile Include="AssemblyConfig.cs" />
     <Compile Include="MainVisual.cs" />
-    <Compile Include="DeferredShadingExample.cs" />
+    <Compile Include="DisplacementMappingExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -45,12 +45,8 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\lighting.frag" />
-    <EmbeddedResource Include="Content\suzanne.obj" />
-    <EmbeddedResource Include="Content\lighting.vert" />
-    <EmbeddedResource Include="Content\helper.glsl" />
-    <EmbeddedResource Include="Content\material.frag" />
-    <EmbeddedResource Include="Content\material.vert" />
+    <EmbeddedResource Include="Content\shader.frag" />
+    <EmbeddedResource Include="Content\shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="OpenTK">
@@ -85,6 +81,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\shader.tesc" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\shader.tese" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\noise2D.glsl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

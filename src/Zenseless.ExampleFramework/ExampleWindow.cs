@@ -150,7 +150,7 @@
 		private GameWindow gameWindow;
 		private List<IAfterRendering> afterRenderingCallbacks = new List<IAfterRendering>();
 		private List<IBeforeRendering> beforeRenderingCallbacks = new List<IBeforeRendering>();
-		private bool isMinimized = false;
+		private bool slowDownActive = false;
 		private readonly DebuggerGL debugger;
 
 		private void CreateIOCcontainer()
@@ -223,19 +223,19 @@
 				gameWindow.RenderFrame -= GameWindow_RenderFrame;
 				gameWindow.UpdateFrame -= GameWindow_UpdateFrame;
 				gameWindow.UpdateFrame += Chilling;
-				isMinimized = true;
+				slowDownActive = true;
 			}
 			else
 			{
-				//check if last time we were minimized
-				if (isMinimized)
+				//check if slow down is active
+				if (slowDownActive)
 				{
 					gameWindow.UpdateFrame -= Chilling;
 					//register a callback for updating the game logic
 					gameWindow.UpdateFrame += GameWindow_UpdateFrame;
 					//registers a callback for drawing a frame
 					gameWindow.RenderFrame += GameWindow_RenderFrame;
-					isMinimized = false;
+					slowDownActive = false;
 				}
 			}
 		}

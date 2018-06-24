@@ -29,6 +29,7 @@ namespace Zenseless.ExampleFramework
 			}
 			else
 			{
+				form.Text += " for shader type " + compileException.ShaderType;
 				form.ShaderSourceCode = compileException.ShaderSourceCode;
 			}
 			//load error list after source code is loaded for highlighting of error to work

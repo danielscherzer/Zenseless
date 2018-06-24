@@ -1,6 +1,5 @@
 ﻿namespace Zenseless.Geometry
 {
-	using System.ComponentModel;
 	using System.Numerics;
 	using Zenseless.Patterns;
 
@@ -9,7 +8,7 @@
 	/// </summary>
 	/// <typeparam name="VIEW">The type of the view.</typeparam>
 	/// <typeparam name="PROJECTION">The type of the projection.</typeparam>
-	public class Camera<VIEW, PROJECTION> : NotifyPropertyChanged, INotifyingTransform where VIEW : INotifyPropertyChanged, ITransformation where PROJECTION : INotifyPropertyChanged, ITransformation
+	public class Camera<VIEW, PROJECTION> : NotifyPropertyChanged, INotifyingTransform where VIEW : INotifyingTransform where PROJECTION : INotifyingTransform
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Camera{VIEW, PROJECTION}"/> class.

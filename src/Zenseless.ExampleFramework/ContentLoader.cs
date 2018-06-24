@@ -6,6 +6,7 @@
 	using Zenseless.Patterns;
 	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
+	using System.Diagnostics;
 
 	/// <summary>
 	/// A content loader for OpenGL resources
@@ -86,7 +87,9 @@
 		{
 			try
 			{
-				return contentManager.Load<TYPE>(names);
+				var instance = contentManager.Load<TYPE>(names);
+				Debug.WriteLine($"Load of '{names.Combine()}' into {typeof(TYPE).FullName}.");
+				return instance;
 			}
 			catch (NamedShaderException e)
 			{
