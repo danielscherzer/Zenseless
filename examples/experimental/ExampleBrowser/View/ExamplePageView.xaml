@@ -5,7 +5,7 @@
 			 xmlns:WpfOpenGL="clr-namespace:WpfOpenGlControl;assembly=WpfOpenGlControl">
 	<Grid>
 		<WpfOpenGL:WpfOpenGLControl HasSharedContext="false" 
-			cal:Message.Attach="[Event GlRender] = [Action GlRender]" 
-			IsRenderLoopActivated="{Binding IsRenderLoopActivated}"/>
+			cal:Message.Attach="[Event GlRender] = [Action GlRender];" 
+			IsRenderLoopActivated="{Binding IsRenderLoopActivated}" />
 	</Grid>
 </UserControl>

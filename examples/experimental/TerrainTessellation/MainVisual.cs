@@ -13,14 +13,14 @@
 		{
 			renderState.Set(new DepthTest(true));
 
-			shader = contentLoader.Load<IShaderProgram>("shader.*");
+			shader = contentLoader.Load<IShaderProgram>("TerrainTessellation.*");
 			shader.Activate();
 
 			GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 			GL.PatchParameter(PatchParameterInt.PatchVertices, 4);
 		}
 
-		public Camera<FirstPerson, Perspective> Camera { get; } = new Camera<FirstPerson, Perspective>(new FirstPerson(new Vector3(18, 0, 30)), new Perspective(70, 0.01f, 300f));
+		public Camera<FirstPerson, Perspective> Camera { get; } = new Camera<FirstPerson, Perspective>(new FirstPerson(new Vector3(36, 0.1f, 30)), new Perspective(70, 0.01f, 300f));
 		private readonly int instanceSqrt = 100;
 
 		public void Draw()

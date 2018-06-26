@@ -11,5 +11,10 @@
 		public virtual void Update()
 		{
 		}
+
+		public virtual void Resize(int width, int height)
+		{
+
+		}
 	}
 }

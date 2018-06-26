@@ -51,6 +51,5 @@
 			instance.Update();
 			instance.Render();
 		}
-
 	}
 }

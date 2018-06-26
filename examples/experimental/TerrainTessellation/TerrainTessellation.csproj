@@ -7,7 +7,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Example</RootNamespace>
-    <AssemblyName>DisplacementMapping</AssemblyName>
+    <AssemblyName>TerrainTessellation</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -37,7 +37,7 @@
   <ItemGroup>
     <Compile Include="AssemblyConfig.cs" />
     <Compile Include="MainVisual.cs" />
-    <Compile Include="DisplacementMappingExample.cs" />
+    <Compile Include="TerrainTessellationExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -45,8 +45,8 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\shader.frag" />
-    <EmbeddedResource Include="Content\shader.vert" />
+    <EmbeddedResource Include="Content\TerrainTessellation.frag" />
+    <EmbeddedResource Include="Content\TerrainTessellation.vert" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="OpenTK">
@@ -83,13 +83,10 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\shader.tesc" />
+    <EmbeddedResource Include="Content\TerrainTessellation.tesc" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\shader.tese" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Content\noise2D.glsl" />
+    <EmbeddedResource Include="Content\TerrainTessellation.tese" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

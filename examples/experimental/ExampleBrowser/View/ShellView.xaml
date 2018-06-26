@@ -36,7 +36,7 @@
 		<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 		<StackPanel Grid.Column="2" Orientation="Vertical">
 			<ToggleButton IsChecked="{Binding IsRunning}">Time is running</ToggleButton>
-			<exTool:PropertyGrid SelectedObject="{Binding ActiveItem.Example}"  />
+			<exTool:PropertyGrid SelectedObject="{Binding ActiveItem.Example}" />
 				<!--cal:Message.Attach="[Event PropertyValueChanged] = [Action Invalidate]"--> 		
 		</StackPanel>
 	</Grid>

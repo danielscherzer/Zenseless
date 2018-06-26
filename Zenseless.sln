@@ -157,7 +157,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiledLevel", "examples\expe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseTiled", "examples\CG\ExerciseTiled\ExerciseTiled.csproj", "{9C9EBB6A-1C59-4437-A85C-6E6C0E5771EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplacementMapping", "examples\experimental\DisplacementMapping\DisplacementMapping.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrainTessellation", "examples\experimental\TerrainTessellation\TerrainTessellation.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompoundTransformationExample", "examples\experimental\CompoundTransformationExample\CompoundTransformationExample.csproj", "{97D9BF95-9CB1-47FC-8F8E-E6FA05351133}"
 EndProject

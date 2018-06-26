@@ -12,10 +12,8 @@
 	using Zenseless.Patterns;
 	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
-	using System.Threading;
 	using System.Reflection;
 	using OpenTK.Graphics;
-	using OpenTK.Graphics.OpenGL4;
 
 	/// <summary>
 	/// Intended for use for small example programs in the <see cref="Zenseless"/> framework
@@ -68,8 +66,6 @@
 			gameWindow.RenderFrame += GameWindow_RenderFrame;
 			//register callback for resizing of window
 			gameWindow.Resize += GameWindow_Resize;
-			gameWindow.FocusedChanged += GameWindow_FocusedChanged;
-			gameWindow.WindowStateChanged += GameWindow_WindowStateChanged;
 
 			var contentLoader = new ContentLoader();
 			beforeRenderingCallbacks.Add(contentLoader);
@@ -150,7 +146,6 @@
 		private GameWindow gameWindow;
 		private List<IAfterRendering> afterRenderingCallbacks = new List<IAfterRendering>();
 		private List<IBeforeRendering> beforeRenderingCallbacks = new List<IBeforeRendering>();
-		private bool slowDownActive = false;
 		private readonly DebuggerGL debugger;
 
 		private void CreateIOCcontainer()
@@ -204,47 +199,6 @@
 			Update?.Invoke((float)gameWindow.TargetUpdatePeriod);
 		}
 		
-		private void GameWindow_FocusedChanged(object sender, EventArgs e)
-		{
-			if (gameWindow.Focused)
-			{
-				gameWindow.UpdateFrame -= Chilling;
-			}
-			else
-			{
-				gameWindow.UpdateFrame += Chilling;
-			}
-		}
-
-		private void GameWindow_WindowStateChanged(object sender, EventArgs e)
-		{
-			if (WindowState.Minimized == gameWindow.WindowState)
-			{
-				gameWindow.RenderFrame -= GameWindow_RenderFrame;
-				gameWindow.UpdateFrame -= GameWindow_UpdateFrame;
-				gameWindow.UpdateFrame += Chilling;
-				slowDownActive = true;
-			}
-			else
-			{
-				//check if slow down is active
-				if (slowDownActive)
-				{
-					gameWindow.UpdateFrame -= Chilling;
-					//register a callback for updating the game logic
-					gameWindow.UpdateFrame += GameWindow_UpdateFrame;
-					//registers a callback for drawing a frame
-					gameWindow.RenderFrame += GameWindow_RenderFrame;
-					slowDownActive = false;
-				}
-			}
-		}
-
-		private void Chilling(object sender, FrameEventArgs e)
-		{
-			Thread.Sleep(100);
-		}
-
 		private void ProcessCommandLineArguments(ref double updateRenderRate)
 		{
 			var args = Environment.GetCommandLineArgs().Skip(1).Select(element => element.ToLowerInvariant());
