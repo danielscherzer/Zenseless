@@ -78,7 +78,7 @@
     <Compile Include="Examples\BlendingExample.cs" />
     <Compile Include="Examples\ColorExample.cs" />
     <Compile Include="Examples\Example.cs" />
-    <Compile Include="Examples\TerrainTessellationExample.cs" />
+    <Compile Include="Examples\TessellationExample.cs" />
     <Compile Include="Examples\TextureExample.cs" />
     <Compile Include="Examples\TextureMagFilterExample.cs" />
     <Compile Include="Examples\TextureMinFilterExample.cs" />
@@ -135,16 +135,16 @@
     <EmbeddedResource Include="Content\redship4.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\TerrainTessellation.frag" />
+    <EmbeddedResource Include="Content\Tessellation.frag" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\TerrainTessellation.tesc" />
+    <EmbeddedResource Include="Content\Tessellation.tesc" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\TerrainTessellation.tese" />
+    <EmbeddedResource Include="Content\Tessellation.tese" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\TerrainTessellation.vert" />
+    <EmbeddedResource Include="Content\Tessellation.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

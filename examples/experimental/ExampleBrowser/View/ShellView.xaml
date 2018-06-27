@@ -13,7 +13,7 @@
 			<Setter Property="ShowSearchBox" Value="False" />
 			<Setter Property="ShowSortOptions" Value="False" />
 			<Setter Property="ShowSummary" Value="False" />
-			<Setter Property="NameColumnWidth" Value="100"/>
+			<Setter Property="NameColumnWidth" Value="170"/>
 			<Setter Property="FontSize" Value="14"/>
 		</Style>
 	</Control.Resources>
@@ -21,7 +21,7 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="5" />
-			<ColumnDefinition Width="200" />
+			<ColumnDefinition Width="300" />
 			<!--<ColumnDefinition Width="{Binding ActiveItem.HasProperties, Converter={StaticResource WidthToVisibleConverter}}" />-->
 		</Grid.ColumnDefinitions>
 		<TabControl x:Name="Items" Grid.Column="0">
