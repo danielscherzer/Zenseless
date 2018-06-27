@@ -13,6 +13,7 @@ void main()
 {
 	color = vec4(1);
 #ifdef SOLUTION
-	color = vec4(i.position.z / i.position.w);
+	float delta = 0.001;
+	color = vec4(delta + i.position.z / i.position.w);
 #endif
 }

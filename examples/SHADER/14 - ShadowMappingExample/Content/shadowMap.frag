@@ -31,7 +31,7 @@ void main()
 	vec3 coord = i.position_LS.xyz / i.position_LS.w;
 	float depth = texture(texShadowMap, coord.xy * 0.5 + 0.5).r;
 	vec3 lighting = ambient;
-	if(depth + 0.001 > coord.z)
+	if(depth > coord.z)
 	{
 		vec3 toLight = normalize(lightPosition - i.position);
 		lighting += lambert(normalize(i.normal), toLight) * vec3(1);

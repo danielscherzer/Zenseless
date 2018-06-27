@@ -82,7 +82,7 @@ void main()
 	vec4 pos = interpolate(tcPos[0], tcPos[1], tcPos[2], tcPos[3]);
 	vec2 texCoord = interpolate(tcTexCoord[0], tcTexCoord[1], tcTexCoord[2], tcTexCoord[3]);
 	vec3 terrain = displacement(texCoord);
-	o.normal = terrain.yxz;
+	o.normal = terrain.yxz; //TODO: normal not correct yet
 	pos.y = terrain.x;
 
 	gl_Position = camera * pos;
