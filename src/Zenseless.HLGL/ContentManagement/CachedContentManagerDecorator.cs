@@ -73,7 +73,7 @@
 		/// </returns>
 		public TYPE Load<TYPE>(IEnumerable<string> names) where TYPE : class
 		{
-			var name = names.Combine();
+			var name = names.Combine(";");
 			if (instanceCache.TryGetValue(name, out var instance))
 			{
 				var typedInstance = instance as TYPE;

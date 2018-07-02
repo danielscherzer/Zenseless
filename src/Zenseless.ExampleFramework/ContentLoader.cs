@@ -88,7 +88,7 @@
 			try
 			{
 				var instance = contentManager.Load<TYPE>(names);
-				Debug.WriteLine($"Load of '{names.Combine()}' into {typeof(TYPE).FullName}.");
+				Debug.WriteLine($"Load of '{names.Combine(";")}' into {typeof(TYPE).FullName}.");
 				return instance;
 			}
 			catch (NamedShaderException e)

@@ -22,7 +22,7 @@ void main()
 {
 	vec3 c = getMaterial(i.instanceID);
 	vec3 n = normalize(i.normal);
-	vec3 l = normalize(vec3(0, 1, 0));
+	vec3 l = normalize(vec3(1, 1, 0));
 	color =  vec4(max(dot(n, l), 0.1) * c, 1.0);
-	color =  vec4(c, 1.0);
+	color =  vec4(n, 1.0);
 }

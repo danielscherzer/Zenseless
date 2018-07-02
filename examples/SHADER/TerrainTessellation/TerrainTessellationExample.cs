@@ -16,7 +16,7 @@
 			window.GameWindow.AddWindowAspectHandling(visual.Camera.Projection);
 			var movementState = window.GameWindow.AddFirstPersonCameraEvents(visual.Camera.View);
 
-			window.Update += (dt) => visual.Camera.View.ApplyRotatedMovement(movementState.movement * 3 * dt);
+			window.Update += (dt) => visual.Camera.View.ApplyRotatedMovement(movementState.movement * 30 * dt);
 			var sampleSeries = new ExponentialSmoothing(0.01);
 			QueryObject timeQuery = new QueryObject();
 			window.Render += () =>

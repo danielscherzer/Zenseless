@@ -22,22 +22,25 @@
 		}
 
 		/// <summary>
-		/// Returns a <see cref="string" /> that represents this instance.
+		/// Returns a <see cref="string" /> that is the concatenation of the input strings.
 		/// </summary>
-		/// <param name="strings">The strings.</param>
-		/// <param name="delimiter">The delimiter.</param>
+		/// <param name="inputStrings">The input strings.</param>
+		/// <param name="delimiter">The delimiter (can be <seealso cref="string.Empty"/> if no delimiter is wanted)</param>
 		/// <returns>
-		/// A <see cref="string" /> that represents this instance.
+		/// A concatenated <see cref="string" /> that represents this instance.
 		/// </returns>
-		public static string Combine(this IEnumerable<string> strings, string delimiter = ";")
+		public static string Combine(this IEnumerable<string> inputStrings, string delimiter)
 		{
 			var result = new StringBuilder();
-			foreach (var name in strings)
+			foreach (var name in inputStrings)
 			{
 				result.Append(name);
 				result.Append(delimiter);
 			}
-			result.Remove(result.Length - delimiter.Length, delimiter.Length);
+			if (delimiter.Length > 0)
+			{
+				result.Remove(result.Length - delimiter.Length, delimiter.Length);
+			}
 			return result.ToString();
 		}
 	}

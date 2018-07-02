@@ -67,7 +67,7 @@
 			if (GetIncludeCode == null) throw new ArgumentNullException(nameof(GetIncludeCode));
 
 			var lines = shaderCode.Split(new[] { '\n' }, StringSplitOptions.None); //if UNIX style line endings still working so do not use Envirnoment.NewLine
-			var pattern = @"^\s*#include\s+""([^""]+)"""; //match everything inside " except " so we get shortest ".+" match 
+			var pattern = @"#include\s+""([^""]+)"""; //match everything inside " except " so we get shortest ".+" match 
 			int lineNr = 1;
 			foreach (var line in lines)
 			{

@@ -68,12 +68,12 @@ vec3 noised( in vec2 p )
 
 vec3 displacement(vec2 coord)
 {
-	vec3 d = noised(coord * 5);
-	d += noised(coord * 20) * 0.5;
-	d += noised(coord * 40) * 0.25;
-	d += noised(coord * 500) * 0.01;
-	d *= 4.5;
-	d = max(d, -0.8);
+	vec3 d = noised(coord * 100);
+//	d += noised(coord * 20) * 0.5;
+//	d += noised(coord * 40) * 0.25;
+//	d += noised(coord * 500) * 0.01;
+//	d *= 20.5;
+//	d = max(d, -0.8);
 	return d;
 }
 
@@ -82,7 +82,7 @@ void main()
 	vec4 pos = interpolate(tcPos[0], tcPos[1], tcPos[2], tcPos[3]);
 	vec2 texCoord = interpolate(tcTexCoord[0], tcTexCoord[1], tcTexCoord[2], tcTexCoord[3]);
 	vec3 terrain = displacement(texCoord);
-	o.normal = terrain.yxz; //TODO: normal not correct yet
+	o.normal = normalize( vec3(-terrain.y, 1.0, -terrain.z) );
 	pos.y = terrain.x;
 
 	gl_Position = camera * pos;
