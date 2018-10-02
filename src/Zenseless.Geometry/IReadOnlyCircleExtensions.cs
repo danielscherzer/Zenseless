@@ -31,7 +31,6 @@ namespace Zenseless.Geometry
 		{
 			var rSum = circleB.Radius + circleA.Radius;
 			var diff = circleB.Center - circleA.Center;
-			var ll = diff.LengthSquared();
 			return rSum * rSum > diff.LengthSquared();
 		}
 	}

@@ -102,6 +102,6 @@ namespace Zenseless.HLGL
 		/// <typeparam name="DATA">The type of the ata.</typeparam>
 		/// <param name="name">The name.</param>
 		/// <param name="uniforms">The uniforms.</param>
-		void UpdateUniforms<DATA>(string name, DATA uniforms) where DATA : struct;
+		void UpdateUniformBuffer<DATA>(string name, DATA uniforms) where DATA : struct;
 	}
 }

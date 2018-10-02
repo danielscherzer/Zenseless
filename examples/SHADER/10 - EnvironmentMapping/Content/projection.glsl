@@ -1,3 +1,5 @@
+//?#version 120
+
 const float PI = 3.14159265359;
 
 vec2 projectLongLat(vec3 direction) {

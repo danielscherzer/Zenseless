@@ -33,6 +33,7 @@
 			ShaderProgram = shader;
 			Drawable = drawable;
 			TextureBindings = textureBindings;
+			uniforms = new HashSet<IUniform>(new UniformComparer());
 		}
 
 		/// <summary>
@@ -58,6 +59,15 @@
 		/// The texture bindings.
 		/// </value>
 		public IEnumerable<TextureBinding> TextureBindings { get; }
+
+		/// <summary>
+		/// Sets an uniform.
+		/// </summary>
+		public void SetUniform(IUniform uniform)
+		{
+			uniforms.Remove(uniform);
+			uniforms.Add(uniform);
+		}
 
 		/// <summary>
 		/// Sets the uniform.
@@ -115,6 +125,10 @@
 		public void Draw()
 		{
 			ShaderProgram.Activate();
+			foreach(var uniform in uniforms)
+			{
+				uniform.Update(ShaderProgram);
+			}
 			if (TextureBindings is null)
 			{
 				Drawable.Draw();
@@ -127,5 +141,13 @@
 			}
 			ShaderProgram.Deactivate();
 		}
+
+		private class UniformComparer : IEqualityComparer<IUniform>
+		{
+			public bool Equals(IUniform x, IUniform y) => string.Equals(x.Name, y.Name);
+
+			public int GetHashCode(IUniform obj) => obj.Name.GetHashCode();
+		}
+		private HashSet<IUniform> uniforms;
 	}
 }

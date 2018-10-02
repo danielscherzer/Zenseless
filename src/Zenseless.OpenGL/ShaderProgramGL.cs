@@ -7,7 +7,6 @@
 	using Zenseless.Patterns;
 	using Zenseless.HLGL;
 	using ShaderType = HLGL.ShaderType;
-	using TKShaderType = OpenTK.Graphics.OpenGL4.ShaderType;
 
 	/// <summary>
 	/// OpenGL shader program class
@@ -93,12 +92,17 @@
 		/// <exception cref="ArgumentOutOfRangeException">Unknown ShaderResourceType</exception>
 		public int GetResourceLocation(ShaderResourceType resourceType, string name)
 		{
-			switch(resourceType)
+			int GetResourceIndex(ProgramInterface type)
+			{
+				return GL.GetProgramResourceIndex(ProgramID, type, name);
+			}
+
+			switch (resourceType)
 			{
 				case ShaderResourceType.Attribute: return GL.GetAttribLocation(ProgramID, name);
-				case ShaderResourceType.UniformBuffer: return GetResourceIndex(name, ProgramInterface.UniformBlock);
-				case ShaderResourceType.RWBuffer: return GetResourceIndex(name, ProgramInterface.ShaderStorageBlock);
-				case ShaderResourceType.Uniform: return GetResourceIndex(name, ProgramInterface.Uniform);
+				case ShaderResourceType.UniformBuffer: return GetResourceIndex(ProgramInterface.UniformBlock);
+				case ShaderResourceType.RWBuffer: return GetResourceIndex(ProgramInterface.ShaderStorageBlock);
+				case ShaderResourceType.Uniform: return GetResourceIndex(ProgramInterface.Uniform);
 				default: throw new ArgumentOutOfRangeException("Unknown ShaderResourceType");
 			}
 		}
@@ -118,38 +122,41 @@
 		}
 
 		/// <summary>
-		/// Set int Uniform on active shader. The correct shader has to be activated first!
+		/// Set int Uniform on active shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="value">The value to set.</param>
 		/// <exception cref="NotImplementedException"></exception>
 		public void Uniform(string name, int value)
 		{
-			GL.ProgramUniform1(ProgramID, GetResourceLocation(ShaderResourceType.Uniform, name), value);
+			var loc = GetResourceLocation(ShaderResourceType.Uniform, name);
+			GL.ProgramUniform1(ProgramID, loc, value);
 		}
 
 		/// <summary>
-		/// Set float Uniform on shader.
+		/// Set float Uniform on active shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="value">The value to set.</param>
 		public void Uniform(string name, float value)
 		{
-			GL.ProgramUniform1(ProgramID, GetResourceLocation(ShaderResourceType.Uniform, name), value);
+			var loc = GetResourceLocation(ShaderResourceType.Uniform, name);
+			GL.ProgramUniform1(ProgramID, loc, value);
 		}
 
 		/// <summary>
-		/// Set Vector2 Uniform on shader.
+		/// Set Vector2 Uniform on active shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="vector">The vector.</param>
 		public void Uniform(string name, in Vector2 vector)
 		{
-			GL.ProgramUniform2(ProgramID, GetResourceLocation(ShaderResourceType.Uniform, name), vector.X, vector.Y);
+			var loc = GetResourceLocation(ShaderResourceType.Uniform, name);
+			GL.ProgramUniform2(ProgramID, loc, vector.X, vector.Y);
 		}
 
 		/// <summary>
-		/// Set Vector3 Uniform.
+		/// Set Vector3 Uniform on active shader.
 		/// </summary>
 		/// <param name="location">The shader variable location.</param>
 		/// <param name="vector">The vector.</param>
@@ -159,27 +166,29 @@
 		}
 
 		/// <summary>
-		/// Set Vector3 Uniform on shader.
+		/// Set Vector3 Uniform on active shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="vector">The vector.</param>
 		public void Uniform(string name, in Vector3 vector)
 		{
-			Uniform(GetResourceLocation(ShaderResourceType.Uniform, name), vector);
+			var loc = GetResourceLocation(ShaderResourceType.Uniform, name);
+			Uniform(loc, vector);
 		}
 
 		/// <summary>
-		/// Set Vector4 Uniform on shader.
+		/// Set Vector4 Uniform on active shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="vector">The vector.</param>
 		public void Uniform(string name, in Vector4 vector)
 		{
-			GL.ProgramUniform4(ProgramID, GetResourceLocation(ShaderResourceType.Uniform, name), vector.X, vector.Y, vector.Z, vector.W);
+			var loc = GetResourceLocation(ShaderResourceType.Uniform, name);
+			GL.ProgramUniform4(ProgramID, loc, vector.X, vector.Y, vector.Z, vector.W);
 		}
 
 		/// <summary>
-		/// Set matrix uniforms.
+		/// Set matrix uniforms on active shader.
 		/// </summary>
 		/// <param name="location">The shader variable location.</param>
 		/// <param name="matrix">The input matrix.</param>
@@ -203,7 +212,7 @@
 		}
 
 		/// <summary>
-		/// Set matrix uniforms on shader.
+		/// Set matrix uniforms on shader on active shader.
 		/// </summary>
 		/// <param name="name">The uniform variable name.</param>
 		/// <param name="matrix">The input matrix.</param>
@@ -228,17 +237,6 @@
 		/// The shader ids used for linking
 		/// </summary>
 		private List<ShaderGL> shaders = new List<ShaderGL>();
-
-		/// <summary>
-		/// Gets the index of the resource.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="type">The type.</param>
-		/// <returns></returns>
-		private int GetResourceIndex(string name, ProgramInterface type)
-		{
-			return GL.GetProgramResourceIndex(ProgramID, type, name);
-		}
 
 		/// <summary>
 		/// Removes all attached shaders.

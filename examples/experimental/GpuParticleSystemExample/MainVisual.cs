@@ -42,6 +42,7 @@ namespace Example
 			//camera.Elevation += 0.1f;
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+			shaderProgram.Activate();
 			shaderProgram.Uniform("camera", camera);
 			shaderProgram.Uniform(nameof(deltaTime), deltaTime);
 			shaderProgram.Uniform(nameof(source), source);
@@ -50,7 +51,6 @@ namespace Example
 			shaderProgram.Uniform("pointResolutionScale", smallerWindowSideResolution * 0.07f);
 			var bindingIndex = shaderProgram.GetResourceLocation(ShaderResourceType.RWBuffer, "BufferParticle");
 			bufferParticles.ActivateBind(bindingIndex);
-			shaderProgram.Activate();
 			GL.DrawArrays(PrimitiveType.Points, 0, particleCount);
 			shaderProgram.Deactivate();
 			bufferParticles.Deactivate();

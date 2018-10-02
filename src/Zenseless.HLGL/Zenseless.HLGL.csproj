@@ -60,11 +60,14 @@
     <Compile Include="ContentManagement\NamedStreamLoaderCollection.cs" />
     <Compile Include="ContentManagement\NewCacheEntryEventArgs.cs" />
     <Compile Include="ContentManagement\ContentSearchDirectoryAttribute.cs" />
+    <Compile Include="Shader\FloatUniform.cs" />
     <Compile Include="handler\IAfterRendering.cs" />
     <Compile Include="handler\IBeforeRendering.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="IRenderSurface.cs" />
-    <Compile Include="ShaderExtensions.cs" />
+    <Compile Include="Shader\IUniform.cs" />
+    <Compile Include="Shader\ShaderExtensions.cs" />
+    <Compile Include="Shader\Vec3Uniform.cs" />
     <Compile Include="StateManagement\ActiveRenderSurface.cs" />
     <Compile Include="StateManagement\ActiveShader.cs" />
     <Compile Include="StateManagement\FaceCullingMode.cs" />
@@ -82,7 +85,7 @@
     <Compile Include="StateManagement\DepthTest.cs" />
     <Compile Include="StateManagement\IRenderState.cs" />
     <Compile Include="deprecated\IOldRenderSurface.cs" />
-    <Compile Include="IShaderProgram.cs" />
+    <Compile Include="Shader\IShaderProgram.cs" />
     <Compile Include="ITexture.cs" />
     <Compile Include="ITexture2D.cs" />
     <Compile Include="ITexture2dArray.cs" />
@@ -92,8 +95,8 @@
     <Compile Include="StateManagement\LineWidth.cs" />
     <Compile Include="StateManagement\PointSprite.cs" />
     <Compile Include="StateManagement\RenderState.cs" />
-    <Compile Include="ShaderException.cs" />
-    <Compile Include="ShaderLog.cs" />
+    <Compile Include="Shader\ShaderException.cs" />
+    <Compile Include="Shader\ShaderLog.cs" />
     <Compile Include="SpriteSheet.cs" />
     <Compile Include="deprecated\IResource.cs" />
     <Compile Include="StateManagement\IState.cs" />

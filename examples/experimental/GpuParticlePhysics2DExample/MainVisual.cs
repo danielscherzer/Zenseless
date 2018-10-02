@@ -31,7 +31,7 @@ namespace Example
 
 		public void Render()
 		{
-			paintObstacles.UpdateUniforms(nameof(MouseState), this.MouseState);
+			paintObstacles.UpdateUniformBuffer(nameof(MouseState), this.MouseState);
 			paintObstacles.SetInputTexture("texObstacles", imageObstaclesLastFrame);
 			imageObstacles.Draw(paintObstacles);
 
@@ -44,8 +44,8 @@ namespace Example
 			drawParticles.SetInputTexture("texObstacles", imageObstacles);
 			frameBuffer.Draw(paintObstacles);
 
-			var uniforms = new Uniforms((float)(random.NextDouble() * 2 - 1), (float)particleCount);
-			drawParticles.UpdateUniforms("Uniforms", uniforms);
+			var uniformBlock = new UniformBock((float)(random.NextDouble() * 2 - 1), (float)particleCount);
+			drawParticles.UpdateUniformBuffer("Uniforms", uniformBlock);
 			frameBuffer.Draw(drawParticles);
 		}
 
@@ -78,12 +78,12 @@ namespace Example
 		}
 	}
 
-	struct Uniforms
+	struct UniformBock
 	{
 		private readonly float v;
 		private readonly float particleCount;
 
-		public Uniforms(float v, float particleCount)
+		public UniformBock(float v, float particleCount)
 		{
 			this.v = v;
 			this.particleCount = particleCount;

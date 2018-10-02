@@ -49,14 +49,14 @@
 		{
 			surfaceGeometry.Clear();
 
-			uniforms.camera = camera.Matrix;
-			suzanne.UpdateUniforms(nameof(Uniforms), uniforms);
+			uniformBlock.camera = camera.Matrix;
+			suzanne.UpdateUniformBuffer(nameof(UniformBlock), uniformBlock);
 			surfaceGeometry.Draw(suzanne);
 
 			frameBuffer.Draw(copyQuad);
 		}
 
-		private struct Uniforms
+		private struct UniformBlock
 		{
 			public Matrix4x4 camera; //memory layout is row-major so transposed to GL
 		};
@@ -64,7 +64,7 @@
 		private IRenderContext context;
 		private IOldRenderSurface frameBuffer;
 		private IOldRenderSurface surfaceGeometry;
-		private Uniforms uniforms = new Uniforms();
+		private UniformBlock uniformBlock = new UniformBlock();
 		private DrawConfiguration suzanne = new DrawConfiguration();
 		private DrawConfiguration copyQuad = new DrawConfiguration();
 	}

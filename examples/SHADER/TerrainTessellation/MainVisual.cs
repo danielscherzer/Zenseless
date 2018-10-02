@@ -16,7 +16,7 @@
 			shader = contentLoader.Load<IShaderProgram>("TerrainTessellation.*");
 			shader.Activate();
 
-			//GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+			GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 			GL.PatchParameter(PatchParameterInt.PatchVertices, 4);
 		}
 

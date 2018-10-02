@@ -1,5 +1,6 @@
 #version 430 core
 #include "projection.glsl"
+//!#define SOLUTION
 
 uniform sampler2D envMap;
 
@@ -14,7 +15,7 @@ in Data
 out vec4 color;
 
 #ifdef SOLUTION
-uniform float reflective = 0f;
+uniform float reflective = 0;
 #endif
 
 void main() 

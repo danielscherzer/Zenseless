@@ -36,7 +36,7 @@
 			Debug.Indent();
 			Debug.WriteLine(errorMessage);
 			Debug.Unindent();
-			if(DebugSeverity.DebugSeverityNotification != severity) throw new GLException($"{meta} {errorMessage}");
+			//if(DebugSeverity.DebugSeverityNotification != severity) throw new GLException($"{meta} {errorMessage}");
 		}
 	}
 }

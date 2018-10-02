@@ -3,7 +3,7 @@
 uniform float deltaTime;
 uniform mat4x4 camera;
 uniform int particleCount;
-uniform float pointResolutionScale = 1f;
+uniform float pointResolutionScale = 1;
 uniform vec3 source = vec3(0);
 uniform vec3 acceleration;
 uniform float lifeTime = 10;

@@ -5,8 +5,6 @@
 	using System.Linq;
 	using System.Numerics;
 	using TiledSharp;
-	using Zenseless.Geometry;
-	using Zenseless.HLGL;
 
 	public class TileMap
 	{
