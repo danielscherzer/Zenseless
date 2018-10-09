@@ -66,7 +66,9 @@
     <Compile Include="IDrawable.cs" />
     <Compile Include="IRenderSurface.cs" />
     <Compile Include="Shader\IUniform.cs" />
+    <Compile Include="Shader\Mat4Uniform.cs" />
     <Compile Include="Shader\ShaderExtensions.cs" />
+    <Compile Include="Shader\TransformUniform.cs" />
     <Compile Include="Shader\Vec3Uniform.cs" />
     <Compile Include="StateManagement\ActiveRenderSurface.cs" />
     <Compile Include="StateManagement\ActiveShader.cs" />

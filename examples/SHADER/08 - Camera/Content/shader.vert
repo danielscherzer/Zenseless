@@ -1,4 +1,4 @@
-#version 430 core
+#version 410 core
 
 uniform float time;
 uniform mat4 camera;

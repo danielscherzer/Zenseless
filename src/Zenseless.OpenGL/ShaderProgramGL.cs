@@ -102,7 +102,7 @@
 				case ShaderResourceType.Attribute: return GL.GetAttribLocation(ProgramID, name);
 				case ShaderResourceType.UniformBuffer: return GetResourceIndex(ProgramInterface.UniformBlock);
 				case ShaderResourceType.RWBuffer: return GetResourceIndex(ProgramInterface.ShaderStorageBlock);
-				case ShaderResourceType.Uniform: return GetResourceIndex(ProgramInterface.Uniform);
+				case ShaderResourceType.Uniform: return GL.GetUniformLocation(ProgramID, name);
 				default: throw new ArgumentOutOfRangeException("Unknown ShaderResourceType");
 			}
 		}

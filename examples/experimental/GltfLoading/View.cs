@@ -1,6 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
 using System.IO;
+using Zenseless.Geometry;
 using Zenseless.HLGL;
 
 namespace Example
@@ -10,8 +11,10 @@ namespace Example
 		private readonly IShaderProgram shader;
 		private readonly Action draw;
 
-		public View(IContentLoader contentLoader)
+		public View(IContentLoader contentLoader, IRenderContext renderContext)
 		{
+			renderContext.RenderState.Set(new DepthTest(true));
+			//renderContext.RenderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
 			shader = contentLoader.Load<IShaderProgram>("shader.*");
 			//using (var stream = contentLoader.Load<Stream>("AnimatedTriangle.gltf"))
 			//using (var stream = contentLoader.Load<Stream>("Box.gltf"))
@@ -22,10 +25,11 @@ namespace Example
 			}
 		}
 
-		internal void Draw()
+		internal void Draw(ITransformation camera)
 		{
-			GL.Clear(ClearBufferMask.ColorBufferBit);
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shader.Activate();
+			shader.Uniform(nameof(camera), camera);
 			draw();
 			shader.Deactivate();
 		}

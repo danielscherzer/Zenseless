@@ -11,7 +11,7 @@
 		[STAThread]
 		private static void Main()
 		{
-			var window = new ExampleWindow();
+			var window = new ExampleWindow(debug:true);
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			window.GameWindow.AddWindowAspectHandling(visual.Camera.Projection);
 			var movementState = window.GameWindow.AddFirstPersonCameraEvents(visual.Camera.View);

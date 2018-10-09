@@ -35,6 +35,8 @@
 
 		public void Draw(ITransformation camera)
 		{
+			var cameraUniform = new TransformUniform(nameof(camera), camera);
+
 			mrtSurface.Draw(() =>
 			{
 				GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -42,7 +44,7 @@
 				renderState.Set(new DepthTest(true));
 				foreach (var vis in meshVisuals)
 				{
-					vis.SetUniform(nameof(camera), camera);
+					vis.SetUniform(cameraUniform); //TODO: only once per shader
 					vis.Draw();
 				}
 				renderState.Set(new DepthTest(false));
@@ -52,9 +54,7 @@
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			renderState.Set(BlendStates.Additive);
 			renderState.Set(new FaceCullingModeState(FaceCullingMode.FRONT_SIDE)); // important to cull for light volume rendering, otherwise we would have lighting partly twice applied and to cull front face, otherwise near clipping artifacts
-			lightsVisual.SetUniform(nameof(camera), camera);
-			lightsVisual.SetUniform("lightIntensity", LightIntensity);
-			lightsVisual.SetUniform("lightRange", LightRange);
+			lightsVisual.SetUniform(cameraUniform);
 			lightsVisual.Draw();
 			renderState.Set(BlendStates.Opaque);
 		}
@@ -72,6 +72,8 @@
 				new TextureBinding(nameof(texPosition), texPosition),
 			};
 			lightsVisual = new MeshVisual(lightsVisual.Drawable, lightsVisual.ShaderProgram, bindings);
+			lightsVisual.SetUniform(new FloatUniform("lightIntensity", LightIntensity));
+			lightsVisual.SetUniform(new FloatUniform("lightRange", LightRange));
 		}
 
 		private readonly IRenderState renderState;

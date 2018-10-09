@@ -1,4 +1,5 @@
 ﻿using Zenseless.ExampleFramework;
+using Zenseless.OpenGL;
 
 namespace Example
 {
@@ -7,8 +8,9 @@ namespace Example
 		static void Main(string[] args)
 		{
 			var window = new ExampleWindow(debug:true);
-			var view = new View(window.ContentLoader);
-			window.Render += () => view.Draw();
+			var view = new View(window.ContentLoader, window.RenderContext);
+			var camera = window.GameWindow.CreateOrbitingCameraController(1000f, 70f, 1f, 2000f);
+			window.Render += () => view.Draw(camera);
 			window.Run();
 
 		}

@@ -30,7 +30,7 @@
 		internal void Render(ITransformation camera)
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			mountain.SetUniform(nameof(camera), camera);
+			mountain.SetUniform(new TransformUniform(nameof(camera), camera));
 			mountain.Draw();
 		}
 

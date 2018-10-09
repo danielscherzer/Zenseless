@@ -12,7 +12,7 @@
 		{
 			string sVertexShader = @"
 				#version 430 core				
-				out flat vec3 pos; 
+				out vec3 pos; 
 				void main() {
 					const vec3 vertices[4] = vec3[4](vec3(-0.9, -0.8, 0.5),
                                     vec3( 0.9, -0.9, 0.5),
@@ -23,7 +23,7 @@
 				}";
 			string sFragmentShd = @"
 			#version 430 core
-			in flat vec3 pos;
+			in vec3 pos;
 			out vec4 color;
 			void main() {
 				color = vec4(pos + 1.0, 1.0);

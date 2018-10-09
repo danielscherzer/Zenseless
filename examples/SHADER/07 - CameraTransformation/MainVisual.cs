@@ -47,9 +47,20 @@ namespace Example
 
 		public void Update(float updatePeriod)
 		{
-			//TODO student: use CameraDistance, CameraAzimuth, CameraElevation
-			var p = Matrix4x4.CreatePerspectiveFieldOfView(0.5f, 1.0f, 0.1f, 100.0f);
-			camera = p;
+			//TODO student: use CameraDistance, CameraAzimuth, CameraElevation to create an orbiting camera
+			var view = Matrix4x4.Identity;
+#if SOLUTION
+			var mtxDistance = Matrix4x4.CreateTranslation(0, 0, -CameraDistance);
+			var mtxElevation = Matrix4x4.CreateRotationX(MathHelper.DegreesToRadians(CameraElevation));
+			var mtxAzimut = Matrix4x4.CreateRotationY(MathHelper.DegreesToRadians(CameraAzimuth));
+			view = mtxAzimut * mtxElevation * mtxDistance;
+#endif
+			var proj = Matrix4x4.CreatePerspectiveFieldOfView(0.5f, 1.0f, 0.1f, 100.0f);
+			//TODO student: use CreateOrthographic
+#if SOLUTION
+			proj = Matrix4x4.CreateOrthographic(10f, 10f, 0, 100f);
+#endif
+			camera = view * proj;
 		}
 
 		private const int particleCount = 500;

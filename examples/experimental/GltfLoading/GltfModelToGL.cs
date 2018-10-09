@@ -2,11 +2,13 @@
 {
 	using glTFLoader;
 	using glTFLoader.Schema;
+	using OpenTK.Graphics;
 	using OpenTK.Graphics.OpenGL4;
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.IO;
+	using System.Linq;
 	using System.Runtime.InteropServices;
 	using System.Text.RegularExpressions;
 	using Zenseless.HLGL;
@@ -16,12 +18,23 @@
 	{
 		private readonly Gltf gltf;
 		private readonly List<BufferObject> glBuffers;
+		private readonly Color4[] materials;
 
 		public GltfModelToGL(Stream stream)
 		{
 			gltf = Interface.LoadModel(stream);
 			glBuffers = CreateBuffers(gltf);
+			materials = CreateMaterials(gltf.Materials).ToArray();
 			//var nodes = from scene in gltf.Scenes select scene.Nodes;
+		}
+
+		private IEnumerable<Color4> CreateMaterials(Material[] materials)
+		{
+			foreach(var material in materials)
+			{
+				var baseColor = material.PbrMetallicRoughness.BaseColorFactor;
+				yield return new Color4(baseColor[0], baseColor[1], baseColor[2], baseColor[3]);
+			}
 		}
 
 		public Action CreateDrawCommand(IShaderProgram shaderProgram)
@@ -34,6 +47,7 @@
 					action += CreateDrawCall(primitive, shaderProgram);
 				}
 			}
+			action += () => GL.BindVertexArray(0);
 			return action;
 		}
 		private Action CreateDrawCall(MeshPrimitive primitive, IShaderProgram shaderProgram)
@@ -51,13 +65,14 @@
 					drawCommand = () => GL.DrawElements(primitiveType, accessor.Count, (DrawElementsType)accessor.ComponentType, accessor.ByteOffset);
 				}
 			}
+			var locColor = shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, "color");
 			foreach (var attribute in primitive.Attributes)
 			{
 				var accessor = gltf.Accessors[attribute.Value];
 				if (accessor.BufferView.HasValue)
 				{
-					var uniformName = attribute.Key.ToLowerInvariant();
-					var bindingID = shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, uniformName);
+					var attributeName = attribute.Key.ToLowerInvariant();
+					var bindingID = shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, attributeName);
 					if (-1 != bindingID)
 					{
 						glBuffers[accessor.BufferView.Value].Activate();
@@ -70,17 +85,20 @@
 				}
 			}
 			GL.BindVertexArray(0);
-			//GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-			//GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 			if (drawCommand is null)
 			{
 				drawCommand = () => GL.DrawArrays(primitiveType, 0, 3);
 			}
+
+			var color = primitive.Material.HasValue ? materials[primitive.Material.Value] : Color4.White;
+
 			return () =>
 			{
 				GL.BindVertexArray(idVAO);
+				GL.Uniform4(locColor, color);
 				drawCommand();
-				GL.BindVertexArray(0);
 			};
 		}
 

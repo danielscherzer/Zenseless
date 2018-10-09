@@ -26,8 +26,6 @@
 			var skySphere = sphere.Transform(Transformation.Scale(200f)).SwitchTriangleMeshWinding();
 			var shaderBackground = contentLoader.Load<IShaderProgram>("background.*");
 			visuals.Add(new MeshVisual(skySphere, shaderBackground, textureBinding));
-			//drawCalls.Add((t, pos) =>
-			//);
 
 #if SOLUTION
 			var shaderEnvMap = contentLoader.Load<IShaderProgram>("envMapping.*");
@@ -45,13 +43,12 @@
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			//var camera = new 
-			var cameraPos = new Vec3Uniform(nameof(cameraPosition), cameraPosition);
+			var cameraUniform = new TransformUniform(nameof(camera), camera);
+			var cameraPosUniform = new Vec3Uniform(nameof(cameraPosition), cameraPosition);
 			foreach (var visual in visuals)
 			{
-				var shader = visual.ShaderProgram;
-				shader.Uniform(nameof(camera), camera);
-				shader.Uniform(nameof(cameraPosition), cameraPosition);
+				visual.SetUniform(cameraPosUniform); //TODO: only per shader needed
+				visual.SetUniform(cameraUniform);
 				visual.Draw();
 			}
 		}

@@ -1,8 +1,6 @@
 ﻿namespace Zenseless.OpenGL
 {
-	using System;
 	using System.Collections.Generic;
-	using System.Numerics;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 
@@ -61,62 +59,12 @@
 		public IEnumerable<TextureBinding> TextureBindings { get; }
 
 		/// <summary>
-		/// Sets an uniform.
+		/// Sets an uniform persistently. It will be updated each time the visual is drawn.
 		/// </summary>
 		public void SetUniform(IUniform uniform)
 		{
 			uniforms.Remove(uniform);
 			uniforms.Add(uniform);
-		}
-
-		/// <summary>
-		/// Sets the uniform.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="value">The value.</param>
-		public void SetUniform(string name, float value)
-		{
-			ShaderProgram.Uniform(name, value);
-		}
-
-		/// <summary>
-		/// Sets the uniform.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="value">The value.</param>
-		public void SetUniform(string name, in Vector2 value)
-		{
-			ShaderProgram.Uniform(name, value);
-		}
-
-		/// <summary>
-		/// Sets the uniform.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="value">The value.</param>
-		public void SetUniform(string name, in Vector3 value)
-		{
-			ShaderProgram.Uniform(name, value);
-		}
-
-		/// <summary>
-		/// Sets the uniform.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="camera">The camera.</param>
-		public void SetUniform(string name, ITransformation camera)
-		{
-			ShaderProgram.Uniform(name, camera);
-		}
-
-		/// <summary>
-		/// Sets the uniform.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="value">The value.</param>
-		public void SetUniform(string name, in Vector4 value)
-		{
-			ShaderProgram.Uniform(name, value);
 		}
 
 		/// <summary>

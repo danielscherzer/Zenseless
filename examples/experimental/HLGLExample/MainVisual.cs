@@ -50,7 +50,7 @@
 			surfaceGeometry.Clear();
 
 			uniformBlock.camera = camera.Matrix;
-			suzanne.UpdateUniformBuffer(nameof(UniformBlock), uniformBlock);
+			suzanne.UpdateUniformBuffer("Uniforms", uniformBlock);
 			surfaceGeometry.Draw(suzanne);
 
 			frameBuffer.Draw(copyQuad);

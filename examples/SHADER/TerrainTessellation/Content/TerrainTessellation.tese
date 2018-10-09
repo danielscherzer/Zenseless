@@ -12,10 +12,11 @@ out Data
 	vec3 normal;
 } o;
 
+patch in int instanceID;
+
 in vec4 tcPos[gl_MaxPatchVertices];
 in vec2 tcTexCoord[gl_MaxPatchVertices];
 
-patch in int instanceID;
 
 vec2 interpolate(vec2 v1, vec2 v2, vec2 v3, vec2 v4)
 {
