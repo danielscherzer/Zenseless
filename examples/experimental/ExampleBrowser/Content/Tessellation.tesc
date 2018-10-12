@@ -1,7 +1,7 @@
 #version 420 core
 layout (vertices = 4) out;
-uniform float tesselationLevelInner = 1f;
-uniform float tesselationLevelOuter = 1f;
+uniform float tesselationLevelInner = 1.0;
+uniform float tesselationLevelOuter = 1.0;
 
 out vec4 tcPos[];
 
