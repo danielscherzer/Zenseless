@@ -1,5 +1,6 @@
 #version 430 core
 uniform mat4 camera;
+uniform mat4 world;
 
 in vec4 position;
 in vec3 normal;
@@ -13,6 +14,7 @@ out Data
 void main() 
 {
 	o.normal = normal;
-	o.position = position.xyz;
-	gl_Position = camera * position;
+	vec4 position_w = world * position;
+	o.position = position_w.xyz;
+	gl_Position = camera * position_w;
 }

@@ -18,10 +18,20 @@ namespace Example
 			shader = contentLoader.Load<IShaderProgram>("shader.*");
 			//using (var stream = contentLoader.Load<Stream>("AnimatedTriangle.gltf"))
 			//using (var stream = contentLoader.Load<Stream>("Box.gltf"))
-			using (var stream = contentLoader.Load<Stream>("2CylinderEngine.gltf"))
+			//using (var stream = contentLoader.Load<Stream>("2CylinderEngine.gltf"))
+			using (var stream = contentLoader.Load<Stream>("BrainStem.gltf"))
 			{
 				var gltf = new GltfModelToGL(stream);
-				draw = gltf.CreateDrawCommand(shader);
+				int UniformLoc(string name) => shader.GetResourceLocation(ShaderResourceType.Uniform, name);
+
+				int AttributeLoc(string name)
+				{
+					var attributeName = name.ToLowerInvariant();
+					return shader.GetResourceLocation(ShaderResourceType.Attribute, attributeName);
+				}
+				gltf.UpdateDrawCommands(UniformLoc, AttributeLoc);
+				var locWorld = shader.GetResourceLocation(ShaderResourceType.Uniform, "world");
+				draw = gltf.CreateTreeDrawCommand((m) => GL.UniformMatrix4(locWorld, true, ref m));
 			}
 		}
 
