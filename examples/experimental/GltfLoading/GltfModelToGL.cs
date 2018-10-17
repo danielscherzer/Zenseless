@@ -60,7 +60,25 @@
 			{
 				var node = gltf.Nodes[nodeId];
 				var localTransform = CreateLocalTransform(node);
-				var worldTransform = localTransform * transform;
+				var worldTransform = transform * localTransform;
+				if(node.Camera.HasValue)
+				{
+					var matrix = worldTransform.Inverted();
+					var camera = gltf.Cameras[node.Camera.Value];
+					if (camera.Orthographic != null)
+					{
+						var o = camera.Orthographic;
+						matrix *= Matrix4.CreateOrthographic(2f * o.Xmag, 2f * o.Ymag, o.Znear, o.Zfar);
+					}
+					if (camera.Perspective != null)
+					{
+						var p = camera.Perspective;
+						var perspective = Matrix4.CreatePerspectiveFieldOfView(p.Yfov, p.AspectRatio ?? 1f, p.Znear, p.Zfar ?? 1e6f);
+						//perspective.Transpose();
+						matrix = perspective * matrix;
+					}
+					Camera = matrix;
+				}
 				if (node.Mesh.HasValue)
 				{
 					drawCommand += () => updateWorldMatrix(worldTransform);
@@ -74,13 +92,15 @@
 		private Matrix4 CreateLocalTransform(glTFLoader.Schema.Node node)
 		{
 			var translation = Matrix4.CreateTranslation(node.Translation[0], node.Translation[1], node.Translation[2]);
+			translation.Transpose();
 			var rotation = Matrix4.CreateFromQuaternion(new Quaternion(node.Rotation[0], node.Rotation[1], node.Rotation[2], node.Rotation[3]));
+			rotation.Transpose();
 			var scale = Matrix4.CreateScale(node.Scale[0], node.Scale[1], node.Scale[2]);
 			var m = node.Matrix;
 			if(rotation != Matrix4.Identity) { }
 			var matrix = new Matrix4(m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15]);
 			matrix.Transpose();
-			return scale * rotation * translation * matrix;
+			return matrix * translation * rotation * scale;
 		}
 
 		private void Traverse(Zenseless.Geometry.Node parent, int[] nodes)
@@ -207,6 +227,8 @@
 				[Accessor.TypeEnum.MAT3] = 9,
 				[Accessor.TypeEnum.MAT4] = 16,
 			});
+
+		public Matrix4 Camera { get; private set; }
 
 		private static List<BufferObject> CreateBuffers(Gltf gltf)
 		{

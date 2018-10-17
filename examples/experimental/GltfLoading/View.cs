@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK;
+using OpenTK.Graphics.OpenGL4;
 using System;
 using System.IO;
 using Zenseless.Geometry;
@@ -10,6 +11,7 @@ namespace Example
 	{
 		private readonly IShaderProgram shader;
 		private readonly Action draw;
+		private Matrix4 camera;
 
 		public View(IContentLoader contentLoader, IRenderContext renderContext)
 		{
@@ -19,7 +21,9 @@ namespace Example
 			//using (var stream = contentLoader.Load<Stream>("AnimatedTriangle.gltf"))
 			//using (var stream = contentLoader.Load<Stream>("Box.gltf"))
 			//using (var stream = contentLoader.Load<Stream>("2CylinderEngine.gltf"))
-			using (var stream = contentLoader.Load<Stream>("BrainStem.gltf"))
+			//using (var stream = contentLoader.Load<Stream>("BrainStem.gltf"))
+			//using (var stream = File.OpenRead(@"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\Cameras\glTF-Embedded\Cameras.gltf"))
+			using (var stream = File.OpenRead(@"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\OrientationTest\glTF-Embedded\OrientationTest.gltf"))
 			{
 				var gltf = new GltfModelToGL(stream);
 				int UniformLoc(string name) => shader.GetResourceLocation(ShaderResourceType.Uniform, name);
@@ -32,6 +36,7 @@ namespace Example
 				gltf.UpdateDrawCommands(UniformLoc, AttributeLoc);
 				var locWorld = shader.GetResourceLocation(ShaderResourceType.Uniform, "world");
 				draw = gltf.CreateTreeDrawCommand((m) => GL.UniformMatrix4(locWorld, true, ref m));
+				camera = gltf.Camera;
 			}
 		}
 
@@ -40,6 +45,8 @@ namespace Example
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shader.Activate();
 			shader.Uniform(nameof(camera), camera);
+			var locCam = shader.GetResourceLocation(ShaderResourceType.Uniform, "camera");
+			//GL.UniformMatrix4(locCam, false, ref this.camera);
 			draw();
 			shader.Deactivate();
 		}
