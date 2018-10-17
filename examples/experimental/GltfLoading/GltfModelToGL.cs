@@ -12,24 +12,46 @@
 	using System.Linq;
 	using System.Runtime.InteropServices;
 	using System.Text.RegularExpressions;
-	using Zenseless.Geometry;
 	using Zenseless.OpenGL;
 
 	public class GltfModelToGL
 	{
+		public IEnumerable<Matrix4> Cameras => cameras;
+
 		private readonly Gltf gltf;
 		private readonly List<BufferObject> glBuffers;
 		private readonly Color4[] materials;
 		private List<Action> meshDrawCommands = new List<Action>();
 		private readonly Zenseless.Geometry.Node root;
 		private readonly List<Zenseless.Geometry.Node> scenes = new List<Zenseless.Geometry.Node>();
+		private List<Matrix4> cameras = new List<Matrix4>();
 
-		public GltfModelToGL(Stream stream)
+		public GltfModelToGL(Stream stream, Func<string, byte[]> externalReferenceSolver)
 		{
 			gltf = Interface.LoadModel(stream);
-			glBuffers = CreateBuffers(gltf);
+			var buffers = LoadByteBuffers(gltf, externalReferenceSolver);
+			glBuffers = CreateBuffers(gltf, buffers);
 			materials = CreateMaterials(gltf.Materials).ToArray();
-			root = new Zenseless.Geometry.Node(null);
+			LoadAnimations(gltf.Animations);
+			//root = new Zenseless.Geometry.Node(null);
+			//foreach (var scene in gltf.Scenes)
+			//{
+			//	Traverse(root, scene.Nodes);
+			//}
+			CalculateSceneBounds();
+		}
+
+		private void LoadAnimations(Animation[] animations)
+		{
+			if (animations is null) return;
+			foreach(var animation in animations)
+			{
+				//animation.
+			}
+		}
+
+		private void CalculateSceneBounds()
+		{
 			foreach (var scene in gltf.Scenes)
 			{
 				Traverse(root, scene.Nodes);
@@ -60,24 +82,21 @@
 			{
 				var node = gltf.Nodes[nodeId];
 				var localTransform = CreateLocalTransform(node);
-				var worldTransform = transform * localTransform;
+				var worldTransform = localTransform * transform;
 				if(node.Camera.HasValue)
 				{
-					var matrix = worldTransform.Inverted();
 					var camera = gltf.Cameras[node.Camera.Value];
 					if (camera.Orthographic != null)
 					{
 						var o = camera.Orthographic;
-						matrix *= Matrix4.CreateOrthographic(2f * o.Xmag, 2f * o.Ymag, o.Znear, o.Zfar);
+						cameras.Add(worldTransform.Inverted() * Matrix4.CreateOrthographic(2f * o.Xmag, 2f * o.Ymag, o.Znear, o.Zfar));
 					}
 					if (camera.Perspective != null)
 					{
 						var p = camera.Perspective;
 						var perspective = Matrix4.CreatePerspectiveFieldOfView(p.Yfov, p.AspectRatio ?? 1f, p.Znear, p.Zfar ?? 1e6f);
-						//perspective.Transpose();
-						matrix = perspective * matrix;
+						cameras.Add(worldTransform.Inverted() * perspective);
 					}
-					Camera = matrix;
 				}
 				if (node.Mesh.HasValue)
 				{
@@ -89,18 +108,15 @@
 			return drawCommand;
 		}
 
-		private Matrix4 CreateLocalTransform(glTFLoader.Schema.Node node)
+		private static Matrix4 CreateLocalTransform(glTFLoader.Schema.Node node)
 		{
 			var translation = Matrix4.CreateTranslation(node.Translation[0], node.Translation[1], node.Translation[2]);
-			translation.Transpose();
 			var rotation = Matrix4.CreateFromQuaternion(new Quaternion(node.Rotation[0], node.Rotation[1], node.Rotation[2], node.Rotation[3]));
-			rotation.Transpose();
 			var scale = Matrix4.CreateScale(node.Scale[0], node.Scale[1], node.Scale[2]);
 			var m = node.Matrix;
-			if(rotation != Matrix4.Identity) { }
 			var matrix = new Matrix4(m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15]);
-			matrix.Transpose();
-			return matrix * translation * rotation * scale;
+			var trs = scale * rotation * translation;
+			return matrix * trs; //order does not matter because one is identity
 		}
 
 		private void Traverse(Zenseless.Geometry.Node parent, int[] nodes)
@@ -228,16 +244,9 @@
 				[Accessor.TypeEnum.MAT4] = 16,
 			});
 
-		public Matrix4 Camera { get; private set; }
-
-		private static List<BufferObject> CreateBuffers(Gltf gltf)
+		private static List<BufferObject> CreateBuffers(Gltf gltf, List<byte[]> byteBuffers)
 		{
 			var glBuffers = new List<BufferObject>();
-			var byteBuffers = new List<byte[]>();
-			foreach (var buffer in gltf.Buffers)
-			{
-				byteBuffers.Add(ReadBuffer(buffer));
-			}
 			foreach (var bufferView in gltf.BufferViews)
 			{
 				if (bufferView.Target.HasValue)
@@ -257,17 +266,20 @@
 			return glBuffers;
 		}
 
-		private static byte[] ReadBuffer(glTFLoader.Schema.Buffer buffer)
+		private static List<byte[]> LoadByteBuffers(Gltf gltf, Func<string, byte[]> externalReferenceSolver)
 		{
-			var match = Regex.Match(buffer.Uri, @"data:application/octet-stream;base64,(?<data>.+)");
-			if (match.Success)
+			if (externalReferenceSolver == null)
 			{
-				var base64Data = match.Groups["data"].Value;
-				var binData = Convert.FromBase64String(base64Data);
-				if (binData.Length != buffer.ByteLength) throw new FormatException("Buffer has wrong length");
-				return binData;
+				throw new ArgumentNullException(nameof(externalReferenceSolver));
 			}
-			throw new FormatException("Only support inline encoded buffers, not external buffer files.");
+
+			var byteBuffers = new List<byte[]>();
+			for(int i = 0; i < gltf.Buffers.Length; ++i)
+			{
+				var buffer = Interface.LoadBinaryBuffer(gltf, i, externalReferenceSolver);
+				byteBuffers.Add(buffer);
+			}
+			return byteBuffers;
 		}
 	}
 }
