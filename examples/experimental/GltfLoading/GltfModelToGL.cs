@@ -50,7 +50,8 @@
 			{
 				foreach(var sampler in animation.Samplers)
 				{
-					//sampler.Input;
+					var input = gltf.Accessors[sampler.Input];
+					var output = gltf.Accessors[sampler.Output];
 				}
 			}
 		}
@@ -76,14 +77,16 @@
 					var mesh = gltf.Meshes[node.Mesh.Value];
 					foreach(var primitive in mesh.Primitives)
 					{
-						var attrPos = primitive.Attributes["POSITION"];
-						var accessor = gltf.Accessors[attrPos];
-						var primMin = new Vector3(accessor.Min[0], accessor.Min[1], accessor.Min[2]);
-						primMin = Vector3.TransformPosition(primMin, worldTransform);
-						Min = Vector3.ComponentMin(Min, primMin);
-						var primMax = new Vector3(accessor.Max[0], accessor.Max[1], accessor.Max[2]);
-						primMax = Vector3.TransformPosition(primMax, worldTransform);
-						Max = Vector3.ComponentMax(Max, primMax);
+						if (primitive.Attributes.TryGetValue("POSITION", out var attrPos))
+						{
+							var accessor = gltf.Accessors[attrPos];
+							var primMin = new Vector3(accessor.Min[0], accessor.Min[1], accessor.Min[2]);
+							primMin = Vector3.TransformPosition(primMin, worldTransform);
+							Min = Vector3.ComponentMin(Min, primMin);
+							var primMax = new Vector3(accessor.Max[0], accessor.Max[1], accessor.Max[2]);
+							primMax = Vector3.TransformPosition(primMax, worldTransform);
+							Max = Vector3.ComponentMax(Max, primMax);
+						}
 					}
 				}
 				Traverse(node.Children, worldTransform);
