@@ -85,13 +85,7 @@
     <EmbeddedResource Include="Content\AnimatedTriangle.gltf" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\2CylinderEngine.gltf" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Content\Box.gltf" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Content\BrainStem.gltf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,7 +13,7 @@ out Data
 
 void main() 
 {
-	o.normal = normal;
+	o.normal = mat3(world) * normal;
 	vec4 position_w = world * position;
 	o.position = position_w.xyz;
 	gl_Position = camera * position_w;

@@ -11,19 +11,21 @@
 	using System.IO;
 	using System.Linq;
 	using System.Runtime.InteropServices;
-	using System.Text.RegularExpressions;
 	using Zenseless.OpenGL;
 
 	public class GltfModelToGL
 	{
 		public IEnumerable<Matrix4> Cameras => cameras;
 
+		public Vector3 Min { get; private set; } = Vector3.One * float.MaxValue;
+		public Vector3 Max { get; private set; } = Vector3.One * float.MinValue;
+
 		private readonly Gltf gltf;
 		private readonly List<BufferObject> glBuffers;
 		private readonly Color4[] materials;
 		private List<Action> meshDrawCommands = new List<Action>();
-		private readonly Zenseless.Geometry.Node root;
-		private readonly List<Zenseless.Geometry.Node> scenes = new List<Zenseless.Geometry.Node>();
+		//private readonly Zenseless.Geometry.Node root;
+		//private readonly List<Zenseless.Geometry.Node> scenes = new List<Zenseless.Geometry.Node>();
 		private List<Matrix4> cameras = new List<Matrix4>();
 
 		public GltfModelToGL(Stream stream, Func<string, byte[]> externalReferenceSolver)
@@ -46,7 +48,10 @@
 			if (animations is null) return;
 			foreach(var animation in animations)
 			{
-				//animation.
+				foreach(var sampler in animation.Samplers)
+				{
+					//sampler.Input;
+				}
 			}
 		}
 
@@ -54,7 +59,34 @@
 		{
 			foreach (var scene in gltf.Scenes)
 			{
-				Traverse(root, scene.Nodes);
+				Traverse(scene.Nodes, Matrix4.Identity);
+			}
+		}
+
+		private void Traverse(int[] nodes, Matrix4 transform)
+		{
+			if (nodes is null) return;
+			foreach (var nodeId in nodes)
+			{
+				var node = gltf.Nodes[nodeId];
+				var localTransform = CreateLocalTransform(node);
+				var worldTransform = localTransform * transform;
+				if (node.Mesh.HasValue)
+				{
+					var mesh = gltf.Meshes[node.Mesh.Value];
+					foreach(var primitive in mesh.Primitives)
+					{
+						var attrPos = primitive.Attributes["POSITION"];
+						var accessor = gltf.Accessors[attrPos];
+						var primMin = new Vector3(accessor.Min[0], accessor.Min[1], accessor.Min[2]);
+						primMin = Vector3.TransformPosition(primMin, worldTransform);
+						Min = Vector3.ComponentMin(Min, primMin);
+						var primMax = new Vector3(accessor.Max[0], accessor.Max[1], accessor.Max[2]);
+						primMax = Vector3.TransformPosition(primMax, worldTransform);
+						Max = Vector3.ComponentMax(Max, primMax);
+					}
+				}
+				Traverse(node.Children, worldTransform);
 			}
 		}
 
@@ -108,7 +140,7 @@
 			return drawCommand;
 		}
 
-		private static Matrix4 CreateLocalTransform(glTFLoader.Schema.Node node)
+		private static Matrix4 CreateLocalTransform(Node node)
 		{
 			var translation = Matrix4.CreateTranslation(node.Translation[0], node.Translation[1], node.Translation[2]);
 			var rotation = Matrix4.CreateFromQuaternion(new Quaternion(node.Rotation[0], node.Rotation[1], node.Rotation[2], node.Rotation[3]));
@@ -159,7 +191,7 @@
 			}
 		}
 
-		private Action CreateMeshDrawCommand(glTFLoader.Schema.Mesh mesh, Func<string, int> uniformLoc, Func<string, int> attributeLoc)
+		private Action CreateMeshDrawCommand(Mesh mesh, Func<string, int> uniformLoc, Func<string, int> attributeLoc)
 		{
 			if (uniformLoc == null)
 			{
@@ -268,11 +300,6 @@
 
 		private static List<byte[]> LoadByteBuffers(Gltf gltf, Func<string, byte[]> externalReferenceSolver)
 		{
-			if (externalReferenceSolver == null)
-			{
-				throw new ArgumentNullException(nameof(externalReferenceSolver));
-			}
-
 			var byteBuffers = new List<byte[]>();
 			for(int i = 0; i < gltf.Buffers.Length; ++i)
 			{
