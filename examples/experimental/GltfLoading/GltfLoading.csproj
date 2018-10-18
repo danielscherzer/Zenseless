@@ -41,7 +41,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GltfModelToGL.cs" />
+    <Compile Include="GltfModelRendererGL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="View.cs" />
   </ItemGroup>

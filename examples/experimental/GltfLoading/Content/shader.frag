@@ -17,7 +17,7 @@ float lambert(vec3 light)
 
 float specular(vec3 toLight, vec3 v, float shininess)
 {
-	if(0 > dot(i.normal, toLight)) return 0;
+	if(0.0 > dot(i.normal, toLight)) return 0;
 	vec3 r = reflect(-toLight, i.normal);
 	float cosRV = dot(r, v);
 	if(0 > cosRV) return 0;

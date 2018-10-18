@@ -7,7 +7,7 @@
 	/// Do not use the parameterless default constructor because he initializes the transform not to the identity, but to the 0 transform.
 	/// Internally it uses row-major matrices (<seealso cref="Matrix4x4"/>).
 	/// </summary>
-	public struct Transformation
+	public struct Transformation : ITransformation
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Transformation" /> structure from a matrix.
@@ -49,6 +49,17 @@
 		/// </summary>
 		/// <returns></returns>
 		public static Transformation Identity => new Transformation(Matrix4x4.Identity);
+
+		/// <summary>
+		/// Inverts a transformation
+		/// </summary>
+		/// <param name="transform">The input transformation.</param>
+		/// <returns>Inverted transformation.</returns>
+		public static Transformation Invert(in Transformation transform)
+		{
+			Matrix4x4.Invert(transform.Matrix, out var result);
+			return new Transformation(result);
+		}
 
 		/// <summary>
 		/// Creates a scale transform.

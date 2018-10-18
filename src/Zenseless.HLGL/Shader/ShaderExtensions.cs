@@ -1,4 +1,5 @@
-﻿using Zenseless.Geometry;
+﻿using System.Numerics;
+using Zenseless.Geometry;
 
 namespace Zenseless.HLGL
 {
