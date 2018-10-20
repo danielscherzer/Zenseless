@@ -376,6 +376,35 @@ namespace Zenseless.Geometry
 			return (float)Math.Atan2(cartesian.Y, cartesian.X);
 		}
 
+
+		/// <summary>
+		/// Converts a Vector to a array of float
+		/// </summary>
+		/// <param name="q">The input vector.</param>
+		/// <returns></returns>
+		public static float[] ToArray(this in Quaternion q) => new float[] { q.X, q.Y, q.Z, q.W };
+
+		/// <summary>
+		/// Converts a Vector to a array of float
+		/// </summary>
+		/// <param name="vector">The input vector.</param>
+		/// <returns></returns>
+		public static float[] ToArray(this in Vector2 vector) => new float[] { vector.X, vector.Y };
+
+		/// <summary>
+		/// Converts a Vector to a array of float
+		/// </summary>
+		/// <param name="vector">The input vector.</param>
+		/// <returns></returns>
+		public static float[] ToArray(this in Vector3 vector) => new float[] { vector.X, vector.Y, vector.Z };
+
+		/// <summary>
+		/// Converts a Vector to a array of float
+		/// </summary>
+		/// <param name="vector">The input vector.</param>
+		/// <returns></returns>
+		public static float[] ToArray(this in Vector4 vector) => new float[] { vector.X, vector.Y, vector.Z, vector.W };
+
 		/// <summary>
 		/// Converts the given polar coordinates to Cartesian.
 		/// </summary>

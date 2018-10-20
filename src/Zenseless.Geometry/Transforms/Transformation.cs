@@ -1,5 +1,6 @@
 ﻿namespace Zenseless.Geometry
 {
+	using System.Diagnostics;
 	using System.Numerics;
 
 	/// <summary>
@@ -7,6 +8,7 @@
 	/// Do not use the parameterless default constructor because he initializes the transform not to the identity, but to the 0 transform.
 	/// Internally it uses row-major matrices (<seealso cref="Matrix4x4"/>).
 	/// </summary>
+	[DebuggerDisplay("{Matrix}")]
 	public struct Transformation : ITransformation
 	{
 		/// <summary>

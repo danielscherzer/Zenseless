@@ -13,6 +13,28 @@ namespace Zenseless.Geometry
 	public class ControlPoints<T>  : IEnumerable<KeyValuePair<float, T>>
 	{
 		/// <summary>
+		/// Initializes a new instance of the <see cref="ControlPoints{T}"/> class.
+		/// </summary>
+		public ControlPoints()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ControlPoints{T}"/> class and
+		/// initializes it with the given keys and values.
+		/// </summary>
+		/// <param name="keys">The array of keys.</param>
+		/// <param name="values">The array of values.</param>
+		public ControlPoints(IEnumerable<float> keys, IEnumerable<T> values)
+		{
+			var zipped = keys.Zip(values, (key, value) => new KeyValuePair<float, T>(key, value));
+			foreach (var item in zipped)
+			{
+				controlPoints.Add(item.Key, item.Value);
+			}
+		}
+
+		/// <summary>
 		/// Adds the update.
 		/// </summary>
 		/// <param name="t">The t.</param>

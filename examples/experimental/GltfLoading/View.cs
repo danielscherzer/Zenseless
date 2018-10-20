@@ -27,6 +27,8 @@ namespace Example
 
 			var fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\Cameras\glTF-Embedded\Cameras.gltf";
 			fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\BrainStem\glTF\BrainStem.gltf";
+			fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\BoxAnimated\glTF\BoxAnimated.gltf";
+			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\RiggedSimple\glTF\RiggedSimple.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\2CylinderEngine\glTF\2CylinderEngine.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\OrientationTest\glTF-Embedded\OrientationTest.gltf";
 			var directory = Path.GetDirectoryName(fileName);
@@ -53,12 +55,15 @@ namespace Example
 
 		internal void Draw(ITransformation camera, Vector3 cameraPos)
 		{
+			void SetWorld(ITransformation transform) => shader.Uniform("world", transform);
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shader.Activate();
 			shader.Uniform(nameof(cameraPos), cameraPos);
 			shader.Uniform(nameof(camera), camera);
-			model.Draw((float)time.Elapsed.TotalSeconds);
+			model.Draw((float)time.Elapsed.TotalSeconds, SetWorld);
 			shader.Deactivate();
+
+			if (time.ElapsedMilliseconds > 5000) time.Restart();
 		}		
 	}
 }

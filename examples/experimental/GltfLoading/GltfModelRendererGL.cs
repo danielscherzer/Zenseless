@@ -16,193 +16,232 @@
 
 	public class GltfModelRendererGL
 	{
+
 		public Box3D Bounds { get; private set; }
 
 		public IEnumerable<Transformation> Cameras => cameras;
 
-		private readonly Action draw;
+		private readonly List<Transformation> localTransforms;
 		private readonly Gltf gltf;
 		private readonly List<byte[]> byteBuffers;
-		private readonly List<BufferObject> glBuffers;
 		private readonly Color4[] materials;
-		private List<Action> meshDrawCommands = new List<Action>();
+		private readonly List<BufferObject> buffersGL;
+		private List<Action> meshDrawCommandsGL = new List<Action>();
 		//private readonly Zenseless.Geometry.Node root;
 		//private readonly List<Zenseless.Geometry.Node> scenes = new List<Zenseless.Geometry.Node>();
 		private List<Transformation> cameras = new List<Transformation>();
+		private readonly List<Action<float>> animationControllers;
 
 		public GltfModelRendererGL(Stream stream, Func<string, byte[]> externalReferenceSolver
 			, Func<string, int> uniformLoc, Func<string, int> attributeLoc, Action<ITransformation> updateWorldMatrix)
 		{
 			gltf = Interface.LoadModel(stream);
 			byteBuffers = LoadByteBuffers(gltf, externalReferenceSolver);
-			glBuffers = CreateGlBuffers(gltf, byteBuffers);
+			localTransforms = CreateLocalTransforms();
 			materials = CreateMaterials(gltf.Materials).ToArray();
-			LoadAnimations(gltf.Animations, byteBuffers);
-			//root = new Zenseless.Geometry.Node(null);
-			//foreach (var scene in gltf.Scenes)
-			//{
-			//	Traverse(root, scene.Nodes);
-			//}
-			var min = Vector3.One * float.MaxValue;
-			var max = Vector3.One * float.MinValue;
-			CalculateSceneBounds(ref min, ref max);
-			var size = max - min;
-			Bounds = new Box3D(min.X, min.Y, min.Z, size.X, size.Y, size.Z);
-			UpdateDrawCommands(uniformLoc, attributeLoc);
-			draw = CreateTreeDrawCommand(updateWorldMatrix);
+
+			Bounds = CalculateSceneBounds();
+			cameras = CreateCameras();
+
+			animationControllers = LoadAnimations(gltf.Animations, byteBuffers);
+
+			buffersGL = CreateBuffersGL(gltf, byteBuffers);
+			UpdateMeshDrawCommandsGL(uniformLoc, attributeLoc);
 		}
 
-		private Action CreateTreeDrawCommand(Action<ITransformation> updateWorldMatrix)
+		internal void Draw(float totalSeconds, Action<ITransformation> updateWorldMatrix)
 		{
 			if (updateWorldMatrix == null)
 			{
 				throw new ArgumentNullException(nameof(updateWorldMatrix));
 			}
+			//TODO: foreach animation channel update with current time
+			foreach(var animationController in animationControllers)
+			{
+				animationController(totalSeconds);
+			}
+			void Draw(Transformation worldTransformation, glTFLoader.Schema.Node node)
+			{
+				if (node.Mesh.HasValue)
+				{
+					updateWorldMatrix(worldTransformation);
+					meshDrawCommandsGL[node.Mesh.Value]();
+				}
+			}
 
-			Action drawNodes = null;
 			foreach (var scene in gltf.Scenes)
 			{
-				drawNodes += CreateNodesDrawCommand(Transformation.Identity, scene.Nodes, updateWorldMatrix);
+				TraverseNodes(scene.Nodes, Transformation.Identity, Draw);
 			}
-			drawNodes += () => GL.BindVertexArray(0);
-			return drawNodes;
-		}
-
-		private void UpdateDrawCommands(Func<string, int> uniformLoc, Func<string, int> attributeLoc)
-		{
-			meshDrawCommands.Clear();
-			foreach (var mesh in gltf.Meshes)
-			{
-				meshDrawCommands.Add(CreateMeshDrawCommand(mesh, uniformLoc, attributeLoc));
-			}
-			//clean-up state
 			GL.BindVertexArray(0);
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 		}
 
-		internal void Draw(float totalSeconds)
+		private List<Transformation> CreateLocalTransforms()
 		{
-			draw();
-		}
-
-		private void LoadAnimations(Animation[] animations, List<byte[]> byteBuffers)
-		{
-			if (animations is null) return;
-			if (byteBuffers == null) throw new ArgumentNullException(nameof(byteBuffers));
-			var typedBuffer = new Dictionary<int, Array>();
-
-			TYPE[] GetBuffer<TYPE>(int id) where TYPE : struct
+			var nodeTransforms = new List<Transformation>();
+			foreach (var node in gltf.Nodes)
 			{
-				if(typedBuffer.TryGetValue(id, out var buf))
+				var transformation = CreateLocalTransform(node);
+				nodeTransforms.Add(transformation);
+			}
+			return nodeTransforms;
+		}
+
+		private List<Action<float>> LoadAnimations(Animation[] animations, List<byte[]> byteBuffers)
+		{
+			var animationController = new List<Action<float>>();
+			if (animations is null) return animationController;
+			if (byteBuffers is null) throw new ArgumentNullException(nameof(byteBuffers));
+			var accessorBuffers = new Dictionary<int, Array>();
+
+			T[] FromByteArray<T>(byte[] source, int byteOffset, int count) where T : struct
+			{
+				T[] destination = new T[count];
+				GCHandle handle = GCHandle.Alloc(destination, GCHandleType.Pinned);
+				try
+				{
+					IntPtr pointer = handle.AddrOfPinnedObject();
+					Marshal.Copy(source, byteOffset, pointer, count * Marshal.SizeOf<T>());
+					return destination;
+				}
+				finally
+				{
+					if (handle.IsAllocated)
+						handle.Free();
+				}
+			}
+
+			TYPE[] GetBuffer<TYPE>(int accessorId) where TYPE : struct
+			{
+				if(accessorBuffers.TryGetValue(accessorId, out var buf))
 				{
 					return buf as TYPE[];
 				}
-				var view = gltf.BufferViews[id];
-				var buffer = FromByteArray<TYPE>(byteBuffers[view.Buffer], view.ByteOffset, view.ByteLength);
-				typedBuffer.Add(id, buffer);
+				var accessor = gltf.Accessors[accessorId];
+				var view = gltf.BufferViews[accessor.BufferView.Value];
+				var buffer = FromByteArray<TYPE>(byteBuffers[view.Buffer],
+					view.ByteOffset + accessor.ByteOffset, accessor.Count);
+				accessorBuffers.Add(accessorId, buffer);
 				return buffer;
 			}
 
 			foreach (var animation in animations)
 			{
-				//foreach(var sampler in animation.Samplers)
-				//{
-				//	var input = gltf.Accessors[sampler.Input];
-				//	var output = gltf.Accessors[sampler.Output];
-				//	var bufferInput = GetBuffer<float>(input.BufferView.Value);
-				//	var bufferOutput = GetBuffer<Vector3>(output.BufferView.Value);
-				//}
-				foreach(var channel in animation.Channels)
+				void AddAnimationControllerTranslate(AnimationChannel channel)
 				{
 					var sampler = animation.Samplers[channel.Sampler];
-					var input = gltf.Accessors[sampler.Input];
-					var output = gltf.Accessors[sampler.Output];
-					var bufferTimes = GetBuffer<float>(input.BufferView.Value);
-					//channel.Target.Node
+					var bufferTimes = GetBuffer<float>(sampler.Input);
+					var bufferOutput = GetBuffer<Vector3>(sampler.Output);
+					var controlPoints = new ControlPoints<Vector3>(bufferTimes, bufferOutput);
+					var node = gltf.Nodes[channel.Target.Node.Value];
+					void Interpolator(float t)
+					{
+						var inter = controlPoints.FindPair(t);
+						var interpolated = Vector3.Lerp(inter.Item1, inter.Item2, inter.Item3);
+						node.Translation = interpolated.ToArray();
+						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
+					}
+					animationController.Add(Interpolator);
+				}
+
+				void AddAnimationControllerRotation(AnimationChannel channel)
+				{
+					var sampler = animation.Samplers[channel.Sampler];
+					var bufferTimes = GetBuffer<float>(sampler.Input);
+					var bufferOutput = GetBuffer<Quaternion>(sampler.Output);
+					var controlPoints = new ControlPoints<Quaternion>(bufferTimes, bufferOutput);
+					var node = gltf.Nodes[channel.Target.Node.Value];
+					void Interpolator(float t)
+					{
+						var inter = controlPoints.FindPair(t);
+						var interpolated = Quaternion.Lerp(inter.Item1, inter.Item2, inter.Item3);
+						node.Rotation = interpolated.ToArray();
+						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
+					}
+					animationController.Add(Interpolator);
+				}
+
+				void AddAnimationControllerScale(AnimationChannel channel)
+				{
+					var sampler = animation.Samplers[channel.Sampler];
+					var bufferTimes = GetBuffer<float>(sampler.Input);
+					var node = gltf.Nodes[channel.Target.Node.Value];
+					var bufferOutput = GetBuffer<Vector3>(sampler.Output);
+					var controlPoints = new ControlPoints<Vector3>(bufferTimes, bufferOutput);
+					void Interpolator(float t)
+					{
+						var inter = controlPoints.FindPair(t);
+						var interpolated = Vector3.Lerp(inter.Item1, inter.Item2, inter.Item3);
+						node.Scale = interpolated.ToArray();
+						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
+					}
+					animationController.Add(Interpolator);
+				}
+
+				foreach (var channel in animation.Channels)
+				{
+					if (!channel.Target.Node.HasValue) continue;
 					switch(channel.Target.Path)
 					{
 						case AnimationChannelTarget.PathEnum.rotation:
-							var bufferOutput = GetBuffer<Vector4>(input.BufferView.Value);
+							AddAnimationControllerRotation(channel);
 							break;
 						case AnimationChannelTarget.PathEnum.translation:
-						//case AnimationChannelTarget.PathEnum.scale:
-						//	var bufferOutput = GetBuffer<Vector3>(input.BufferView.Value);
-						//	break;
+							AddAnimationControllerTranslate(channel);
+							break;
+						case AnimationChannelTarget.PathEnum.scale:
+							AddAnimationControllerScale(channel);
+							break;
 						default:
 							break;
 					}
 				}
 			}
+			return animationController;
 		}
 
-		private static T[] FromByteArray<T>(byte[] source, int byteOffset, int byteLength) where T : struct
+		private Box3D CalculateSceneBounds()
 		{
-			T[] destination = new T[byteLength / Marshal.SizeOf<T>()];
-			GCHandle handle = GCHandle.Alloc(destination, GCHandleType.Pinned);
-			try
+			var min = Vector3.One * float.MaxValue;
+			var max = Vector3.One * float.MinValue;
+			void UpdateBounds(Transformation worldTransformation, glTFLoader.Schema.Node node)
 			{
-				IntPtr pointer = handle.AddrOfPinnedObject();
-				Marshal.Copy(source, byteOffset, pointer, byteLength);
-				return destination;
-			}
-			finally
-			{
-				if (handle.IsAllocated)
-					handle.Free();
-			}
-		}
-
-		private void CalculateSceneBounds(ref Vector3 min, ref Vector3 max)
-		{
-			foreach (var scene in gltf.Scenes)
-			{
-				Traverse(scene.Nodes, Transformation.Identity, ref min, ref max);
-			}
-		}
-
-		private void Traverse(int[] nodes, Transformation transform, ref Vector3 min, ref Vector3 max)
-		{
-			if (nodes is null) return;
-			foreach (var nodeId in nodes)
-			{
-				var node = gltf.Nodes[nodeId];
-				var localTransform = CreateLocalTransform(node);
-				var worldTransform = Transformation.Combine(localTransform, transform);
 				if (node.Mesh.HasValue)
 				{
 					var mesh = gltf.Meshes[node.Mesh.Value];
-					foreach(var primitive in mesh.Primitives)
+					foreach (var primitive in mesh.Primitives)
 					{
 						if (primitive.Attributes.TryGetValue("POSITION", out var attrPos))
 						{
 							var accessor = gltf.Accessors[attrPos];
 							var primMin = new Vector3(accessor.Min[0], accessor.Min[1], accessor.Min[2]);
-							primMin = worldTransform.Transform(primMin);
+							primMin = worldTransformation.Transform(primMin);
 							min = Vector3.Min(min, primMin);
 							var primMax = new Vector3(accessor.Max[0], accessor.Max[1], accessor.Max[2]);
-							primMax = worldTransform.Transform(primMax);
+							primMax = worldTransformation.Transform(primMax);
 							max = Vector3.Max(max, primMax);
 						}
 					}
 				}
-				Traverse(node.Children, worldTransform, ref min, ref max);
 			}
+
+			foreach (var scene in gltf.Scenes)
+			{
+				TraverseNodes(scene.Nodes, Transformation.Identity, UpdateBounds);
+			}
+			var size = max - min;
+			return new Box3D(min.X, min.Y, min.Z, size.X, size.Y, size.Z);
 		}
 
-		private Action CreateNodesDrawCommand(Transformation transform, int[] nodes, Action<ITransformation> updateWorldMatrix)
+		private List<Transformation> CreateCameras()
 		{
-			Action drawCommand = null;
-			if (nodes is null) return drawCommand;
-			foreach (var nodeId in nodes)
+			var cameras = new List<Transformation>();
+			void CreateCamera(Transformation worldTransformation, glTFLoader.Schema.Node node)
 			{
-				var node = gltf.Nodes[nodeId];
-				var localTransform = CreateLocalTransform(node);
-				var worldTransform = Transformation.Combine(localTransform, transform);
-				if(node.Camera.HasValue)
+				if (node.Camera.HasValue)
 				{
 					var camera = gltf.Cameras[node.Camera.Value];
-					var invWorldTransform = Transformation.Invert(worldTransform);
+					var invWorldTransform = Transformation.Invert(worldTransformation);
 					if (camera.Orthographic != null)
 					{
 						var o = camera.Orthographic;
@@ -216,14 +255,26 @@
 						cameras.Add(Transformation.Combine(invWorldTransform, new Transformation(mtx)));
 					}
 				}
-				if (node.Mesh.HasValue)
-				{
-					drawCommand += () => updateWorldMatrix(worldTransform);
-					drawCommand += meshDrawCommands[node.Mesh.Value];
-				}
-				drawCommand += CreateNodesDrawCommand(worldTransform, node.Children, updateWorldMatrix);
 			}
-			return drawCommand;
+			foreach (var scene in gltf.Scenes)
+			{
+				TraverseNodes(scene.Nodes, Transformation.Identity, CreateCamera);
+			}
+			return cameras;
+		}
+
+		private void TraverseNodes(int[] nodes, in Transformation parentTransformation, Action<Transformation, glTFLoader.Schema.Node> process)
+		{
+			//TODO: redo this as iterator
+			if (nodes is null) return;
+			foreach (var nodeId in nodes)
+			{
+				var node = gltf.Nodes[nodeId];
+				var localTransform = localTransforms[nodeId];
+				var worldTransform = Transformation.Combine(localTransform, parentTransformation);
+				process(worldTransform, node);
+				TraverseNodes(node.Children, worldTransform, process);
+			}
 		}
 
 		private static Transformation CreateLocalTransform(glTFLoader.Schema.Node node)
@@ -237,25 +288,7 @@
 			return Transformation.Combine(trs, transform); //order does not matter because one is identity
 		}
 
-		private void Traverse(Zenseless.Geometry.Node parent, int[] nodes)
-		{
-			if (nodes == null) return;
-			foreach (var nodeId in nodes)
-			{
-				var node = gltf.Nodes[nodeId];
-				var m = node.Matrix;
-				//var n = new Zenseless.Geometry.Node(new Transformation(new Matrix4x4(m[0], m[1], m[2], m[3], m[4], m[5], m[6]
-				//	, m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15])), parent);
-				if (node.Mesh != null)
-				{
-					//n.RegisterTypeInstance(node.Mesh);
-				}
-				//Traverse(n, node.Children);
-			}
-		}
-
-
-		private IEnumerable<Color4> CreateMaterials(Material[] materials)
+		private static IEnumerable<Color4> CreateMaterials(Material[] materials)
 		{
 			if (materials is null) yield break;
 			foreach (var material in materials)
@@ -265,7 +298,18 @@
 			}
 		}
 
-		private Action CreateMeshDrawCommand(glTFLoader.Schema.Mesh mesh, Func<string, int> uniformLoc, Func<string, int> attributeLoc)
+		private static List<byte[]> LoadByteBuffers(Gltf gltf, Func<string, byte[]> externalReferenceSolver)
+		{
+			var byteBuffers = new List<byte[]>();
+			for (int i = 0; i < gltf.Buffers.Length; ++i)
+			{
+				var buffer = Interface.LoadBinaryBuffer(gltf, i, externalReferenceSolver);
+				byteBuffers.Add(buffer);
+			}
+			return byteBuffers;
+		}
+
+		private Action CreateMeshDrawCommandGL(glTFLoader.Schema.Mesh mesh, Func<string, int> uniformLoc, Func<string, int> attributeLoc)
 		{
 			if (uniformLoc == null)
 			{
@@ -283,12 +327,12 @@
 			{
 				var color = primitive.Material.HasValue ? materials[primitive.Material.Value] : Color4.White;
 				action += () => GL.Uniform4(locColor, color);
-				action += CreatePrimitiveDrawCall(primitive, attributeLoc);
+				action += CreatePrimitiveDrawCallGL(primitive, attributeLoc);
 			}
 			return action;
 		}
 
-		private Action CreatePrimitiveDrawCall(MeshPrimitive primitive, Func<string, int> attributeLoc)
+		private Action CreatePrimitiveDrawCallGL(MeshPrimitive primitive, Func<string, int> attributeLoc)
 		{
 			if (attributeLoc == null)
 			{
@@ -308,7 +352,7 @@
 					if (-1 != bindingID)
 					{
 						vertexCount = accessor.Count;
-						glBuffers[accessor.BufferView.Value].Activate();
+						buffersGL[accessor.BufferView.Value].Activate();
 						var bufferView = gltf.BufferViews[accessor.BufferView.Value];
 						var elementBytes = bufferView.ByteStride ?? 0;
 						var baseTypeCount = mappingTypeToBaseTypeCount[accessor.Type];
@@ -323,7 +367,7 @@
 				var accessor = gltf.Accessors[primitive.Indices.Value];
 				if (accessor.BufferView.HasValue)
 				{
-					glBuffers[accessor.BufferView.Value].Activate();
+					buffersGL[accessor.BufferView.Value].Activate();
 					return () =>
 					{
 						GL.BindVertexArray(idVAO);
@@ -350,7 +394,7 @@
 				[Accessor.TypeEnum.MAT4] = 16,
 			});
 
-		private static List<BufferObject> CreateGlBuffers(Gltf gltf, List<byte[]> byteBuffers)
+		private static List<BufferObject> CreateBuffersGL(Gltf gltf, List<byte[]> byteBuffers)
 		{
 			var glBuffers = new List<BufferObject>();
 			foreach (var bufferView in gltf.BufferViews)
@@ -372,15 +416,17 @@
 			return glBuffers;
 		}
 
-		private static List<byte[]> LoadByteBuffers(Gltf gltf, Func<string, byte[]> externalReferenceSolver)
+		private void UpdateMeshDrawCommandsGL(Func<string, int> uniformLoc, Func<string, int> attributeLoc)
 		{
-			var byteBuffers = new List<byte[]>();
-			for(int i = 0; i < gltf.Buffers.Length; ++i)
+			meshDrawCommandsGL.Clear();
+			foreach (var mesh in gltf.Meshes)
 			{
-				var buffer = Interface.LoadBinaryBuffer(gltf, i, externalReferenceSolver);
-				byteBuffers.Add(buffer);
+				meshDrawCommandsGL.Add(CreateMeshDrawCommandGL(mesh, uniformLoc, attributeLoc));
 			}
-			return byteBuffers;
+			//clean-up state
+			GL.BindVertexArray(0);
+			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 		}
 	}
 }
