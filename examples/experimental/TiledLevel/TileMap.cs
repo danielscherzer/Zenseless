@@ -4,13 +4,14 @@
 	using System.IO;
 	using System.Linq;
 	using System.Numerics;
+	using System.Reflection;
 	using TiledSharp;
 
 	public class TileMap
 	{
-		public TileMap()
+		public TileMap(string fileName)
 		{
-			map = new TmxMap(@"D:\Daten\tiled\Level\level.tmx");
+			map = new TmxMap(fileName);
 		}
 
 		private readonly TmxMap map;

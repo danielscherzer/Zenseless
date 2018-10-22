@@ -27,11 +27,8 @@ namespace Zenseless.Geometry
 		/// <param name="values">The array of values.</param>
 		public ControlPoints(IEnumerable<float> keys, IEnumerable<T> values)
 		{
-			var zipped = keys.Zip(values, (key, value) => new KeyValuePair<float, T>(key, value));
-			foreach (var item in zipped)
-			{
-				controlPoints.Add(item.Key, item.Value);
-			}
+			var zipped = keys.Zip(values, (key, value) => new { key, value });
+			controlPoints = new SortedDictionary<float, T>(zipped.ToDictionary((item) => item.key, (item) => item.value));
 		}
 
 		/// <summary>

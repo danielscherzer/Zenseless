@@ -3,13 +3,16 @@
 	using OpenTK.Input;
 	using System;
 	using Zenseless.ExampleFramework;
+	using Zenseless.HLGL;
+	using Zenseless.Patterns;
 
 	class TiledLevelExample
 	{
 		static void Main(string[] args)
 		{
 			var window = new ExampleWindow();
-			var tileMap = new TileMap();
+			var dir = ContentSearchDirectoryAttribute.GetContentSearchDirectory();
+			var tileMap = new TileMap(dir + @"\Content\level.tmx");
 			var model = new Model(tileMap.ExtractStart(), tileMap.ExtractCollisionGrid());
 			var view = new View(window.ContentLoader, window.RenderContext.RenderState, tileMap.ExtractTileSprites(), tileMap.ExtractViewLayerGrids());
 

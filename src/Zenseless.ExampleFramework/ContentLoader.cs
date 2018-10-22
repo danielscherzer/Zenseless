@@ -30,7 +30,6 @@
 
 			var contentDir = assembly.GetCustomAttribute<ContentSearchDirectoryAttribute>()?.ContentSearchDirectory;
 			contentManager.SetContentSearchDirectory(contentDir);
-
 		}
 
 		/// <summary>

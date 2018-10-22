@@ -27,13 +27,12 @@
 		private readonly Color4[] materials;
 		private readonly List<BufferObject> buffersGL;
 		private List<Action> meshDrawCommandsGL = new List<Action>();
-		//private readonly Zenseless.Geometry.Node root;
-		//private readonly List<Zenseless.Geometry.Node> scenes = new List<Zenseless.Geometry.Node>();
 		private List<Transformation> cameras = new List<Transformation>();
+		private Dictionary<int, Transformation> jointNodeInverseBindTransform = new Dictionary<int, Transformation>();
 		private readonly List<Action<float>> animationControllers;
 
 		public GltfModelRendererGL(Stream stream, Func<string, byte[]> externalReferenceSolver
-			, Func<string, int> uniformLoc, Func<string, int> attributeLoc, Action<ITransformation> updateWorldMatrix)
+			, Func<string, int> uniformLoc, Func<string, int> attributeLoc)
 		{
 			gltf = Interface.LoadModel(stream);
 			byteBuffers = LoadByteBuffers(gltf, externalReferenceSolver);
@@ -44,6 +43,7 @@
 			cameras = CreateCameras();
 
 			animationControllers = LoadAnimations(gltf.Animations, byteBuffers);
+			LoadSkins(gltf.Skins, byteBuffers);
 
 			buffersGL = CreateBuffersGL(gltf, byteBuffers);
 			UpdateMeshDrawCommandsGL(uniformLoc, attributeLoc);
@@ -55,24 +55,49 @@
 			{
 				throw new ArgumentNullException(nameof(updateWorldMatrix));
 			}
-			//TODO: foreach animation channel update with current time
+			//for each animation channel update the respective local transform of the node with current time
 			foreach(var animationController in animationControllers)
 			{
 				animationController(totalSeconds);
 			}
-			void Draw(Transformation worldTransformation, glTFLoader.Schema.Node node)
+			//skinning
+			//void Skinning(Transformation worldTransformation, glTFLoader.Schema.Node node)
+			//{
+			//	if(jointNodeInverseBindTransform.TryGetValue())
+			//}
+			//foreach (var scene in gltf.Scenes)
+			//{
+			//	TraverseNodes(scene.Nodes, Transformation.Identity, skinning);
+			//}
+			//foreach (var item in jointNodeInverseBindTransform)
+			//{
+			//	localTransforms[item.Key] = Transformation.Combine(item.Value, localTransforms[item.Key]);
+			//}
+
+			var jointTransforms = new Matrix4x4[jointNodeInverseBindTransform.Count];
+			Action drawCalls = null;
+			void CalcWorldTransforms(Transformation worldTransformation, int nodeId)
 			{
+				var node = gltf.Nodes[nodeId];
+				if (jointNodeInverseBindTransform.TryGetValue(nodeId, out var inverseBindTransform))
+				{
+					//jointTransforms[]
+				}
 				if (node.Mesh.HasValue)
 				{
-					updateWorldMatrix(worldTransformation);
-					meshDrawCommandsGL[node.Mesh.Value]();
+					drawCalls += () =>
+					{
+						updateWorldMatrix(worldTransformation);
+						meshDrawCommandsGL[node.Mesh.Value]();
+					};
 				}
 			}
 
 			foreach (var scene in gltf.Scenes)
 			{
-				TraverseNodes(scene.Nodes, Transformation.Identity, Draw);
+				TraverseNodes(scene.Nodes, Transformation.Identity, CalcWorldTransforms);
 			}
+			drawCalls();
 			GL.BindVertexArray(0);
 		}
 
@@ -87,29 +112,29 @@
 			return nodeTransforms;
 		}
 
+		private static T[] FromByteArray<T>(byte[] source, int byteOffset, int destinationCount) where T : struct
+		{
+			T[] destination = new T[destinationCount];
+			GCHandle handle = GCHandle.Alloc(destination, GCHandleType.Pinned);
+			try
+			{
+				IntPtr pointer = handle.AddrOfPinnedObject();
+				Marshal.Copy(source, byteOffset, pointer, destinationCount * Marshal.SizeOf<T>());
+				return destination;
+			}
+			finally
+			{
+				if (handle.IsAllocated)
+					handle.Free();
+			}
+		}
+
 		private List<Action<float>> LoadAnimations(Animation[] animations, List<byte[]> byteBuffers)
 		{
 			var animationController = new List<Action<float>>();
 			if (animations is null) return animationController;
 			if (byteBuffers is null) throw new ArgumentNullException(nameof(byteBuffers));
 			var accessorBuffers = new Dictionary<int, Array>();
-
-			T[] FromByteArray<T>(byte[] source, int byteOffset, int count) where T : struct
-			{
-				T[] destination = new T[count];
-				GCHandle handle = GCHandle.Alloc(destination, GCHandleType.Pinned);
-				try
-				{
-					IntPtr pointer = handle.AddrOfPinnedObject();
-					Marshal.Copy(source, byteOffset, pointer, count * Marshal.SizeOf<T>());
-					return destination;
-				}
-				finally
-				{
-					if (handle.IsAllocated)
-						handle.Free();
-				}
-			}
 
 			TYPE[] GetBuffer<TYPE>(int accessorId) where TYPE : struct
 			{
@@ -200,12 +225,28 @@
 			return animationController;
 		}
 
+		private void LoadSkins(Skin[] skins, List<byte[]> byteBuffers)
+		{
+			if (skins is null) return;
+			foreach(var skin in skins)
+			{
+				var nodeIds = skin.Joints;
+				var accessor = gltf.Accessors[skin.InverseBindMatrices.Value];
+				var view = gltf.BufferViews[accessor.BufferView.Value];
+				var inverseBindMatrices = FromByteArray<Matrix4x4>(byteBuffers[view.Buffer],
+					view.ByteOffset + accessor.ByteOffset, accessor.Count);
+				var zipped = nodeIds.Zip(inverseBindMatrices, (key, value) => new { key, value });
+				jointNodeInverseBindTransform = zipped.ToDictionary((item) => item.key, (item) => new Transformation(item.value));
+			}
+		}
+
 		private Box3D CalculateSceneBounds()
 		{
 			var min = Vector3.One * float.MaxValue;
 			var max = Vector3.One * float.MinValue;
-			void UpdateBounds(Transformation worldTransformation, glTFLoader.Schema.Node node)
+			void UpdateBounds(Transformation worldTransformation, int nodeId)
 			{
+				var node = gltf.Nodes[nodeId];
 				if (node.Mesh.HasValue)
 				{
 					var mesh = gltf.Meshes[node.Mesh.Value];
@@ -236,8 +277,9 @@
 		private List<Transformation> CreateCameras()
 		{
 			var cameras = new List<Transformation>();
-			void CreateCamera(Transformation worldTransformation, glTFLoader.Schema.Node node)
+			void CreateCamera(Transformation worldTransformation, int nodeId)
 			{
+				var node = gltf.Nodes[nodeId];
 				if (node.Camera.HasValue)
 				{
 					var camera = gltf.Cameras[node.Camera.Value];
@@ -263,16 +305,16 @@
 			return cameras;
 		}
 
-		private void TraverseNodes(int[] nodes, in Transformation parentTransformation, Action<Transformation, glTFLoader.Schema.Node> process)
+		private void TraverseNodes(int[] nodes, in Transformation parentTransformation, Action<Transformation, int> process)
 		{
 			//TODO: redo this as iterator
 			if (nodes is null) return;
 			foreach (var nodeId in nodes)
 			{
-				var node = gltf.Nodes[nodeId];
 				var localTransform = localTransforms[nodeId];
 				var worldTransform = Transformation.Combine(localTransform, parentTransformation);
-				process(worldTransform, node);
+				process(worldTransform, nodeId);
+				var node = gltf.Nodes[nodeId];
 				TraverseNodes(node.Children, worldTransform, process);
 			}
 		}

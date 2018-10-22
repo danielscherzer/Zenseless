@@ -27,8 +27,8 @@ namespace Example
 
 			var fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\Cameras\glTF-Embedded\Cameras.gltf";
 			fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\BrainStem\glTF\BrainStem.gltf";
-			fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\BoxAnimated\glTF\BoxAnimated.gltf";
-			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\RiggedSimple\glTF\RiggedSimple.gltf";
+			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\BoxAnimated\glTF\BoxAnimated.gltf";
+			fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\RiggedSimple\glTF\RiggedSimple.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\2CylinderEngine\glTF\2CylinderEngine.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\OrientationTest\glTF-Embedded\OrientationTest.gltf";
 			var directory = Path.GetDirectoryName(fileName);
@@ -41,12 +41,10 @@ namespace Example
 				int AttributeLoc(string name)
 				{
 					var attributeName = name.ToLowerInvariant();
-					return shader.GetResourceLocation(ShaderResourceType.Attribute, attributeName);
+					var location = shader.GetResourceLocation(ShaderResourceType.Attribute, attributeName);
+					return location;
 				}
-				//var locWorld = shader.GetResourceLocation(ShaderResourceType.Uniform, "world");
-				void SetWorld(ITransformation transform) => shader.Uniform("world", transform);
-
-				model = new GltfModelRendererGL(stream, LoadFile, UniformLoc, AttributeLoc, SetWorld);
+				model = new GltfModelRendererGL(stream, LoadFile, UniformLoc, AttributeLoc);
 			}
 			Cameras = model.Cameras;
 			time = new Stopwatch();

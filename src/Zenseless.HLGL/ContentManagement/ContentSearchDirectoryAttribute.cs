@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -29,5 +30,15 @@ namespace Zenseless.HLGL
 		/// The content search directory.
 		/// </value>
 		public string ContentSearchDirectory { get; }
+
+		/// <summary>
+		/// Gets the content search directory. Static version.
+		/// </summary>
+		/// <returns></returns>
+		public static string GetContentSearchDirectory()
+		{
+			var assembly = Assembly.GetEntryAssembly();
+			return assembly.GetCustomAttribute<ContentSearchDirectoryAttribute>()?.ContentSearchDirectory;
+		}
 	}
 }
