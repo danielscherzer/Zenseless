@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyConfig.cs" />
     <Compile Include="Model.cs" />
