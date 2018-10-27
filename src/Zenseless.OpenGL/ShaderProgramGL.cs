@@ -50,24 +50,6 @@
 		}
 
 		/// <summary>
-		/// Compiles the specified shader source code.
-		/// </summary>
-		/// <param name="shaderSourceCode">The shader source code.</param>
-		/// <param name="type">The type.</param>
-		/// <exception cref="ShaderCompileException"></exception>
-		public void Compile(string shaderSourceCode, ShaderType type)
-		{
-			var shader = new ShaderGL(type);
-			if (!shader.Compile(shaderSourceCode))
-			{
-				var e = new ShaderCompileException(type, shader.Log, shaderSourceCode);
-				shader.Dispose();
-				throw e;
-			}
-			Attach(shader);
-		}
-
-		/// <summary>
 		/// Begins this shader use.
 		/// </summary>
 		public void Activate()

@@ -4,7 +4,7 @@
 	using System.Numerics;
 
 	/// <summary>
-	/// 
+	/// Enumeration of valid shader types
 	/// </summary>
 	public enum ShaderType
 	{
@@ -21,11 +21,11 @@
 		/// </summary>
 		GeometryShader,
 		/// <summary>
-		/// The tess evaluation shader
+		/// The tessellation evaluation shader
 		/// </summary>
 		TessEvaluationShader,
 		/// <summary>
-		/// The tess control shader
+		/// The tessellation control shader
 		/// </summary>
 		TessControlShader,
 		/// <summary>
@@ -35,7 +35,7 @@
 	}
 
 	/// <summary>
-	/// 
+	/// Enumeration of valid shader resource types
 	/// </summary>
 	public enum ShaderResourceType
 	{
@@ -58,7 +58,7 @@
 	}
 
 	/// <summary>
-	/// 
+	/// Interface of a shader program
 	/// </summary>
 	/// <seealso cref="IDisposable" />
 	public interface IShaderProgram : IDisposable
