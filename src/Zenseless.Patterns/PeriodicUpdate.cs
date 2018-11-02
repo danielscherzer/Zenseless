@@ -4,7 +4,7 @@
 	/// Invokes a registered callback in regular intervals in the main thread 
 	/// (important if you do for instance OpenGL stuff)
 	/// </summary>
-	/// <seealso cref="Zenseless.Patterns.ITimedUpdate" />
+	/// <seealso cref="ITimedUpdate" />
 	public class PeriodicUpdate : ITimedUpdate
 	{
 		/// <summary>

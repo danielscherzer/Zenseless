@@ -10,15 +10,8 @@ namespace Zenseless.Geometry
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <seealso cref="IEnumerable{T}" />
-	public class ControlPoints<T>  : IEnumerable<KeyValuePair<float, T>>
+	public class ControlPoints<T> : IEnumerable<KeyValuePair<float, T>>
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ControlPoints{T}"/> class.
-		/// </summary>
-		public ControlPoints()
-		{
-		}
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ControlPoints{T}"/> class and
 		/// initializes it with the given keys and values.
@@ -27,8 +20,8 @@ namespace Zenseless.Geometry
 		/// <param name="values">The array of values.</param>
 		public ControlPoints(IEnumerable<float> keys, IEnumerable<T> values)
 		{
-			var zipped = keys.Zip(values, (key, value) => new { key, value });
-			controlPoints = new SortedDictionary<float, T>(zipped.ToDictionary((item) => item.key, (item) => item.value));
+			var zipped = keys.Zip(values, (key, value) => new KeyValuePair<float, T>(key, value)).Distinct(new KeyOnlyComparer());
+			controlPoints = new SortedDictionary<float, T>(zipped.ToDictionary((item) => item.Key, (item) => item.Value));
 		}
 
 		/// <summary>
@@ -134,6 +127,30 @@ namespace Zenseless.Geometry
 				return lastItem;
 			}
 		}
+
+		/// <summary>
+		/// Returns a <see cref="string" /> that represents this instance.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="string" /> that represents this instance.
+		/// </returns>
+		public override string ToString()
+		{
+			return string.Join(",", controlPoints.Values);
+		}
+
+		class KeyOnlyComparer : IEqualityComparer<KeyValuePair<float, T>>
+		{
+			public bool Equals(KeyValuePair<float, T> x, KeyValuePair<float, T> y)
+			{
+				return x.Key == y.Key;
+			}
+
+			public int GetHashCode(KeyValuePair<float, T> obj)
+			{
+				return obj.Key.GetHashCode();
+			}
+		};
 
 		/// <summary>
 		/// The control points

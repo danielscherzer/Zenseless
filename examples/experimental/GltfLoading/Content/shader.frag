@@ -1,11 +1,12 @@
 #version 430 core
-uniform vec4 color;
+uniform vec4 baseColor;
 uniform vec3 cameraPos;
 
 in Data
 {
 	vec3 normal;
 	vec3 position;
+	vec2 texCoord0;
 } i;
 
 out vec4 outputColor;
@@ -43,5 +44,6 @@ vec4 metallic(vec3 light)
 void main() 
 {
 	vec3 toLight = normalize(vec3(0, 1, 0));
+	vec4 color = baseColor ;//* vec4(i.texCoord0, 0, 0);
 	outputColor = metallic(toLight) + hemisphericalLight(toLight) * color;
 }

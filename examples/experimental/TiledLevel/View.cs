@@ -79,18 +79,18 @@
 				{
 					for (int y = (int)tileMin.Y; y < (int)tileMax.Y; ++y)
 					{
-						DrawTile(layer, x, y);
+						var gid = layer.GetElement(x, y);
+						DrawTile(gid, x, y);
 					}
 				}
 			}
 		}
 
-		private void DrawTile(Grid<int> layer, int tileX, int tileY)
+		private void DrawTile(int gid, int tileX, int tileY)
 		{
-			var gid = layer.GetElement(tileX, tileY);
 			if (0 != gid)
 			{
-				 var tex = texTileSets[gid];
+				var tex = texTileSets[gid];
 				var x = tileX;
 				var y = tileY;
 				var bounds = new Box2D(x, y, 1f, 1f);

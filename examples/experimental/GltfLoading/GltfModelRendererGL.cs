@@ -12,6 +12,7 @@
 	using System.Numerics;
 	using System.Runtime.InteropServices;
 	using Zenseless.Geometry;
+	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
 
 	public class GltfModelRendererGL
@@ -26,15 +27,20 @@
 		private readonly List<byte[]> byteBuffers;
 		private readonly Color4[] materials;
 		private readonly List<BufferObject> buffersGL;
+		private readonly List<ITexture> texturesGL;
 		private List<Action> meshDrawCommandsGL = new List<Action>();
 		private List<Transformation> cameras = new List<Transformation>();
 		private Dictionary<int, Transformation> jointNodeInverseBindTransform = new Dictionary<int, Transformation>();
+
+		public bool IsSkinned { get; private set; } = false;
+
+		private int[] skinJointNodeIds;
 		private readonly List<Action<float>> animationControllers;
 
-		public GltfModelRendererGL(Stream stream, Func<string, byte[]> externalReferenceSolver
+		public GltfModelRendererGL(Stream streamGltf, Func<string, byte[]> externalReferenceSolver
 			, Func<string, int> uniformLoc, Func<string, int> attributeLoc)
 		{
-			gltf = Interface.LoadModel(stream);
+			gltf = Interface.LoadModel(streamGltf);
 			byteBuffers = LoadByteBuffers(gltf, externalReferenceSolver);
 			localTransforms = CreateLocalTransforms();
 			materials = CreateMaterials(gltf.Materials).ToArray();
@@ -45,44 +51,45 @@
 			animationControllers = LoadAnimations(gltf.Animations, byteBuffers);
 			LoadSkins(gltf.Skins, byteBuffers);
 
+			texturesGL = LoadTextures(externalReferenceSolver);
 			buffersGL = CreateBuffersGL(gltf, byteBuffers);
 			UpdateMeshDrawCommandsGL(uniformLoc, attributeLoc);
 		}
 
-		internal void Draw(float totalSeconds, Action<ITransformation> updateWorldMatrix)
+		private List<ITexture> LoadTextures(Func<string, byte[]> externalReferenceSolver)
+		{
+			var textures = new List<ITexture>();
+			if (gltf.Images is null) return textures;
+			if (textures is null) return textures;
+			var images = new List<ITexture>();
+			foreach (var image in gltf.Images)
+			{
+				
+			}
+			return textures;
+		}
+
+		internal void UpdateAnimations(float totalSeconds, Action<Matrix4x4[]> setJointMatrix)
+		{
+			Console.Clear();
+			Console.WriteLine($"time={totalSeconds}");
+			//for each animation channel update the respective local transform of the node with current time
+			foreach (var animationController in animationControllers)
+			{
+				animationController(totalSeconds);
+			}
+		}
+
+		internal void Draw(Action<ITransformation> updateWorldMatrix)
 		{
 			if (updateWorldMatrix == null)
 			{
 				throw new ArgumentNullException(nameof(updateWorldMatrix));
 			}
-			//for each animation channel update the respective local transform of the node with current time
-			foreach(var animationController in animationControllers)
-			{
-				animationController(totalSeconds);
-			}
-			//skinning
-			//void Skinning(Transformation worldTransformation, glTFLoader.Schema.Node node)
-			//{
-			//	if(jointNodeInverseBindTransform.TryGetValue())
-			//}
-			//foreach (var scene in gltf.Scenes)
-			//{
-			//	TraverseNodes(scene.Nodes, Transformation.Identity, skinning);
-			//}
-			//foreach (var item in jointNodeInverseBindTransform)
-			//{
-			//	localTransforms[item.Key] = Transformation.Combine(item.Value, localTransforms[item.Key]);
-			//}
-
-			var jointTransforms = new Matrix4x4[jointNodeInverseBindTransform.Count];
 			Action drawCalls = null;
-			void CalcWorldTransforms(Transformation worldTransformation, int nodeId)
+			void UpdateWorldMatrix(Transformation worldTransformation, int nodeId)
 			{
 				var node = gltf.Nodes[nodeId];
-				if (jointNodeInverseBindTransform.TryGetValue(nodeId, out var inverseBindTransform))
-				{
-					//jointTransforms[]
-				}
 				if (node.Mesh.HasValue)
 				{
 					drawCalls += () =>
@@ -92,13 +99,40 @@
 					};
 				}
 			}
+			foreach (var scene in gltf.Scenes)
+			{
+				TraverseNodes(scene.Nodes, Transformation.Identity, UpdateWorldMatrix);
+			}
+
+			drawCalls();
+			GL.BindVertexArray(0);
+		}
+
+		public Matrix4x4[] CalculateJointTransforms()
+		{
+			var jointTransforms = new Dictionary<int, Matrix4x4>();
+			void CalcJointTransforms(Transformation worldTransformation, int nodeId)
+			{
+				var node = gltf.Nodes[nodeId];
+				if (jointNodeInverseBindTransform.TryGetValue(nodeId, out var inverseBindTransform))
+				{
+					var ibt = jointNodeInverseBindTransform[nodeId];
+					var jointTransform = Transformation.Combine(ibt, worldTransformation);
+					jointTransforms.Add(nodeId, jointTransform.Matrix);
+				}
+			}
 
 			foreach (var scene in gltf.Scenes)
 			{
-				TraverseNodes(scene.Nodes, Transformation.Identity, CalcWorldTransforms);
+				TraverseNodes(scene.Nodes, Transformation.Identity, CalcJointTransforms);
 			}
-			drawCalls();
-			GL.BindVertexArray(0);
+
+			var joints = new List<Matrix4x4>(jointTransforms.Count);
+			foreach(var nodeId in skinJointNodeIds)
+			{
+				joints.Add(jointTransforms[nodeId]);
+			}
+			return joints.ToArray();
 		}
 
 		private List<Transformation> CreateLocalTransforms()
@@ -110,23 +144,6 @@
 				nodeTransforms.Add(transformation);
 			}
 			return nodeTransforms;
-		}
-
-		private static T[] FromByteArray<T>(byte[] source, int byteOffset, int destinationCount) where T : struct
-		{
-			T[] destination = new T[destinationCount];
-			GCHandle handle = GCHandle.Alloc(destination, GCHandleType.Pinned);
-			try
-			{
-				IntPtr pointer = handle.AddrOfPinnedObject();
-				Marshal.Copy(source, byteOffset, pointer, destinationCount * Marshal.SizeOf<T>());
-				return destination;
-			}
-			finally
-			{
-				if (handle.IsAllocated)
-					handle.Free();
-			}
 		}
 
 		private List<Action<float>> LoadAnimations(Animation[] animations, List<byte[]> byteBuffers)
@@ -144,8 +161,7 @@
 				}
 				var accessor = gltf.Accessors[accessorId];
 				var view = gltf.BufferViews[accessor.BufferView.Value];
-				var buffer = FromByteArray<TYPE>(byteBuffers[view.Buffer],
-					view.ByteOffset + accessor.ByteOffset, accessor.Count);
+				var buffer = byteBuffers[view.Buffer].FromByteArray<TYPE>(view.ByteOffset + accessor.ByteOffset, accessor.Count);
 				accessorBuffers.Add(accessorId, buffer);
 				return buffer;
 			}
@@ -165,6 +181,7 @@
 						var interpolated = Vector3.Lerp(inter.Item1, inter.Item2, inter.Item3);
 						node.Translation = interpolated.ToArray();
 						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
+						//Console.WriteLine($"{sampler.Output}: translate {interpolated}");
 					}
 					animationController.Add(Interpolator);
 				}
@@ -182,6 +199,7 @@
 						var interpolated = Quaternion.Lerp(inter.Item1, inter.Item2, inter.Item3);
 						node.Rotation = interpolated.ToArray();
 						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
+						Console.WriteLine($"{sampler.Output}: rotate {interpolated}");
 					}
 					animationController.Add(Interpolator);
 				}
@@ -199,6 +217,7 @@
 						var interpolated = Vector3.Lerp(inter.Item1, inter.Item2, inter.Item3);
 						node.Scale = interpolated.ToArray();
 						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
+						//Console.WriteLine($"{sampler.Output}: scale {interpolated}");
 					}
 					animationController.Add(Interpolator);
 				}
@@ -230,13 +249,13 @@
 			if (skins is null) return;
 			foreach(var skin in skins)
 			{
-				var nodeIds = skin.Joints;
+				skinJointNodeIds = skin.Joints;
 				var accessor = gltf.Accessors[skin.InverseBindMatrices.Value];
 				var view = gltf.BufferViews[accessor.BufferView.Value];
-				var inverseBindMatrices = FromByteArray<Matrix4x4>(byteBuffers[view.Buffer],
-					view.ByteOffset + accessor.ByteOffset, accessor.Count);
-				var zipped = nodeIds.Zip(inverseBindMatrices, (key, value) => new { key, value });
+				var inverseBindMatrices = byteBuffers[view.Buffer].FromByteArray<Matrix4x4>(view.ByteOffset + accessor.ByteOffset, accessor.Count);
+				var zipped = skinJointNodeIds.Zip(inverseBindMatrices, (key, value) => new { key, value });
 				jointNodeInverseBindTransform = zipped.ToDictionary((item) => item.key, (item) => new Transformation(item.value));
+				IsSkinned = true;
 			}
 		}
 
@@ -335,6 +354,11 @@
 			if (materials is null) yield break;
 			foreach (var material in materials)
 			{
+				var tex = material.PbrMetallicRoughness.BaseColorTexture;
+				if(!(tex is null))
+				{
+
+				}
 				var baseColor = material.PbrMetallicRoughness.BaseColorFactor;
 				yield return new Color4(baseColor[0], baseColor[1], baseColor[2], baseColor[3]);
 			}
@@ -364,7 +388,7 @@
 			}
 
 			Action action = null;
-			var locColor = uniformLoc("color");
+			var locColor = uniformLoc("baseColor");
 			foreach (var primitive in mesh.Primitives)
 			{
 				var color = primitive.Material.HasValue ? materials[primitive.Material.Value] : Color4.White;
