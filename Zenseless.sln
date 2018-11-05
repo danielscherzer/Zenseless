@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{353CE3AB-3D8F-4859-9B2B-75BAC7BC2359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Patterns", "src\Zenseless.Patterns\Zenseless.Patterns.csproj", "{4DE8BCD3-83DF-48DD-B962-518C06D3491A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.Patterns", "src\Zenseless.Patterns\Zenseless.Patterns.csproj", "{4DE8BCD3-83DF-48DD-B962-518C06D3491A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Geometry", "src\Zenseless.Geometry\Zenseless.Geometry.csproj", "{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}"
 EndProject
@@ -106,39 +106,39 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureFont", "examples\CG\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureWrap", "examples\CG\TextureWrap\TextureWrap.csproj", "{EA0EE733-BCA5-4AA1-BD9B-186D9D18228F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 - BasicTransformations3D", "examples\SHADER\06 - BasicTransformations3D\06 - BasicTransformations3D.csproj", "{5CE8B95A-A23E-49D0-BF5D-879472F6E7FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 - BasicTransformations3D", "examples\ACG\06 - BasicTransformations3D\06 - BasicTransformations3D.csproj", "{5CE8B95A-A23E-49D0-BF5D-879472F6E7FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "08 - Camera", "examples\SHADER\08 - Camera\08 - Camera.csproj", "{D1EBA24E-C135-4AF4-9802-D6EEBEEC2656}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "08 - Camera", "examples\ACG\08 - Camera\08 - Camera.csproj", "{D1EBA24E-C135-4AF4-9802-D6EEBEEC2656}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07 - CameraTransformation", "examples\SHADER\07 - CameraTransformation\07 - CameraTransformation.csproj", "{93522A71-576A-4C95-BF4B-A4D1EE173635}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07 - CameraTransformation", "examples\ACG\07 - CameraTransformation\07 - CameraTransformation.csproj", "{93522A71-576A-4C95-BF4B-A4D1EE173635}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10 - EnvironmentMapping", "examples\SHADER\10 - EnvironmentMapping\10 - EnvironmentMapping.csproj", "{40B874B8-2E8D-42AE-A567-06AE167B0E8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10 - EnvironmentMapping", "examples\ACG\10 - EnvironmentMapping\10 - EnvironmentMapping.csproj", "{40B874B8-2E8D-42AE-A567-06AE167B0E8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04 - GeometryExample", "examples\SHADER\04 - GeometryExample\04 - GeometryExample.csproj", "{C9043719-1776-48D3-9515-5370F1508C48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04 - GeometryExample", "examples\ACG\04 - GeometryExample\04 - GeometryExample.csproj", "{C9043719-1776-48D3-9515-5370F1508C48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05 - InstancingExample", "examples\SHADER\05 - InstancingExample\05 - InstancingExample.csproj", "{4F8B145D-AD8A-43CB-B706-569F0B80C1E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05 - InstancingExample", "examples\ACG\05 - InstancingExample\05 - InstancingExample.csproj", "{4F8B145D-AD8A-43CB-B706-569F0B80C1E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03 - MeshExample", "examples\SHADER\03 - MeshExample\03 - MeshExample.csproj", "{1995505D-5179-43C0-A122-BB51D8F5EEA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03 - MeshExample", "examples\ACG\03 - MeshExample\03 - MeshExample.csproj", "{1995505D-5179-43C0-A122-BB51D8F5EEA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01 - MinimalShaderExample", "examples\SHADER\01 - MinimalShaderExample\01 - MinimalShaderExample.csproj", "{3F964DED-9DF1-4350-9C56-220D5AACCBAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01 - MinimalShaderExample", "examples\ACG\01 - MinimalShaderExample\01 - MinimalShaderExample.csproj", "{3F964DED-9DF1-4350-9C56-220D5AACCBAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12 - ParticleSystem", "examples\SHADER\12 - ParticleSystem\12 - ParticleSystem.csproj", "{0D198482-14CC-4FBA-BDF5-8B1633D4E5A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12 - ParticleSystem", "examples\ACG\12 - ParticleSystem\12 - ParticleSystem.csproj", "{0D198482-14CC-4FBA-BDF5-8B1633D4E5A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "09 - Lighting", "examples\SHADER\09 - Lighting\09 - Lighting.csproj", "{3F29DE75-E5F8-4FC8-91AD-D332B1816EC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "09 - Lighting", "examples\ACG\09 - Lighting\09 - Lighting.csproj", "{3F29DE75-E5F8-4FC8-91AD-D332B1816EC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11 - Physics", "examples\SHADER\11 - Physics\11 - Physics.csproj", "{ADFE07A0-D2B7-42A7-8DDC-C0F1D441ACC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11 - Physics", "examples\ACG\11 - Physics\11 - Physics.csproj", "{ADFE07A0-D2B7-42A7-8DDC-C0F1D441ACC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "13 - RenderToTexture", "examples\SHADER\13 - RenderToTexture\13 - RenderToTexture.csproj", "{06D368A6-B600-4323-BDBC-EA5B9486C145}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "13 - RenderToTexture", "examples\ACG\13 - RenderToTexture\13 - RenderToTexture.csproj", "{06D368A6-B600-4323-BDBC-EA5B9486C145}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02 - ShaderDebugDialogExample", "examples\SHADER\02 - ShaderDebugDialogExample\02 - ShaderDebugDialogExample.csproj", "{AB2FC8A2-9741-42B7-9170-D713B5125D78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02 - ShaderDebugDialogExample", "examples\ACG\02 - ShaderDebugDialogExample\02 - ShaderDebugDialogExample.csproj", "{AB2FC8A2-9741-42B7-9170-D713B5125D78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14 - ShadowMappingExample", "examples\SHADER\14 - ShadowMappingExample\14 - ShadowMappingExample.csproj", "{613DB9B5-0255-4B4E-9482-EA6A127F7894}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14 - ShadowMappingExample", "examples\ACG\14 - ShadowMappingExample\14 - ShadowMappingExample.csproj", "{613DB9B5-0255-4B4E-9482-EA6A127F7894}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSBOExample", "examples\SHADER\SSBOExample\SSBOExample.csproj", "{B477FA61-3ABE-43EC-B785-2306975C65B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSBOExample", "examples\ACG\SSBOExample\SSBOExample.csproj", "{B477FA61-3ABE-43EC-B785-2306975C65B1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SHADER", "SHADER", "{DC899246-DB92-4DFE-9E0B-F2300B77B281}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ACG", "ACG", "{DC899246-DB92-4DFE-9E0B-F2300B77B281}"
 	ProjectSection(SolutionItems) = preProject
-		examples\SHADER\readme.md = examples\SHADER\readme.md
+		examples\ACG\readme.md = examples\ACG\readme.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heightfield", "examples\experimental\Heightfield\Heightfield.csproj", "{90EA30D9-1EE9-48EE-9375-A91206E9EA9D}"
@@ -163,7 +163,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GltfLoading", "examples\exp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeferredShading", "examples\experimental\DeferredShading\DeferredShading.csproj", "{253A7FA6-2984-4172-929A-DBD654538B38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrainTessellation", "examples\SHADER\TerrainTessellation\TerrainTessellation.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrainTessellation", "examples\ACG\TerrainTessellation\TerrainTessellation.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
