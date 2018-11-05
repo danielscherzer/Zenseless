@@ -71,8 +71,8 @@
 
 		internal void UpdateAnimations(float totalSeconds, Action<Matrix4x4[]> setJointMatrix)
 		{
-			Console.Clear();
-			Console.WriteLine($"time={totalSeconds}");
+			//Console.Clear();
+			//Console.WriteLine($"time={totalSeconds}");
 			//for each animation channel update the respective local transform of the node with current time
 			foreach (var animationController in animationControllers)
 			{
@@ -199,7 +199,7 @@
 						var interpolated = Quaternion.Lerp(inter.Item1, inter.Item2, inter.Item3);
 						node.Rotation = interpolated.ToArray();
 						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
-						Console.WriteLine($"{sampler.Output}: rotate {interpolated}");
+						//Console.WriteLine($"{sampler.Output}: rotate {interpolated}");
 					}
 					animationController.Add(Interpolator);
 				}
