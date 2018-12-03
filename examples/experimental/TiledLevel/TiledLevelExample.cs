@@ -4,7 +4,6 @@
 	using System;
 	using Zenseless.ExampleFramework;
 	using Zenseless.HLGL;
-	using Zenseless.Patterns;
 
 	class TiledLevelExample
 	{

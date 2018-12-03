@@ -13,11 +13,10 @@
 		{
 			for(int x = 0; x < Width; ++x)
 			{
-				for (int y = 0; y < Width; ++y)
+				for (int y = 0; y < Height; ++y)
 				{
 					arrTile[x, y] = value;
 				}
-
 			}
 		}
 

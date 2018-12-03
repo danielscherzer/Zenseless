@@ -78,17 +78,25 @@ namespace Zenseless.OpenGL
 		/// <summary>
 		/// Loads the pixels.
 		/// </summary>
-		/// <param name="pixels">The pixels.</param>
-		/// <param name="width">The width.</param>
-		/// <param name="height">The height.</param>
+		/// <param name="pixels">The 2-dim pixel array.</param>
 		/// <param name="components">The components.</param>
 		/// <param name="floatingPoint">if set to <c>true</c> [floating point].</param>
-		public void LoadPixels(IntPtr pixels, int width, int height, byte components = 4, bool floatingPoint = false)
+		public void LoadPixels<T>(T[,] pixels, byte components = 4, bool floatingPoint = false) where T : struct
 		{
-			var internalFormat = Convert(components, floatingPoint);
+			var width = pixels.GetLength(0);
+			var height = pixels.GetLength(1);
+			var internalFormat = Convert(components, false);
 			var inputPixelFormat = Convert(components);
-			var type = floatingPoint ? PixelType.UnsignedByte : PixelType.Float;
-			LoadPixels(pixels, width, height, internalFormat, inputPixelFormat, type);
+			var type = floatingPoint ? PixelType.Float : PixelType.UnsignedByte;
+			Activate();
+			//if (width != Width || height != Height)
+			//GL.TexStorage2D((TextureTarget2d)Target, 1, (SizedInternalFormat)internalFormat, width, height); //immutable texture storage need to set mipmap levels
+			Width = width;
+			Height = height;
+			//if (IntPtr.Zero != pixels) GL.TexSubImage2D(Target, 0, 0, 0, width, height, inputPixelFormat, type, pixels);
+			GL.TexImage2D(Target, 0, internalFormat, width, height, 0, inputPixelFormat, type, pixels);
+
+			Deactivate();
 		}
 	}
 }

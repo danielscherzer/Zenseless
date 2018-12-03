@@ -53,7 +53,7 @@
 		/// <exception cref="FileLoadException"></exception>
 		public static ITexture2D FromFile(string fileName)
 		{
-			if (String.IsNullOrEmpty(fileName))
+			if (string.IsNullOrEmpty(fileName))
 			{
 				throw new ArgumentException(fileName);
 			}
