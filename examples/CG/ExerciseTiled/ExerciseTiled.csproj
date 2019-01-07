@@ -76,7 +76,7 @@
       <Version>3.0.1</Version>
     </PackageReference>
     <PackageReference Include="TiledSharp">
-      <Version>0.15.0</Version>
+      <Version>1.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

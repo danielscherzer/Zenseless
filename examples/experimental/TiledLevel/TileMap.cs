@@ -4,7 +4,6 @@
 	using System.IO;
 	using System.Linq;
 	using System.Numerics;
-	using System.Reflection;
 	using TiledSharp;
 
 	public class TileMap
@@ -19,7 +18,7 @@
 		public Grid<bool> ExtractCollisionGrid()
 		{
 			var tileSet = map.Tilesets[0];
-			var walkableIds = new HashSet<int>(from tile in tileSet.Tiles where !tile.Properties.ContainsKey("forbidden") select tile.Id);
+			var walkableIds = new HashSet<int>(from tile in tileSet.Tiles.Values where !tile.Properties.ContainsKey("forbidden") select tile.Id);
 			var gridIsWalkable = new Grid<bool>(map.Width, map.Height);
 			gridIsWalkable.Clear(true);
 			foreach (var layer in map.Layers)
@@ -56,7 +55,7 @@
 			var dir = map.TmxDirectory + Path.DirectorySeparatorChar;
 			foreach (var tileSet in map.Tilesets)
 			{
-				foreach (var tile in tileSet.Tiles)
+				foreach (var tile in tileSet.Tiles.Values)
 				{
 					var name = tile.Image.Source.Replace(dir, string.Empty);
 					name = name.Replace(Path.AltDirectorySeparatorChar, '.');

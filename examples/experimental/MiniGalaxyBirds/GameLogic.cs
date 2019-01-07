@@ -47,7 +47,7 @@ namespace MiniGalaxyBirds
 			Console.WriteLine(registry.GetAllContainer().Count());
 		}
 
-		private IEnumerable<Tuple<ICollidable, ICollidable>> ResolveCollisions(IEnumerable<ICollidable> collidables)
+		private static IEnumerable<Tuple<ICollidable, ICollidable>> ResolveCollisions(IEnumerable<ICollidable> collidables)
 		{
 			var collisions = new List<Tuple<ICollidable, ICollidable>>();
 			var work = new Stack<ICollidable>(collidables);

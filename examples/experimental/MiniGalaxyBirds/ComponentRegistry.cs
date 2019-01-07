@@ -52,26 +52,22 @@ namespace MiniGalaxyBirds
 
 			public static IEnumerable<Type> GetDerivedTypes(IComponent component)
 			{
-				var types = new List<Type>
-				{
-					component.GetType()
-				};
+				yield return component.GetType();
 				//add implemented interfaces
 				foreach (Type iType in component.GetType().GetInterfaces())
 				{
 					if (typeof(IComponent) != iType)
 					{
-						types.Add(iType);
+						yield return iType;
 					}
 				}
 				//add base classes
 				Type type = component.GetType().BaseType;
 				while (typeof(object) != type)
 				{
-					types.Add(type);
+					yield return type;
 					type = type.BaseType;
 				}
-				return types;
 			}
 
 			public IEnumerable<IComponent> Components { get { return components; } }
