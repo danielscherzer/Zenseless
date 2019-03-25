@@ -22,7 +22,6 @@ dotnet_csproj:
 image: Visual Studio 2017
 
 configuration:
-#- Debug
 - Release
 
 before_build:
