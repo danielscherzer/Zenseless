@@ -7,8 +7,6 @@
 
 	public class CollisionGrid
 	{
-		public delegate void CollisionHandler(IBox2DCollider a, IBox2DCollider b);
-
 		public Box2D Bounds { get; private set; }
 		public Vector2 CellSize { get; private set; }
 
@@ -60,9 +58,9 @@
 			}
 		}
 
-		public void FindAllCollisions(IEnumerable<IBox2DCollider> colliders, CollisionHandler Handler)
+		public void FindAllCollisions(IEnumerable<IBox2DCollider> colliders, Action<IBox2DCollider, IBox2DCollider> collisionHandler)
 		{
-			if (Handler is null) return;
+			if (collisionHandler is null) return;
 			Clear();
 			foreach (var collider in colliders)
 			{
@@ -73,19 +71,19 @@
 				for (int x = 0; x < CellCountX; ++x)
 				{
 					var cell = cells[x, y];
-					CheckCell(Handler, cell);
+					CheckCell(collisionHandler, cell);
 				}
 			}
 		}
 
-		private static void CheckCell(CollisionHandler Handler, List<IBox2DCollider> cell)
+		private static void CheckCell(Action<IBox2DCollider, IBox2DCollider> collisionHandler, List<IBox2DCollider> cell)
 		{
-			for (int i = 0; i < cell.Count; ++i)
+			for (int i = 0; i + 1 < cell.Count; ++i)
 			{
 				//check each collider against every other collider
 				for (int j = i + 1; j < cell.Count; ++j)
 				{
-					Handler(cell[i], cell[j]);
+					collisionHandler(cell[i], cell[j]);
 				}
 			}
 		}

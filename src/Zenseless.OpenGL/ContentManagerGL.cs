@@ -142,7 +142,7 @@
 					}
 					return includeCode;
 				}
-				var expandedShaderCode = ShaderLoader.ResolveIncludes(shaderCode, GetIncludeCode);
+				var expandedShaderCode = ShaderLoader.ExpandIncludes(shaderCode, GetIncludeCode);
 				var shader = new ShaderGL(shaderType);
 				if (shader.Compile(expandedShaderCode))
 				{

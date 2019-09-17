@@ -48,15 +48,9 @@
 			collisionGrid.FindAllCollisions(colliders, (c1, c2) => HandleNarrowPhaseCollision(c1 as Collider, c2 as Collider));
 		}
 
-		internal void GridCollisionCenter()
-		{
-			collisionGridCenter.FindAllCollisions(colliders, (c1, c2) => HandleNarrowPhaseCollision(c1 as Collider, c2 as Collider));
-		}
-
 		private List<Collider> colliders = new List<Collider>();
 		private IReadOnlyBox2D windowBorders = new Box2D(-1.0f, -1.0f, 2.0f, 2.0f);
 		private CollisionGrid collisionGrid;
-		private CollisionGridCenter collisionGridCenter;
 
 		private void SetupColliders()
 		{
@@ -79,7 +73,6 @@
 			}
 			float scale = 2f;
 			collisionGrid = new CollisionGrid(windowBorders, size * scale, size * scale);
-			collisionGridCenter = new CollisionGridCenter(windowBorders, size * scale, size * scale);
 		}
 
 		private void HandleNarrowPhaseCollision(Collider collider1, Collider collider2)

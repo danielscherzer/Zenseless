@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Collider.cs" />
     <Compile Include="CollisionGrid.cs" />
-    <Compile Include="CollisionGridCenter.cs" />
     <Compile Include="IBox2DCollider.cs" />
     <Compile Include="CollisionBroadPhaseExample.cs" />
     <Compile Include="Model.cs" />

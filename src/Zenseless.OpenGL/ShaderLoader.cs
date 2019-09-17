@@ -1,7 +1,6 @@
 ﻿namespace Zenseless.OpenGL
 {
 	using System;
-	using System.IO;
 	using System.Text.RegularExpressions;
 	using Zenseless.HLGL;
 
@@ -62,7 +61,7 @@
 		/// <param name="GetIncludeCode">Functor that will be called with the include path and that should return the shader code.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentNullException">GetIncludeCode</exception>
-		public static string ResolveIncludes(string shaderCode, Func<string, string> GetIncludeCode)
+		public static string ExpandIncludes(string shaderCode, Func<string, string> GetIncludeCode)
 		{
 			if (GetIncludeCode == null) throw new ArgumentNullException(nameof(GetIncludeCode));
 

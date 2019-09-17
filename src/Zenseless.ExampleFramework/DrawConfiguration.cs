@@ -182,11 +182,11 @@ namespace Zenseless.ExampleFramework
 		}
 		
 		/// <summary>
-				/// Updates the uniforms.
-				/// </summary>
-				/// <typeparam name="DATA">The type of the ata.</typeparam>
-				/// <param name="name">The name.</param>
-				/// <param name="uniforms">The uniforms.</param>
+		/// Updates the uniforms.
+		/// </summary>
+		/// <typeparam name="DATA">The type of the ata.</typeparam>
+		/// <param name="name">The name.</param>
+		/// <param name="uniforms">The uniforms.</param>
 		public void UpdateUniformBuffer<DATA>(string name, DATA uniforms) where DATA : struct
 		{
 			if (!buffers.TryGetValue(name, out BufferObject buffer))

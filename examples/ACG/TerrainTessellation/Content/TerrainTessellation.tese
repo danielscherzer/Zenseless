@@ -34,9 +34,9 @@ vec4 interpolate(vec4 v1, vec4 v2, vec4 v3, vec4 v4)
 
 vec2 hash( in vec2 x )  // replace this by something better
 {
-    const vec2 k = vec2( 0.3183099, 0.3678794 );
-    x = x*k + k.yx;
-    return -1.0 + 2.0*fract( 16.0 * k*fract( x.x*x.y*(x.x+x.y)) );
+	const vec2 k = vec2( 0.3183099, 0.3678794 );
+	x = x * k + k.yx;
+	return -1.0 + 2.0*fract( 16.0 * k * fract( x.x * x.y * (x.x + x.y)) );
 }
 
 // The MIT License
@@ -69,12 +69,11 @@ vec3 noised( in vec2 p )
 
 vec3 displacement(vec2 coord)
 {
-	vec3 d = noised(coord * 100);
-//	d += noised(coord * 20) * 0.5;
-//	d += noised(coord * 40) * 0.25;
-//	d += noised(coord * 500) * 0.01;
-//	d *= 20.5;
-//	d = max(d, -0.8);
+	coord *= 100;
+	vec3 d = noised(coord);
+	coord *= 5;
+	float a = 0.1;
+	d += noised(coord) * a;
 	return d;
 }
 

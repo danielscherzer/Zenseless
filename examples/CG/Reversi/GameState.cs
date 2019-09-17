@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Drawing;
 
 namespace Reversi
 {
 	[Serializable]
 	public class GameState : IGameState
 	{
-		public Point LastMove { get; set; }
-
 		public GameState()
 		{
 			for (int x = 0; x < GridWidth; ++x)
@@ -28,8 +25,8 @@ namespace Reversi
 		public int GridWidth { get { return grid.GetLength(0); } }
 		public int GridHeight { get { return grid.GetLength(1); } }
 
-		public int LastMoveX { get { return LastMove.X; } }
-		public int LastMoveY { get { return LastMove.Y; } }
+		public int LastMoveX { get; set; }
+		public int LastMoveY { get; set; }
 
 		private FieldType[,] grid = new FieldType[8, 8];
 	}

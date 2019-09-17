@@ -12,13 +12,14 @@ float func(float x)
 	return sign(sin(x)) * pow(sin(x), 3.0);
 }
 
+out vec4 color;
 void main () {
 	// range [-1..1]²
-    vec2 range11 = 2 * uv - 1;
+	vec2 range11 = 2 * uv - 1;
 
 	//cartesian to polar coordinates
-    float radius = length(range11); // radius of current pixel
-    float angle = atan(range11.y, range11.x); //angel of current pixel [-PI..PI] 
+	float radius = length(range11); // radius of current pixel
+	float angle = atan(range11.y, range11.x); //angel of current pixel [-PI..PI] 
 
 	//distort angle
 	float amplitude = 7.5;
@@ -33,6 +34,5 @@ void main () {
 
 	vec2 newUv = (vec2(x, y) + 1) * 0.5;
 	
-	vec3 color = texture(image, newUv).rgb;  
-    gl_FragColor = vec4(color, 1.0);
+	color = vec4(texture(image, newUv).rgb, 1.0);
 }

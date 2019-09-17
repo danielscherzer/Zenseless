@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace Reversi
 {
@@ -20,7 +19,8 @@ namespace Reversi
 			grid[centerX - 1, centerY] = FieldType.WHITE;
 			grid[centerX, centerY - 1] = FieldType.WHITE;
 			grid[centerX, centerY] = FieldType.BLACK;
-			grid.LastMove = new Point(centerX, centerY - 1);
+			grid.LastMoveX = centerX;
+			grid.LastMoveY = centerY - 1;
 			UpdateGameResult();
 		}
 
@@ -30,16 +30,15 @@ namespace Reversi
 		public Result CurrentGameResult { get; private set; }
 		public IGameState GameState { get { return grid; } }
 
-		public void Move(Point point)
+		public void Move(int x, int y)
 		{
-			var x = point.X;
-			var y = point.Y;
 			if (x < 0 || grid.GridWidth <= x) return;
 			if (y < 0 || grid.GridHeight <= y) return;
 			if (FieldType.EMPTY != grid[x, y]) return;
 			var color = whiteMoves ? FieldType.WHITE : FieldType.BLACK;
 			grid[x, y] = color;
-			grid.LastMove = new Point(x, y);
+			grid.LastMoveX = x;
+			grid.LastMoveY = y;
 			for (int dirX = -1; dirX <= 1; ++dirX)
 			{
 				for (int dirY = -1; dirY <= 1; ++dirY)

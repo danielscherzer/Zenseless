@@ -66,7 +66,7 @@
 		}
 
 		/// <summary>
-		/// Gets the texture.
+		/// Gets the first color texture.
 		/// </summary>
 		/// <value>
 		/// The texture.

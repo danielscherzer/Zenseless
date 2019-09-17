@@ -13,14 +13,14 @@
 		</Style>
 	</Window.Resources>
 	<Canvas x:Name="canvas" Width="500" Height="500">
-		<Viewbox x:Name="player" Height="18" Width="17" Stretch="Fill">
+		<Viewbox x:Name="player" Height="18" Width="17" Stretch="Fill" Canvas.Left="10" Canvas.Top="16">
 			<Canvas Height="28" Width="25" d:IsLocked="True">
 				<Image Height="28" Source="Wizard.png" Stretch="Fill" Width="20" Canvas.Left="3"/>
 				<Ellipse Height="25" Width="25" Canvas.Top="3"/>
 			</Canvas>
 		</Viewbox>
 		<Image Source="grass.png" Stretch="Fill" Height="500" Width="500" Panel.ZIndex="-1" d:IsLocked="True"/>
-		<Viewbox x:Name="boar" Canvas.Left="39" Canvas.Top="174" Stretch="Fill" Height="38" Width="50">
+		<Viewbox x:Name="boar" Canvas.Left="57" Canvas.Top="172" Stretch="Fill" Height="38" Width="50">
 			<Canvas Height="54" Width="70" d:IsLocked="True">
 				<Image Height="53" Source="boar.png" Stretch="Fill" Width="69"/>
 				<Ellipse Height="50" Width="52" Canvas.Left="12" Canvas.Top="4"/>

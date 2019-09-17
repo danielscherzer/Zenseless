@@ -16,7 +16,8 @@
 			window.GameWindow.AddWindowAspectHandling(visual.Camera.Projection);
 			var movementState = window.GameWindow.AddFirstPersonCameraEvents(visual.Camera.View);
 
-			window.Update += (dt) => visual.Camera.View.ApplyRotatedMovement(movementState.movement * 30 * dt);
+			window.Update += (dt) => visual.Camera.View.ApplyRotatedMovement(movementState.movement * dt);
+			window.GameWindow.KeyDown += (s, a) => { if (a.Key == OpenTK.Input.Key.Tab) visual.Wireframe = !visual.Wireframe; };
 			var sampleSeries = new ExponentialSmoothing(0.01);
 			QueryObject timeQuery = new QueryObject();
 			window.Render += () =>
