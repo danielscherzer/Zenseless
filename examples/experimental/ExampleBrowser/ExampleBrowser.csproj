@@ -62,10 +62,10 @@
       <Version>3.2.0</Version>
     </PackageReference>
     <PackageReference Include="Extended.Wpf.Toolkit">
-      <Version>3.4.0</Version>
+      <Version>3.5.0</Version>
     </PackageReference>
     <PackageReference Include="WpfOpenGlControl">
-      <Version>0.3.20</Version>
+      <Version>0.3.24</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
