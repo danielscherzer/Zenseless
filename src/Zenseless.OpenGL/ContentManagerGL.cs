@@ -1,5 +1,6 @@
 ﻿namespace Zenseless.OpenGL
 {
+	using GLSLhelper;
 	using OpenTK.Graphics.OpenGL4;
 	using System;
 	using System.Collections.Generic;
@@ -142,7 +143,7 @@
 					}
 					return includeCode;
 				}
-				var expandedShaderCode = ShaderLoader.ExpandIncludes(shaderCode, GetIncludeCode);
+				var expandedShaderCode = Transformations.ExpandIncludes(shaderCode, GetIncludeCode);
 				var shader = new ShaderGL(shaderType);
 				if (shader.Compile(expandedShaderCode))
 				{

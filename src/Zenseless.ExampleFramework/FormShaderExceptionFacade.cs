@@ -3,6 +3,7 @@ using Zenseless.OpenGL;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using GLSLhelper;
 
 namespace Zenseless.ExampleFramework
 {
@@ -34,7 +35,7 @@ namespace Zenseless.ExampleFramework
 			}
 			//load error list after source code is loaded for highlighting of error to work
 			form.Errors.Clear();
-			var log = new ShaderLog(exception.Message);
+			var log = new ShaderLogParser(exception.Message);
 			foreach (var logLine in log.Lines)
 			{
 				form.Errors.Add(logLine);

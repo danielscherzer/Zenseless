@@ -101,7 +101,6 @@
     <Compile Include="StateManagement\PointSprite.cs" />
     <Compile Include="StateManagement\RenderState.cs" />
     <Compile Include="Shader\ShaderException.cs" />
-    <Compile Include="Shader\ShaderLog.cs" />
     <Compile Include="SpriteSheet.cs" />
     <Compile Include="deprecated\IResource.cs" />
     <Compile Include="StateManagement\IState.cs" />
