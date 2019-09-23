@@ -19,7 +19,7 @@
 		/// <param name="farClip">The far clip plane distance.</param>
 		public Perspective(float fieldOfViewY = 90f, float nearClip = 0.1f, float farClip = 1f, float aspect = 1f)
 		{
-			cachedMatrix = new CachedCalculatedValue<Matrix4x4>(CalculateProjectionMatrix);
+			cachedMatrix = new DirtyFlag<Matrix4x4>(CalculateProjectionMatrix);
 			PropertyChanged += (s, a) => cachedMatrix.Invalidate();
 			Aspect = aspect;
 			FarClip = farClip;
@@ -100,7 +100,7 @@
 		private float _farClip = 1f;
 		private float _fieldOfViewY = 90f;
 		private float _nearClip = 0.1f;
-		private CachedCalculatedValue<Matrix4x4> cachedMatrix;
+		private DirtyFlag<Matrix4x4> cachedMatrix;
 
 		private Matrix4x4 CalculateProjectionMatrix()
 		{

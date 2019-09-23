@@ -19,7 +19,7 @@
 		{
 			View = view;
 			Projection = projection;
-			cachedMatrix = new CachedCalculatedValue<Matrix4x4>(CalcCombinedTransform);
+			cachedMatrix = new DirtyFlag<Matrix4x4>(CalcCombinedTransform);
 
 			View.PropertyChanged += (s, e) => OnPropertyChanged(this, nameof(View));
 			Projection.PropertyChanged += (s, e) => OnPropertyChanged(this, nameof(Projection));
@@ -55,7 +55,7 @@
 		/// </value>
 		public VIEW View { get; }
 
-		private CachedCalculatedValue<Matrix4x4> cachedMatrix;
+		private DirtyFlag<Matrix4x4> cachedMatrix;
 
 		private Matrix4x4 CalcCombinedTransform()
 		{

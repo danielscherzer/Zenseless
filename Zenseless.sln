@@ -161,6 +161,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeferredShading", "examples
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrainTessellation", "examples\ACG\TerrainTessellation\TerrainTessellation.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Patterns.Tests", "Test\Zenseless.Patterns.Tests\Zenseless.Patterns.Tests.csproj", "{0CB50E8E-B837-4053-9E05-817738178E05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -435,6 +437,10 @@ Global
 		{9037E855-7592-4DAC-89C7-62257D8F2343}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9037E855-7592-4DAC-89C7-62257D8F2343}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9037E855-7592-4DAC-89C7-62257D8F2343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CB50E8E-B837-4053-9E05-817738178E05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB50E8E-B837-4053-9E05-817738178E05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB50E8E-B837-4053-9E05-817738178E05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB50E8E-B837-4053-9E05-817738178E05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -510,6 +516,7 @@ Global
 		{5D481F3C-0C1F-4963-9D08-66FEEA4E178B} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{253A7FA6-2984-4172-929A-DBD654538B38} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{9037E855-7592-4DAC-89C7-62257D8F2343} = {DC899246-DB92-4DFE-9E0B-F2300B77B281}
+		{0CB50E8E-B837-4053-9E05-817738178E05} = {BEE08292-7C95-44EC-B228-44ED81C09610}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CA293D8-FC78-4BF1-BA73-543451A6B7AB}

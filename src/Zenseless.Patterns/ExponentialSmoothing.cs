@@ -11,10 +11,11 @@
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ExponentialSmoothing"/> class.
 		/// </summary>
-		/// <param name="stableWeight">The stable weight.</param>
-		public ExponentialSmoothing(double stableWeight)
+		/// <param name="weight">The weight of a new sample. between ]0,1[.</param>
+		public ExponentialSmoothing(double weight)
 		{
-			this.stableWeight = stableWeight;
+			if ((0 >= weight) || (1 <= weight)) throw new ArgumentException("Stable weight has to be inside ]0,1[");
+			stableWeight = weight;
 			Clear();
 		}
 
@@ -24,7 +25,7 @@
 		public void Clear()
 		{
 			SmoothedValue = 0f;
-			weight = 1.0; //initially only use new sample value
+			currentWeight = 1.0; //initially only use new sample value
 		}
 
 		/// <summary>
@@ -41,11 +42,11 @@
 		/// <param name="value">The value.</param>
 		public void NewSample(double value)
 		{
-			SmoothedValue = weight * value + (1.0 - weight) * SmoothedValue;
-			weight = Math.Max(stableWeight, weight - stableWeight); //needed to avoid initial drift
+			SmoothedValue = currentWeight * value + (1.0 - currentWeight) * SmoothedValue;
+			currentWeight = Math.Max(stableWeight, currentWeight - stableWeight); //needed to avoid initial drift
 		}
 
 		private readonly double stableWeight;
-		private double weight;
+		private double currentWeight;
 	}
 }

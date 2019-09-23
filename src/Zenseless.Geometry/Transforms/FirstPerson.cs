@@ -17,7 +17,7 @@
 		/// <param name="tilt">The tilt.</param>
 		public FirstPerson(Vector3 position, float heading = 0f, float tilt = 0f)
 		{
-			cachedMatrixView = new CachedCalculatedValue<Matrix4x4>(CalcViewMatrix);
+			cachedMatrixView = new DirtyFlag<Matrix4x4>(CalcViewMatrix);
 			PropertyChanged += (s, a) => cachedMatrixView.Invalidate();
 			Position = position;
 			Heading = heading;
@@ -85,7 +85,7 @@
 		private float _heading = 0f;
 		private float _tilt = 0f;
 		private Vector3 _position = Vector3.Zero;
-		private CachedCalculatedValue<Matrix4x4> cachedMatrixView;
+		private DirtyFlag<Matrix4x4> cachedMatrixView;
 
 		private Matrix4x4 CalcRotationMatrix()
 		{

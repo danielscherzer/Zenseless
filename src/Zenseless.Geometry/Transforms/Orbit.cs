@@ -18,7 +18,7 @@
 		/// <param name="elevation">The elevation or tilt.</param>
 		public Orbit(float distance = 1f, float azimuth = 0f, float elevation = 0f)
 		{
-			cachedMatrixView = new CachedCalculatedValue<Matrix4x4>(CalcViewMatrix);
+			cachedMatrixView = new DirtyFlag<Matrix4x4>(CalcViewMatrix);
 			PropertyChanged += (s, a) => cachedMatrixView.Invalidate();
 			Azimuth = azimuth;
 			Distance = distance;
@@ -161,7 +161,7 @@
 		private float _distance = 0f;
 		private float _elevation = 0f;
 		private Vector3 _target = Vector3.Zero;
-		private CachedCalculatedValue<Matrix4x4> cachedMatrixView;
+		private DirtyFlag<Matrix4x4> cachedMatrixView;
 
 		private Matrix4x4 CalcViewMatrix()
 		{

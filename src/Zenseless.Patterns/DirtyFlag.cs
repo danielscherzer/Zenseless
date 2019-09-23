@@ -7,14 +7,14 @@
 	/// A value is cached and only recalculated, if invalidated.
 	/// </summary>
 	/// <typeparam name="VALUE_TYPE">The type of the cached value.</typeparam>
-	public class CachedCalculatedValue<VALUE_TYPE>
+	public class DirtyFlag<VALUE_TYPE>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CachedCalculatedValue{VALUE_TYPE}"/> class.
+		/// Initializes a new instance of the <see cref="DirtyFlag{VALUE_TYPE}"/> class.
 		/// </summary>
 		/// <param name="calculateValue">Functor for calculating the value.</param>
 		/// <exception cref="ArgumentNullException">calculateValue</exception>
-		public CachedCalculatedValue(Func<VALUE_TYPE> calculateValue)
+		public DirtyFlag(Func<VALUE_TYPE> calculateValue)
 		{
 			this.calculateValue = calculateValue ?? throw new ArgumentNullException(nameof(calculateValue));
 		}

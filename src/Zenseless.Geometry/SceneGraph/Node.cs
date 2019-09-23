@@ -14,7 +14,7 @@
 		/// <param name="parent">The parent node.</param>
 		public Node(Node parent)
 		{
-			globalTransform = new CachedCalculatedValue<Transformation>(CalcGlobalTransformation);
+			globalTransform = new DirtyFlag<Transformation>(CalcGlobalTransformation);
 			LocalTransformation = Transformation.Identity;
 			Parent = parent;
 		}
@@ -26,7 +26,7 @@
 		/// <param name="parent">The parent node.</param>
 		public Node(in Transformation localTransformation, Node parent)
 		{
-			globalTransform = new CachedCalculatedValue<Transformation>(CalcGlobalTransformation);
+			globalTransform = new DirtyFlag<Transformation>(CalcGlobalTransformation);
 			LocalTransformation = localTransformation;
 			Parent = parent;
 		}
@@ -98,7 +98,7 @@
 		}
 
 		private readonly List<Node> children = new List<Node>();
-		private CachedCalculatedValue<Transformation> globalTransform;
+		private DirtyFlag<Transformation> globalTransform;
 		private Node parent;
 		private Transformation localTransform;
 
