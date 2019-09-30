@@ -35,11 +35,8 @@
 		/// </value>
 		public float Aspect
 		{
-			get => _aspect; set
-			{
-				_aspect = Math.Max(value, float.Epsilon);
-				RaisePropertyChanged();
-			}
+			get => _aspect;
+			set => SetNotify(ref _aspect, Math.Max(value, float.Epsilon));
 		}
 
 		/// <summary>
@@ -50,11 +47,8 @@
 		/// </value>
 		public float FarClip
 		{
-			get => _farClip; set
-			{
-				_farClip = Math.Max(value, NearClip);
-				RaisePropertyChanged();
-			}
+			get => _farClip;
+			set => SetNotify(ref _farClip, Math.Max(value, NearClip));
 		}
 
 		/// <summary>
@@ -66,11 +60,7 @@
 		public float FieldOfViewY
 		{
 			get => _fieldOfViewY;
-			set
-			{
-				_fieldOfViewY = MathHelper.Clamp(value, float.Epsilon, 179.9f);
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _fieldOfViewY, MathHelper.Clamp(value, float.Epsilon, 179.9f));
 		}
 
 		/// <summary>
@@ -89,11 +79,8 @@
 		/// </value>
 		public float NearClip
 		{
-			get => _nearClip; set
-			{
-				_nearClip = Math.Max(value, float.Epsilon);
-				RaisePropertyChanged();
-			}
+			get => _nearClip;
+			set => SetNotify(ref _nearClip, Math.Max(value, float.Epsilon));
 		}
 
 		private float _aspect = 1f;

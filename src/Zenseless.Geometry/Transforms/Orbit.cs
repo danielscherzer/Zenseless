@@ -35,11 +35,7 @@
 		public float Azimuth
 		{
 			get => _azimuth;
-			set
-			{
-				_azimuth = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _azimuth, value);
 		}
 
 		/// <summary>
@@ -51,11 +47,7 @@
 		public float Distance
 		{
 			get => _distance;
-			set
-			{
-				_distance = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _distance, value);
 		}
 
 		/// <summary>
@@ -67,11 +59,7 @@
 		public float Elevation
 		{
 			get => _elevation;
-			set
-			{
-				_elevation = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _elevation, value);
 		}
 
 		/// <summary>
@@ -91,11 +79,7 @@
 		public Vector3 Target
 		{
 			get => _target;
-			set
-			{
-				_target = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _target, value);
 		}
 
 		/// <summary>
@@ -107,11 +91,7 @@
 		public float TargetX
 		{
 			get => Target.X;
-			set
-			{
-				_target.X = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _target.X, value);
 		}
 
 		/// <summary>
@@ -123,11 +103,7 @@
 		public float TargetY
 		{
 			get => Target.Y;
-			set
-			{
-				_target.Y = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _target.Y, value);
 		}
 
 		/// <summary>
@@ -139,11 +115,7 @@
 		public float TargetZ
 		{
 			get => Target.Z;
-			set
-			{
-				_target.Z = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _target.Z, value);
 		}
 
 		/// <summary>

@@ -41,11 +41,7 @@
 		public float Heading
 		{
 			get => _heading;
-			set
-			{
-				_heading = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _heading, value);
 		}
 
 		/// <summary>
@@ -62,11 +58,7 @@
 		public Vector3 Position
 		{
 			get => _position;
-			set
-			{
-				_position = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _position, value);
 		}
 
 		/// <summary>
@@ -75,11 +67,7 @@
 		public float Tilt
 		{
 			get => _tilt;
-			set
-			{
-				_tilt = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _tilt, value);
 		}
 
 		private float _heading = 0f;

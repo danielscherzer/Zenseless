@@ -36,16 +36,8 @@
 		/// </value>
 		public float Degrees
 		{
-			get
-			{
-				return _degrees;
-			}
-			set
-			{
-				_degrees = value;
-				Matrix = MathHelper.CreateRotation(_degrees, Axis);
-				RaisePropertyChanged();
-			}
+			get => _degrees;
+			set => SetNotify(ref _degrees, value, (degrees) => Matrix = MathHelper.CreateRotation(degrees, Axis));
 		}
 
 		/// <summary>

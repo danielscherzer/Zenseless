@@ -52,7 +52,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The x-coordinate.
 		/// </value>
-		public float Sx { get { return matrix.M11; } set { matrix.M11 = value; RaisePropertyChanged(); } }
+		public float Sx { get => matrix.M11; set => SetNotify(ref matrix.M11, value); }
 
 		/// <summary>
 		/// Gets or sets the y-coordinate.
@@ -60,7 +60,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The y-coordinate.
 		/// </value>
-		public float Sy { get { return matrix.M22; } set { matrix.M22 = value; RaisePropertyChanged(); } }
+		public float Sy { get => matrix.M22; set => SetNotify(ref matrix.M22, value); }
 
 		/// <summary>
 		/// Gets or sets the z-coordinate.
@@ -68,7 +68,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The z-coordinate.
 		/// </value>
-		public float Sz { get { return matrix.M33; } set { matrix.M33 = value; RaisePropertyChanged(); } }
+		public float Sz { get => matrix.M33; set => SetNotify(ref matrix.M33, value); }
 
 		private Matrix4x4 matrix;
 	}

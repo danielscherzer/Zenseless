@@ -51,11 +51,7 @@ namespace ExampleBrowser
 		public float Angle
 		{
 			get => _angle;
-			set
-			{
-				_angle = value;
-				RaisePropertyChanged();
-			}
+			set => SetNotify(ref _angle, value);
 		}
 
 		private ITime Time { get; }
