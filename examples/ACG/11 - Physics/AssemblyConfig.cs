@@ -1,5 +1,5 @@
-﻿using Zenseless.Patterns;
-using Zenseless.HLGL;
+﻿using Zenseless.HLGL;
+using Zenseless.ExampleFramework;
 
 #if SOLUTION
 [assembly: Solution]

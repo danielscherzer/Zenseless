@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Zenseless.Patterns
+namespace Zenseless.ExampleFramework
 {
 	/// <summary>
 	/// Defines an attribute that is used by Zenseless to detect if SOLUTION is defined.

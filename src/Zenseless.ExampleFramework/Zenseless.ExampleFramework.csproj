@@ -58,6 +58,7 @@
     <Compile Include="RegistryLoaderForm.cs" />
     <Compile Include="experimental\ShaderCreatorGL.cs" />
     <Compile Include="experimental\ShaderManagerGL.cs" />
+    <Compile Include="SolutionAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GLSLhelper, Version=0.1.5.0, Culture=neutral, processorArchitecture=MSIL">
