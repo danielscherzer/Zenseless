@@ -71,9 +71,16 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Zenseless.HLGL\Zenseless.HLGL.csproj">
+      <Project>{227d6be1-ba08-4030-a755-07288540931f}</Project>
+      <Name>Zenseless.HLGL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Zenseless.Patterns\Zenseless.Patterns.csproj">
       <Project>{e5ff60a4-46fb-42d2-9430-bc523315c2e0}</Project>
       <Name>Zenseless.Patterns</Name>
@@ -81,10 +88,6 @@
     <ProjectReference Include="..\Zenseless.Geometry\Zenseless.Geometry.csproj">
       <Project>{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}</Project>
       <Name>Zenseless.Geometry</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Zenseless.HLGL\Zenseless.HLGL.csproj">
-      <Project>{227d6be1-ba08-4030-a755-07288540931f}</Project>
-      <Name>Zenseless.HLGL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zenseless.OpenGL\Zenseless.OpenGL.csproj">
       <Project>{C660F6AF-C100-4169-A9FB-61E1EBE87F34}</Project>
