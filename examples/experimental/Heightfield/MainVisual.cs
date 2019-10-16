@@ -15,8 +15,6 @@
 			var mesh = Meshes.CreatePlane(2, 2, 1024, 1024);
 
 			var texHeightfield = contentLoader.Load<ITexture2D>("mountain_height");
-			var heightField = new float[texHeightfield.Width, texHeightfield.Height];
-			texHeightfield.ToBuffer(ref heightField);
 			var bindings = new TextureBinding[]
 			{
 				new TextureBinding("texHeightfield", texHeightfield),

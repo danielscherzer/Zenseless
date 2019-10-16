@@ -69,7 +69,7 @@
 		/// <summary>
 		/// Gets the internal list of elements.
 		/// </summary>
-		/// <typeparam name="ELEMENT_TYPE">The type of the lement type.</typeparam>
+		/// <typeparam name="ELEMENT_TYPE">The type of the element type.</typeparam>
 		/// <returns></returns>
 		/// <exception cref="InvalidCastException"></exception>
 		public List<ELEMENT_TYPE> GetList<ELEMENT_TYPE>()

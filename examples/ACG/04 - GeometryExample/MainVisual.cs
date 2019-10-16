@@ -47,22 +47,22 @@
 			var rnd = new Random(12);
 			float Rnd01() => (float)rnd.NextDouble();
 			float RndCoord() => (Rnd01() - 0.5f) * 2.0f;
-			var positions = new Vector2[pointCount];
+			var position = new Vector2[pointCount];
 			for (int i = 0; i < pointCount; ++i)
 			{
-				positions[i] = new Vector2(RndCoord(), RndCoord());
+				position[i] = new Vector2(RndCoord(), RndCoord());
 			}
 			//copy positions to GPU
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "in_position"), positions);
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "position"), position);
 			//generate velocity array on CPU
 			float RndSpeed() => (Rnd01() - 0.5f) * 0.1f;
-			var velocities = new Vector2[pointCount];
+			var velocity = new Vector2[pointCount];
 			for (int i = 0; i < pointCount; ++i)
 			{
-				velocities[i] = new Vector2(RndSpeed(), RndSpeed());
+				velocity[i] = new Vector2(RndSpeed(), RndSpeed());
 			}
 			//copy velocities to GPU
-			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "in_velocity"), velocities);
+			geometry.SetAttribute(shaderProgram.GetResourceLocation(ShaderResourceType.Attribute, "velocity"), velocity);
 		}
 	}
 }

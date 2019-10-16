@@ -23,14 +23,14 @@ namespace Example
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-			//texDiffuse.Activate();
+//			texDiffuse.Activate();
 			geometry.Draw();
-			//texDiffuse.Deactivate();
+//			texDiffuse.Deactivate();
 			shaderProgram.Deactivate();
 		}
 
 		private IShaderProgram shaderProgram;
 		private IDrawable geometry;
-		//private ITexture texDiffuse;
+//		private ITexture texDiffuse;
 	}
 }

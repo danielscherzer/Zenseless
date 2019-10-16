@@ -13,12 +13,12 @@
 			this.context = context;
 			frameBuffer = context.GetFrameBuffer();
 			surfaceGeometry = context.CreateRenderSurface(1024, 1024, true);
-			suzanne.BackfaceCulling = true;
-			suzanne.SetInputTexture("chalet", contentLoader.Load<ITexture2D>("chalet.jpg"));
+			this.scene.BackfaceCulling = true;
+			this.scene.SetInputTexture("chalet", contentLoader.Load<ITexture2D>("chalet.jpg"));
 			//model from https://sketchfab.com/models/e925320e1d5744d9ae661aeff61e7aef
 			var mesh = contentLoader.Load<DefaultMesh>("chalet.obj").Transform(Transformation.Rotation(-90f, Axis.X));
-			suzanne.UpdateMeshShader(mesh, contentLoader.Load<IShaderProgram>("shader.*"));
-			suzanne.ZBufferTest = true;
+			this.scene.UpdateMeshShader(mesh, contentLoader.Load<IShaderProgram>("shader.*"));
+			this.scene.ZBufferTest = true;
 
 			copyQuad.BackfaceCulling = false;
 			copyQuad.SetInputTexture("tex", surfaceGeometry);
@@ -35,8 +35,8 @@
 					translates.Add(new Vector3(x, 0, z));
 				}
 			}
-			suzanne.UpdateInstanceAttribute("translate", translates.ToArray());
-			suzanne.InstanceCount = translates.Count;
+			this.scene.UpdateInstanceAttribute("translate", translates.ToArray());
+			this.scene.InstanceCount = translates.Count;
 		}
 
 		internal void Resize(int width, int height)
@@ -50,8 +50,8 @@
 			surfaceGeometry.Clear();
 
 			uniformBlock.camera = camera.Matrix;
-			suzanne.UpdateUniformBuffer("Uniforms", uniformBlock);
-			surfaceGeometry.Draw(suzanne);
+			scene.UpdateUniformBuffer("Uniforms", uniformBlock);
+			surfaceGeometry.Draw(scene);
 
 			frameBuffer.Draw(copyQuad);
 		}
@@ -65,7 +65,7 @@
 		private IOldRenderSurface frameBuffer;
 		private IOldRenderSurface surfaceGeometry;
 		private UniformBlock uniformBlock = new UniformBlock();
-		private DrawConfiguration suzanne = new DrawConfiguration();
+		private DrawConfiguration scene = new DrawConfiguration();
 		private DrawConfiguration copyQuad = new DrawConfiguration();
 	}
 }

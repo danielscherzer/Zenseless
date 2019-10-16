@@ -4,8 +4,6 @@
 layout(lines_adjacency) in;
 layout(triangle_strip, max_vertices = OUTPUT_COUNT) out;
 
-uniform mat4 gl_ModelViewProjectionMatrix;
-
 float H1(float t) { return 2 * t * t * t - 3 * t * t + 1; }
 float H2(float t) { return -2 * t * t * t + 3 * t * t; }
 float H3(float t) { return t * t * t - 2 * t * t + t; }

@@ -96,6 +96,6 @@ namespace Example
 			shader.Deactivate();
 
 			if (time.ElapsedMilliseconds > 5000) time.Restart();
-		}		
+		}
 	}
 }

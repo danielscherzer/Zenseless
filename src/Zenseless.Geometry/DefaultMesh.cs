@@ -4,7 +4,7 @@
 	using System.Numerics;
 
 	/// <summary>
-	/// 
+	/// A mesh with position, normal and texture coordinates
 	/// </summary>
 	/// <seealso cref="Mesh" />
 	public class DefaultMesh : Mesh
@@ -30,7 +30,6 @@
 		/// </value>
 		public List<Vector3> Position { get; }
 
-		//public List<Vector3> Position => Get<Vector3>(PositionName);
 		/// <summary>
 		/// Gets the normal.
 		/// </summary>

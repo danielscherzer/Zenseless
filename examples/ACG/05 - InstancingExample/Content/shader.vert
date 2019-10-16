@@ -1,4 +1,4 @@
-#version 430 core				
+#version 430 core
 
 #ifdef SOLUTION
 uniform mat4x4 camera;
