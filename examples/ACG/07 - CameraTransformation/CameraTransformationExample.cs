@@ -22,6 +22,7 @@
 			window.GameWindow.MouseWheel += (s, e) => visual.CameraDistance *= (float)Math.Pow(1.05, e.DeltaPrecise);
 			window.Update += visual.Update;
 			window.Render += visual.Render;
+			window.Resize += visual.Resize;
 			window.Run();
 
 		}

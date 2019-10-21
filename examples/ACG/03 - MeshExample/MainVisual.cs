@@ -11,7 +11,9 @@ namespace Example
 		{
 			renderState.Set(new DepthTest(true));
 			renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
-			//texDiffuse = contentLoader.Load<ITexture2D>("capsule0");
+#if SOLUTION
+			texDiffuse = contentLoader.Load<ITexture2D>("capsule0");
+#endif
 			shaderProgram = contentLoader.Load<IShaderProgram>("shader.*");
 			//load geometry
 			var mesh = contentLoader.Load<DefaultMesh>("suzanne");
@@ -23,14 +25,20 @@ namespace Example
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
-//			texDiffuse.Activate();
+#if SOLUTION
+			texDiffuse.Activate();
+#endif
 			geometry.Draw();
-//			texDiffuse.Deactivate();
+#if SOLUTION
+			texDiffuse.Deactivate();
+#endif
 			shaderProgram.Deactivate();
 		}
 
 		private IShaderProgram shaderProgram;
 		private IDrawable geometry;
-//		private ITexture texDiffuse;
+#if SOLUTION
+		private ITexture texDiffuse;
+#endif
 	}
 }

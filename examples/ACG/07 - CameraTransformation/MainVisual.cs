@@ -39,6 +39,26 @@ namespace Example
 		{
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+#if SOLUTION
+			GL.Viewport(0, 0, splitX - 2, height);
+			DrawScene(view * Matrix4x4.CreateOrthographic(aspect * 10f, 10f, 0, 100f));
+			GL.Viewport(splitX + 2, 0, splitX - 2, height);
+#endif
+			DrawScene(view * Matrix4x4.CreatePerspectiveFieldOfView(0.5f, aspect, 0.1f, 100.0f));
+		}
+
+		public void Resize(int width, int height)
+		{
+			aspect = width / (float)height;
+#if SOLUTION
+			splitX = width / 2;
+			this.height = height;
+			aspect = splitX / (float)height;
+#endif
+		}
+
+		private void DrawScene(Matrix4x4 camera)
+		{
 			shaderProgram.Activate();
 			shaderProgram.Uniform(nameof(camera), camera, true);
 			geometry.Draw();
@@ -48,25 +68,24 @@ namespace Example
 		public void Update(float updatePeriod)
 		{
 			//TODO student: use CameraDistance, CameraAzimuth, CameraElevation to create an orbiting camera
-			var view = Matrix4x4.Identity;
+			view = Matrix4x4.Identity;
 #if SOLUTION
 			var mtxDistance = Matrix4x4.CreateTranslation(0, 0, -CameraDistance);
 			var mtxElevation = Matrix4x4.CreateRotationX(MathHelper.DegreesToRadians(CameraElevation));
 			var mtxAzimut = Matrix4x4.CreateRotationY(MathHelper.DegreesToRadians(CameraAzimuth));
 			view = mtxAzimut * mtxElevation * mtxDistance;
 #endif
-			var proj = Matrix4x4.CreatePerspectiveFieldOfView(0.5f, 1.0f, 0.1f, 100.0f);
-			//TODO student: use CreateOrthographic
-#if SOLUTION
-			proj = Matrix4x4.CreateOrthographic(10f, 10f, 0, 100f);
-#endif
-			camera = view * proj;
 		}
 
 		private const int particleCount = 500;
 
 		private IShaderProgram shaderProgram;
-		private Matrix4x4 camera = Matrix4x4.Identity;
+		private Matrix4x4 view = Matrix4x4.Identity;
 		private VAO geometry;
+		private float aspect = 1f;
+#if SOLUTION
+		private int splitX;
+		private int height;
+#endif
 	}
 }
