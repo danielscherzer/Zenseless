@@ -2,6 +2,7 @@
 {
 	using OpenTK;
 	using OpenTK.Input;
+	using OpenTK.Platform;
 	using System;
 	using Zenseless.Geometry;
 
@@ -99,6 +100,28 @@
 				state.movement = movement;
 			};
 			return state;
+		}
+
+		/// <summary>
+		/// Creates a first person camera controller.
+		/// </summary>
+		/// <param name="window">The window.</param>
+		/// <param name="speed">The movement speed.</param>
+		/// <param name="position">The starting position.</param>
+		/// <param name="fieldOfViewY">The field of view y.</param>
+		/// <param name="nearClip">The near clip plane.</param>
+		/// <param name="farClip">The far clip plane.</param>
+		/// <returns>a Camera</returns>
+		public static Camera<FirstPerson, Perspective> CreateFirstPersonCameraController(this IGameWindow window, float speed, System.Numerics.Vector3 position, float fieldOfViewY = 90f, float nearClip = 0.1f, float farClip = 1f)
+		{
+			var perspective = new Perspective(fieldOfViewY, nearClip, farClip);
+			var camera = new Camera<FirstPerson, Perspective>(new FirstPerson(position), perspective);
+
+			window.AddWindowAspectHandling(perspective);
+			var movementState = window.AddFirstPersonCameraEvents(camera.View);
+			window.UpdateFrame += (s, a) => camera.View.ApplyRotatedMovement(movementState.movement * speed * (float)a.Time);
+
+			return camera;
 		}
 
 		/// <summary>

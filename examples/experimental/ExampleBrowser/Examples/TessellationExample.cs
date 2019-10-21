@@ -3,7 +3,6 @@
 	using ExampleBrowser;
 	using OpenTK.Graphics.OpenGL4;
 	using System.ComponentModel.Composition;
-	using System.Numerics;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 	using Zenseless.Patterns;

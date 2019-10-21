@@ -19,15 +19,14 @@
 			GL.PatchParameter(PatchParameterInt.PatchVertices, 4);
 		}
 
-		public Camera<FirstPerson, Perspective> Camera { get; } = new Camera<FirstPerson, Perspective>(new FirstPerson(new Vector3(36, 0.1f, 30)), new Perspective(70, 0.01f, 300f));
 		public bool Wireframe { get; set; } = true;
 
 		private readonly int instanceSqrt = 100;
 
-		public void Draw()
+		public void Draw(ITransformation camera)
 		{
 			GL.PolygonMode(MaterialFace.FrontAndBack, Wireframe ? PolygonMode.Line : PolygonMode.Fill);
-			shader.Uniform("camera", Camera);
+			shader.Uniform("camera", camera);
 			shader.Uniform(nameof(instanceSqrt), instanceSqrt);
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			GL.DrawArraysInstanced(PrimitiveType.Patches, 0, 4, instanceSqrt * instanceSqrt);
