@@ -65,7 +65,6 @@
 			shaderProgramToon.Uniform(nameof(materialColor), materialColor);
 			shaderProgramToon.Uniform(nameof(camera), camera);
 			shaderProgramToon.Uniform(nameof(cameraPosition), cameraPosition);
-
 			geometryToon.Draw();
 			shaderProgramToon.Deactivate();
 
