@@ -2,7 +2,6 @@
 {
 	using OpenTK.Graphics.OpenGL;
 	using System.Collections.Generic;
-	using System.Drawing;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 
@@ -30,7 +29,7 @@
 
 		private static void DrawTexturedRect(IReadOnlyBox2D Rectangle, ITexture tex)
 		{
-			GL.Color3(Color.White);
+			GL.Color3(OpenTK.Color.White);
 			tex.Activate();
 			GL.Begin(PrimitiveType.Quads);
 			GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(Rectangle.MinX, Rectangle.MinY);

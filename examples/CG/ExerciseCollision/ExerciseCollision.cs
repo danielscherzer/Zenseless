@@ -16,8 +16,8 @@ namespace Example
 			window.Update += (dt) =>
 			{
 				// handle input
-				var movementXAxis = Keyboard.GetState()[Key.Left] ? -1f : (Keyboard.GetState()[Key.Right] ? 1f : 0f);
-				model.Update(movementXAxis, dt);
+				float axisLeftRight = window.Input.IsButtonDown("Left") ? -1f : window.Input.IsButtonDown("Right") ? 1f : 0f;
+				model.Update(axisLeftRight, dt);
 			};
 
 			window.Render += () =>

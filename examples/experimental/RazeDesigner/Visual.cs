@@ -35,18 +35,18 @@
 			texSand.Deactivate();
 			shaderRoad.Deactivate();
 
-			GL.Color3(Color.Red);
+			GL.Color3(OpenTK.Color.Red);
 			GL.PointSize(15.0f);
 			DrawPoints(points);
 
 			if(-1 != selectedPoint)
 			{
-				GL.Color3(Color.Blue);
+				GL.Color3(OpenTK.Color.Blue);
 				GL.PointSize(25.0f);
 				DrawPoint(points[selectedPoint]);
 			}
 			var pos = CubicHermiteSpline.CatmullRomSpline(points, truckPos);
-			GL.Color3(Color.White);
+			GL.Color3(OpenTK.Color.White);
 			//GL.Color3(Color.Green);
 			//GL.PointSize(25.0f);
 			shaderTruck.Activate();

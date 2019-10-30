@@ -41,8 +41,10 @@
 			{
 				X = 200, //DPI scaling screws everything up, so use some hacked values
 				Y = 10,
-				ClientSize = new Size(width, height), //do not set extents in the constructor, because windows 10 with enabled scale != 100% scales our given sizes in the constructor of GameWindow
+				ClientSize = new OpenTK.Size(width, height), //do not set extents in the constructor, because windows 10 with enabled scale != 100% scales our given sizes in the constructor of GameWindow
 			};
+
+			Input = new Input(gameWindow);
 
 			if(debug)
 			{
@@ -144,6 +146,15 @@
 
 		private CompositionContainer _container;
 		private GameWindow gameWindow;
+
+		/// <summary>
+		/// Retrieve keyboard and mouse input state.
+		/// </summary>
+		/// <value>
+		/// The input state.
+		/// </value>
+		public IInput Input { get; }
+
 		private List<IAfterRendering> afterRenderingCallbacks = new List<IAfterRendering>();
 		private List<IBeforeRendering> beforeRenderingCallbacks = new List<IBeforeRendering>();
 		private readonly DebuggerGL debugger;

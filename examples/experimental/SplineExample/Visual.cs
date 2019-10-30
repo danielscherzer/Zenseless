@@ -3,7 +3,6 @@
 	using OpenTK.Graphics.OpenGL;
 	using System;
 	using System.Collections.Generic;
-	using System.Drawing;
 	using System.Numerics;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
@@ -24,31 +23,31 @@
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 
-			GL.Color3(Color.White);
+			GL.Color3(OpenTK.Color.White);
 			renderState.Set(new LineWidth(3f));
 			DrawSpline(points, tangents);
 
-			GL.Color3(Color.Green);
+			GL.Color3(OpenTK.Color.Green);
 			renderState.Set(new LineWidth(2f));
 			DrawLines(points, tangentHandles);
 
-			GL.Color3(Color.Red);
+			GL.Color3(OpenTK.Color.Red);
 			GL.PointSize(15.0f);
 			DrawPoints(points);
 
-			GL.Color3(Color.Green);
+			GL.Color3(OpenTK.Color.Green);
 			GL.PointSize(8.0f);
 			DrawPoints(tangentHandles);
 
 			if(-1 != selectedPoint)
 			{
-				GL.Color3(Color.Red);
+				GL.Color3(OpenTK.Color.Red);
 				GL.PointSize(25.0f);
 				DrawPoint(points[selectedPoint]);
 			}
 			if (-1 != selectedTangentHandle)
 			{
-				GL.Color3(Color.Green);
+				GL.Color3(OpenTK.Color.Green);
 				GL.PointSize(25.0f);
 				DrawPoint(tangentHandles[selectedTangentHandle]);
 			}

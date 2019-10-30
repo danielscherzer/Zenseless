@@ -1,6 +1,5 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System;
 using System.Diagnostics;
 using Zenseless.Patterns;
 

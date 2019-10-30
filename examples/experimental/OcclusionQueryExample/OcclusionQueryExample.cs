@@ -2,7 +2,6 @@
 using Zenseless.Geometry;
 using OpenTK.Graphics.OpenGL;
 using System;
-using System.Drawing;
 using Zenseless.ExampleFramework;
 using Zenseless.HLGL;
 
@@ -30,12 +29,12 @@ namespace Example
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			GL.Color3(Color.White);
+			GL.Color3(OpenTK.Color.White);
 			queryA.Activate(OpenTK.Graphics.OpenGL4.QueryTarget.SamplesPassed);
 			DrawBox(boxA, 0.0f);
 			queryA.Deactivate();
 
-			GL.Color3(Color.Red);
+			GL.Color3(OpenTK.Color.Red);
 			queryB.Activate(OpenTK.Graphics.OpenGL4.QueryTarget.SamplesPassed);
 			DrawBox(boxB, 0.5f);
 			queryB.Deactivate();

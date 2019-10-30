@@ -51,7 +51,7 @@ namespace Example
 			var fitBox = Box2DExtensions.CreateContainingBox(levelState.Width, levelState.Height, windowAspect);
 			var camera = Matrix4x4.CreateOrthographicOffCenter(fitBox.MinX, fitBox.MaxX, fitBox.MinY, fitBox.MaxY, 0, 1);
 
-			shdTexColor.Uniform(nameof(tint), tint);
+			shdTexColor.Uniform(nameof(tint), tint.ToVector4());
 			shdTexColor.Uniform(nameof(camera), camera, true);
 
 			vaoLevelGeometry.Draw(levelState.Width * levelState.Height);

@@ -63,7 +63,7 @@ namespace Example
 
 		private static void DrawGridLines(int width, int height)
 		{
-			GL.Color3(Color.White);
+			GL.Color3(OpenTK.Color.White);
 			GL.LineWidth(3.0f);
 			var deltaX = 2.0f / (float)width;
 			var deltaY = 2.0f / (float)height;

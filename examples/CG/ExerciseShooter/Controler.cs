@@ -1,8 +1,8 @@
 ﻿namespace SpaceInvadersMvc
 {
-	using OpenTK.Input;
 	using System;
 	using Zenseless.ExampleFramework;
+	using Zenseless.HLGL;
 
 	class Controler
 	{
@@ -26,16 +26,16 @@
 					view.DrawBullets(model.Bullets);
 					view.DrawPlayer(model.Player);
 				};
-				window.Update += (dt) => Update(model);
+				window.Update += (dt) => Update(window.Input, model);
 				window.Run();
 	
 			}
 		}
 
-		private static void Update(Model logic)
+		private static void Update(IInput input, Model logic)
 		{
-			float axisLeftRight = Keyboard.GetState()[Key.Left] ? -1.0f : Keyboard.GetState()[Key.Right] ? 1.0f : 0.0f;
-			bool shoot = Keyboard.GetState()[Key.Space];
+			float axisLeftRight = input.IsButtonDown("Left") ? -1f : input.IsButtonDown("Right") ? 1f : 0f;
+			bool shoot = input.IsButtonDown("Space");
 			logic.Update(axisLeftRight, shoot);
 		}
 	}

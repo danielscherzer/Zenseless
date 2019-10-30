@@ -1,9 +1,9 @@
-﻿using Zenseless.ExampleFramework;
-using Zenseless.OpenGL;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
-using System.Drawing;
+using Zenseless.ExampleFramework;
 using Zenseless.HLGL;
+using Zenseless.OpenGL;
 
 namespace Example
 {

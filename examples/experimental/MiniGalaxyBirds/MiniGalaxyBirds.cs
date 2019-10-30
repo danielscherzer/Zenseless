@@ -1,7 +1,7 @@
-﻿using OpenTK.Input;
-using System;
+﻿using System;
 using Zenseless.Patterns;
 using Zenseless.ExampleFramework;
+using Zenseless.HLGL;
 
 namespace MiniGalaxyBirds
 {
@@ -16,7 +16,7 @@ namespace MiniGalaxyBirds
 
 			GameTime time = new GameTime();
 
-			window.Update += (t) => HandleInput(gameLogic, time.AbsoluteTime);
+			window.Update += (t) => HandleInput(window.Input, gameLogic, time.AbsoluteTime);
 			window.Resize += view.ResizeWindow;
 			window.Render += () => view.DrawScreen(GameLogic.visibleFrame, gameLogic.Points);
 			window.Render += () => time.NewFrame();
@@ -26,11 +26,11 @@ namespace MiniGalaxyBirds
 
 		}
 
-		private static void HandleInput(GameLogic gameLogic, float time)
+		private static void HandleInput(IInput input, GameLogic gameLogic, float time)
 		{
-			float axisUpDown = Keyboard.GetState()[Key.Up] ? -1.0f : Keyboard.GetState()[Key.Down] ? 1.0f : 0.0f;
-			float axisLeftRight = Keyboard.GetState()[Key.Left] ? -1.0f : Keyboard.GetState()[Key.Right] ? 1.0f : 0.0f;
-			bool shoot = Keyboard.GetState()[Key.Space];
+			float axisLeftRight = input.IsButtonDown("Left") ? -1.0f : input.IsButtonDown("Right") ? 1.0f : 0.0f;
+			float axisUpDown = input.IsButtonDown("Down") ? -1.0f : input.IsButtonDown("Up") ? 1.0f : 0.0f;
+			bool shoot = input.IsButtonDown("Space");
 			gameLogic.Update(time, axisUpDown, axisLeftRight, shoot);
 		}
 	}

@@ -15,10 +15,10 @@ namespace Zenseless.ExampleFramework
 	public class DrawConfiguration : IDrawConfiguration
 	{
 		/// <summary>
-		/// Gets or sets a value indicating whether [backface culling].
+		/// Gets or sets a value indicating whether [back-face culling].
 		/// </summary>
 		/// <value>
-		///   <c>true</c> if [backface culling]; otherwise, <c>false</c>.
+		///   <c>true</c> if [back-face culling]; otherwise, <c>false</c>.
 		/// </value>
 		public bool BackfaceCulling { get; set; } = false;
 		/// <summary>

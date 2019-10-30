@@ -1,11 +1,11 @@
-﻿using Zenseless.ExampleFramework;
-using Zenseless.Geometry;
-using Zenseless.Patterns;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using Zenseless.ExampleFramework;
+using Zenseless.Geometry;
+using Zenseless.HLGL;
+using Zenseless.Patterns;
 
 namespace SpaceInvaders
 {
@@ -41,7 +41,7 @@ namespace SpaceInvaders
 			DrawPlayer(player);
 		}
 
-		private void Update(float updatePeriod)
+		private void Update(IInput input, float updatePeriod)
 		{
 			shootCoolDown.Update(time.AbsoluteTime);
 			if (Lost)
@@ -49,8 +49,8 @@ namespace SpaceInvaders
 				return;
 			}
 
-			float axisLeftRight = Keyboard.GetState()[Key.Left] ? -1.0f : Keyboard.GetState()[Key.Right] ? 1.0f : 0.0f;
-			bool shoot = Keyboard.GetState()[Key.Space];
+			float axisLeftRight = input.IsButtonDown("Left") ? -1f : input.IsButtonDown("Right") ? 1f : 0f;
+			bool shoot = input.IsButtonDown("Space");
 
 			Update(updatePeriod, axisLeftRight, shoot);
 		}
@@ -61,7 +61,7 @@ namespace SpaceInvaders
 			var window = new ExampleWindow();
 			var controller = new Controller();
 			window.Render += controller.Render;
-			window.Update += (dt) => controller.Update(dt);
+			window.Update += (dt) => controller.Update(window.Input, dt);
 			window.Run();
 
 		}

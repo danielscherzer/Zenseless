@@ -57,5 +57,15 @@
 		{
 			return new Vector3(color.R / 255f, color.G / 255f, color.B / 255f);
 		}
+
+		/// <summary>
+		/// To the vector3.
+		/// </summary>
+		/// <param name="color">The color.</param>
+		/// <returns></returns>
+		public static Vector4 ToVector4(this SysColor color)
+		{
+			return new Vector4(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
+		}
 	}
 }

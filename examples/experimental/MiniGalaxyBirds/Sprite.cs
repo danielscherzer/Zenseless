@@ -1,6 +1,5 @@
 ﻿using Zenseless.Geometry;
 using OpenTK.Graphics.OpenGL;
-using System.Drawing;
 using Zenseless.HLGL;
 
 namespace MiniGalaxyBirds
@@ -17,7 +16,7 @@ namespace MiniGalaxyBirds
 		{
 			tex.Activate();
 			GL.Begin(PrimitiveType.Quads);
-			GL.Color3(Color.White);
+			GL.Color3(OpenTK.Color.White);
 			GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(Rect.MinX, Rect.MinY);
 			GL.TexCoord2(1.0f, 0.0f); GL.Vertex2(Rect.MaxX, Rect.MinY);
 			GL.TexCoord2(1.0f, 1.0f); GL.Vertex2(Rect.MaxX, Rect.MaxY);

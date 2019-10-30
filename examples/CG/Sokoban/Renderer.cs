@@ -31,7 +31,7 @@ namespace Example
 
 		public void DrawLevelState(ILevelGrid level, Color tint)
 		{
-			GL.Color3(tint);
+			GL.Color3(tint.R, tint.G, tint.B);
 			GL.LoadIdentity();
 			var fitBox = Box2DExtensions.CreateContainingBox(level.Width, level.Height, windowAspect);
 			GL.Ortho(fitBox.MinX, fitBox.MaxX, fitBox.MinY, fitBox.MaxY, 0.0, 1.0);

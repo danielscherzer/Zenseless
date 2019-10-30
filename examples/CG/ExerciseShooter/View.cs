@@ -2,7 +2,6 @@
 {
 	using OpenTK.Graphics.OpenGL;
 	using System.Collections.Generic;
-	using System.Drawing;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 
@@ -25,7 +24,7 @@
 		{
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			GL.LoadIdentity();
-			GL.Color3(Color.White);
+			GL.Color3(OpenTK.Color.White);
 		}
 
 		public void DrawEnemies(IEnumerable<IReadOnlyBox2D> enemies) => DrawSpriteBatch(enemies, texEnemy);

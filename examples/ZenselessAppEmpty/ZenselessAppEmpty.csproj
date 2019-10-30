@@ -49,8 +49,8 @@
     <Compile Include="View.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="OpenTK">
-      <Version>3.1.0</Version>
+    <PackageReference Include="OpenTK.NetStandard">
+      <Version>1.0.4</Version>
     </PackageReference>
     <PackageReference Include="Zenseless.ExampleFramework">
       <Version>0.5.124</Version>

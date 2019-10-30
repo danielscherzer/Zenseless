@@ -10,7 +10,7 @@ using Zenseless.HLGL;
 namespace LevelEditor
 {
 	/// <summary>
-	/// Interaktionslogik für MainWindow.xaml
+	/// Interaction logic of MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
 	{
@@ -79,10 +79,10 @@ namespace LevelEditor
 		private static Sprite CreateSprite(Image image, Canvas canvas, string parentName)
 		{
 			var bounds = image.ConvertBounds(canvas);
-			var layer = Canvas.GetZIndex(image);
+			var layer = Panel.GetZIndex(image);
 			var namedStream = new NamedStream(image.Source?.ToString(), image.Source.ToStream());
 			var sprite = new Sprite(EditorTools.ResolveName(image.Name, parentName), bounds, layer, namedStream);
-			//todo: use cached content loader for streams 
+			//todo: use cached content loader for streams
 			return sprite;
 		}
 	}

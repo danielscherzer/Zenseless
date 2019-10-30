@@ -2,7 +2,6 @@
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Zenseless.Patterns;
 using Zenseless.Geometry;
 using Zenseless.OpenGL;
@@ -34,9 +33,9 @@ namespace Example
 
 		public void DrawShape(IReadOnlyCircle boundingCircle)
 		{
-			GL.Color3(Color.LightSlateGray);
+			GL.Color3(OpenTK.Color.LightSlateGray);
 			DrawObstacle(boundingCircle);
-			GL.Color3(Color.White);
+			GL.Color3(OpenTK.Color.White);
 			DrawCollisionOutline(boundingCircle);
 		}
 

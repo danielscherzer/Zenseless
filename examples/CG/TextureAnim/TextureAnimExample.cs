@@ -1,11 +1,11 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using System;
-using System.Drawing;
 using Zenseless.Patterns;
 using Zenseless.ExampleFramework;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
+using OpenTK;
 
 namespace Example
 {

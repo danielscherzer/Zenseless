@@ -1,5 +1,4 @@
 ﻿using Zenseless.ExampleFramework;
-using OpenTK.Input;
 using System;
 
 namespace Example
@@ -15,7 +14,7 @@ namespace Example
 			window.Update += visual.Update;
 			window.Render += () =>
 			{
-				bool doPostProcessing = !Keyboard.GetState()[Key.Space];
+				bool doPostProcessing = !window.Input.IsButtonDown("Space");
 				if (doPostProcessing)
 				{
 					postProcessing.Render(visual.Render);

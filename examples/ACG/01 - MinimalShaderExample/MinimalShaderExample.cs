@@ -4,7 +4,7 @@
 	using Zenseless.OpenGL;
 	using OpenTK.Graphics.OpenGL4;
 	using System;
-	using System.Drawing;
+	using OpenTK.Graphics;
 
 	class MyVisual
 	{
@@ -40,7 +40,7 @@
 			//}
 			//catch { };
 			shaderProgram = ShaderLoader.CreateFromStrings(sVertexShader, sFragmentShd);
-			GL.ClearColor(Color.White);
+			GL.ClearColor(Color4.White);
 		}
 
 		private ShaderProgramGL shaderProgram;

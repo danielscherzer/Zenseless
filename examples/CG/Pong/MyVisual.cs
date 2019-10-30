@@ -1,6 +1,4 @@
 ﻿using OpenTK.Graphics.OpenGL;
-using System;
-using System.Drawing;
 using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
@@ -34,14 +32,14 @@ namespace Pong
 
 		private static void DrawCircle(float centerX, float centerY, float radius)
 		{
-			GL.Color3(Color.Red);
+			GL.Color3(OpenTK.Color.Red);
 			DrawTools.DrawCircle(centerX, centerY, radius, 40);
 		}
 
 		private static void DrawPaddle(IReadOnlyBox2D frame)
 		{
 			GL.Begin(PrimitiveType.Quads);
-			GL.Color3(Color.Green);
+			GL.Color3(OpenTK.Color.Green);
 			GL.Vertex2(frame.MinX, frame.MinY);
 			GL.Vertex2(frame.MaxX, frame.MinY);
 			GL.Vertex2(frame.MaxX, frame.MaxY);

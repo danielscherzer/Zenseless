@@ -1,6 +1,5 @@
 ﻿namespace Example
 {
-	using OpenTK.Input;
 	using System;
 	using Zenseless.ExampleFramework;
 	using Zenseless.HLGL;
@@ -17,10 +16,15 @@
 
 			window.GameWindow.MouseWheel += (s, e) => view.Zoom *= (float)Math.Pow(1.05, 3 * e.DeltaPrecise);
 
+			float MovementAxis(float dt, string keyMinus, string keyPlus)
+			{
+				return window.Input.IsButtonDown(keyPlus) ? dt : window.Input.IsButtonDown(keyMinus) ? -dt : 0f;
+			}
 			window.Update += (dt) =>
 			{
-				float deltaX = MovementAxis(dt, Key.Left, Key.Right);
-				float deltaY = MovementAxis(dt, Key.Down, Key.Up);
+				Console.WriteLine(string.Join("#", window.Input.PressedButtons));
+				float deltaX = MovementAxis(dt, "Left", "Right");
+				float deltaY = MovementAxis(dt, "Down", "Up");
 				model.Update(deltaX, deltaY);
 			};
 			window.Render += () =>
@@ -29,11 +33,6 @@
 			};
 			window.Resize += view.Resize;
 			window.Run();
-		}
-
-		private static float MovementAxis(float dt, Key keyMinus, Key keyPlus)
-		{
-			return Keyboard.GetState().IsKeyDown(keyPlus) ? dt : Keyboard.GetState().IsKeyDown(keyMinus) ? -dt : 0f;
 		}
 	}
 }

@@ -23,7 +23,7 @@
 			{
 				model.UpdateMovements(t);
 
-				var isSpaceDown = Keyboard.GetState().IsKeyDown(Key.Space);
+				var isSpaceDown = window.Input.IsButtonDown("Space");
 				if(isSpaceDown != bruteForce)
 				{
 					sampleSeries.Clear();

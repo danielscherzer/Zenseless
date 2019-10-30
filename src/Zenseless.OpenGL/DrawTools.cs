@@ -51,18 +51,6 @@
 		}
 
 		/// <summary>
-		/// Set color Uniform on active shader. The correct shader has to be activated first!
-		/// </summary>
-		/// <param name="shaderProgram">The shader program.</param>
-		/// <param name="name">The uniform variable name.</param>
-		/// <param name="color">The color.</param>
-		public static void Uniform(this IShaderProgram shaderProgram, string name, Color color)
-		{
-			GL.ProgramUniform4(shaderProgram.ProgramID, shaderProgram.GetResourceLocation(ShaderResourceType.Uniform, name), color);
-
-		}
-
-		/// <summary>
 		/// Binds the textures to texture units and to a given shader program.
 		/// </summary>
 		/// <param name="shaderProgram">The shader program.</param>

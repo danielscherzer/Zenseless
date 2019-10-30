@@ -48,11 +48,6 @@
     <Compile Include="View.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="OpenTK">
-      <Version>3.1.0</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\src\Zenseless.Patterns\Zenseless.Patterns.csproj">
       <Project>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</Project>
       <Name>Zenseless.Patterns</Name>
@@ -77,6 +72,11 @@
       <Project>{78a88806-ad96-4821-b9ad-8fc060f6feb6}</Project>
       <Name>Zenseless.Sound</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="OpenTK.NetStandard">
+      <Version>1.0.4</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

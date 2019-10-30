@@ -1,13 +1,13 @@
-﻿using Zenseless.Geometry;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Drawing;
+using Zenseless.Geometry;
 using Zenseless.HLGL;
 
 namespace Example
 {
 	public class MyVisual
 	{
-		private ITexture texBird;
+		private readonly ITexture texBird;
 
 		public MyVisual(IRenderState renderState, IContentLoader contentLoader)
 		{

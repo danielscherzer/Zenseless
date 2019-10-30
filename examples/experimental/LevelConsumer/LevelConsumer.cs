@@ -1,8 +1,6 @@
-﻿using LevelData;
-using OpenTK.Input;
-using System;
+﻿using System;
 using Zenseless.ExampleFramework;
-using Zenseless.Patterns;
+using Zenseless.HLGL;
 
 namespace Example
 {
@@ -16,43 +14,17 @@ namespace Example
 			var logic = new GameLogic();
 			var renderer = new SpriteRenderer(window.RenderContext.RenderState);
 			logic.NewPosition += (name, x, y) => renderer.UpdateSprites(name, x, y);
-			try
-			{
-				LoadLevelData("level.data", logic, renderer);
-				window.Resize += (width, height) => renderer.Resize(width, height);
-				window.Render += () => renderer.Render(logic.Bounds);
-				window.Update += (updatePeriod) => HandleInput(updatePeriod, logic);
-			}
-			catch
-			{
-			}
+			LevelLoader.LoadLevelData("level.data", logic, renderer);
+			window.Resize += (width, height) => renderer.Resize(width, height);
+			window.Render += () => renderer.Render(logic.Bounds);
+			window.Update += (updatePeriod) => HandleInput(window.Input, updatePeriod, logic);
 			window.Run();
-
 		}
 
-		private static void LoadLevelData(string levelFile, GameLogic logic, SpriteRenderer renderer)
+		private static void HandleInput(IInput input, float updatePeriod, GameLogic logic)
 		{
-			using (var level = Serialization.FromBinFile(levelFile) as Level)
-			{
-				//set level bounds
-				logic.Bounds = level.Bounds;
-				//load colliders
-				foreach (var collider in level.colliders)
-				{
-					logic.AddCollider(collider.Name, collider.Bounds);
-				}
-				//load sprites
-				foreach (var sprite in level.Sprites)
-				{
-					renderer.AddSprite(sprite.Name, sprite.Layer, sprite.RenderBounds, sprite.NamedStream);
-				}
-			}
-		}
-
-		private static void HandleInput(float updatePeriod, GameLogic logic)
-		{
-			float axisLeftRight = Keyboard.GetState()[Key.Left] ? -1.0f : Keyboard.GetState()[Key.Right] ? 1.0f : 0.0f;
-			float axisUpDown = Keyboard.GetState()[Key.Down] ? -1.0f : Keyboard.GetState()[Key.Up] ? 1.0f : 0.0f;
+			float axisLeftRight = input.IsButtonDown("Left") ? -1f : input.IsButtonDown("Right") ? 1f : 0f;
+			float axisUpDown = input.IsButtonDown("Down") ? -1f : input.IsButtonDown("Up") ? 1f : 0f;
 			logic.Update(updatePeriod, axisLeftRight, axisUpDown);
 		}
 	}

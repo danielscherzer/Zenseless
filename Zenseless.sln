@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.Patterns", "src\Z
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.Geometry", "src\Zenseless.Geometry\Zenseless.Geometry.csproj", "{B37B7DDE-435B-4F27-9A9B-9B6DF8744EBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.OpenGL", "src\Zenseless.OpenGL\Zenseless.OpenGL.csproj", "{C660F6AF-C100-4169-A9FB-61E1EBE87F34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.OpenGL", "src\Zenseless.OpenGL\Zenseless.OpenGL.csproj", "{C660F6AF-C100-4169-A9FB-61E1EBE87F34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Sound", "src\Zenseless.Sound\Zenseless.Sound.csproj", "{78A88806-AD96-4821-B9AD-8FC060F6FEB6}"
 EndProject
@@ -80,8 +80,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseCollision", "examples\CG\ExerciseCollision\ExerciseCollision.csproj", "{79E142ED-CDA0-4AB7-AE97-000775E82ED5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLoopExample", "examples\CG\GameLoopExample\GameLoopExample.csproj", "{3E179B42-E1EF-41A4-804C-6EDBB06EC86C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalExample", "examples\CG\MinimalExample\MinimalExample.csproj", "{D2E19210-80D1-4F07-8E9D-5205F18B0B26}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sokoban", "examples\CG\Sokoban\Sokoban.csproj", "{CEF63B7C-D944-4EAA-8FCA-45C8160F3711}"
 EndProject
@@ -164,7 +162,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrainTessellation", "exam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.Patterns.Tests", "Test\Zenseless.Patterns.Tests\Zenseless.Patterns.Tests.csproj", "{0CB50E8E-B837-4053-9E05-817738178E05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.OpenGL.Tests", "Test\Zenseless.OpenGL.Tests\Zenseless.OpenGL.Tests.csproj", "{87F3A725-6AF4-41F7-AA58-CACD9E23D6D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.OpenGL.Tests", "Test\Zenseless.OpenGL.Tests\Zenseless.OpenGL.Tests.csproj", "{87F3A725-6AF4-41F7-AA58-CACD9E23D6D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -284,10 +282,6 @@ Global
 		{3E179B42-E1EF-41A4-804C-6EDBB06EC86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E179B42-E1EF-41A4-804C-6EDBB06EC86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E179B42-E1EF-41A4-804C-6EDBB06EC86C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2E19210-80D1-4F07-8E9D-5205F18B0B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2E19210-80D1-4F07-8E9D-5205F18B0B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2E19210-80D1-4F07-8E9D-5205F18B0B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2E19210-80D1-4F07-8E9D-5205F18B0B26}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CEF63B7C-D944-4EAA-8FCA-45C8160F3711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CEF63B7C-D944-4EAA-8FCA-45C8160F3711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEF63B7C-D944-4EAA-8FCA-45C8160F3711}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -479,7 +473,6 @@ Global
 		{F059451F-42CF-44E2-88D8-1DBE869D8256} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 		{79E142ED-CDA0-4AB7-AE97-000775E82ED5} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 		{3E179B42-E1EF-41A4-804C-6EDBB06EC86C} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
-		{D2E19210-80D1-4F07-8E9D-5205F18B0B26} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 		{CEF63B7C-D944-4EAA-8FCA-45C8160F3711} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 		{A5A5F2D5-E05C-43CF-9F9D-4B5B9FFDCF13} = {CDE252E6-67F8-44B3-A54E-9A4685482412}
 		{4C2306E3-01BB-4A6F-9630-73E36A2BA57A} = {CDE252E6-67F8-44B3-A54E-9A4685482412}

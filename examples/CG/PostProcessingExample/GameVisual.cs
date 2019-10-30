@@ -1,7 +1,6 @@
 ﻿namespace Example
 {
 	using OpenTK.Graphics.OpenGL;
-	using System.Drawing;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
@@ -20,7 +19,7 @@
 
 		public void Render()
 		{
-			GL.Color3(Color.White);
+			GL.Color3(OpenTK.Color.White);
 			//draw background
 			texBackground.Activate();
 			background.DrawTexturedRect(Box2D.BOX01);

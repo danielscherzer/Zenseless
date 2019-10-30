@@ -32,7 +32,7 @@
 				}
 			};
 
-			window.Update += (t) => doPostProcessing = !Keyboard.GetState()[Key.Space];
+			window.Update += (t) => doPostProcessing = !window.Input.IsButtonDown("Space");
 			window.Resize += visual.Resize;
 			window.Run();
 

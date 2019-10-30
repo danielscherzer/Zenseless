@@ -1,8 +1,8 @@
-﻿using Zenseless.ExampleFramework;
-using Zenseless.Geometry;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Drawing;
 using System;
+using Zenseless.ExampleFramework;
+using Zenseless.Geometry;
 using Zenseless.HLGL;
 
 namespace Example
@@ -13,7 +13,7 @@ namespace Example
 	class MyVisual
 	{
 		private ITexture texBackground;
-		private ITexture texPlayer;
+		private readonly ITexture texPlayer;
 		private Box2D texCoord = new Box2D(0, 0, 0.3f, 1);
 
 		private MyVisual(IRenderState renderState, IContentLoader contentLoader)
