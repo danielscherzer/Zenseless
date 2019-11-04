@@ -1,8 +1,8 @@
-﻿using Zenseless.Patterns;
-using NAudio.Wave;
+﻿using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using System;
 using System.IO;
+using Zenseless.Patterns;
 
 namespace Zenseless.Sound
 {

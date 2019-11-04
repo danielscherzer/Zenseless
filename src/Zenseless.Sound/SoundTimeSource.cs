@@ -23,7 +23,7 @@ namespace Zenseless.Sound
 		/// <param name="fileName">Name of the file.</param>
 		public SoundTimeSource(string fileName)
 		{
-			waveOutDevice = new WaveOut();
+			waveOutDevice = new WaveOutEvent();
 			audioFileReader = new AudioFileReader(fileName);
 			loopingWaveStream = new SoundLoopWaveProvider(audioFileReader)
 			{
@@ -96,7 +96,7 @@ namespace Zenseless.Sound
 		private SoundLoopWaveProvider loopingWaveStream;
 
 		private bool playing = false;
-		private float length = 10.0f;
+		private readonly float length = 10.0f;
 
 		/// <summary>
 		/// Will be called from the default Dispose method.
