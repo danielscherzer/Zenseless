@@ -1,7 +1,7 @@
 ﻿namespace Zenseless.OpenGL
 {
-	using Zenseless.HLGL;
 	using OpenTK.Graphics.OpenGL4;
+	using Zenseless.HLGL;
 
 	/// <summary>
 	/// 
@@ -15,7 +15,7 @@
 		/// <param name="texture">The texture.</param>
 		public FBOwithDepth(ITexture2D texture) : base(texture)
 		{
-			Draw(() =>
+			Execute(() =>
 			{
 				depth = new RenderBuffer(RenderbufferStorage.DepthComponent32, texture.Width, texture.Height);
 				depth.Attach(FramebufferAttachment.DepthAttachment);

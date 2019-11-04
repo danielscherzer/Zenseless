@@ -1,12 +1,12 @@
-﻿using Zenseless.Patterns;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
+using Zenseless.Patterns;
 
 namespace Zenseless.OpenGL
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <seealso cref="Zenseless.Patterns.Disposable" />
+	/// <seealso cref="Disposable" />
 	public class RenderBuffer : Disposable
 	{
 		/// <summary>
@@ -61,7 +61,11 @@ namespace Zenseless.OpenGL
 		/// </summary>
 		protected override void DisposeResources()
 		{
-			if (-1 != Handle) GL.DeleteRenderbuffer(Handle);
+			if (-1 != Handle)
+			{
+				GL.DeleteRenderbuffer(Handle);
+				Handle = -1;
+			}
 		}
 	}
 }

@@ -37,7 +37,7 @@
 		{
 			var cameraUniform = new TransformUniform(nameof(camera), camera);
 
-			mrtSurface.Draw(() =>
+			mrtSurface.Execute(() =>
 			{
 				GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 				renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));

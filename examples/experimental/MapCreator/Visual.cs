@@ -27,7 +27,7 @@
 		internal void Render(IEnumerable<IEnumerable<Vector2>> paths, IEnumerable<Vector2> points)
 		{
 			var random = new Random(12);
-			fbo.Draw(() =>
+			fbo.Execute(() =>
 			{
 				GL.Clear(ClearBufferMask.ColorBufferBit);
 				foreach (var path in paths)
