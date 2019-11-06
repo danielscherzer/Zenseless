@@ -2,11 +2,10 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Reflection;
-	using Zenseless.Patterns;
 	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
-	using System.Diagnostics;
 
 	/// <summary>
 	/// A content loader for OpenGL resources

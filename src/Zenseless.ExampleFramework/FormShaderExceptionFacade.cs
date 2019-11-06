@@ -1,9 +1,8 @@
-﻿using Zenseless.HLGL;
-using Zenseless.OpenGL;
+﻿using GLSLhelper;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using GLSLhelper;
+using Zenseless.HLGL;
 
 namespace Zenseless.ExampleFramework
 {

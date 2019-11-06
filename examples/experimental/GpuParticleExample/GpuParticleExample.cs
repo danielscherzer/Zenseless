@@ -11,19 +11,11 @@
 		private static void Main()
 		{
 			var window = new ExampleWindow();
-			var camera = window.GameWindow.CreateOrbitingCameraController(3, 70, 0.1f, 20);
-			camera.View.Elevation = 35;
-			camera.View.Azimuth = 60;
+			var camera = window.GameWindow.CreateOrbitingCameraController(2, 70, 0.1f, 20f);
+			camera.View.Elevation = 15;
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
 			var time = new GameTime();
-			var timeSeries = new ExponentialSmoothing(0.01);
-			window.Render += () =>
-			{
-				time.NewFrame();
-				var deltaTime = visual.Render(time.DeltaTime, camera);
-				timeSeries.NewSample(deltaTime);
-				window.GameWindow.Title = $"{timeSeries.SmoothedValue:F2}msec";
-			};
+			window.Render += () => visual.Render(time.DeltaTime, camera);
 			window.Resize += visual.Resize;
 			window.Run();
 

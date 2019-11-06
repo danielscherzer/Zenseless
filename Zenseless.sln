@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.Geometry", "src\Z
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.OpenGL", "src\Zenseless.OpenGL\Zenseless.OpenGL.csproj", "{C660F6AF-C100-4169-A9FB-61E1EBE87F34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenseless.Sound", "src\Zenseless.Sound\Zenseless.Sound.csproj", "{78A88806-AD96-4821-B9AD-8FC060F6FEB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.Sound", "src\Zenseless.Sound\Zenseless.Sound.csproj", "{78A88806-AD96-4821-B9AD-8FC060F6FEB6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.HLGL", "src\Zenseless.HLGL\Zenseless.HLGL.csproj", "{227D6BE1-BA08-4030-A755-07288540931F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -40,8 +40,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpuParticleExample", "examples\experimental\GpuParticleExample\GpuParticleExample.csproj", "{88E2E445-0859-4364-BF3D-53CB78DB02C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpuParticlePhysics2DExample", "examples\experimental\GpuParticlePhysics2DExample\GpuParticlePhysics2DExample.csproj", "{112DAB1A-27FC-4677-94EE-BFA6B6689D49}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpuParticleSystemExample", "examples\experimental\GpuParticleSystemExample\GpuParticleSystemExample.csproj", "{DAF8FFC9-D90C-4F1D-B361-85A4D1AA726D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grow", "examples\experimental\Grow\Grow.csproj", "{897591CD-CEC3-42B6-9207-0A23E92C0E5A}"
 EndProject
@@ -115,13 +113,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03 - MeshExample", "example
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01 - MinimalShaderExample", "examples\ACG\01 - MinimalShaderExample\01 - MinimalShaderExample.csproj", "{3F964DED-9DF1-4350-9C56-220D5AACCBAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12 - ParticleSystem", "examples\ACG\12 - ParticleSystem\12 - ParticleSystem.csproj", "{0D198482-14CC-4FBA-BDF5-8B1633D4E5A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "13 - ParticleSystem", "examples\ACG\13 - ParticleSystem\13 - ParticleSystem.csproj", "{0D198482-14CC-4FBA-BDF5-8B1633D4E5A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "09 - Lighting", "examples\ACG\09 - Lighting\09 - Lighting.csproj", "{3F29DE75-E5F8-4FC8-91AD-D332B1816EC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11 - Physics", "examples\ACG\11 - Physics\11 - Physics.csproj", "{ADFE07A0-D2B7-42A7-8DDC-C0F1D441ACC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12 - Physics", "examples\ACG\12 - Physics\12 - Physics.csproj", "{ADFE07A0-D2B7-42A7-8DDC-C0F1D441ACC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "13 - RenderToTexture", "examples\ACG\13 - RenderToTexture\13 - RenderToTexture.csproj", "{06D368A6-B600-4323-BDBC-EA5B9486C145}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11 - RenderToTexture", "examples\ACG\11 - RenderToTexture\11 - RenderToTexture.csproj", "{06D368A6-B600-4323-BDBC-EA5B9486C145}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02 - ShaderDebugDialogExample", "examples\ACG\02 - ShaderDebugDialogExample\02 - ShaderDebugDialogExample.csproj", "{AB2FC8A2-9741-42B7-9170-D713B5125D78}"
 EndProject
@@ -159,6 +157,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.Patterns.Tests", "Test\Zenseless.Patterns.Tests\Zenseless.Patterns.Tests.csproj", "{0CB50E8E-B837-4053-9E05-817738178E05}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.OpenGL.Tests", "Test\Zenseless.OpenGL.Tests\Zenseless.OpenGL.Tests.csproj", "{87F3A725-6AF4-41F7-AA58-CACD9E23D6D9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PingPong", "examples\ACG\PingPong\PingPong.csproj", "{1CD3B140-328E-4824-A91C-E1D68C7561E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14 - GpuParticleSystem", "examples\ACG\14 - GpuParticleSystem\14 - GpuParticleSystem.csproj", "{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -210,10 +212,6 @@ Global
 		{112DAB1A-27FC-4677-94EE-BFA6B6689D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{112DAB1A-27FC-4677-94EE-BFA6B6689D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{112DAB1A-27FC-4677-94EE-BFA6B6689D49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DAF8FFC9-D90C-4F1D-B361-85A4D1AA726D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DAF8FFC9-D90C-4F1D-B361-85A4D1AA726D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DAF8FFC9-D90C-4F1D-B361-85A4D1AA726D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DAF8FFC9-D90C-4F1D-B361-85A4D1AA726D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{897591CD-CEC3-42B6-9207-0A23E92C0E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{897591CD-CEC3-42B6-9207-0A23E92C0E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{897591CD-CEC3-42B6-9207-0A23E92C0E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -426,6 +424,14 @@ Global
 		{87F3A725-6AF4-41F7-AA58-CACD9E23D6D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87F3A725-6AF4-41F7-AA58-CACD9E23D6D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87F3A725-6AF4-41F7-AA58-CACD9E23D6D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CD3B140-328E-4824-A91C-E1D68C7561E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD3B140-328E-4824-A91C-E1D68C7561E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD3B140-328E-4824-A91C-E1D68C7561E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD3B140-328E-4824-A91C-E1D68C7561E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -442,7 +448,6 @@ Global
 		{1A07B025-F381-4503-823C-F1885E202D0B} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{88E2E445-0859-4364-BF3D-53CB78DB02C0} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{112DAB1A-27FC-4677-94EE-BFA6B6689D49} = {CB237D59-2840-48EB-888F-965EDB20E868}
-		{DAF8FFC9-D90C-4F1D-B361-85A4D1AA726D} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{897591CD-CEC3-42B6-9207-0A23E92C0E5A} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{8AAF26AD-B969-437F-8EA5-D45D2EB07C2B} = {CB237D59-2840-48EB-888F-965EDB20E868}
 		{47D435BB-0619-4CDE-93A2-7ACE1FDF47FC} = {CB237D59-2840-48EB-888F-965EDB20E868}
@@ -499,6 +504,8 @@ Global
 		{9037E855-7592-4DAC-89C7-62257D8F2343} = {DC899246-DB92-4DFE-9E0B-F2300B77B281}
 		{0CB50E8E-B837-4053-9E05-817738178E05} = {BEE08292-7C95-44EC-B228-44ED81C09610}
 		{87F3A725-6AF4-41F7-AA58-CACD9E23D6D9} = {BEE08292-7C95-44EC-B228-44ED81C09610}
+		{1CD3B140-328E-4824-A91C-E1D68C7561E3} = {DC899246-DB92-4DFE-9E0B-F2300B77B281}
+		{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9} = {DC899246-DB92-4DFE-9E0B-F2300B77B281}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CA293D8-FC78-4BF1-BA73-543451A6B7AB}

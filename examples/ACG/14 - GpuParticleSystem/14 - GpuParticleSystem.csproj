@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D198482-14CC-4FBA-BDF5-8B1633D4E5A4}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Example</RootNamespace>
-    <AssemblyName>12 - ParticleSystem</AssemblyName>
+    <AssemblyName>14 - GpuParticleSystem</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -38,7 +38,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,7 +47,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -58,18 +56,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyConfig.cs" />
-    <Compile Include="IParticle.cs" />
     <Compile Include="MainVisual.cs" />
-    <Compile Include="Particle.cs" />
-    <Compile Include="ParticleSystem.cs" />
-    <Compile Include="ParticleSystemExample.cs" />
-    <Compile Include="VisualPlane.cs" />
-    <Compile Include="VisualSmoke.cs" />
-    <Compile Include="VisualWaterfall.cs" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
@@ -91,17 +82,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.md" />
     <EmbeddedResource Include="Content\particle.frag" />
-    <EmbeddedResource Include="Content\plane.frag" />
     <EmbeddedResource Include="Content\particle.vert" />
-    <EmbeddedResource Include="Content\plane.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Content\smoke_256a.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Content\water_splash.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Zenseless.Patterns\Zenseless.Patterns.csproj">
@@ -129,6 +111,9 @@
     <PackageReference Include="OpenTK.NetStandard">
       <Version>1.0.4</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

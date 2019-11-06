@@ -10,4 +10,4 @@
 1. Implement gravitational attraction. You will find our own physically incorrect gravitational constant in the code, because real gravity is really small. You can change it, if you want to tweak your results.
 1. Combine it with another force like resistance 
    - Consider for example a water basin, which offers resistance in a certain space, while the bodies are floating around propelled by gravitational attraction.
-1. Invent your own force
+1. Invent your own force.

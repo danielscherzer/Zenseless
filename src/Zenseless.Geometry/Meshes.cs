@@ -237,7 +237,7 @@
 		}
 
 		/// <summary>
-		/// creates a sphere made up of pairs of triangles; stored as an indexed vertex array
+		/// creates a sphere made up of triangles; stored as an indexed vertex array
 		/// </summary>
 		/// <param name="radius">radius</param>
 		/// <param name="subdivision">subdivision count, each subdivision creates 4 times more faces</param>

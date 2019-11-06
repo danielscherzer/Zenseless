@@ -2,20 +2,16 @@
 
 uniform float deltaTime;
 uniform mat4x4 camera;
-uniform int particleCount;
 uniform float pointResolutionScale = 1;
-uniform vec3 source = vec3(0);
-uniform vec3 acceleration;
-uniform float lifeTime = 10;
 
 out vec4 baseColor;
 
 struct Particle
 {
 	vec3 position;
-	float size;
+	float size; //float is aligned with previous vec3 to 16byte alignment, changing the order does not work
 	vec3 velocity;
-	float age;
+	uint color; //uint is aligned with previous vec3 to 16byte alignment, changing the order does not work
 };
 
 layout(std430) buffer BufferParticle
@@ -23,25 +19,25 @@ layout(std430) buffer BufferParticle
 	Particle particle[];
 };
  
+bool outside(vec3 pos)
+{
+	return any(greaterThan(abs(pos), vec3(1))); 
+}
+
 void update(inout Particle p)
 {
 	p.position += p.velocity * deltaTime; //update particle buffer with new position
-	p.velocity += acceleration * deltaTime;
-	p.age += deltaTime;
 
-	//particle dead?
-	if(p.age > lifeTime)
+	if(outside(p.position))
 	{
-		p.position = source;
-//		p.velocity = 
-		p.age = 0;
+		p.velocity = -p.velocity; //bounce on walls
 	}
 
 	//set vertex outputs
 	vec4 pos = camera * vec4(p.position, 1.0);
 	gl_Position = pos;
-	gl_PointSize = p.size / pos.z; //points get smaller with distance and are scaled with resolution
-	baseColor = mix(vec4(1, 1, 1, 1), vec4(0, 0, 0, 0), p.age / lifeTime);
+	gl_PointSize = p.size / pos.z * pointResolutionScale; //points get smaller with distance
+	baseColor = unpackUnorm4x8(p.color).xyza;
 }
 
 void main() 
