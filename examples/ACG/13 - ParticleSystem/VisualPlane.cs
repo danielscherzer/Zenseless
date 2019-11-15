@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Zenseless.Geometry;
+﻿using Zenseless.Geometry;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
 
