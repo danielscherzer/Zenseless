@@ -19,17 +19,20 @@
 			GL.PatchParameter(PatchParameterInt.PatchVertices, 4);
 		}
 
+		public float LODScale { get; set; } = 100f;
 		public bool Wireframe { get; set; } = true;
 
-		private readonly int instanceSqrt = 100;
+		private readonly int columnCount = 100;
 
 		public void Draw(ITransformation camera)
 		{
 			GL.PolygonMode(MaterialFace.FrontAndBack, Wireframe ? PolygonMode.Line : PolygonMode.Fill);
+			shader.Uniform("lodScale", LODScale);
 			shader.Uniform("camera", camera);
-			shader.Uniform(nameof(instanceSqrt), instanceSqrt);
+			shader.Uniform(nameof(columnCount), columnCount);
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-			GL.DrawArraysInstanced(PrimitiveType.Patches, 0, 4, instanceSqrt * instanceSqrt);
+			// draw columnCount * columnCount count quad patches
+			GL.DrawArraysInstanced(PrimitiveType.Patches, 0, 4, columnCount * columnCount);
 		}
 
 		public void Resize(int width, int height)

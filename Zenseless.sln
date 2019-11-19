@@ -150,7 +150,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GltfLoading", "examples\exp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeferredShading", "examples\experimental\DeferredShading\DeferredShading.csproj", "{253A7FA6-2984-4172-929A-DBD654538B38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrainTessellation", "examples\ACG\TerrainTessellation\TerrainTessellation.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "15 - TerrainTessellation", "examples\ACG\15 - TerrainTessellation\15 - TerrainTessellation.csproj", "{9037E855-7592-4DAC-89C7-62257D8F2343}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenseless.Patterns.Tests", "Test\Zenseless.Patterns.Tests\Zenseless.Patterns.Tests.csproj", "{0CB50E8E-B837-4053-9E05-817738178E05}"
 EndProject

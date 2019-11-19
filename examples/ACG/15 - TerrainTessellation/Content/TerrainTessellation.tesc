@@ -25,17 +25,16 @@ float calcEdgeTessellation(vec2 v0, vec2 v1)
 bool test(vec3 v[4], int axis)
 {
 	vec4 coords = vec4(v[0][axis], v[1][axis], v[2][axis], v[3][axis]);
-	bool right = all(greaterThan(coords, vec4(1)));
-	if(right) return true;
-	bool left = all(lessThan(coords, vec4(-1)));
-	if(left) return true;
+	if(all(greaterThan(coords, vec4(1)))) return true;
+	if(all(lessThan(coords, vec4(-1)))) return true;
 	return false;
 }
 
 bool outside(vec3 v[4])
 {
-	if(test(v, 0)) return true;
-	if(test(v, 2)) return true;
+	if(test(v, 0)) return true; // test all x outside
+//	if(test(v, 1)) return true; // do not test all y outside because displacement will move the triangles in y-direction
+	if(test(v, 2)) return true; // test all z outside
 	return false;
 }
 

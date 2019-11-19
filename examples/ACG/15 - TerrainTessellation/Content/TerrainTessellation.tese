@@ -2,7 +2,6 @@
 
 uniform mat4 camera;
 uniform sampler2D texDisplacement;
-uniform int instanceSqrt = 5;
 
 layout (quads, fractional_odd_spacing, ccw) in;
 
@@ -32,7 +31,7 @@ vec4 interpolate(vec4 v1, vec4 v2, vec4 v3, vec4 v4)
 	return mix(aX, bX, gl_TessCoord.y);
 }
 
-vec2 hash( in vec2 x )  // replace this by something better
+vec2 hash( in vec2 x )  // replace this with something better
 {
 	const vec2 k = vec2( 0.3183099, 0.3678794 );
 	x = x * k + k.yx;

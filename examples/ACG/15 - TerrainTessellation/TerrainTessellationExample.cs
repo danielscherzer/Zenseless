@@ -1,6 +1,7 @@
 ﻿namespace Example
 {
 	using OpenTK.Graphics.OpenGL4;
+	using OpenTK.Input;
 	using System;
 	using System.Numerics;
 	using Zenseless.ExampleFramework;
@@ -18,9 +19,22 @@
 			var camera = window.GameWindow.CreateFirstPersonCameraController(1f, new Vector3(36f, 0.1f, 30f), 70f, 0.01f, 300f);
 
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
-			window.GameWindow.KeyDown += (s, a) => { if (a.Key == OpenTK.Input.Key.Tab) visual.Wireframe = !visual.Wireframe; };
+			window.GameWindow.KeyDown += (s, a) => 
+			{
+				switch(a.Key)
+				{
+					case Key.Tab:
+						visual.Wireframe = !visual.Wireframe;
+						break;
+					case Key.PageUp:
+						visual.LODScale *= 1.1f;
+						break;
+					case Key.PageDown:
+						visual.LODScale /= 1.1f;
+						break;
+				}
+			};
 
-			var sampleSeries = new ExponentialSmoothing(0.01);
 			QueryObject timeQuery = new QueryObject();
 			window.Render += () =>
 			{
@@ -28,11 +42,9 @@
 				visual.Draw(camera);
 				timeQuery.Deactivate();
 				var timerQueryResult = timeQuery.ResultLong * 1e-6;
-				sampleSeries.NewSample(timerQueryResult);
-				window.GameWindow.Title = $"{sampleSeries.SmoothedValue:F0}ms";
+				window.GameWindow.Title = $"{timerQueryResult:F1}ms LODscale={visual.LODScale}";
 			};
 			window.Resize += visual.Resize;
-			window.Resize += (w, h) => sampleSeries.Clear();
 			window.Run();
 		}
 	}
