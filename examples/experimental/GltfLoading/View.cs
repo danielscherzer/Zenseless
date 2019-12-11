@@ -28,7 +28,7 @@ namespace Example
 			shader = contentLoader.Load<IShaderProgram>("shader.*");
 
 			var fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\Cameras\glTF-Embedded\Cameras.gltf";
-			fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\BrainStem\glTF\BrainStem.gltf";
+			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\BrainStem\glTF\BrainStem.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\BoxAnimated\glTF\BoxAnimated.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\RiggedSimple\glTF\RiggedSimple.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\RiggedFigure\glTF\RiggedFigure.gltf";

@@ -1,7 +1,7 @@
 #version 420 core
 
 //equal_spacing, fractional_odd_spacing, fractional_even_spacing
-layout (quads, equal_spacing, ccw) in;
+layout (quads, fractional_even_spacing, ccw) in;
 
 in vec4 tcPos[gl_MaxPatchVertices];
 

@@ -22,7 +22,7 @@
 			Debug.WriteLine($"Shading Language Version {GL.GetString(StringName.ShadingLanguageVersion)}");
 			GL.Enable(EnableCap.DebugOutput);
 			GL.Enable(EnableCap.DebugOutputSynchronous);
-			//Console.WriteLine(GL.GetString(StringName.Extensions));
+			Debug.WriteLine(GL.GetString(StringName.Extensions));
 			debugCallback = DebugCallback; //need to keep an instance, otherwise delegate is garbage collected
 			GL.DebugMessageCallback(debugCallback, IntPtr.Zero);
 			GL.DebugMessageControl(DebugSourceControl.DontCare, DebugTypeControl.DontCare, DebugSeverityControl.DontCare, 0, new int[] { }, true);

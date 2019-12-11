@@ -24,6 +24,5 @@ void main()
 	o.texCoord = (vertices[gl_VertexID] + vec2(1) + vec2(x, y)) / columnCount;
 
 	vec2 pos = vertices[gl_VertexID] + vec2(x, y) - vec2(columnCount / 2);
-
 	gl_Position = vec4(pos.x, 0, pos.y, 1.0);
 }

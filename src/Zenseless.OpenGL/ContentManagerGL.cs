@@ -5,6 +5,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
+	using System.Diagnostics;
 	using System.Drawing;
 	using System.IO;
 	using System.Linq;
@@ -112,6 +113,7 @@
 
 		private static void Update(ShaderProgramGL shaderProgram, IEnumerable<NamedStream> namedStreams, bool solutionMode, IContentLoader contentLoader)
 		{
+			Debug.WriteLine($"Updating shader {GetNameString(namedStreams)}");
 			string ShaderCode(Stream stream)
 			{
 				using (var reader = new StreamReader(stream, true))
@@ -157,7 +159,7 @@
 					throw new NamedShaderException(res.Name, e);
 				}
 			}
-			if(!shaderProgram.Link())
+			if (!shaderProgram.Link())
 			{
 				var e = new ShaderLinkException(shaderProgram.Log);
 				var s = new StringBuilder();
@@ -170,19 +172,25 @@
 			}
 		}
 
-		private static ITexture2dArray TextureArrayImporter(IEnumerable<NamedStream> resources)
+		private static string GetNameString(IEnumerable<NamedStream> namedStreams)
+		{
+			return string.Join(",", namedStreams.Select(ns => ns.Name));
+		}
+
+		private static ITexture2dArray TextureArrayImporter(IEnumerable<NamedStream> namedStreams)
 		{
 			var texArray = new TextureArray2dGL();
-			Update(texArray, resources);
+			Update(texArray, namedStreams);
 			return texArray;
 		}
 
-		private static void Update(TextureArray2dGL texArray, IEnumerable<NamedStream> resources)
+		private static void Update(TextureArray2dGL texArray, IEnumerable<NamedStream> namedStreams)
 		{
-			var count = resources.Count();
+			Debug.WriteLine($"Updating texture array {GetNameString(namedStreams)}");
+			var count = namedStreams.Count();
 			if (2 > count) return;
 
-			var bitmaps = from res in resources select new Bitmap(res.Stream);
+			var bitmaps = from res in namedStreams select new Bitmap(res.Stream);
 
 			var first = bitmaps.First();
 			var levels = MathHelper.MipMapLevels(first.Width, first.Height);

@@ -22,7 +22,7 @@
 			}
 			window.Update += (dt) =>
 			{
-				Console.WriteLine(string.Join("#", window.Input.PressedButtons));
+				Console.WriteLine($"PressedButtons={string.Join(",", window.Input.PressedButtons)}");
 				float deltaX = MovementAxis(dt, "Left", "Right");
 				float deltaY = MovementAxis(dt, "Down", "Up");
 				model.Update(deltaX, deltaY);

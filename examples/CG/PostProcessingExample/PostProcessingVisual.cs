@@ -3,6 +3,7 @@ using System;
 using Zenseless.Patterns;
 using Zenseless.HLGL;
 using Zenseless.OpenGL;
+using System.Diagnostics;
 
 namespace Example
 {
@@ -25,8 +26,7 @@ namespace Example
 			}
 			catch (ShaderException e)
 			{
-				Console.WriteLine(e.Message);
-				Console.ReadLine();
+				Debug.WriteLine(e.Message);
 			}
 		}
 

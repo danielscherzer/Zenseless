@@ -123,7 +123,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11 - RenderToTexture", "exa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02 - ShaderDebugDialogExample", "examples\ACG\02 - ShaderDebugDialogExample\02 - ShaderDebugDialogExample.csproj", "{AB2FC8A2-9741-42B7-9170-D713B5125D78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14 - ShadowMappingExample", "examples\ACG\14 - ShadowMappingExample\14 - ShadowMappingExample.csproj", "{613DB9B5-0255-4B4E-9482-EA6A127F7894}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "16 - ShadowMappingExample", "examples\ACG\16 - ShadowMappingExample\16 - ShadowMappingExample.csproj", "{613DB9B5-0255-4B4E-9482-EA6A127F7894}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ACG", "ACG", "{DC899246-DB92-4DFE-9E0B-F2300B77B281}"
 	ProjectSection(SolutionItems) = preProject

@@ -3,6 +3,7 @@ using Zenseless.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 namespace MiniGalaxyBirds
 {
@@ -44,7 +45,7 @@ namespace MiniGalaxyBirds
 			{
 				HandleCollisions(absoluteTime, containerPlayer);
 			}
-			Console.WriteLine(registry.GetAllContainer().Count());
+			Debug.WriteLine(registry.GetAllContainer().Count());
 		}
 
 		private static IEnumerable<Tuple<ICollidable, ICollidable>> ResolveCollisions(IEnumerable<ICollidable> collidables)

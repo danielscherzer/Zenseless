@@ -17,7 +17,7 @@ namespace Example
 			{
 				//find level editor
 				var searchPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..\\..\\.."));
-				Console.WriteLine(searchPath);
+				Debug.WriteLine(searchPath);
 				var editor = Directory.GetFiles(searchPath, "LevelEditor.exe", SearchOption.AllDirectories).FirstOrDefault();
 				//create level data
 				Process.Start(editor, $"autosave {levelFile}").WaitForExit();

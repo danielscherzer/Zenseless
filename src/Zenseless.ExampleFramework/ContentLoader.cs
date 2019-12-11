@@ -1,5 +1,6 @@
 ﻿namespace Zenseless.ExampleFramework
 {
+	using GLSLhelper;
 	using System;
 	using System.Collections.Generic;
 	using System.Diagnostics;
@@ -58,19 +59,27 @@
 			}
 			catch (NamedShaderException e)
 			{
-				ShowExceptionForm(e.InnerException, e.Name);
+				ShowException(e.InnerException, e.Name);
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e.ToString());
+				Debug.WriteLine(e.ToString());
 			}
 		}
 
-		private void ShowExceptionForm(ShaderException e, string resourceName)
+		private void ShowException(ShaderException e, string resourceName)
 		{
 			var name = contentManager.GetFilePath(resourceName);
 			name = string.IsNullOrEmpty(name) ? resourceName : name;
-			new FormShaderExceptionFacade().ShowModal(e, name);
+
+			var log = new ShaderLogParser(e.Message);
+			foreach (var logLine in log.Lines)
+			{
+				var msg = name + "(" + logLine.LineNumber + "): " + logLine.Message;
+				Debug.Print(msg);
+			}
+
+			//new FormShaderExceptionFacade().ShowModal(e, name);
 		}
 
 		/// <summary>
@@ -91,13 +100,8 @@
 			}
 			catch (NamedShaderException e)
 			{
-				ShowExceptionForm(e.InnerException, e.Name);
+				ShowException(e.InnerException, e.Name);
 			}
-			//throw all other exceptions
-			//catch (Exception e)
-			//{
-			//	Console.WriteLine(e.ToString());
-			//}
 			return null;
 		}
 	}

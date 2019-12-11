@@ -7,13 +7,13 @@
 	using System.Collections.Generic;
 	using System.ComponentModel.Composition;
 	using System.ComponentModel.Composition.Hosting;
-	using System.Drawing;
 	using System.Linq;
 	using Zenseless.Patterns;
 	using Zenseless.HLGL;
 	using Zenseless.OpenGL;
 	using System.Reflection;
 	using OpenTK.Graphics;
+	using System.Diagnostics;
 
 	/// <summary>
 	/// Intended for use for small example programs in the <see cref="Zenseless"/> framework
@@ -35,6 +35,7 @@
 		/// <param name="debug">Activate OpenGL debug mode (probably slower)</param>
 		public ExampleWindow(int width = 1024, int height = 1024, double updateRenderRate = 60, int samples = 1, bool debug = false)
 		{
+			Debug.Listeners.Add(new ConsoleDebugListener());
 			var graphicsMode = new GraphicsMode(new ColorFormat(8, 8, 8, 8), 24, 0, samples, ColorFormat.Empty, 2);
 			gameWindow = new GameWindow(width,height, graphicsMode, Assembly.GetEntryAssembly().ManifestModule.Name
 				, GameWindowFlags.Default, DisplayDevice.Default, 0, 0, debug ? GraphicsContextFlags.Debug : GraphicsContextFlags.Default)
@@ -170,7 +171,7 @@
 			}
 			catch (CompositionException e)
 			{
-				Console.WriteLine($"Example Window error: {e}");
+				Debug.WriteLine($"Example Window error: {e}");
 			}
 		}
 

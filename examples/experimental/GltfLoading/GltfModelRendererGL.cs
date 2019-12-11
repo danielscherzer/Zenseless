@@ -71,8 +71,8 @@
 
 		internal void UpdateAnimations(float totalSeconds, Action<Matrix4x4[]> setJointMatrix)
 		{
-			//Console.Clear();
-			//Console.WriteLine($"time={totalSeconds}");
+			//Debug.Clear();
+			//Debug.WriteLine($"time={totalSeconds}");
 			//for each animation channel update the respective local transform of the node with current time
 			foreach (var animationController in animationControllers)
 			{
@@ -181,7 +181,7 @@
 						var interpolated = Vector3.Lerp(inter.Item1, inter.Item2, inter.Item3);
 						node.Translation = interpolated.ToArray();
 						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
-						//Console.WriteLine($"{sampler.Output}: translate {interpolated}");
+						//Debug.WriteLine($"{sampler.Output}: translate {interpolated}");
 					}
 					animationController.Add(Interpolator);
 				}
@@ -199,7 +199,7 @@
 						var interpolated = Quaternion.Lerp(inter.Item1, inter.Item2, inter.Item3);
 						node.Rotation = interpolated.ToArray();
 						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
-						//Console.WriteLine($"{sampler.Output}: rotate {interpolated}");
+						//Debug.WriteLine($"{sampler.Output}: rotate {interpolated}");
 					}
 					animationController.Add(Interpolator);
 				}
@@ -217,7 +217,7 @@
 						var interpolated = Vector3.Lerp(inter.Item1, inter.Item2, inter.Item3);
 						node.Scale = interpolated.ToArray();
 						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
-						//Console.WriteLine($"{sampler.Output}: scale {interpolated}");
+						//Debug.WriteLine($"{sampler.Output}: scale {interpolated}");
 					}
 					animationController.Add(Interpolator);
 				}

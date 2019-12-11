@@ -1,7 +1,7 @@
 #version 420 core
 
 uniform mat4 camera;
-uniform sampler2D texDisplacement;
+//uniform sampler2D texDisplacement;
 
 layout (quads, fractional_odd_spacing, ccw) in;
 
@@ -66,7 +66,7 @@ vec3 noised( in vec2 p )
 					du * (u.yx*(va-vb-vc+vd) + vec2(vb,vc) - va));
 }
 
-vec3 displacement(vec2 coord)
+vec3 displacementAndDerivatives(vec2 coord)
 {
 	coord *= 100;
 	vec3 d = noised(coord);
@@ -80,9 +80,9 @@ void main()
 {
 	vec4 pos = interpolate(tcPos[0], tcPos[1], tcPos[2], tcPos[3]);
 	vec2 texCoord = interpolate(tcTexCoord[0], tcTexCoord[1], tcTexCoord[2], tcTexCoord[3]);
-	vec3 terrain = displacement(texCoord);
-	o.normal = normalize( vec3(-terrain.y, 1.0, -terrain.z) );
+	vec3 terrain = displacementAndDerivatives(texCoord);
 	pos.y = terrain.x;
+	o.normal = normalize( vec3(-terrain.y, 1.0, -terrain.z) );
 
 	gl_Position = camera * pos;
 	o.instanceID = instanceID;
