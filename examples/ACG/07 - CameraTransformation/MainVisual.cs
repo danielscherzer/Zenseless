@@ -1,4 +1,4 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL;
 using System;
 using System.Numerics;
 using Zenseless.Geometry;
@@ -18,7 +18,7 @@ namespace Example
 			var mesh = contentLoader.Load<DefaultMesh>("suzanne");
 			
 			geometry = VAOLoader.FromMesh(mesh, shaderProgram);
-
+			axis = CoordinateSystemAxis();
 			//per instance attributes
 			var rnd = new Random(12);
 			float Rnd01() => (float)rnd.NextDouble();
@@ -59,10 +59,13 @@ namespace Example
 
 		private void DrawScene(Matrix4x4 camera)
 		{
+			var m = camera.Convert();
 			shaderProgram.Activate();
 			shaderProgram.Uniform(nameof(camera), camera, true);
 			geometry.Draw();
 			shaderProgram.Deactivate();
+			GL.LoadMatrix(ref m);
+			axis.Draw();
 		}
 
 		public void Update(float updatePeriod)
@@ -82,10 +85,21 @@ namespace Example
 		private IShaderProgram shaderProgram;
 		private Matrix4x4 view = Matrix4x4.Identity;
 		private VAO geometry;
+		private readonly VAO axis;
 		private float aspect = 1f;
 #if SOLUTION
 		private int splitX;
 		private int height;
 #endif
+
+		public static VAO CoordinateSystemAxis()
+		{
+			var vao = new VAO(OpenTK.Graphics.OpenGL4.PrimitiveType.Lines);
+			var coords = new Vector3[] { Vector3.Zero, Vector3.UnitX, Vector3.Zero, Vector3.UnitY, Vector3.Zero, Vector3.UnitZ };
+			var colors = new Vector3[] { Vector3.UnitX, Vector3.UnitX, Vector3.UnitY, Vector3.UnitY, Vector3.UnitZ, Vector3.UnitZ };
+			vao.SetAttribute(0, coords);
+			vao.SetAttribute(3, colors);
+			return vao;
+		}
 	}
 }
