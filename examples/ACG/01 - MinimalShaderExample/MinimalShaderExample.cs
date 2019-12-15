@@ -11,7 +11,7 @@
 		private MyVisual()
 		{
 			string sVertexShader = @"
-				#version 430 core				
+				#version 430 core
 				out vec3 pos; 
 				void main() {
 					const vec3 vertices[4] = vec3[4](vec3(-0.9, -0.8, 0.5),

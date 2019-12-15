@@ -24,6 +24,12 @@ namespace Zenseless.Geometry
 			controlPoints = new SortedDictionary<float, T>(zipped.ToDictionary((item) => item.Key, (item) => item.Value));
 		}
 
+		/// <summary>Initializes a new instance of the <see cref="ControlPoints{T}"/> class.</summary>
+		public ControlPoints()
+		{
+			controlPoints = new SortedDictionary<float, T>();
+		}
+
 		/// <summary>
 		/// Adds the update.
 		/// </summary>

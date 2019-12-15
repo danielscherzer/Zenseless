@@ -14,14 +14,15 @@
 	using System.Reflection;
 	using OpenTK.Graphics;
 	using System.Diagnostics;
+	using System.IO;
 
 	/// <summary>
 	/// Intended for use for small example programs in the <see cref="Zenseless"/> framework
 	/// creates a OpenTK.GameWindow;
 	/// reads command line arguments: 'capture' records each rendered frame into a png file; 'fullscreen'
-	/// handles keys: ESCAPE: closes application; F11: toggles full-screen; <see cref="RemoveDefaultKeyHandler"/> ROLL: makes a screen-shot to the clipboard
+	/// handles keys: ESCAPE: closes application; F11: toggles full-screen; <see cref="RemoveDefaultKeyHandler"/> F12: makes a screen-shot to the clipboard
 	/// create a MEF composition container for IOC;
-	/// creates experimental versions of high level GL abstraction and resource handling; use with car and subject to change;
+	/// creates experimental versions of high level GL abstraction and resource handling; use with care and subject to change;
 	/// </summary>
 	public sealed class ExampleWindow : Disposable
 	{
@@ -179,8 +180,12 @@
 		{
 			switch (e.Key)
 			{
-				case Key.ScrollLock:
-					FrameBuffer.ToBitmap().SaveToClipboard();
+				case Key.F12:
+					var bitmap = FrameBuffer.ToBitmap();
+					bitmap.SaveToClipboard();
+					var assemblyPath = Assembly.GetEntryAssembly().Location;
+					var screenShotName = Path.ChangeExtension(assemblyPath, " screenshot.png");
+					bitmap.Save(screenShotName);
 					break;
 			}
 		}

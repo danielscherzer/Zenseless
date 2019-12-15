@@ -31,7 +31,7 @@
 		/// </summary>
 		public void AfterRendering()
 		{
-			screenShots.Add(FrameBuffer.ToBitmap(false));  //no rotate flip for speed
+			screenShots.Add(FrameBuffer.ToBitmap(false)); //no rotate flip for speed
 		}
 
 		/// <summary>
