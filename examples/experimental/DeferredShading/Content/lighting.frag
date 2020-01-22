@@ -16,15 +16,15 @@ out vec4 color;
 
 void main() 
 {
-	ivec2 uv = ivec2(gl_FragCoord);
-	vec3 position = texelFetch(texPosition, uv, 0).xyz;
+	ivec2 fragCoord = ivec2(gl_FragCoord);
+	vec3 position = texelFetch(texPosition, fragCoord, 0).xyz;
 	vec3 toLight = dataIn.lightPosition - position;
 	float dist = length(toLight);
 	float attenuation = clamp(1.0 - dist / lightRange, 0.0, 1.0);
 	attenuation *= attenuation * 4.0 * 3.1415;
 	
 	toLight = normalize(toLight);
-	vec4 inNormalMaterial = texelFetch(texNormalMaterial, uv, 0);
+	vec4 inNormalMaterial = texelFetch(texNormalMaterial, fragCoord, 0);
 	vec3 normal = inNormalMaterial.xyz;
 	vec3 albedo = getMaterial(inNormalMaterial.w);
 

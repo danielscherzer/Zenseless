@@ -23,6 +23,8 @@
 			geometry = VAOLoader.FromMesh(mesh, shaderProgram);
 
 			shaderProgramDepth = contentLoader.Load<IShaderProgram>("depth.*");
+			// make small values darker with power function
+			overlayDepthTexture = new TextureQuad(new Box2D(-1, -1, 0.5f, 0.5f), "color = vec4(vec3(pow(color.r, 16.0)), 1.0);");
 			//todo: radeon cards created errors with geometry bound to one shader and used in other shaders because of binding id changes
 		}
 
@@ -42,7 +44,6 @@
 				geometry.Draw();
 				shaderProgramDepth.Deactivate();
 			});
-			//TextureDebugger.Draw(fboShadowMap.Texture); return;
 #endif
 			//second pass: render with shadow map
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -57,12 +58,14 @@
 			geometry.Draw();
 			fboShadowMap.Texture.Deactivate();
 			shaderProgram.Deactivate();
+			overlayDepthTexture.Draw(fboShadowMap.Texture);
 		}
 
-		private readonly Camera<Orbit, Perspective> light = new Camera<Orbit, Perspective>(new Orbit(8, -100, 44), new Perspective(farClip:50));
+		private readonly Camera<Orbit, Perspective> light = new Camera<Orbit, Perspective>(new Orbit(8, -100, 66), new Perspective(farClip:50f));
 		private IShaderProgram shaderProgram;
 		private IShaderProgram shaderProgramDepth;
-		private IRenderSurface fboShadowMap = new FBOwithDepth(Texture2dGL.Create(2048, 2048, 1, true));
+		private readonly TextureQuad overlayDepthTexture;
+		private IRenderSurface fboShadowMap = new FBOwithDepth(Texture2dGL.Create(256, 256, 1, true));
 		private IDrawable geometry;
 	}
 }

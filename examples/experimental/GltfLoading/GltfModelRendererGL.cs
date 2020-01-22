@@ -20,43 +20,35 @@
 
 		public Box3D Bounds { get; private set; }
 
-		public IEnumerable<Transformation> Cameras => cameras;
-
 		private readonly List<Transformation> localTransforms;
 		private readonly Gltf gltf;
-		private readonly List<byte[]> byteBuffers;
-		private readonly Color4[] materials;
 		private readonly List<BufferObject> buffersGL;
 		private readonly List<ITexture> texturesGL;
 		private List<Action> meshDrawCommandsGL = new List<Action>();
-		private List<Transformation> cameras = new List<Transformation>();
 		private Dictionary<int, Transformation> jointNodeInverseBindTransform = new Dictionary<int, Transformation>();
 
-		public bool IsSkinned { get; private set; } = false;
+		public bool IsSkinned => jointNodeInverseBindTransform.Count > 0;
 
-		private int[] skinJointNodeIds;
 		private readonly List<Action<float>> animationControllers;
 
 		public GltfModelRendererGL(Stream streamGltf, Func<string, byte[]> externalReferenceSolver
 			, Func<string, int> uniformLoc, Func<string, int> attributeLoc)
 		{
 			gltf = Interface.LoadModel(streamGltf);
-			byteBuffers = LoadByteBuffers(gltf, externalReferenceSolver);
+			var byteBuffers = gltf.ExtractByteBuffers(externalReferenceSolver);
 			localTransforms = CreateLocalTransforms();
-			materials = CreateMaterials(gltf.Materials).ToArray();
 
 			Bounds = CalculateSceneBounds();
-			cameras = CreateCameras();
 
-			animationControllers = LoadAnimations(gltf.Animations, byteBuffers);
-			LoadSkins(gltf.Skins, byteBuffers);
+			animationControllers = LoadAnimations(gltf, byteBuffers);
+			jointNodeInverseBindTransform = gltf.ExtractJointNodeInverseBindTransforms(byteBuffers);
 
-			texturesGL = LoadTextures(externalReferenceSolver);
+			texturesGL = LoadTextures(gltf, externalReferenceSolver);
 			buffersGL = CreateBuffersGL(gltf, byteBuffers);
 			UpdateMeshDrawCommandsGL(uniformLoc, attributeLoc);
 		}
 
-		private List<ITexture> LoadTextures(Func<string, byte[]> externalReferenceSolver)
+		private static List<ITexture> LoadTextures(Gltf gltf, Func<string, byte[]> externalReferenceSolver)
 		{
 			var textures = new List<ITexture>();
 			if (gltf.Images is null) return textures;
@@ -99,16 +91,13 @@
 					};
 				}
 			}
-			foreach (var scene in gltf.Scenes)
-			{
-				TraverseNodes(scene.Nodes, Transformation.Identity, UpdateWorldMatrix);
-			}
+			Traverse(UpdateWorldMatrix);
 
 			drawCalls();
 			GL.BindVertexArray(0);
 		}
 
-		public Matrix4x4[] CalculateJointTransforms()
+		public Matrix4x4[] CalculateWorldJointTransforms()
 		{
 			var jointTransforms = new Dictionary<int, Matrix4x4>();
 			void CalcJointTransforms(Transformation worldTransformation, int nodeId)
@@ -116,23 +105,27 @@
 				var node = gltf.Nodes[nodeId];
 				if (jointNodeInverseBindTransform.TryGetValue(nodeId, out var inverseBindTransform))
 				{
-					var ibt = jointNodeInverseBindTransform[nodeId];
-					var jointTransform = Transformation.Combine(ibt, worldTransformation);
+					var jointTransform = Transformation.Combine(inverseBindTransform, worldTransformation);
 					jointTransforms.Add(nodeId, jointTransform.Matrix);
 				}
 			}
 
-			foreach (var scene in gltf.Scenes)
-			{
-				TraverseNodes(scene.Nodes, Transformation.Identity, CalcJointTransforms);
-			}
+			Traverse(CalcJointTransforms);
 
 			var joints = new List<Matrix4x4>(jointTransforms.Count);
-			foreach(var nodeId in skinJointNodeIds)
+			foreach(var nodeId in jointNodeInverseBindTransform.Keys)
 			{
 				joints.Add(jointTransforms[nodeId]);
 			}
 			return joints.ToArray();
+		}
+
+		private void Traverse(Action<Transformation, int> process)
+		{
+			foreach (var scene in gltf.Scenes)
+			{
+				TraverseNodes(scene.Nodes, Transformation.Identity, process);
+			}
 		}
 
 		private List<Transformation> CreateLocalTransforms()
@@ -140,14 +133,15 @@
 			var nodeTransforms = new List<Transformation>();
 			foreach (var node in gltf.Nodes)
 			{
-				var transformation = CreateLocalTransform(node);
+				var transformation = node.ExtractLocalTransform();
 				nodeTransforms.Add(transformation);
 			}
 			return nodeTransforms;
 		}
 
-		private List<Action<float>> LoadAnimations(Animation[] animations, List<byte[]> byteBuffers)
+		private List<Action<float>> LoadAnimations(Gltf gltf, List<byte[]> byteBuffers)
 		{
+			var animations = gltf.Animations;
 			var animationController = new List<Action<float>>();
 			if (animations is null) return animationController;
 			if (byteBuffers is null) throw new ArgumentNullException(nameof(byteBuffers));
@@ -180,7 +174,7 @@
 						var inter = controlPoints.FindPair(t);
 						var interpolated = Vector3.Lerp(inter.Item1, inter.Item2, inter.Item3);
 						node.Translation = interpolated.ToArray();
-						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
+						localTransforms[channel.Target.Node.Value] = node.ExtractLocalTransform();
 						//Debug.WriteLine($"{sampler.Output}: translate {interpolated}");
 					}
 					animationController.Add(Interpolator);
@@ -198,7 +192,7 @@
 						var inter = controlPoints.FindPair(t);
 						var interpolated = Quaternion.Lerp(inter.Item1, inter.Item2, inter.Item3);
 						node.Rotation = interpolated.ToArray();
-						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
+						localTransforms[channel.Target.Node.Value] = node.ExtractLocalTransform();
 						//Debug.WriteLine($"{sampler.Output}: rotate {interpolated}");
 					}
 					animationController.Add(Interpolator);
@@ -216,7 +210,7 @@
 						var inter = controlPoints.FindPair(t);
 						var interpolated = Vector3.Lerp(inter.Item1, inter.Item2, inter.Item3);
 						node.Scale = interpolated.ToArray();
-						localTransforms[channel.Target.Node.Value] = CreateLocalTransform(node);
+						localTransforms[channel.Target.Node.Value] = node.ExtractLocalTransform();
 						//Debug.WriteLine($"{sampler.Output}: scale {interpolated}");
 					}
 					animationController.Add(Interpolator);
@@ -242,21 +236,6 @@
 				}
 			}
 			return animationController;
-		}
-
-		private void LoadSkins(Skin[] skins, List<byte[]> byteBuffers)
-		{
-			if (skins is null) return;
-			foreach(var skin in skins)
-			{
-				skinJointNodeIds = skin.Joints;
-				var accessor = gltf.Accessors[skin.InverseBindMatrices.Value];
-				var view = gltf.BufferViews[accessor.BufferView.Value];
-				var inverseBindMatrices = byteBuffers[view.Buffer].FromByteArray<Matrix4x4>(view.ByteOffset + accessor.ByteOffset, accessor.Count);
-				var zipped = skinJointNodeIds.Zip(inverseBindMatrices, (key, value) => new { key, value });
-				jointNodeInverseBindTransform = zipped.ToDictionary((item) => item.key, (item) => new Transformation(item.value));
-				IsSkinned = true;
-			}
 		}
 
 		private Box3D CalculateSceneBounds()
@@ -285,15 +264,12 @@
 				}
 			}
 
-			foreach (var scene in gltf.Scenes)
-			{
-				TraverseNodes(scene.Nodes, Transformation.Identity, UpdateBounds);
-			}
+			Traverse(UpdateBounds);
 			var size = max - min;
 			return new Box3D(min.X, min.Y, min.Z, size.X, size.Y, size.Z);
 		}
 
-		private List<Transformation> CreateCameras()
+		public List<Transformation> ExtractCameras()
 		{
 			var cameras = new List<Transformation>();
 			void CreateCamera(Transformation worldTransformation, int nodeId)
@@ -317,10 +293,7 @@
 					}
 				}
 			}
-			foreach (var scene in gltf.Scenes)
-			{
-				TraverseNodes(scene.Nodes, Transformation.Identity, CreateCamera);
-			}
+			Traverse(CreateCamera);
 			return cameras;
 		}
 
@@ -336,43 +309,6 @@
 				var node = gltf.Nodes[nodeId];
 				TraverseNodes(node.Children, worldTransform, process);
 			}
-		}
-
-		private static Transformation CreateLocalTransform(glTFLoader.Schema.Node node)
-		{
-			var translation = Transformation.Translation(node.Translation[0], node.Translation[1], node.Translation[2]);
-			var rotation = new Transformation(Matrix4x4.CreateFromQuaternion(new Quaternion(node.Rotation[0], node.Rotation[1], node.Rotation[2], node.Rotation[3])));
-			var scale = Transformation.Scale(node.Scale[0], node.Scale[1], node.Scale[2]);
-			var m = node.Matrix;
-			var transform = new Transformation((new Matrix4x4(m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15])));
-			var trs = Transformation.Combine(Transformation.Combine(scale, rotation), translation);
-			return Transformation.Combine(trs, transform); //order does not matter because one is identity
-		}
-
-		private static IEnumerable<Color4> CreateMaterials(Material[] materials)
-		{
-			if (materials is null) yield break;
-			foreach (var material in materials)
-			{
-				var tex = material.PbrMetallicRoughness.BaseColorTexture;
-				if(!(tex is null))
-				{
-
-				}
-				var baseColor = material.PbrMetallicRoughness.BaseColorFactor;
-				yield return new Color4(baseColor[0], baseColor[1], baseColor[2], baseColor[3]);
-			}
-		}
-
-		private static List<byte[]> LoadByteBuffers(Gltf gltf, Func<string, byte[]> externalReferenceSolver)
-		{
-			var byteBuffers = new List<byte[]>();
-			for (int i = 0; i < gltf.Buffers.Length; ++i)
-			{
-				var buffer = Interface.LoadBinaryBuffer(gltf, i, externalReferenceSolver);
-				byteBuffers.Add(buffer);
-			}
-			return byteBuffers;
 		}
 
 		private Action CreateMeshDrawCommandGL(glTFLoader.Schema.Mesh mesh, Func<string, int> uniformLoc, Func<string, int> attributeLoc)
@@ -391,7 +327,7 @@
 			var locColor = uniformLoc("baseColor");
 			foreach (var primitive in mesh.Primitives)
 			{
-				var color = primitive.Material.HasValue ? materials[primitive.Material.Value] : Color4.White;
+				var color = primitive.Material.HasValue ? gltf.Materials[primitive.Material.Value].ExtractBaseColor() : Color4.White;
 				action += () => GL.Uniform4(locColor, color);
 				action += CreatePrimitiveDrawCallGL(primitive, attributeLoc);
 			}

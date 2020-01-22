@@ -12,7 +12,7 @@ namespace Example
 	{
 		static void Main(string[] args)
 		{
-			var window = new ExampleWindow(debug:true);
+			var window = new ExampleWindow();
 			var view = new View(window.ContentLoader, window.RenderContext);
 			var bounds = view.Bounds;
 			var distance = 1.5f * Math.Max(bounds.SizeX, Math.Max(bounds.SizeY, bounds.SizeZ));

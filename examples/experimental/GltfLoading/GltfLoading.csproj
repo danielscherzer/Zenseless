@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayBuffer.cs" />
+    <Compile Include="GltfModelConverter.cs" />
     <Compile Include="GltfModelRendererGL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="View.cs" />

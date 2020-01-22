@@ -156,6 +156,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PingPong", "examples\ACG\Pi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14 - GpuParticleSystem", "examples\ACG\14 - GpuParticleSystem\14 - GpuParticleSystem.csproj", "{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCFShadowMapping", "examples\experimental\PCFShadowMapping\PCFShadowMapping.csproj", "{7F66296B-E468-42A0-9C63-352FAB9E0735}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -414,6 +416,10 @@ Global
 		{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F66296B-E468-42A0-9C63-352FAB9E0735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F66296B-E468-42A0-9C63-352FAB9E0735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F66296B-E468-42A0-9C63-352FAB9E0735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F66296B-E468-42A0-9C63-352FAB9E0735}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -485,6 +491,7 @@ Global
 		{87F3A725-6AF4-41F7-AA58-CACD9E23D6D9} = {BEE08292-7C95-44EC-B228-44ED81C09610}
 		{1CD3B140-328E-4824-A91C-E1D68C7561E3} = {DC899246-DB92-4DFE-9E0B-F2300B77B281}
 		{A7F205F7-5E7E-4838-9915-C8CFCCED4AE9} = {DC899246-DB92-4DFE-9E0B-F2300B77B281}
+		{7F66296B-E468-42A0-9C63-352FAB9E0735} = {CB237D59-2840-48EB-888F-965EDB20E868}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CA293D8-FC78-4BF1-BA73-543451A6B7AB}

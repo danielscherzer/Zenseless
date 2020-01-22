@@ -16,9 +16,15 @@
 			var camera = window.GameWindow.CreateOrbitingCameraController(0.3f, 70, 0.01f, 30f);
 			camera.View.Elevation = 15;
 			var visual = new MainVisual(window.RenderContext.RenderState, window.ContentLoader);
-
+			
 			var sampleSeries = new ExponentialSmoothing(0.01);
 			QueryObject timeQuery = new QueryObject();
+			var time = 0.0f;
+			window.Update += (deltaTime) =>
+			{
+				time += deltaTime;
+				visual.LightRange += 0.001f * (float)Math.Sin(time);
+			};
 			window.Render += () =>
 			{
 				var timerQueryResult = timeQuery.ResultLong * 1e-6;

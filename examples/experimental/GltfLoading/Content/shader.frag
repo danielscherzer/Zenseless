@@ -27,9 +27,8 @@ float specular(vec3 toLight, vec3 v, float shininess)
 
 vec4 hemisphericalLight(vec3 toLight)
 {
-	const float d = 0.7;
-	const vec3 skyColor = vec3(d, d, 1);
-	const vec3 groundColor = vec3(d, 1, d);
+	const vec3 skyColor = vec3(0.229,0.875,1.000);
+	const vec3 groundColor = vec3(0.720,1.000,0.440);
 	float w = 0.5 + 0.5 * dot(i.normal, toLight);
 	return vec4(mix(groundColor, skyColor, w), 1.0);
 }
@@ -45,5 +44,6 @@ void main()
 {
 	vec3 toLight = normalize(vec3(0, 1, 0));
 	vec4 color = baseColor ;//* vec4(i.texCoord0, 0, 0);
-	outputColor = metallic(toLight) + hemisphericalLight(toLight) * color;
+	outputColor = metallic(toLight) + 
+		hemisphericalLight(toLight) * color;
 }

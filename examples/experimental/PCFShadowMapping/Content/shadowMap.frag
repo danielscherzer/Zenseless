@@ -35,14 +35,14 @@ float pcf(vec3 coord)
 {
 	ivec2 iCoord_ts = ivec2((coord.xy * 0.5 + 0.5) * textureSize(texShadowMap, 0));
 	float result = 0.0;
-	int kernelSizeHalf = 1;
-	int weightSum = 0;
+	int kernelSizeHalf = 3;
+	float weightSum = 0;
 	for(int x = -kernelSizeHalf; x <= kernelSizeHalf; ++x)
 	{
 		for(int y = -kernelSizeHalf; y <= kernelSizeHalf; ++y)
 		{
 			ivec2 newCoord = iCoord_ts + ivec2(x,y);
-			weightSum++;
+			weightSum ++;
 			result += shadowLookup(newCoord, coord.z);
 		}
 	}
@@ -52,8 +52,8 @@ float pcf(vec3 coord)
 // exponential smooth min (k = 32);
 float smin( float a, float b, float k )
 {
-    float res = exp2( -k*a ) + exp2( -k*b );
-    return -log2( res )/k;
+	float res = exp2( -k * a ) + exp2( -k * b );
+	return -log2( res ) / k;
 }
 
 // polynomial smooth min (k = 0.1);
@@ -90,9 +90,9 @@ float pcfQuartil(vec2 from, vec2 to, float depth)
 {
 	float result = 0.0;
 	int weightSum = 0;
-	for(float x = from.x; x <= to.x; ++x)
+	for(float x = (from.x); x <= (to.x); ++x)
 	{
-		for(float y = from.y; y <= to.y; ++y)
+		for(float y = (from.y); y <= (to.y); ++y)
 		{
 			ivec2 newCoord = ivec2(x,y);
 			weightSum++;
@@ -106,7 +106,7 @@ float pcf3Smooth(vec3 coord)
 {
 	int kernelSizeHalf = 1;
 	vec2 coord_ts = (coord.xy * 0.5 + 0.5) * textureSize(texShadowMap, 0);
-	float q[4];
+	vec4 q;
 	q[0] = pcfQuartil(coord_ts, coord_ts + kernelSizeHalf, coord.z);
 	q[1] = pcfQuartil(vec2(coord_ts.x - kernelSizeHalf, coord_ts.y), vec2(coord_ts.x, coord_ts.y + kernelSizeHalf), coord.z);
 	q[2] = pcfQuartil(coord_ts - kernelSizeHalf, coord_ts, coord.z);
@@ -116,9 +116,8 @@ float pcf3Smooth(vec3 coord)
 	//bilinear interpolation weights
 	vec2 weights = fract(coord_ts);
 	//bilinear interpolation
-	float q10 = mix(q[1], q[0], weights.x);
-	float q23 = mix(q[2], q[3], weights.x);
-	return mix(q23, q10, weights.y);
+	vec2 x = mix(q.yz, q.xw, weights.x);
+	return mix(x[1], x[0], weights.y);
 }
 
 float lambert(vec3 n, vec3 l)
@@ -137,7 +136,7 @@ void main()
 	vec3 lighting = ambient;
 
 	vec3 toLight = normalize(lightPosition - i.position);
-	lighting += pcf(coord) * lambert(normalize(i.normal), toLight) * vec3(1);
+	lighting += pcf3Smooth(coord) * lambert(normalize(i.normal), toLight) * vec3(1);
 
 	color = vec4(lighting, 1);
 }

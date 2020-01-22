@@ -3,6 +3,7 @@
 	using OpenTK.Graphics.OpenGL4;
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Numerics;
 	using Zenseless.Geometry;
 	using Zenseless.HLGL;
@@ -27,6 +28,9 @@
 			var lightGeometry = VAOLoader.FromMesh(lightMesh, shaderLighting);
 			lightGeometry.SetAttribute(shaderLighting.GetResourceLocation(ShaderResourceType.Attribute, "lightData"), instanceData, true);
 			lightsVisual = new MeshVisual(lightGeometry, shaderLighting);
+			overlayNormals = new TextureQuad(new Box2D(-1f, -1f, 0.3f, 0.3f), "color.a = 1.0;");
+			overlayMaterial = new TextureQuad(new Box2D(-0.7f, -1f, 0.3f, 0.3f), "color = vec4(vec3(color.w), 1.0);");
+			overlayPositions = new TextureQuad(new Box2D(-0.4f, -1f, 0.3f, 0.3f), "color.rgb = abs(color.rgb);");
 		}
 
 		public float LightIntensity { get; set; } = 0.2f;
@@ -39,7 +43,6 @@
 			mrtSurface.Execute(() =>
 			{
 				GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-				renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
 				renderState.Set(new DepthTest(true));
 				foreach (var vis in meshVisuals)
 				{
@@ -48,14 +51,20 @@
 				}
 				renderState.Set(new DepthTest(false));
 			});
-			//TextureDebugger.Draw(mrtSurface.Textures.ElementAt(1)); return;
 
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			renderState.Set(BlendStates.Additive);
 			renderState.Set(new FaceCullingModeState(FaceCullingMode.FRONT_SIDE)); // important to cull for light volume rendering, otherwise we would have lighting partly twice applied and to cull front face, otherwise near clipping artifacts
+			lightsVisual.SetUniform(new FloatUniform("lightIntensity", LightIntensity));
+			lightsVisual.SetUniform(new FloatUniform("lightRange", LightRange));
 			lightsVisual.SetUniform(cameraUniform);
 			lightsVisual.Draw();
+			renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
 			renderState.Set(BlendStates.Opaque);
+
+			overlayNormals.Draw(mrtSurface.Textures.ElementAt(0));
+			overlayMaterial.Draw(mrtSurface.Textures.ElementAt(0));
+			overlayPositions.Draw(mrtSurface.Textures.ElementAt(1));
 		}
 
 		public void Resize(int width, int height)
@@ -71,14 +80,15 @@
 				new TextureBinding(nameof(texPosition), texPosition),
 			};
 			lightsVisual = new MeshVisual(lightsVisual.Drawable, lightsVisual.ShaderProgram, bindings);
-			lightsVisual.SetUniform(new FloatUniform("lightIntensity", LightIntensity));
-			lightsVisual.SetUniform(new FloatUniform("lightRange", LightRange));
 		}
 
 		private readonly IRenderState renderState;
 		private IRenderSurface mrtSurface;
 		private readonly List<MeshVisual> meshVisuals = new List<MeshVisual>();
 		private MeshVisual lightsVisual;
+		private readonly TextureQuad overlayNormals;
+		private readonly TextureQuad overlayMaterial;
+		private readonly TextureQuad overlayPositions;
 
 		private static Vector4[] CreateInstancePositionMaterial(uint xCount, uint zCount)
 		{

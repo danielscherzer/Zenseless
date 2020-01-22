@@ -33,12 +33,13 @@ namespace Example
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\RiggedSimple\glTF\RiggedSimple.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\RiggedFigure\glTF\RiggedFigure.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\Monster\glTF\Monster.gltf";
-			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\CesiumMan\glTF\CesiumMan.gltf";
+			fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\CesiumMan\glTF\CesiumMan.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\2CylinderEngine\glTF\2CylinderEngine.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\OrientationTest\glTF-Embedded\OrientationTest.gltf";
 			//fileName = @"D:\Daten\downloads\_cg\gltf models\ferris_wheel_animated\scene.gltf";
 			//fileName = @"D:\Daten\downloads\_cg\gltf models\izzy_-_animated_female_character_free_download\scene.gltf";
 			//fileName = @"D:\Daten\downloads\_cg\gltf models\littlest_tokyo\scene.gltf";
+			fileName = @"D:\Daten\downloads\_cg\gltf models\busterDrone\busterDrone.gltf";
 			var directory = Path.GetDirectoryName(fileName);
 			//using (var stream = contentLoader.Load<Stream>("AnimatedTriangle.gltf"))
 			//using (var stream = contentLoader.Load<Stream>("Box.gltf"))
@@ -55,7 +56,7 @@ namespace Example
 				model = new GltfModelRendererGL(stream, LoadFile, UniformLoc, AttributeLoc);
 			}
 			locJoints = shader.GetResourceLocation(ShaderResourceType.Uniform, "u_jointMat");
-			Cameras = model.Cameras;
+			Cameras = model.ExtractCameras();
 			time = new Stopwatch();
 			time.Start();
 		}
@@ -75,7 +76,7 @@ namespace Example
 
 			if (model.IsSkinned)
 			{
-				var joints = model.CalculateJointTransforms();
+				var joints = model.CalculateWorldJointTransforms();
 				SetJointMatrices(joints);
 				SetWorld(Transformation.Identity);
 				model.Draw((m) => { });
@@ -88,7 +89,7 @@ namespace Example
 				{
 					ident[i] = Matrix4x4.Identity;
 				}
-				float[] buffer = ident.ToFloatArray();
+				//float[] buffer = ident.ToFloatArray();
 				SetJointMatrices(ident);
 				model.Draw(SetWorld);
 			}
