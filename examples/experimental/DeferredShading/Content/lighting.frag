@@ -14,12 +14,13 @@ in Data
 
 out vec4 color;
 
-void main() 
+void main()
 {
 	ivec2 fragCoord = ivec2(gl_FragCoord);
 	vec3 position = texelFetch(texPosition, fragCoord, 0).xyz;
 	vec3 toLight = dataIn.lightPosition - position;
 	float dist = length(toLight);
+	// light energy at certain distance is distributed on a sphere
 	float attenuation = clamp(1.0 - dist / lightRange, 0.0, 1.0);
 	attenuation *= attenuation * 4.0 * 3.1415;
 	
@@ -32,5 +33,5 @@ void main()
 	vec3 light = dataIn.lightColor * lightIntensity * attenuation;
 	vec3 diffuse = lambert * albedo * light;
 
-	color =  vec4(diffuse, 1);
+	color = vec4(diffuse, 1);
 }

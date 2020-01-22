@@ -18,8 +18,8 @@ void main()
 {
 	vec3 pos = instanceData.xyz + position;
 	outData.position = pos;
-	outData.normal = normal;
-	outData.material = instanceData.w;
+	outData.normal = normal; // would need to rotate if there is model to world rotation
+	outData.material = instanceData.w; // material id
 	
 	gl_Position = camera * vec4(pos, 1.0);
 }

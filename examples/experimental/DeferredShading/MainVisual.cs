@@ -15,19 +15,21 @@
 		{
 			this.renderState = renderState;
 			var shaderMaterial = contentLoader.Load<IShaderProgram>("material.*");
-
+			// scene
 			var plane = Meshes.CreatePlane(4, 4, 1, 1);
 			meshVisuals.Add(new MeshVisual(plane, shaderMaterial));
 			var instanceMesh = contentLoader.Load<DefaultMesh>("suzanne").Transform(Transformation.Scale(0.03f));
-			var instanceData = CreateInstancePositionMaterial(20, 20);
+			var instanceData = CreatePerInstancePositionMaterial(20, 20);
 			var suzanneInstances = VAOLoader.FromMesh(instanceMesh, shaderMaterial);
 			suzanneInstances.SetAttribute(shaderMaterial.GetResourceLocation(ShaderResourceType.Attribute, nameof(instanceData)), instanceData, true);
 			meshVisuals.Add(new MeshVisual(suzanneInstances, shaderMaterial));
+			// lights
 			var shaderLighting = contentLoader.Load<IShaderProgram>("lighting.*");
-			var lightMesh = Meshes.CreateSphere(1f, 2); // either make it bigger or you need good subdivision to avoid border artifacts
-			var lightGeometry = VAOLoader.FromMesh(lightMesh, shaderLighting);
-			lightGeometry.SetAttribute(shaderLighting.GetResourceLocation(ShaderResourceType.Attribute, "lightData"), instanceData, true);
-			lightsVisual = new MeshVisual(lightGeometry, shaderLighting);
+			var lightSphereMesh = Meshes.CreateSphere(1f, 2); // either make it bigger or you need good subdivision to avoid border artifacts
+			var vaoInstancedLightSphere = VAOLoader.FromMesh(lightSphereMesh, shaderLighting);
+			vaoInstancedLightSphere.SetAttribute(shaderLighting.GetResourceLocation(ShaderResourceType.Attribute, "lightData"), instanceData, true);
+			instancedLightSphereVisual = new MeshVisual(vaoInstancedLightSphere, shaderLighting);
+			//overlays
 			overlayNormals = new TextureQuad(new Box2D(-1f, -1f, 0.3f, 0.3f), "color.a = 1.0;");
 			overlayMaterial = new TextureQuad(new Box2D(-0.7f, -1f, 0.3f, 0.3f), "color = vec4(vec3(color.w), 1.0);");
 			overlayPositions = new TextureQuad(new Box2D(-0.4f, -1f, 0.3f, 0.3f), "color.rgb = abs(color.rgb);");
@@ -55,10 +57,10 @@
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			renderState.Set(BlendStates.Additive);
 			renderState.Set(new FaceCullingModeState(FaceCullingMode.FRONT_SIDE)); // important to cull for light volume rendering, otherwise we would have lighting partly twice applied and to cull front face, otherwise near clipping artifacts
-			lightsVisual.SetUniform(new FloatUniform("lightIntensity", LightIntensity));
-			lightsVisual.SetUniform(new FloatUniform("lightRange", LightRange));
-			lightsVisual.SetUniform(cameraUniform);
-			lightsVisual.Draw();
+			instancedLightSphereVisual.SetUniform(new FloatUniform("lightIntensity", LightIntensity));
+			instancedLightSphereVisual.SetUniform(new FloatUniform("lightRange", LightRange));
+			instancedLightSphereVisual.SetUniform(cameraUniform);
+			instancedLightSphereVisual.Draw();
 			renderState.Set(new FaceCullingModeState(FaceCullingMode.BACK_SIDE));
 			renderState.Set(BlendStates.Opaque);
 
@@ -79,18 +81,18 @@
 				new TextureBinding(nameof(texNormalMaterial), texNormalMaterial),
 				new TextureBinding(nameof(texPosition), texPosition),
 			};
-			lightsVisual = new MeshVisual(lightsVisual.Drawable, lightsVisual.ShaderProgram, bindings);
+			instancedLightSphereVisual = new MeshVisual(instancedLightSphereVisual.Drawable, instancedLightSphereVisual.ShaderProgram, bindings);
 		}
 
 		private readonly IRenderState renderState;
 		private IRenderSurface mrtSurface;
 		private readonly List<MeshVisual> meshVisuals = new List<MeshVisual>();
-		private MeshVisual lightsVisual;
+		private MeshVisual instancedLightSphereVisual;
 		private readonly TextureQuad overlayNormals;
 		private readonly TextureQuad overlayMaterial;
 		private readonly TextureQuad overlayPositions;
 
-		private static Vector4[] CreateInstancePositionMaterial(uint xCount, uint zCount)
+		private static Vector4[] CreatePerInstancePositionMaterial(uint xCount, uint zCount)
 		{
 			var rnd = new Random(12);
 			float Rnd01() => (float)rnd.NextDouble();
