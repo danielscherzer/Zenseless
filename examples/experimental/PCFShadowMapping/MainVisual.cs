@@ -35,7 +35,6 @@
 			if (shaderProgram is null) return;
 			if (shaderProgramDepth is null) return;
 			//first pass: create shadow map
-#if SOLUTION
 			shaderProgramDepth.Activate();
 			fboShadowMap.Execute(() =>
 			{
@@ -44,17 +43,16 @@
 				geometry.Draw();
 				shaderProgramDepth.Deactivate();
 			});
-#endif
+
 			//second pass: render with shadow map
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 			shaderProgram.Activate();
 			fboShadowMap.Texture.Activate();
 			shaderProgram.Uniform("ambient", new Vector3(0.1f, 0.1f, 0f));
 			shaderProgram.Uniform("camera", Camera);
-#if SOLUTION
 			shaderProgram.Uniform(nameof(light), light);
 			shaderProgram.Uniform("lightPosition", light.View.CalcPosition());
-#endif
+
 			geometry.Draw();
 			fboShadowMap.Texture.Deactivate();
 			shaderProgram.Deactivate();
