@@ -61,11 +61,11 @@
 			public Matrix4x4 camera; //memory layout is row-major so transposed to GL
 		};
 
-		private IRenderContext context;
-		private IOldRenderSurface frameBuffer;
+		private readonly IRenderContext context;
+		private readonly IOldRenderSurface frameBuffer;
 		private IOldRenderSurface surfaceGeometry;
 		private UniformBlock uniformBlock = new UniformBlock();
-		private DrawConfiguration scene = new DrawConfiguration();
-		private DrawConfiguration copyQuad = new DrawConfiguration();
+		private readonly DrawConfiguration scene = new DrawConfiguration();
+		private readonly DrawConfiguration copyQuad = new DrawConfiguration();
 	}
 }

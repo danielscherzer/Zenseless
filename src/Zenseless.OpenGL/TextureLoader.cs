@@ -44,7 +44,7 @@ namespace Zenseless.OpenGL
 		/// </summary>
 		/// <param name="texture">The texture to save.</param>
 		/// <param name="buffer">The buffer to write to</param>
-		public static void ToBuffer(this ITexture2D texture, ref Vector4[,] buffer)
+		public static void ToBuffer(this ITexture2D texture, ref Vector4[] buffer)
 		{
 			if (buffer is null) throw new ArgumentNullException(nameof(buffer));
 
@@ -65,7 +65,7 @@ namespace Zenseless.OpenGL
 		/// </summary>
 		/// <param name="texture">The texture to save.</param>
 		/// <param name="buffer">The buffer to write to</param>
-		public static void ToBuffer(this ITexture2D texture, ref float[,] buffer)
+		public static void ToBuffer(this ITexture2D texture, ref float[] buffer)
 		{
 			if (buffer is null) throw new ArgumentNullException(nameof(buffer));
 

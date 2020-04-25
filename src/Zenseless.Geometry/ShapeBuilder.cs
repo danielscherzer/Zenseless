@@ -142,7 +142,7 @@ namespace Zenseless.Geometry
 		{
 			if (createPosition is null) throw new ArgumentNullException(nameof(createPosition) + " must not be null");
 			float deltaU = (1.0f / segmentsX);
-			float deltaV = (1.0f / segmentsX);
+			float deltaV = (1.0f / segmentsY);
 			float deltaX = deltaU * sizeX;
 			float deltaY = deltaV * sizeY;
 			//create vertex data

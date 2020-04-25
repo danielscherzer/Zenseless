@@ -97,15 +97,15 @@
 			GL.BindVertexArray(0);
 		}
 
-		public Matrix4x4[] CalculateWorldJointTransforms()
+		public Matrix4x4[] CalculateJointTransforms()
 		{
 			var jointTransforms = new Dictionary<int, Matrix4x4>();
-			void CalcJointTransforms(Transformation worldTransformation, int nodeId)
+			void CalcJointTransforms(Transformation globalJointTransformation, int nodeId)
 			{
 				var node = gltf.Nodes[nodeId];
 				if (jointNodeInverseBindTransform.TryGetValue(nodeId, out var inverseBindTransform))
 				{
-					var jointTransform = Transformation.Combine(inverseBindTransform, worldTransformation);
+					var jointTransform = Transformation.Combine(inverseBindTransform, globalJointTransformation);
 					jointTransforms.Add(nodeId, jointTransform.Matrix);
 				}
 			}

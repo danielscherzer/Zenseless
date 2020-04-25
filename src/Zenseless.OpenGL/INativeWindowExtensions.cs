@@ -9,7 +9,7 @@
 	/// <summary>
 	/// Extension method class for OpenTK.INativeWindow
 	/// </summary>
-	public static class INativeWindowExtensions
+	public static partial class INativeWindowExtensions
 	{
 		/// <summary>
 		/// Registered a perspective Transformation that will react on aspect changes of the window.
@@ -43,17 +43,6 @@
 				orbit.Distance = Geometry.MathHelper.Clamp(orbit.Distance, projection.NearClip, projection.FarClip);
 			};
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public class FirstPersonMovementState
-		{
-			/// <summary>
-			/// delta movement since
-			/// </summary>
-			public System.Numerics.Vector3 movement;
-		};
 		/// <summary>
 		/// Add first person camera controller. 
 		/// </summary>
@@ -152,8 +141,7 @@
 		/// <param name="e">The <see cref="KeyboardKeyEventArgs"/> instance containing the event data.</param>
 		public static void DefaultExampleWindowKeyEvents(object sender, KeyboardKeyEventArgs e)
 		{
-			var window = sender as INativeWindow;
-			if (window is null) return;
+			if (!(sender is INativeWindow window)) return;
 			switch (e.Key)
 			{
 				case Key.Escape:
