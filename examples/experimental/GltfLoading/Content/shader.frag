@@ -27,8 +27,8 @@ float specular(vec3 toLight, vec3 v, float shininess)
 
 vec4 hemisphericalLight(vec3 toLight)
 {
-	const vec3 skyColor = vec3(0.229,0.875,1.000);
-	const vec3 groundColor = vec3(0.720,1.000,0.440);
+	const vec3 skyColor = vec3(0.229, 0.875, 1.0);
+	const vec3 groundColor = vec3(0.72, 1.0, 0.44);
 	float w = 0.5 + 0.5 * dot(i.normal, toLight);
 	return vec4(mix(groundColor, skyColor, w), 1.0);
 }

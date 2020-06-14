@@ -1,18 +1,25 @@
-﻿namespace Zenseless.OpenGL
-{
-	using System;
+﻿using System;
+using System.Runtime.Serialization;
 
-	/// <summary>
-	/// Implements an FBO exception.
-	/// </summary>
-	/// <seealso cref="GLException" />
+namespace Zenseless.OpenGL
+{
 	[Serializable]
-	public class FBOException : GLException
+	internal class FBOException : Exception
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="FBOException" /> class.
-		/// </summary>
-		/// <param name="message">The error message.</param>
-		public FBOException(string message) : base(message) { }
+		public FBOException()
+		{
+		}
+
+		public FBOException(string message) : base(message)
+		{
+		}
+
+		public FBOException(string message, Exception innerException) : base(message, innerException)
+		{
+		}
+
+		protected FBOException(SerializationInfo info, StreamingContext context) : base(info, context)
+		{
+		}
 	}
 }

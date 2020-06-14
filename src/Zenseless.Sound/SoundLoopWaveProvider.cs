@@ -6,9 +6,9 @@ namespace Zenseless.Sound
 	/// A wave stream that is looped when played back (can be turned off)
 	/// </summary>
 	/// <seealso cref="IWaveProvider" />
-	class SoundLoopWaveProvider : IWaveProvider
+	public class SoundLoopWaveProvider : IWaveProvider
 	{
-		WaveStream sourceStream;
+		readonly WaveStream sourceStream;
 
 		/// <summary>
 		/// Creates a an adapter around an input WaveStream that enables looping

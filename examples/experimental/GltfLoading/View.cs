@@ -32,7 +32,7 @@ namespace Example
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\BoxAnimated\glTF\BoxAnimated.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\RiggedSimple\glTF\RiggedSimple.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\RiggedFigure\glTF\RiggedFigure.gltf";
-			fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\Monster\glTF\Monster.gltf";
+			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\Monster\glTF\Monster.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\CesiumMan\glTF\CesiumMan.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\2CylinderEngine\glTF\2CylinderEngine.gltf";
 			//fileName = @"D:\Daten\downloads\gits\glTF-Sample-Models\2.0\OrientationTest\glTF-Embedded\OrientationTest.gltf";
