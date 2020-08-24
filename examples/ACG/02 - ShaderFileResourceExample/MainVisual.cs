@@ -1,5 +1,4 @@
 ﻿using OpenTK.Graphics.OpenGL4;
-using System.Diagnostics;
 using Zenseless.HLGL;
 
 namespace Example
@@ -13,7 +12,6 @@ namespace Example
 
 		public void Render()
 		{
-			var stopwatch = new Stopwatch();
 			if (shaderProgram is null) return;
 			GL.Clear(ClearBufferMask.ColorBufferBit);
 			shaderProgram.Activate();
@@ -21,6 +19,6 @@ namespace Example
 			shaderProgram.Deactivate();
 		}
 
-		private IShaderProgram shaderProgram;
+		private readonly IShaderProgram shaderProgram;
 	}
 }

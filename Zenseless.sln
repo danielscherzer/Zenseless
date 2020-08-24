@@ -121,7 +121,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12 - Physics", "examples\AC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11 - RenderToTexture", "examples\ACG\11 - RenderToTexture\11 - RenderToTexture.csproj", "{06D368A6-B600-4323-BDBC-EA5B9486C145}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02 - ShaderDebugDialogExample", "examples\ACG\02 - ShaderDebugDialogExample\02 - ShaderDebugDialogExample.csproj", "{AB2FC8A2-9741-42B7-9170-D713B5125D78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02 - ShaderFileResourceExample", "examples\ACG\02 - ShaderFileResourceExample\02 - ShaderFileResourceExample.csproj", "{AB2FC8A2-9741-42B7-9170-D713B5125D78}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "16 - ShadowMappingExample", "examples\ACG\16 - ShadowMappingExample\16 - ShadowMappingExample.csproj", "{613DB9B5-0255-4B4E-9482-EA6A127F7894}"
 EndProject
