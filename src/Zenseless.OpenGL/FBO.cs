@@ -107,11 +107,11 @@
 		/// <summary>
 		/// Execute the specified action on the render surface.
 		/// </summary>
-		/// <param name="action">The code to execute.</param>
-		public void Draw(Action action)
+		/// <param name="draw">The code to draw.</param>
+		public void Draw(Action draw)
 		{
 			Activate();
-			action();
+			draw();
 			Deactivate();
 		}
 
@@ -150,9 +150,6 @@
 			};
 		}
 
-		private static FramebufferAttachment AttachmentFromID(int id)
-		{
-			return FramebufferAttachment.ColorAttachment0 + id;
-		}
+		private static FramebufferAttachment AttachmentFromID(int id) => FramebufferAttachment.ColorAttachment0 + id;
 	}
 }
