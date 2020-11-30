@@ -26,7 +26,7 @@ namespace Example
 
 		public void Render()
 		{
-			fbo.Execute(drawHandler);
+			fbo.Draw(drawHandler);
 			copyToFrameBuffer.Draw(fbo.Texture);
 		}
 	}

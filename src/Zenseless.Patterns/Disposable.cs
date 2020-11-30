@@ -18,7 +18,7 @@ namespace Zenseless.Patterns
 		/// <summary>
 		/// Dispose status of the instance.
 		/// </summary>
-		public bool Disposed { get{ return disposed; } }
+		public bool Disposed => disposed;
 
 		/// <summary>
 		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

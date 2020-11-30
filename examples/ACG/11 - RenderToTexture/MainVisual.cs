@@ -38,22 +38,22 @@
 
 		public void DrawWithPostProcessing(float time, ITransformation camera)
 		{
-			renderToTexture.Execute(() => Draw(camera));
-			renderToTexture.Texture.Activate(); //use this new texture
+			renderSurface.Draw(() => Draw(camera));
+			renderSurface.Texture.Activate(); //use this new texture
 			shaderPostProcess.Activate(); //activate post processing shader
 			shaderPostProcess.Uniform("iGlobalTime", time);
 			GL.DrawArrays(PrimitiveType.Quads, 0, 4); //draw quad
 			shaderPostProcess.Deactivate();
-			renderToTexture.Texture.Deactivate();
+			renderSurface.Texture.Deactivate();
 		}
 
 		public void Resize(int width, int height)
 		{
-			renderToTexture = new FBOwithDepth(Texture2dGL.Create(width, height));
-			renderToTexture.Texture.WrapFunction = TextureWrapFunction.MirroredRepeat;
+			renderSurface = new FBOwithDepth(Texture2dGL.Create(width, height));
+			renderSurface.Texture.WrapFunction = TextureWrapFunction.MirroredRepeat;
 		}
 
-		private IRenderSurface renderToTexture;
+		private IRenderSurface renderSurface;
 		private IShaderProgram shaderPostProcess;
 		private IShaderProgram shaderProgram;
 		private IDrawable geometry;

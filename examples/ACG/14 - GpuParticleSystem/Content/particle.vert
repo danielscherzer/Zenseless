@@ -37,7 +37,7 @@ void update(inout Particle p)
 	vec4 pos = camera * vec4(p.position, 1.0);
 	gl_Position = pos;
 	gl_PointSize = p.size / pos.z * pointResolutionScale; //points get smaller with distance
-	baseColor = unpackUnorm4x8(p.color).xyza;
+	baseColor = unpackUnorm4x8(p.color).rgba;
 }
 
 void main() 

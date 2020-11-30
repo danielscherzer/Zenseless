@@ -42,7 +42,7 @@
 		{
 			var cameraUniform = new TransformUniform(nameof(camera), camera);
 
-			mrtSurface.Execute(() =>
+			mrtSurface.Draw(() =>
 			{
 				GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 				renderState.Set(new DepthTest(true));

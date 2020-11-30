@@ -1,8 +1,8 @@
-﻿namespace Example
-{
-	using System.Collections.Generic;
-	using System.Numerics;
+﻿using System.Collections.Generic;
+using System.Numerics;
 
+namespace Example
+{
 	public class Model
 	{
 		public Model()

@@ -25,7 +25,7 @@ namespace Zenseless.HLGL
 		/// <value>
 		/// The importer types.
 		/// </value>
-		public IEnumerable<Type> ImporterTypes => importers.Keys;
+		public IEnumerable<Type> ImporterTypes => _importers.Keys;
 
 		/// <summary>
 		/// Enumerates all content resource names.
@@ -44,7 +44,7 @@ namespace Zenseless.HLGL
 		public void RegisterImporter<TYPE>(Func<IEnumerable<NamedStream>, TYPE> importer) where TYPE : class
 		{
 			if (importer is null) throw new ArgumentNullException($"The importer must not be null.");
-			importers.Add(typeof(TYPE), importer);
+			_importers.Add(typeof(TYPE), importer);
 		}
 		
 		/// <summary>
@@ -60,7 +60,7 @@ namespace Zenseless.HLGL
 		public TYPE Load<TYPE>(IEnumerable<string> names) where TYPE : class
 		{
 			var type = typeof(TYPE);
-			if (importers.TryGetValue(type, out var importer))
+			if (_importers.TryGetValue(type, out var importer))
 			{
 				var namedStreams = new List<NamedStream>();
 				foreach (var name in names)
@@ -77,6 +77,6 @@ namespace Zenseless.HLGL
 		}
 
 		private readonly INamedStreamLoader loader;
-		private Dictionary<Type, Func<IEnumerable<NamedStream>, object>> importers = new Dictionary<Type, Func<IEnumerable<NamedStream>, object>>();
+		private readonly Dictionary<Type, Func<IEnumerable<NamedStream>, object>> _importers = new Dictionary<Type, Func<IEnumerable<NamedStream>, object>>();
 	}
 }

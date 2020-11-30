@@ -1,10 +1,10 @@
-﻿namespace Example
-{
-	using OpenTK.Graphics.OpenGL4;
-	using System.Numerics;
-	using Zenseless.Geometry;
-	using Zenseless.HLGL;
+﻿using OpenTK.Graphics.OpenGL4;
+using System.Numerics;
+using Zenseless.Geometry;
+using Zenseless.HLGL;
 
+namespace Example
+{
 	public class MainVisual
 	{
 		private readonly IShaderProgram shader;

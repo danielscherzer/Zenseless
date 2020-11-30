@@ -52,14 +52,13 @@
 		/// </summary>
 		public void DisposeInstances()
 		{
-			foreach(var instance in instanceCache.Values)
+			foreach(var instance in _instanceCache.Values)
 			{
-				var disposable = instance as IDisposable;
-				if(!(disposable is null))
+				if (instance is IDisposable disposable)
 				{
 					disposable.Dispose();
 				}
-				instanceCache.Clear();
+				_instanceCache.Clear();
 			}
 		}
 
@@ -74,15 +73,14 @@
 		public TYPE Load<TYPE>(IEnumerable<string> names) where TYPE : class
 		{
 			var name = string.Join(";", names);
-			if (instanceCache.TryGetValue(name, out var instance))
+			if (_instanceCache.TryGetValue(name, out var instance))
 			{
-				var typedInstance = instance as TYPE;
-				if(typedInstance is null) throw new ArgumentException($"Wrong type '{typeof(TYPE).FullName}' for instance of type '{instance.GetType().FullName}'.");
+				if (instance is not TYPE typedInstance) throw new ArgumentException($"Wrong type '{typeof(TYPE).FullName}' for instance of type '{instance.GetType().FullName}'.");
 				return typedInstance;
 			}
 			var fullNames = Names.GetFullNames(names);
 			var result = ContentManager.Load<TYPE>(fullNames);
-			instanceCache[name] = result;
+			_instanceCache[name] = result;
 			NewCacheEntry?.Invoke(this, new NewCacheEntryEventArgs(result, name, fullNames));
 			return result;
 		}
@@ -97,6 +95,6 @@
 			ContentManager.RegisterImporter(importer);
 		}
 
-		private Dictionary<string, object> instanceCache = new Dictionary<string, object>();
+		private readonly Dictionary<string, object> _instanceCache = new Dictionary<string, object>();
 	}
 }

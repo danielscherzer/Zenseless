@@ -1,9 +1,9 @@
 #version 430 core
 
-out vec4 color;
+out vec4 fragColor;
 
-void main() 
+void main()
 {
 	const vec4 color2 = vec4(1.0);
-	color = color2;
+	fragColor = color2;
 }

@@ -72,7 +72,7 @@
 			throw new ArgumentException($"File extension {extension} is not valid for a shader.");
 		}
 
-		private static ReadOnlyDictionary<string, HLGL.ShaderType> mapExtensionToShaderType = 
+		private static readonly IReadOnlyDictionary<string, HLGL.ShaderType> mapExtensionToShaderType = 
 			new ReadOnlyDictionary<string, HLGL.ShaderType>(new Dictionary<string, HLGL.ShaderType>
 		{
 			{ ".comp" , HLGL.ShaderType.ComputeShader },
@@ -88,11 +88,9 @@
 		{
 			foreach (var res in resources)
 			{
-				using (var bitmap = new Bitmap(res.Stream))
-				{
-					texture.FromBitmap(bitmap);
-					return;
-				}
+				using var bitmap = new Bitmap(res.Stream);
+				texture.FromBitmap(bitmap);
+				return;
 				//TODO: if multiple textures assume these contain mipmap levels and load them
 			}
 		}
@@ -116,12 +114,10 @@
 			Debug.WriteLine($"Updating shader {GetNameString(namedStreams)}");
 			string ShaderCode(Stream stream)
 			{
-				using (var reader = new StreamReader(stream, true))
-				{
-					var code = reader.ReadToEnd();
-					if (solutionMode) code = code.Replace("#ifdef SOLUTION", "#if 1");
-					return code;
-				}
+				using var reader = new StreamReader(stream, true);
+				var code = reader.ReadToEnd();
+				if (solutionMode) code = code.Replace("#ifdef SOLUTION", "#if 1");
+				return code;
 			}
 
 			var count = namedStreams.Count();

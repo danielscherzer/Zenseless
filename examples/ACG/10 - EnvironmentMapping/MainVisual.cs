@@ -1,7 +1,6 @@
 ﻿namespace Example
 {
 	using OpenTK.Graphics.OpenGL4;
-	using System;
 	using System.Collections.Generic;
 	using System.Numerics;
 	using Zenseless.Geometry;
@@ -54,6 +53,5 @@
 		}
 
 		private readonly List<MeshVisual> visuals = new List<MeshVisual>();
-		private readonly List<Action<ITransformation, Vector3>> drawCalls = new List<Action<ITransformation, Vector3>>();
 	}
 }

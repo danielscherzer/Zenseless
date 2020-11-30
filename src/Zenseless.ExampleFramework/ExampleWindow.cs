@@ -157,8 +157,8 @@
 		/// </value>
 		public IInput Input { get; }
 
-		private List<IAfterRendering> afterRenderingCallbacks = new List<IAfterRendering>();
-		private List<IBeforeRendering> beforeRenderingCallbacks = new List<IBeforeRendering>();
+		private readonly List<IAfterRendering> afterRenderingCallbacks = new List<IAfterRendering>();
+		private readonly List<IBeforeRendering> beforeRenderingCallbacks = new List<IBeforeRendering>();
 		private readonly DebuggerGL debugger;
 
 		private void CreateIOCcontainer()
@@ -211,7 +211,7 @@
 			Resize?.Invoke(gameWindow.Width, gameWindow.Height);
 		}
 
-		private void GameWindow_UpdateFrame(object sender, FrameEventArgs e)
+		private void GameWindow_UpdateFrame(object _, FrameEventArgs e)
 		{
 			Update?.Invoke((float)gameWindow.TargetUpdatePeriod);
 		}

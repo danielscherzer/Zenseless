@@ -32,7 +32,7 @@
 		/// Draws onto the render surface using the specified draw code.
 		/// </summary>
 		/// <param name="drawCode">The draw code.</param>
-		void Execute(Action drawCode);
+		void Draw(Action drawCode);
 
 		/// <summary>
 		/// Attaches the specified texture.

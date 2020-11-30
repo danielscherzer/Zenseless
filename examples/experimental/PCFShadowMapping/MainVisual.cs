@@ -36,7 +36,7 @@
 			if (shaderProgramDepth is null) return;
 			//first pass: create shadow map
 			shaderProgramDepth.Activate();
-			fboShadowMap.Execute(() =>
+			fboShadowMap.Draw(() =>
 			{
 				GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 				shaderProgramDepth.Uniform("camera", light);

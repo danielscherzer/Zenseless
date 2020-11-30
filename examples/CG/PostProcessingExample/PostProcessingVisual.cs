@@ -33,7 +33,7 @@ namespace Example
 		public void Render(Action renderAction)
 		{
 			//render into texture
-			renderToTexture.Execute(renderAction);
+			renderToTexture.Draw(renderAction);
 
 			//use this texture to draw
 			renderToTexture.Texture.Activate();

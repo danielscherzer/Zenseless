@@ -48,7 +48,7 @@
 						$"do not match primary texture ({Texture.Width},{Texture.Height})");
 			}
 			attachments.Add(texture);
-			Execute(() =>
+			Draw(() =>
 			{
 				GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, AttachmentFromID(attachments.Count - 1), TextureTarget.Texture2D, texture.ID, 0);
 				string status = GetStatusMessage();
@@ -108,7 +108,7 @@
 		/// Execute the specified action on the render surface.
 		/// </summary>
 		/// <param name="action">The code to execute.</param>
-		public void Execute(Action action)
+		public void Draw(Action action)
 		{
 			Activate();
 			action();

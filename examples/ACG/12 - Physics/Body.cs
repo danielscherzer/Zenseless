@@ -1,9 +1,8 @@
-﻿namespace Example
-{
-	using System.Diagnostics;
-	using System.Numerics;
-	using Zenseless.Geometry;
+﻿using System.Numerics;
+using Zenseless.Geometry;
 
+namespace Example
+{
 	/// <summary>
 	/// Adapted from http://natureofcode.com/book/chapter-2-forces/
 	/// </summary>
