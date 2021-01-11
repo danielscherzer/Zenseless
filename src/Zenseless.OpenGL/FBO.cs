@@ -22,7 +22,7 @@
 		public FBO(ITexture2D texture)
 		{
 			// Create an FBO object
-			GL.GenFramebuffers(1, out m_FBOHandle);
+			GL.CreateFramebuffers(1, out handle);
 			// attach first texture
 			Attach(texture);
 		}
@@ -48,15 +48,9 @@
 						$"do not match primary texture ({Texture.Width},{Texture.Height})");
 			}
 			attachments.Add(texture);
-			Draw(() =>
-			{
-				GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, AttachmentFromID(attachments.Count - 1), TextureTarget.Texture2D, texture.ID, 0);
-				string status = GetStatusMessage();
-				if (!(status is null))
-				{
-					throw new FBOException(status);
-				}
-			});
+			GL.NamedFramebufferTexture(handle, AttachmentFromID(attachments.Count - 1), texture.ID, 0);
+			CheckFramebufferStatus();
+
 			var drawBuffers = new List<DrawBuffersEnum>();
 			for (int i = 0; i < attachments.Count; ++i)
 			{
@@ -87,9 +81,9 @@
 		{
 			GL.PushAttrib(AttribMask.ViewportBit);
 			lastFBO = currentFrameBufferHandle;
-			GL.BindFramebuffer(FramebufferTarget.Framebuffer, m_FBOHandle);
+			GL.BindFramebuffer(FramebufferTarget.Framebuffer, handle);
 			GL.Viewport(0, 0, Texture.Width, Texture.Height);
-			currentFrameBufferHandle = m_FBOHandle;
+			currentFrameBufferHandle = handle;
 			GL.DrawBuffers(drawBuffers.Length, drawBuffers);
 		}
 
@@ -115,7 +109,7 @@
 			Deactivate();
 		}
 
-		private uint m_FBOHandle = 0;
+		private readonly uint handle = 0;
 		private uint lastFBO = 0;
 		private static uint currentFrameBufferHandle = 0;
 		private readonly List<ITexture2D> attachments = new List<ITexture2D>();
@@ -127,29 +121,33 @@
 		protected override void DisposeResources()
 		{
 			foreach (var tex in attachments) tex.Dispose();
-			GL.DeleteFramebuffers(1, ref m_FBOHandle);
+			GL.DeleteFramebuffer(handle);
+		}
+
+		private static FramebufferAttachment AttachmentFromID(int id) => FramebufferAttachment.ColorAttachment0 + id;
+
+		private void CheckFramebufferStatus()
+		{
+			string status = GetStatusMessage();
+			if (status is null) return;
+			throw new FBOException(status);
 		}
 
 		private string GetStatusMessage()
 		{
-			return (GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer)) switch
+			return (GL.CheckNamedFramebufferStatus(handle, FramebufferTarget.Framebuffer)) switch
 			{
-				FramebufferErrorCode.FramebufferComplete => null,
-				FramebufferErrorCode.FramebufferIncompleteAttachment => "One or more attachment points are not frame buffer attachment complete. This could mean there’s no texture attached or the format isn’t renderable. For color textures this means the base format must be RGB or RGBA and for depth textures it must be a DEPTH_COMPONENT format. Other causes of this error are that the width or height is zero or the z-offset is out of range in case of render to volume.",
-				FramebufferErrorCode.FramebufferIncompleteMissingAttachment => "There are no attachments.",
-				FramebufferErrorCode.FramebufferIncompleteDimensionsExt => "Attachments are of different size. All attachments must have the same width and height.",
-				FramebufferErrorCode.FramebufferIncompleteFormatsExt => "The color attachments have different format. All color attachments must have the same format.",
-				FramebufferErrorCode.FramebufferIncompleteDrawBuffer => "An attachment point referenced by GL.DrawBuffers() doesn’t have an attachment.",
-				FramebufferErrorCode.FramebufferIncompleteReadBuffer => "The attachment point referenced by GL.ReadBuffers() doesn’t have an attachment.",
-				FramebufferErrorCode.FramebufferUnsupported => "This particular FBO configuration is not supported by the implementation.",
-				FramebufferErrorCode.FramebufferUndefined => "Frame buffer Undefined",
-				FramebufferErrorCode.FramebufferIncompleteMultisample => "Frame buffer incomplete multi sample",
-				FramebufferErrorCode.FramebufferIncompleteLayerTargets => "Frame buffer Incomplete Layer Targets",
-				FramebufferErrorCode.FramebufferIncompleteLayerCount => "Frame buffer incomplete layer count",
+				FramebufferStatus.FramebufferComplete => null,
+				FramebufferStatus.FramebufferIncompleteAttachment => "One or more attachment points are not frame buffer attachment complete. This could mean there’s no texture attached or the format isn’t renderable. For color textures this means the base format must be RGB or RGBA and for depth textures it must be a DEPTH_COMPONENT format. Other causes of this error are that the width or height is zero or the z-offset is out of range in case of render to volume.",
+				FramebufferStatus.FramebufferIncompleteDrawBuffer => "An attachment point referenced by GL.DrawBuffers() doesn’t have an attachment.",
+				FramebufferStatus.FramebufferIncompleteLayerTargets => "Frame buffer Incomplete Layer Targets",
+				FramebufferStatus.FramebufferIncompleteMissingAttachment => "There are no attachments.",
+				FramebufferStatus.FramebufferIncompleteMultisample => "Frame buffer incomplete multi sample",
+				FramebufferStatus.FramebufferIncompleteReadBuffer => "The attachment point referenced by GL.ReadBuffers() doesn’t have an attachment.",
+				FramebufferStatus.FramebufferUndefined => "Frame buffer Undefined",
+				FramebufferStatus.FramebufferUnsupported => "This particular FBO configuration is not supported by the implementation.",
 				_ => "Status unknown. (yes, this is really bad.)",
 			};
 		}
-
-		private static FramebufferAttachment AttachmentFromID(int id) => FramebufferAttachment.ColorAttachment0 + id;
 	}
 }

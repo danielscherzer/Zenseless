@@ -68,7 +68,7 @@ float pcfDistField(vec3 coord)
 	vec2 coord_ts = (coord.xy * 0.5 + 0.5) * textureSize(texShadowMap, 0);
 	ivec2 iCoord_ts = ivec2(coord_ts - fract(coord_ts));
 	float minDist = 1e10;
-	int kernelSizeHalf = 10;
+	int kernelSizeHalf = 20;
 	for(int x = -kernelSizeHalf; x <= kernelSizeHalf; ++x)
 	{
 		for(int y = -kernelSizeHalf; y <= kernelSizeHalf; ++y)

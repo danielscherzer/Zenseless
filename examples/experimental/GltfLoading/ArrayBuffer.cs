@@ -12,7 +12,7 @@ namespace Example
 			try
 			{
 				IntPtr pointer = handle.AddrOfPinnedObject();
-				Marshal.Copy(source, byteOffset, pointer, destinationCount * Marshal.SizeOf<T>());
+				Marshal.Copy(source, byteOffset, pointer, destinationCount * Marshal.SizeOf<T>()); // need to use marshalling because of data type conversion
 				return destination;
 			}
 			finally

@@ -47,9 +47,6 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.md" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\src\Zenseless.Patterns\Zenseless.Patterns.csproj">
       <Project>{4DE8BCD3-83DF-48DD-B962-518C06D3491A}</Project>
       <Name>Zenseless.Patterns</Name>

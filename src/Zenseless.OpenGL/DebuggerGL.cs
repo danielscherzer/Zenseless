@@ -1,10 +1,10 @@
-﻿namespace Zenseless.OpenGL
-{
-	using OpenTK.Graphics.OpenGL4;
-	using System;
-	using System.Diagnostics;
-	using System.Runtime.InteropServices;
+﻿using OpenTK.Graphics.OpenGL4;
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
+namespace Zenseless.OpenGL
+{
 	/// <summary>
 	/// A debugger for OpenGL needs an OpenGL context created with the debug flag
 	/// </summary>
