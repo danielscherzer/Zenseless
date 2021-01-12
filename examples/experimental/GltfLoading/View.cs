@@ -70,7 +70,7 @@ namespace Example
 
 			void SetJointMatrices(Matrix4x4[] jointTransformations) => GL.UniformMatrix4(locJoints, jointTransformations.Length, false, jointTransformations.ToFloatArray());
 
-			model.UpdateAnimations((float)time.Elapsed.TotalSeconds, SetJointMatrices);
+			model.UpdateAnimations((float)time.Elapsed.TotalSeconds);
 
 			void SetWorld(ITransformation transform) => shader.Uniform("world", transform);
 

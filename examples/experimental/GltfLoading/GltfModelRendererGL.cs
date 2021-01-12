@@ -61,7 +61,7 @@
 			return textures;
 		}
 
-		internal void UpdateAnimations(float totalSeconds, Action<Matrix4x4[]> setJointMatrix)
+		internal void UpdateAnimations(float totalSeconds)
 		{
 			//Debug.Clear();
 			//Debug.WriteLine($"time={totalSeconds}");

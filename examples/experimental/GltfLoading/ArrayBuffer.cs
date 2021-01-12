@@ -29,7 +29,7 @@ namespace Example
 			try
 			{
 				IntPtr pointer = handle.AddrOfPinnedObject();
-				Marshal.Copy(pointer, destination, 0, destination.Length);
+				Marshal.Copy(pointer + byteOffset, destination, 0, destination.Length);
 				return destination;
 			}
 			finally
