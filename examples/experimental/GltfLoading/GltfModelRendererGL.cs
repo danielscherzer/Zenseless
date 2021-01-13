@@ -24,7 +24,7 @@
 		private readonly Gltf gltf;
 		private readonly List<BufferObject> buffersGL;
 		private readonly List<ITexture> texturesGL;
-		private List<Action> meshDrawCommandsGL = new List<Action>();
+		private readonly List<Action> meshDrawCommandsGL = new List<Action>();
 		private Dictionary<int, Transformation> jointNodeInverseBindTransform = new Dictionary<int, Transformation>();
 
 		public bool IsSkinned => jointNodeInverseBindTransform.Count > 0;
@@ -40,7 +40,7 @@
 
 			Bounds = CalculateSceneBounds();
 
-			animationControllers = LoadAnimations(gltf, byteBuffers);
+			animationControllers = CreateAnimationControllers(gltf, byteBuffers, localTransforms);
 			jointNodeInverseBindTransform = gltf.ExtractJointNodeInverseBindTransforms(byteBuffers);
 
 			texturesGL = LoadTextures(gltf, externalReferenceSolver);
@@ -139,7 +139,7 @@
 			return nodeTransforms;
 		}
 
-		private List<Action<float>> LoadAnimations(Gltf gltf, List<byte[]> byteBuffers)
+		private static List<Action<float>> CreateAnimationControllers(Gltf gltf, List<byte[]> byteBuffers, List<Transformation> localTransforms)
 		{
 			var animations = gltf.Animations;
 			var animationController = new List<Action<float>>();

@@ -21,32 +21,23 @@ namespace Zenseless.Geometry
 		public ControlPoints(IEnumerable<float> keys, IEnumerable<T> values)
 		{
 			var zipped = keys.Zip(values, (key, value) => new KeyValuePair<float, T>(key, value)).Distinct(new KeyOnlyComparer());
-			controlPoints = new SortedDictionary<float, T>(zipped.ToDictionary((item) => item.Key, (item) => item.Value));
+			_controlPoints = new SortedDictionary<float, T>(zipped.ToDictionary((item) => item.Key, (item) => item.Value));
 		}
 
 		/// <summary>Initializes a new instance of the <see cref="ControlPoints{T}"/> class.</summary>
-		public ControlPoints()
-		{
-			controlPoints = new SortedDictionary<float, T>();
-		}
+		public ControlPoints() => _controlPoints = new SortedDictionary<float, T>();
 
 		/// <summary>
 		/// Adds the update.
 		/// </summary>
 		/// <param name="t">The t.</param>
 		/// <param name="value">The value.</param>
-		public void AddUpdate(float t, T value)
-		{
-			controlPoints[t] = value;
-		}
+		public void AddUpdate(float t, T value) => _controlPoints[t] = value;
 
 		/// <summary>
 		/// Clears this instance.
 		/// </summary>
-		public void Clear()
-		{
-			controlPoints.Clear();
-		}
+		public void Clear() => _controlPoints.Clear();
 
 		/// <summary>
 		/// Gets the count.
@@ -54,7 +45,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The count.
 		/// </value>
-		public int Count { get { return controlPoints.Count; } }
+		public int Count => _controlPoints.Count;
 
 		/// <summary>
 		/// Returns an enumerator that iterates through the collection.
@@ -62,10 +53,7 @@ namespace Zenseless.Geometry
 		/// <returns>
 		/// An enumerator that can be used to iterate through the collection.
 		/// </returns>
-		public IEnumerator<KeyValuePair<float, T>> GetEnumerator()
-		{
-			return controlPoints.GetEnumerator();
-		}
+		public IEnumerator<KeyValuePair<float, T>> GetEnumerator() => _controlPoints.GetEnumerator();
 
 		/// <summary>
 		/// Returns an enumerator that iterates through a collection.
@@ -73,10 +61,7 @@ namespace Zenseless.Geometry
 		/// <returns>
 		/// An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
 		/// </returns>
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return controlPoints.GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => _controlPoints.GetEnumerator();
 
 		/// <summary>
 		/// Returns the infimum.
@@ -140,27 +125,18 @@ namespace Zenseless.Geometry
 		/// <returns>
 		/// A <see cref="string" /> that represents this instance.
 		/// </returns>
-		public override string ToString()
-		{
-			return string.Join(",", controlPoints.Values);
-		}
+		public override string ToString() => string.Join(",", _controlPoints.Values);
 
 		class KeyOnlyComparer : IEqualityComparer<KeyValuePair<float, T>>
 		{
-			public bool Equals(KeyValuePair<float, T> x, KeyValuePair<float, T> y)
-			{
-				return x.Key == y.Key;
-			}
+			public bool Equals(KeyValuePair<float, T> x, KeyValuePair<float, T> y) => x.Key == y.Key;
 
-			public int GetHashCode(KeyValuePair<float, T> obj)
-			{
-				return obj.Key.GetHashCode();
-			}
+			public int GetHashCode(KeyValuePair<float, T> obj) => obj.Key.GetHashCode();
 		};
 
 		/// <summary>
 		/// The control points
 		/// </summary>
-		private SortedDictionary<float, T> controlPoints = new SortedDictionary<float, T>();
+		private readonly SortedDictionary<float, T> _controlPoints = new SortedDictionary<float, T>();
 	}
 }
