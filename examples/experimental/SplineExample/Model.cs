@@ -66,9 +66,9 @@
 		}
 
 		private State state = State.Default;
-		private List<Vector2> points = new List<Vector2>();
-		private List<Vector2> tangentHandles = new List<Vector2>();
-		private List<Vector2> tangents = new List<Vector2>();
+		private readonly List<Vector2> points = new List<Vector2>();
+		private readonly List<Vector2> tangentHandles = new List<Vector2>();
+		private readonly List<Vector2> tangents = new List<Vector2>();
 
 		internal void Move(in Vector2 coord)
 		{

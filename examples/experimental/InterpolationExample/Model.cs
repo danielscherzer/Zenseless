@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
 using Zenseless.Geometry;
 
@@ -7,8 +6,8 @@ namespace Example
 {
 	internal class Model
 	{
-		private Box2D movingObject = new Box2D(0, 0, .2f, .2f);
-		private List<Vector2> wayPoints = new List<Vector2>();
+		private readonly Box2D movingObject = new Box2D(0, 0, .2f, .2f);
+		private readonly List<Vector2> wayPoints = new List<Vector2>();
 
 		public Model()
 		{

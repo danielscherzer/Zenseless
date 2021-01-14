@@ -9,7 +9,7 @@ namespace Zenseless.Geometry
 	/// is a third-degree polynomial specified in Hermite form that is, by its values and first derivatives 
 	/// at the end points of the corresponding domain interval (Wikipedia).
 	/// </summary>
-	public class CubicHermiteSpline
+	public static class CubicHermiteSpline
 	{
 		/// <summary>
 		/// Evaluates a cubic Hermite spline segment given by two control points and tangents at parametric position t.
