@@ -200,6 +200,63 @@ namespace Zenseless.Geometry
 		}
 
 		/// <summary>
+		/// Finds a range of existing indexes inside a sorted array that encompass a given value
+		/// </summary>
+		/// <typeparam name="TValue"></typeparam>
+		/// <param name="sorted">a sorted array of values</param>
+		/// <param name="value">a value</param>
+		/// <returns></returns>
+		public static (int lower, int upper) FindExistingRange<TValue>(this TValue[] sorted, TValue value)
+		{
+			var ipos = Array.BinarySearch(sorted, value);
+			if (ipos >= 0)
+			{
+				// exact target found at position "ipos"
+				return (ipos, ipos);
+			}
+			else
+			{
+				// Exact key not found: BinarySearch returns negative when the 
+				// exact target is not found, which is the bitwise complement 
+				// of the next index in the list larger than the target.
+				ipos = ~ipos;
+				if (0 == ipos)
+				{
+					return (0, 0);
+				}
+				if (ipos < sorted.Length)
+				{
+					return (ipos - 1, ipos);
+				}
+				else
+				{
+					return (sorted.Length - 1, sorted.Length - 1);
+				}
+			}
+		}
+		/*
+			var times = Enumerable.Range(-4, 10).Select(v => (float)v).ToArray();
+			for (var v = -4f; v < 15; v += 0.25f)
+			{
+				var (lower, upper) = times.FindExistingRange(v);
+				Console.WriteLine($"{v}: lower={times[lower]} higher={times[upper]}");
+			}
+		 */
+
+		/// <summary>
+		/// Transform the input value into the range [0..1]
+		/// </summary>
+		/// <param name="inputValue">the input value</param>
+		/// <param name="inputMin">the lower input range bound</param>
+		/// <param name="inputMax">the upper input range bound</param>
+		/// <returns></returns>
+		public static float Normalize(this float inputValue, float inputMin, float inputMax)
+		{
+			var inputRange = inputMax - inputMin;
+			return float.Epsilon >= inputRange ? 0f : (inputValue - inputMin) / inputRange;
+		}
+
+		/// <summary>
 		/// Normalizes each input uint from range [0,255] into float in range [0,1]
 		/// </summary>
 		/// <param name="x">input in range [0,255]</param>

@@ -166,13 +166,13 @@
 				{
 					var sampler = animation.Samplers[channel.Sampler];
 					var bufferTimes = GetBuffer<float>(sampler.Input);
-					var bufferOutput = GetBuffer<Vector3>(sampler.Output);
-					var controlPoints = new ControlPoints<Vector3>(bufferTimes, bufferOutput);
+					var bufferValues = GetBuffer<Vector3>(sampler.Output);
 					var node = gltf.Nodes[channel.Target.Node.Value];
-					void Interpolator(float t)
+					void Interpolator(float time)
 					{
-						var inter = controlPoints.FindPair(t);
-						var interpolated = Vector3.Lerp(inter.Item1, inter.Item2, inter.Item3);
+						var (lower, upper) = bufferTimes.FindExistingRange(time);
+						var weight = time.Normalize(bufferTimes[lower], bufferTimes[upper]);
+						var interpolated = Vector3.Lerp(bufferValues[lower], bufferValues[upper], weight);
 						node.Translation = interpolated.ToArray();
 						localTransforms[channel.Target.Node.Value] = node.ExtractLocalTransform();
 						//Debug.WriteLine($"{sampler.Output}: translate {interpolated}");
@@ -184,13 +184,13 @@
 				{
 					var sampler = animation.Samplers[channel.Sampler];
 					var bufferTimes = GetBuffer<float>(sampler.Input);
-					var bufferOutput = GetBuffer<Quaternion>(sampler.Output);
-					var controlPoints = new ControlPoints<Quaternion>(bufferTimes, bufferOutput);
+					var bufferValues = GetBuffer<Quaternion>(sampler.Output);
 					var node = gltf.Nodes[channel.Target.Node.Value];
-					void Interpolator(float t)
+					void Interpolator(float time)
 					{
-						var inter = controlPoints.FindPair(t);
-						var interpolated = Quaternion.Lerp(inter.Item1, inter.Item2, inter.Item3);
+						var (lower, upper) = bufferTimes.FindExistingRange(time);
+						var weight = time.Normalize(bufferTimes[lower], bufferTimes[upper]);
+						var interpolated = Quaternion.Lerp(bufferValues[lower], bufferValues[upper], weight);
 						node.Rotation = interpolated.ToArray();
 						localTransforms[channel.Target.Node.Value] = node.ExtractLocalTransform();
 						//Debug.WriteLine($"{sampler.Output}: rotate {interpolated}");
@@ -203,12 +203,12 @@
 					var sampler = animation.Samplers[channel.Sampler];
 					var bufferTimes = GetBuffer<float>(sampler.Input);
 					var node = gltf.Nodes[channel.Target.Node.Value];
-					var bufferOutput = GetBuffer<Vector3>(sampler.Output);
-					var controlPoints = new ControlPoints<Vector3>(bufferTimes, bufferOutput);
-					void Interpolator(float t)
+					var bufferValues = GetBuffer<Vector3>(sampler.Output);
+					void Interpolator(float time)
 					{
-						var inter = controlPoints.FindPair(t);
-						var interpolated = Vector3.Lerp(inter.Item1, inter.Item2, inter.Item3);
+						var (lower, upper) = bufferTimes.FindExistingRange(time);
+						var weight = time.Normalize(bufferTimes[lower], bufferTimes[upper]);
+						var interpolated = Vector3.Lerp(bufferValues[lower], bufferValues[upper], weight);
 						node.Scale = interpolated.ToArray();
 						localTransforms[channel.Target.Node.Value] = node.ExtractLocalTransform();
 						//Debug.WriteLine($"{sampler.Output}: scale {interpolated}");

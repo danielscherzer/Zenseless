@@ -18,8 +18,8 @@
 		/// <param name="elevation">The elevation or tilt.</param>
 		public Orbit(float distance = 1f, float azimuth = 0f, float elevation = 0f)
 		{
-			cachedMatrixView = new DirtyFlag<Matrix4x4>(CalcViewMatrix);
-			PropertyChanged += (s, a) => cachedMatrixView.Invalidate();
+			_cachedMatrixView = new DirtyFlag<Matrix4x4>(CalcViewMatrix);
+			PropertyChanged += (s, a) => _cachedMatrixView.Invalidate();
 			Azimuth = azimuth;
 			Distance = distance;
 			Elevation = elevation;
@@ -68,7 +68,7 @@
 		/// <value>
 		/// The matrix.
 		/// </value>
-		public Matrix4x4 Matrix => cachedMatrixView.Value;
+		public Matrix4x4 Matrix => _cachedMatrixView.Value;
 
 		/// <summary>
 		/// Gets or sets the target, the point the camera is looking at.
@@ -133,7 +133,7 @@
 		private float _distance = 0f;
 		private float _elevation = 0f;
 		private Vector3 _target = Vector3.Zero;
-		private DirtyFlag<Matrix4x4> cachedMatrixView;
+		private readonly DirtyFlag<Matrix4x4> _cachedMatrixView;
 
 		private Matrix4x4 CalcViewMatrix()
 		{
