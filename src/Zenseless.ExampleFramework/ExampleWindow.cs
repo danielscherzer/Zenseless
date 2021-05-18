@@ -147,7 +147,7 @@
 		}
 
 		private CompositionContainer _container;
-		private GameWindow gameWindow;
+		private readonly GameWindow gameWindow;
 
 		/// <summary>
 		/// Retrieve keyboard and mouse input state.

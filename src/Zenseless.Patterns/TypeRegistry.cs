@@ -34,6 +34,6 @@ namespace Zenseless.Patterns
 			return null;
 		}
 
-		private Dictionary<Type, object> types = new Dictionary<Type, object>();
+		private readonly Dictionary<Type, object> types = new Dictionary<Type, object>();
 	}
 }

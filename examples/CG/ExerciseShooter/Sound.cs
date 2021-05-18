@@ -1,11 +1,11 @@
-﻿namespace SpaceInvadersMvc
-{
-	using System;
-	using System.IO;
-	using Zenseless.Patterns;
-	using Zenseless.HLGL;
-	using Zenseless.Sound;
+﻿using System;
+using System.IO;
+using Zenseless.Patterns;
+using Zenseless.HLGL;
+using Zenseless.Sound;
 
+namespace SpaceInvadersMvc
+{
 	/// <summary>
 	/// All sounds should have the same sampling frequency, otherwise mixing them will throw an exception.
 	/// </summary>
@@ -13,7 +13,7 @@
 	{
 		public Sound(IContentLoader contentLoader)
 		{
-			this.contentLoader = contentLoader ?? throw new ArgumentNullException(nameof(contentLoader));
+			if (contentLoader is null) throw new ArgumentNullException(nameof(contentLoader));
 			soundEngine = new AudioPlaybackEngine();
 			laser = contentLoader.Load<byte[]>("laser.wav"); //content manager will cache it, but its still faster to keep a direct reference
 		}
@@ -44,8 +44,7 @@
 			soundEngine.Dispose();
 		}
 
-		private AudioPlaybackEngine soundEngine;
-		private byte[] laser;
-		private readonly IContentLoader contentLoader;
+		private readonly AudioPlaybackEngine soundEngine;
+		private readonly byte[] laser;
 	}
 }
