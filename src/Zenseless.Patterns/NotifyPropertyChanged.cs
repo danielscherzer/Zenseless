@@ -34,7 +34,7 @@
 		/// <param name="valueBackend">The backing variable that contains the property value.</param>
 		/// <param name="value">The new value of the property.</param>
 		/// <param name="memberName">Auto filled name of the property.</param>
-		protected void SetNotify<TYPE>(ref TYPE valueBackend, TYPE value, [CallerMemberName] string memberName = "")
+		protected void Set<TYPE>(ref TYPE valueBackend, TYPE value, [CallerMemberName] string memberName = "")
 		{
 			if (EqualityComparer<TYPE>.Default.Equals(valueBackend, value)) return;
 			valueBackend = value;
@@ -50,7 +50,7 @@
 		/// <param name="value">The new value of the property.</param>
 		/// <param name="action">An action that is executed after changing the property, but before invoking the event.</param>
 		/// <param name="memberName">Auto filled name of the property.</param>
-		protected void SetNotify<TYPE>(ref TYPE valueBackend, TYPE value, Action<TYPE> action, [CallerMemberName] string memberName = "")
+		protected void Set<TYPE>(ref TYPE valueBackend, TYPE value, Action<TYPE> action, [CallerMemberName] string memberName = "")
 		{
 			if (EqualityComparer<TYPE>.Default.Equals(valueBackend, value)) return;
 			valueBackend = value;

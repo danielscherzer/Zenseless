@@ -36,7 +36,7 @@
 		public float Aspect
 		{
 			get => _aspect;
-			set => SetNotify(ref _aspect, Math.Max(value, float.Epsilon));
+			set => Set(ref _aspect, Math.Max(value, float.Epsilon));
 		}
 
 		/// <summary>
@@ -48,7 +48,7 @@
 		public float FarClip
 		{
 			get => _farClip;
-			set => SetNotify(ref _farClip, Math.Max(value, NearClip));
+			set => Set(ref _farClip, Math.Max(value, NearClip));
 		}
 
 		/// <summary>
@@ -60,7 +60,7 @@
 		public float FieldOfViewY
 		{
 			get => _fieldOfViewY;
-			set => SetNotify(ref _fieldOfViewY, MathHelper.Clamp(value, float.Epsilon, 179.9f));
+			set => Set(ref _fieldOfViewY, MathHelper.Clamp(value, float.Epsilon, 179.9f));
 		}
 
 		/// <summary>
@@ -80,7 +80,7 @@
 		public float NearClip
 		{
 			get => _nearClip;
-			set => SetNotify(ref _nearClip, Math.Max(value, float.Epsilon));
+			set => Set(ref _nearClip, Math.Max(value, float.Epsilon));
 		}
 
 		private float _aspect = 1f;

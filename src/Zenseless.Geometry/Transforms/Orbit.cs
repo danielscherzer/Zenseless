@@ -35,7 +35,7 @@
 		public float Azimuth
 		{
 			get => _azimuth;
-			set => SetNotify(ref _azimuth, value);
+			set => Set(ref _azimuth, value);
 		}
 
 		/// <summary>
@@ -47,7 +47,7 @@
 		public float Distance
 		{
 			get => _distance;
-			set => SetNotify(ref _distance, value);
+			set => Set(ref _distance, value);
 		}
 
 		/// <summary>
@@ -59,7 +59,7 @@
 		public float Elevation
 		{
 			get => _elevation;
-			set => SetNotify(ref _elevation, value);
+			set => Set(ref _elevation, value);
 		}
 
 		/// <summary>
@@ -79,7 +79,7 @@
 		public Vector3 Target
 		{
 			get => _target;
-			set => SetNotify(ref _target, value);
+			set => Set(ref _target, value);
 		}
 
 		/// <summary>
@@ -91,7 +91,7 @@
 		public float TargetX
 		{
 			get => Target.X;
-			set => SetNotify(ref _target.X, value);
+			set => Set(ref _target.X, value);
 		}
 
 		/// <summary>
@@ -103,7 +103,7 @@
 		public float TargetY
 		{
 			get => Target.Y;
-			set => SetNotify(ref _target.Y, value);
+			set => Set(ref _target.Y, value);
 		}
 
 		/// <summary>
@@ -115,7 +115,7 @@
 		public float TargetZ
 		{
 			get => Target.Z;
-			set => SetNotify(ref _target.Z, value);
+			set => Set(ref _target.Z, value);
 		}
 
 		/// <summary>

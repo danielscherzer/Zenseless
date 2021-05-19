@@ -51,7 +51,7 @@ namespace ExampleBrowser
 		public float Angle
 		{
 			get => _angle;
-			set => SetNotify(ref _angle, value);
+			set => Set(ref _angle, value);
 		}
 
 		private ITime Time { get; }

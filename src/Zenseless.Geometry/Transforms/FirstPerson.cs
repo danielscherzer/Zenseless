@@ -41,7 +41,7 @@
 		public float Heading
 		{
 			get => _heading;
-			set => SetNotify(ref _heading, value);
+			set => Set(ref _heading, value);
 		}
 
 		/// <summary>
@@ -58,7 +58,7 @@
 		public Vector3 Position
 		{
 			get => _position;
-			set => SetNotify(ref _position, value);
+			set => Set(ref _position, value);
 		}
 
 		/// <summary>
@@ -67,7 +67,7 @@
 		public float Tilt
 		{
 			get => _tilt;
-			set => SetNotify(ref _tilt, value);
+			set => Set(ref _tilt, value);
 		}
 
 		private float _heading = 0f;

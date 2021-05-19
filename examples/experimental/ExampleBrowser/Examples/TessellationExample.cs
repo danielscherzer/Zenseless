@@ -30,13 +30,13 @@
 		public float TesselationLevelInner
 		{
 			get => _tesselationLevelInner;
-			set => SetNotify(ref _tesselationLevelInner, MathHelper.Clamp(value, 1, 64));
+			set => Set(ref _tesselationLevelInner, MathHelper.Clamp(value, 1, 64));
 		}
 
 		public float TesselationLevelOuter
 		{
 			get => _tesselationLevelOuter;
-			set => SetNotify(ref _tesselationLevelOuter, MathHelper.Clamp(value, 1, 64));
+			set => Set(ref _tesselationLevelOuter, MathHelper.Clamp(value, 1, 64));
 		}
 
 		public bool Animate { get; set; } = false;

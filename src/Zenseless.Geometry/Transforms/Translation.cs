@@ -43,7 +43,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The x-coordinate.
 		/// </value>
-		public float Tx { get => matrix.M41; set => SetNotify(ref matrix.M41, value); }
+		public float Tx { get => matrix.M41; set => Set(ref matrix.M41, value); }
 
 		/// <summary>
 		/// Gets or sets the y-coordinate.
@@ -51,7 +51,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The y-coordinate.
 		/// </value>
-		public float Ty { get => matrix.M42; set => SetNotify(ref matrix.M42, value); }
+		public float Ty { get => matrix.M42; set => Set(ref matrix.M42, value); }
 
 		/// <summary>
 		/// Gets or sets the z-coordinate.
@@ -59,7 +59,7 @@ namespace Zenseless.Geometry
 		/// <value>
 		/// The z-coordinate.
 		/// </value>
-		public float Tz { get => matrix.M43; set => SetNotify(ref matrix.M43, value); }
+		public float Tz { get => matrix.M43; set => Set(ref matrix.M43, value); }
 
 		/// <summary>
 		/// Gets or sets the translation vector.
