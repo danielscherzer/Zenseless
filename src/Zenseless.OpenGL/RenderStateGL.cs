@@ -99,7 +99,7 @@ namespace Zenseless.OpenGL
 				case BlendOperator.Min: GL.BlendEquation(BlendEquationMode.Min); break;
 				case BlendOperator.ReverseSubtract: GL.BlendEquation(BlendEquationMode.FuncReverseSubtract); break;
 				case BlendOperator.Subtract: GL.BlendEquation(BlendEquationMode.FuncSubtract); break;
-				default: throw new ArgumentOutOfRangeException(blendOperator.ToString());
+				default: throw new ArgumentException(blendOperator.ToString());
 			}
 			GL.Enable(EnableCap.Blend);
 		}
@@ -119,7 +119,7 @@ namespace Zenseless.OpenGL
 				case BlendParameter.SourceAlphaSaturation: return BlendingFactorSrc.SrcAlphaSaturate;
 				case BlendParameter.SourceColor: return BlendingFactorSrc.SrcColor;
 				case BlendParameter.Zero: return BlendingFactorSrc.Zero;
-				default: throw new ArgumentOutOfRangeException(param.ToString());
+				default: throw new ArgumentException(param.ToString());
 			}
 		}
 
@@ -138,7 +138,7 @@ namespace Zenseless.OpenGL
 				case BlendParameter.SourceAlphaSaturation: return BlendingFactorDest.SrcAlphaSaturate;
 				case BlendParameter.SourceColor: return BlendingFactorDest.SrcColor;
 				case BlendParameter.Zero: return BlendingFactorDest.Zero;
-				default: throw new ArgumentOutOfRangeException(param.ToString());
+				default: throw new ArgumentException(param.ToString());
 			}
 		}
 

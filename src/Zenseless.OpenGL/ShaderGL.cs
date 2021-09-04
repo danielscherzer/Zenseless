@@ -81,7 +81,7 @@
 				case ShaderType.TessControlShader: return TKShaderType.TessControlShader;
 				case ShaderType.TessEvaluationShader: return TKShaderType.TessEvaluationShader;
 				case ShaderType.VertexShader: return TKShaderType.VertexShader;
-				default: throw new ArgumentOutOfRangeException("Unknown Shader type");
+				default: throw new ArgumentException("Unknown Shader type");
 			}
 		}
 	}
