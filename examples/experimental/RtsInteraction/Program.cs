@@ -6,7 +6,7 @@
 	using Zenseless.ExampleFramework;
 	using Zenseless.OpenGL;
 
-	class Controller
+	class Program
 	{
 		[STAThread]
 		private static void Main()

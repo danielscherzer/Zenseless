@@ -40,7 +40,7 @@
   <ItemGroup>
     <Compile Include="IUnit.cs" />
     <Compile Include="Model.cs" />
-    <Compile Include="SelectionRts.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="View.cs" />
   </ItemGroup>
