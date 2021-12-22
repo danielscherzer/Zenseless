@@ -3,9 +3,10 @@
 uniform sampler2D image;
 
 in vec4 color;
-in vec2 texCoord0; 
+in vec2 texCoord0;
 
+out vec4 fragColor;
 void main() 
 {
-	gl_FragColor = color * texture(image, texCoord0);
+	fragColor = color * texture(image, texCoord0);
 }

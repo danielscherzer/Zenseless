@@ -84,6 +84,7 @@
 		/// <returns><seealso cref="string.Empty"/> if no file path was found.</returns>
 		public string GetFilePath(string fullName)
 		{
+			if (fileLoader is null) return fullName;
 			return fileLoader.GetFilePath(fullName);
 		}
 

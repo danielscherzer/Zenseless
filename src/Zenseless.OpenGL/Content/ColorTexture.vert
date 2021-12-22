@@ -1,11 +1,10 @@
-﻿#version 130
+﻿#version 120
 
-uniform mat4 gl_ModelViewProjectionMatrix;
+//uniform mat4 gl_ModelViewProjectionMatrix;
 
-in vec4 gl_Vertex;
-
-out vec4 color;
-out vec2 texCoord0;
+//in vec4 gl_Vertex;
+varying vec4 color;
+varying vec2 texCoord0;
 
 void main() 
 {
