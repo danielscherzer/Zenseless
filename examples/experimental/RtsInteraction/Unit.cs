@@ -103,21 +103,11 @@ namespace Example
 		private bool UpdateOrientation(in Vector2 dir)
 		{
 			var currentDirection = MathHelper.ToCartesian(new Vector2(MathHelper.DegreesToRadians(Orientation), 1f));
-			var dot = Vector2.Dot(dir, currentDirection);
-			if(dot < 0.99)
-			{
-				var det = MathHelper.Determinant(currentDirection, dir);
-				var angle = Math.Atan2(det, dot);
-				var ccw = Math.Sign(angle);
-				Orientation += ccw;
-				return true;
-			}
-			else
-			{
-				var destinationAngle = MathHelper.RadiansToDegrees(MathHelper.PolarAngle(dir));
-				Orientation = destinationAngle;
-				return false;
-			}
+			var det = MathHelper.Determinant(currentDirection, dir); // det = sin angle * leng
+			var dot = Vector2.Dot(dir, currentDirection); // dot = cos angle * leng
+			var angle = (float)Math.Atan2(det, dot); // tan =  sin / cos
+			Orientation += MathHelper.Clamp(MathHelper.RadiansToDegrees(angle), -1f, 1f);
+			return dot < 0.99;
 		}
 	}
 }
