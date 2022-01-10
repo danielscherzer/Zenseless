@@ -36,11 +36,12 @@
 			string sFragmentShd = @"#version 430 core
 				uniform sampler2D image;
 				in vec2 uv;
+				out vec4 fragColor;
 				void main() 
 				{
 					vec4 color = texture(image, uv);
 					colorMappingExpression
-					gl_FragColor = color;
+					fragColor = color;
 				}";
 			sFragmentShd = sFragmentShd.Replace("colorMappingExpression", colorMappingGlslExpression);
 			shaderProgram = ShaderLoader.CreateFromStrings(sVertexShader, sFragmentShd);
