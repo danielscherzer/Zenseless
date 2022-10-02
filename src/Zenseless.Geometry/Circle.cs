@@ -124,7 +124,7 @@ namespace Zenseless.Geometry
 		public override int GetHashCode()
 		{
 			unchecked
-			{
+			{//TODO: hashcode.combine
 				var hashCode = Radius.GetHashCode();
 				hashCode = (hashCode * 397) ^ CenterX.GetHashCode();
 				hashCode = (hashCode * 397) ^ CenterY.GetHashCode();
