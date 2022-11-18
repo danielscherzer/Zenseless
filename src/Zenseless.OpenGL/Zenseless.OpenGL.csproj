@@ -29,7 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GLSLhelper" Version="0.1.11" />
+    <PackageReference Include="GLSLhelper" Version="0.3.59" />
     <PackageReference Include="OpenTK.NetStandard" Version="1.0.4" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
   </ItemGroup>

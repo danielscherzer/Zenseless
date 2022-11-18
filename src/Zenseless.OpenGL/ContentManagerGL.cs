@@ -104,7 +104,7 @@
 
 		private static IShaderProgram ShaderProgramImporter(IEnumerable<NamedStream> resources, bool solutionMode, IContentLoader contentLoader)
 		{
-			ShaderProgramGL shaderProgram = new ShaderProgramGL();
+			ShaderProgramGL shaderProgram = new();
 			Update(shaderProgram, resources, solutionMode, contentLoader);
 			return shaderProgram;
 		}
@@ -141,7 +141,7 @@
 					}
 					return includeCode;
 				}
-				var expandedShaderCode = Transformations.ExpandIncludes(shaderCode, GetIncludeCode);
+				var expandedShaderCode = GLSLhelper.Transformation.ExpandIncludes(shaderCode, GetIncludeCode);
 				var shader = new ShaderGL(shaderType);
 				if (shader.Compile(expandedShaderCode))
 				{
