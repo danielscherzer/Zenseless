@@ -47,5 +47,14 @@ void main()
 	float gy = convolve(sy, I);
 	vec2 gxy = vec2(gx, gy);
 	float g = sqrt(dot(gxy, gxy)); //sqrt(gx^2 + gy^2)
-	gl_FragColor = vec4(vec3(g), 1.0);
+
+	vec3 color = vec3(g);
+
+//	g = step(0.3, g);
+//	color = texelFetch(image, ivec2(gl_FragCoord), 0).rgb;
+//	float intensity = grayScale(color);
+//	float intensityStep = trunc(intensity * 4) / 4;
+//	color = color / intensity * intensityStep * vec3(1 - g);
+//
+	gl_FragColor = vec4(color, 1.0);
 }
