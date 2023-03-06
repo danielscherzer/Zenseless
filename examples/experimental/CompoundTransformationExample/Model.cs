@@ -84,7 +84,7 @@
 		private class CreateGeometryTag { };
 
 		private readonly Node root;
-		private List<Action> eachFrameCallbacks = new List<Action>();
+		private readonly List<Action> eachFrameCallbacks = new List<Action>();
 
 		private void Foreach(Node node, Action<Node> action)
 		{

@@ -1,6 +1,7 @@
-﻿namespace Zenseless.Geometry
+﻿namespace Example
 {
 	using System.Collections.Generic;
+	using Zenseless.Geometry;
 	using Zenseless.Patterns;
 
 	/// <summary>
@@ -84,21 +85,15 @@
 			get => parent;
 			set
 			{
-				if (!(parent is null))
-				{
-					parent.children.Remove(this);
-				}
-				if (!(value is null))
-				{
-					value.children.Add(this);
-				}
+				parent?.children.Remove(this);
+				value?.children.Add(this);
 				parent = value;
 				Invalidate();
 			}
 		}
 
 		private readonly List<Node> children = new List<Node>();
-		private DirtyFlag<Transformation> globalTransform;
+		private readonly DirtyFlag<Transformation> globalTransform;
 		private Node parent;
 		private Transformation localTransform;
 

@@ -44,14 +44,12 @@
     <Compile Include="CompoundTransformationExample.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="MyVisual.cs" />
+    <Compile Include="Node.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Zenseless.Patterns\Zenseless.Patterns.csproj">
